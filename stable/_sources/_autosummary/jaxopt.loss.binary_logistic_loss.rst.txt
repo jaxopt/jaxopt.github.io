@@ -1,6 +1,0 @@
-﻿jaxopt.loss.binary\_logistic\_loss
-==================================
-
-.. currentmodule:: jaxopt.loss
-
-.. autofunction:: binary_logistic_loss
