@@ -1,0 +1,6 @@
+﻿jaxopt.loss.multiclass\_logistic\_loss
+======================================
+
+.. currentmodule:: jaxopt.loss
+
+.. autofunction:: multiclass_logistic_loss

@@ -1,0 +1,6 @@
+﻿jaxopt.projection.projection\_hyperplane
+========================================
+
+.. currentmodule:: jaxopt.projection
+
+.. autofunction:: projection_hyperplane

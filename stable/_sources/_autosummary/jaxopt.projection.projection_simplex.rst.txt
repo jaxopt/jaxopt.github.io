@@ -1,0 +1,6 @@
+﻿jaxopt.projection.projection\_simplex
+=====================================
+
+.. currentmodule:: jaxopt.projection
+
+.. autofunction:: projection_simplex

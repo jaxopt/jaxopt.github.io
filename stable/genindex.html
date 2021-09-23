@@ -1,0 +1,945 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Index &mdash; JAXopt 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="_static/gallery-rendered-html.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> JAXopt
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Index</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.__init__">__init__() (jaxopt.Bisection method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.__init__">(jaxopt.BlockCoordinateDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.__init__">(jaxopt.GradientDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.__init__">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.__init__">(jaxopt.OptaxSolver method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.__init__">(jaxopt.PolyakSGD method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.__init__">(jaxopt.ProjectedGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.__init__">(jaxopt.ProximalGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming.__init__">(jaxopt.QuadraticProgramming method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.__init__">(jaxopt.ScipyBoundedMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.__init__">(jaxopt.ScipyMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.__init__">(jaxopt.ScipyRootFinding method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.acceleration">acceleration (jaxopt.GradientDescent attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.acceleration">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.acceleration">(jaxopt.ProximalGradient attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss">binary_logistic_loss() (in module jaxopt.loss)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.objective.binary_logreg.html#jaxopt.objective.binary_logreg">binary_logreg (in module jaxopt.objective)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection">Bisection (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.block_prox">block_prox (jaxopt.BlockCoordinateDescent attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent">BlockCoordinateDescent (class in jaxopt)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.check_bracket">check_bracket (jaxopt.Bisection attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.implicit_diff.custom_fixed_point.html#jaxopt.implicit_diff.custom_fixed_point">custom_fixed_point() (in module jaxopt.implicit_diff)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.implicit_diff.custom_root.html#jaxopt.implicit_diff.custom_root">custom_root() (in module jaxopt.implicit_diff)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.delta">delta (jaxopt.PolyakSGD attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#id0">dtype (jaxopt.ScipyBoundedMinimize attribute)</a>, <a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.dtype">[1]</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#id0">(jaxopt.ScipyMinimize attribute)</a>, <a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.dtype">[1]</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#id0">(jaxopt.ScipyRootFinding attribute)</a>, <a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.dtype">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.fun">fun (jaxopt.BlockCoordinateDescent attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.fun">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.fun">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.fun">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.fun">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.fun">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.fun">(jaxopt.ProximalGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.fun">(jaxopt.ScipyBoundedMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.fun">(jaxopt.ScipyMinimize attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent">GradientDescent (class in jaxopt)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.has_aux">has_aux (jaxopt.GradientDescent attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.has_aux">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.has_aux">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.has_aux">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.has_aux">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.has_aux">(jaxopt.ProximalGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.has_aux">(jaxopt.ScipyBoundedMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.has_aux">(jaxopt.ScipyMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.has_aux">(jaxopt.ScipyRootFinding attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.loss.huber_loss.html#jaxopt.loss.huber_loss">huber_loss() (in module jaxopt.loss)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.implicit_diff">implicit_diff (jaxopt.BlockCoordinateDescent attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.implicit_diff">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.implicit_diff">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.implicit_diff">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.implicit_diff">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.implicit_diff">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.implicit_diff">(jaxopt.ProximalGradient attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.implicit_diff_solve">implicit_diff_solve (jaxopt.Bisection attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.implicit_diff_solve">(jaxopt.BlockCoordinateDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.implicit_diff_solve">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.implicit_diff_solve">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.implicit_diff_solve">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.implicit_diff_solve">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.implicit_diff_solve">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.implicit_diff_solve">(jaxopt.ProximalGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming.implicit_diff_solve">(jaxopt.QuadraticProgramming attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.implicit_diff_solve">(jaxopt.ScipyBoundedMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.implicit_diff_solve">(jaxopt.ScipyMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.implicit_diff_solve">(jaxopt.ScipyRootFinding attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#id0">implicit_diff_solve() (jaxopt.Bisection method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#id0">(jaxopt.BlockCoordinateDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#id0">(jaxopt.GradientDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#id0">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#id0">(jaxopt.OptaxSolver method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#id0">(jaxopt.PolyakSGD method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#id0">(jaxopt.ProjectedGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#id0">(jaxopt.ProximalGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#id0">(jaxopt.QuadraticProgramming method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#id1">(jaxopt.ScipyBoundedMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#id1">(jaxopt.ScipyMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#id1">(jaxopt.ScipyRootFinding method)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.init">init() (jaxopt.Bisection method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.init">(jaxopt.BlockCoordinateDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.init">(jaxopt.GradientDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.init">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.init">(jaxopt.OptaxSolver method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.init">(jaxopt.PolyakSGD method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.init">(jaxopt.ProjectedGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.init">(jaxopt.ProximalGradient method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.jit">jit (jaxopt.Bisection attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.jit">(jaxopt.BlockCoordinateDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.jit">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.jit">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.jit">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.jit">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.jit">(jaxopt.ProximalGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.jit">(jaxopt.ScipyBoundedMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.jit">(jaxopt.ScipyMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.jit">(jaxopt.ScipyRootFinding attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.objective.l2_multiclass_logreg.html#jaxopt.objective.l2_multiclass_logreg">l2_multiclass_logreg() (in module jaxopt.objective)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.objective.l2_multiclass_logreg_with_intercept.html#jaxopt.objective.l2_multiclass_logreg_with_intercept">l2_multiclass_logreg_with_intercept() (in module jaxopt.objective)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.l2_optimality_error">l2_optimality_error() (jaxopt.Bisection method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.l2_optimality_error">(jaxopt.BlockCoordinateDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.l2_optimality_error">(jaxopt.GradientDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.l2_optimality_error">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.l2_optimality_error">(jaxopt.OptaxSolver method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.l2_optimality_error">(jaxopt.PolyakSGD method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.l2_optimality_error">(jaxopt.ProjectedGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.l2_optimality_error">(jaxopt.ProximalGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming.l2_optimality_error">(jaxopt.QuadraticProgramming method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.l2_optimality_error">(jaxopt.ScipyBoundedMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.l2_optimality_error">(jaxopt.ScipyMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.l2_optimality_error">(jaxopt.ScipyRootFinding method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.objective.least_squares.html#jaxopt.objective.least_squares">least_squares (in module jaxopt.objective)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.lower">lower (jaxopt.Bisection attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.make_projection_grad">make_projection_grad() (jaxopt.MirrorDescent static method)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.prox.make_prox_from_projection.html#jaxopt.prox.make_prox_from_projection">make_prox_from_projection() (in module jaxopt.prox)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming.matvec_A">matvec_A (jaxopt.QuadraticProgramming attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming.matvec_Q">matvec_Q (jaxopt.QuadraticProgramming attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.max_step_size">max_step_size (jaxopt.PolyakSGD attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.maxiter">maxiter (jaxopt.Bisection attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.maxiter">(jaxopt.BlockCoordinateDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.maxiter">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.maxiter">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.maxiter">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.maxiter">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.maxiter">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.maxiter">(jaxopt.ProximalGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming.maxiter">(jaxopt.QuadraticProgramming attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.maxls">maxls (jaxopt.GradientDescent attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.maxls">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.maxls">(jaxopt.ProximalGradient attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.method">method (jaxopt.ScipyBoundedMinimize attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.method">(jaxopt.ScipyMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.method">(jaxopt.ScipyRootFinding attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent">MirrorDescent (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.momentum">momentum (jaxopt.PolyakSGD attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.objective.multiclass_linear_svm_dual.html#jaxopt.objective.multiclass_linear_svm_dual">multiclass_linear_svm_dual (in module jaxopt.objective)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html#jaxopt.loss.multiclass_logistic_loss">multiclass_logistic_loss() (in module jaxopt.loss)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.objective.multiclass_logreg.html#jaxopt.objective.multiclass_logreg">multiclass_logreg (in module jaxopt.objective)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.objective.multiclass_logreg_with_intercept.html#jaxopt.objective.multiclass_logreg_with_intercept">multiclass_logreg_with_intercept() (in module jaxopt.objective)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html#jaxopt.loss.multiclass_sparsemax_loss">multiclass_sparsemax_loss() (in module jaxopt.loss)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.opt">opt (jaxopt.OptaxSolver attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver">OptaxSolver (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.optimality_fun">optimality_fun (jaxopt.Bisection attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.optimality_fun">(jaxopt.ScipyRootFinding attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.optimality_fun">optimality_fun() (jaxopt.BlockCoordinateDescent method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.optimality_fun">(jaxopt.GradientDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.optimality_fun">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.optimality_fun">(jaxopt.OptaxSolver method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.optimality_fun">(jaxopt.PolyakSGD method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.optimality_fun">(jaxopt.ProjectedGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.optimality_fun">(jaxopt.ProximalGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.optimality_fun">(jaxopt.ScipyBoundedMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.optimality_fun">(jaxopt.ScipyMinimize method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.options">options (jaxopt.ScipyBoundedMinimize attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.options">(jaxopt.ScipyMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.options">(jaxopt.ScipyRootFinding attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD">PolyakSGD (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.pre_update">pre_update (jaxopt.OptaxSolver attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.pre_update">(jaxopt.PolyakSGD attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient">ProjectedGradient (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.projection">projection (jaxopt.ProjectedGradient attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_affine_set.html#jaxopt.projection.projection_affine_set">projection_affine_set() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_box.html#jaxopt.projection.projection_box">projection_box() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_box_section.html#jaxopt.projection.projection_box_section">projection_box_section() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.projection_grad">projection_grad (jaxopt.MirrorDescent attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_halfspace.html#jaxopt.projection.projection_halfspace">projection_halfspace() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_hyperplane.html#jaxopt.projection.projection_hyperplane">projection_hyperplane() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_l1_ball.html#jaxopt.projection.projection_l1_ball">projection_l1_ball() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_l1_sphere.html#jaxopt.projection.projection_l1_sphere">projection_l1_sphere() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_l2_ball.html#jaxopt.projection.projection_l2_ball">projection_l2_ball() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_l2_sphere.html#jaxopt.projection.projection_l2_sphere">projection_l2_sphere() (in module jaxopt.projection)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.projection.projection_linf_ball.html#jaxopt.projection.projection_linf_ball">projection_linf_ball() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_non_negative.html#jaxopt.projection.projection_non_negative">projection_non_negative() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_polyhedron.html#jaxopt.projection.projection_polyhedron">projection_polyhedron() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.projection.projection_simplex.html#jaxopt.projection.projection_simplex">projection_simplex() (in module jaxopt.projection)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.prox">prox (jaxopt.ProximalGradient attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.prox">prox() (jaxopt.GradientDescent method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#id1">(jaxopt.ProximalGradient method)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/jaxopt.prox.prox_elastic_net.html#jaxopt.prox.prox_elastic_net">prox_elastic_net() (in module jaxopt.prox)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.prox.prox_group_lasso.html#jaxopt.prox.prox_group_lasso">prox_group_lasso() (in module jaxopt.prox)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.prox.prox_lasso.html#jaxopt.prox.prox_lasso">prox_lasso() (in module jaxopt.prox)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.prox.prox_non_negative_lasso.html#jaxopt.prox.prox_non_negative_lasso">prox_non_negative_lasso() (in module jaxopt.prox)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.prox.prox_non_negative_ridge.html#jaxopt.prox.prox_non_negative_ridge">prox_non_negative_ridge() (in module jaxopt.prox)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.prox.prox_none.html#jaxopt.prox.prox_none">prox_none() (in module jaxopt.prox)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.prox.prox_ridge.html#jaxopt.prox.prox_ridge">prox_ridge() (in module jaxopt.prox)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient">ProximalGradient (class in jaxopt)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming">QuadraticProgramming (class in jaxopt)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.implicit_diff.root_jvp.html#jaxopt.implicit_diff.root_jvp">root_jvp() (in module jaxopt.implicit_diff)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.implicit_diff.root_vjp.html#jaxopt.implicit_diff.root_vjp">root_vjp() (in module jaxopt.implicit_diff)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.run">run() (jaxopt.Bisection method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.run">(jaxopt.BlockCoordinateDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.run">(jaxopt.GradientDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.run">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.run">(jaxopt.OptaxSolver method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.run">(jaxopt.PolyakSGD method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.run">(jaxopt.ProjectedGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.run">(jaxopt.ProximalGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming.run">(jaxopt.QuadraticProgramming method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.run">(jaxopt.ScipyBoundedMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.run">(jaxopt.ScipyMinimize method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.run">(jaxopt.ScipyRootFinding method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.run_iterator">run_iterator() (jaxopt.OptaxSolver method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.run_iterator">(jaxopt.PolyakSGD method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize">ScipyBoundedMinimize (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize">ScipyMinimize (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding">ScipyRootFinding (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.stepfactor">stepfactor (jaxopt.ProximalGradient attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.stepsize">stepsize (jaxopt.GradientDescent attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.stepsize">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.stepsize">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.stepsize">(jaxopt.ProximalGradient attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.tol">tol (jaxopt.Bisection attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.tol">(jaxopt.BlockCoordinateDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.tol">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.tol">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.tol">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.tol">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.tol">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.tol">(jaxopt.ProximalGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.tol">(jaxopt.ScipyBoundedMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.tol">(jaxopt.ScipyMinimize attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.tol">(jaxopt.ScipyRootFinding attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.unroll">unroll (jaxopt.Bisection attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.unroll">(jaxopt.BlockCoordinateDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.unroll">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.unroll">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.unroll">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.unroll">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.unroll">(jaxopt.ProximalGradient attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.update">update() (jaxopt.Bisection method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.update">(jaxopt.BlockCoordinateDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.update">(jaxopt.GradientDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.update">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.update">(jaxopt.OptaxSolver method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.update">(jaxopt.PolyakSGD method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.update">(jaxopt.ProjectedGradient method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.update">(jaxopt.ProximalGradient method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.upper">upper (jaxopt.Bisection attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.use_jacrev">use_jacrev (jaxopt.ScipyRootFinding attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.verbose">verbose (jaxopt.Bisection attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.verbose">(jaxopt.BlockCoordinateDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.verbose">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.verbose">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.verbose">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.verbose">(jaxopt.PolyakSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.verbose">(jaxopt.ProjectedGradient attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.verbose">(jaxopt.ProximalGradient attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the JAXopt authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿jaxopt.ScipyMinimize
+====================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: ScipyMinimize
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScipyMinimize.__init__
+      ~ScipyMinimize.implicit_diff_solve
+      ~ScipyMinimize.init
+      ~ScipyMinimize.l2_optimality_error
+      ~ScipyMinimize.optimality_fun
+      ~ScipyMinimize.run
+      ~ScipyMinimize.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ScipyMinimize.fun
+      ~ScipyMinimize.has_aux
+      ~ScipyMinimize.implicit_diff
+      ~ScipyMinimize.jit
+      ~ScipyMinimize.method
+      ~ScipyMinimize.options
+      ~ScipyMinimize.tol
+   
+   

@@ -1,0 +1,270 @@
+:orphan:
+
+
+
+.. _sphx_glr_auto_examples:
+
+.. _general_examples:
+
+Example gallery
+===============
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Multiclass linear SVM (without intercept).">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_multiclass_linear_svm_thumb.png
+     :alt: Multiclass linear SVM (without intercept).
+
+     :ref:`sphx_glr_auto_examples_multiclass_linear_svm.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/multiclass_linear_svm
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The dual objective of binary kernel SVMs with an intercept contains both box constraints and an...">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_binary_kernel_svm_with_intercept_thumb.png
+     :alt: Binary kernel SVM with intercept.
+
+     :ref:`sphx_glr_auto_examples_binary_kernel_svm_with_intercept.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/binary_kernel_svm_with_intercept
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Dataset distillation `[Maclaurin et al. 2015] &lt;https://arxiv.org/pdf/1502.03492.pdf&gt;`_, `[Wang ...">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_plot_dataset_distillation_thumb.png
+     :alt: Dataset Distillation Example
+
+     :ref:`sphx_glr_auto_examples_plot_dataset_distillation.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/plot_dataset_distillation
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Non-negative matrix factorizaton (NMF) using alternating minimization.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_nmf_thumb.png
+     :alt: Non-negative matrix factorizaton (NMF) using alternating minimization.
+
+     :ref:`sphx_glr_auto_examples_nmf.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/nmf
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of lasso.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_lasso_implicit_diff_thumb.png
+     :alt: Implicit differentiation of lasso.
+
+     :ref:`sphx_glr_auto_examples_lasso_implicit_diff.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/lasso_implicit_diff
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of ridge regression.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_ridge_reg_implicit_diff_thumb.png
+     :alt: Implicit differentiation of ridge regression.
+
+     :ref:`sphx_glr_auto_examples_ridge_reg_implicit_diff.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/ridge_reg_implicit_diff
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The following code trains a convolutional neural network (CNN) to be robust with respect to the...">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_robust_training_thumb.png
+     :alt: Robust Training in JAXOpt.
+
+     :ref:`sphx_glr_auto_examples_robust_training.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/robust_training
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="MNIST example with Haiku and JAXopt.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_haiku_mnist_thumb.png
+     :alt: MNIST example with Haiku and JAXopt.
+
+     :ref:`sphx_glr_auto_examples_haiku_mnist.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/haiku_mnist
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="MNIST example with Flax and JAXopt.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_flax_mnist_thumb.png
+     :alt: MNIST example with Flax and JAXopt.
+
+     :ref:`sphx_glr_auto_examples_flax_mnist.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/flax_mnist
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="VAE example with Haiku and JAXopt.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_haiku_vae_thumb.png
+     :alt: VAE example with Haiku and JAXopt.
+
+     :ref:`sphx_glr_auto_examples_haiku_vae.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/haiku_vae
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Implementation of sparse coding using jaxopt.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_sparse_coding_thumb.png
+     :alt: Implementation of sparse coding using jaxopt.
+
+     :ref:`sphx_glr_auto_examples_sparse_coding.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/sparse_coding
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-gallery
+
+
+  .. container:: sphx-glr-download sphx-glr-download-python
+
+    :download:`Download all examples in Python source code: auto_examples_python.zip </auto_examples/auto_examples_python.zip>`
+
+
+
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+    :download:`Download all examples in Jupyter notebooks: auto_examples_jupyter.zip </auto_examples/auto_examples_jupyter.zip>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_
