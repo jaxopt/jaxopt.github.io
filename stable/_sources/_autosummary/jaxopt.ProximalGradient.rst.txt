@@ -1,0 +1,46 @@
+﻿jaxopt.ProximalGradient
+=======================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: ProximalGradient
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ProximalGradient.__init__
+      ~ProximalGradient.implicit_diff_solve
+      ~ProximalGradient.init
+      ~ProximalGradient.l2_optimality_error
+      ~ProximalGradient.optimality_fun
+      ~ProximalGradient.prox
+      ~ProximalGradient.run
+      ~ProximalGradient.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ProximalGradient.acceleration
+      ~ProximalGradient.has_aux
+      ~ProximalGradient.implicit_diff
+      ~ProximalGradient.jit
+      ~ProximalGradient.maxiter
+      ~ProximalGradient.maxls
+      ~ProximalGradient.stepfactor
+      ~ProximalGradient.stepsize
+      ~ProximalGradient.tol
+      ~ProximalGradient.unroll
+      ~ProximalGradient.verbose
+      ~ProximalGradient.fun
+   
+   

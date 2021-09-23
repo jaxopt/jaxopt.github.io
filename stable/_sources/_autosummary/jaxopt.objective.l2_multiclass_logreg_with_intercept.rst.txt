@@ -1,0 +1,6 @@
+﻿jaxopt.objective.l2\_multiclass\_logreg\_with\_intercept
+========================================================
+
+.. currentmodule:: jaxopt.objective
+
+.. autofunction:: l2_multiclass_logreg_with_intercept

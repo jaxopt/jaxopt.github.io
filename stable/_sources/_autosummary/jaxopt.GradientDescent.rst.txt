@@ -1,0 +1,46 @@
+﻿jaxopt.GradientDescent
+======================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: GradientDescent
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GradientDescent.__init__
+      ~GradientDescent.implicit_diff_solve
+      ~GradientDescent.init
+      ~GradientDescent.l2_optimality_error
+      ~GradientDescent.optimality_fun
+      ~GradientDescent.prox
+      ~GradientDescent.run
+      ~GradientDescent.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~GradientDescent.acceleration
+      ~GradientDescent.has_aux
+      ~GradientDescent.implicit_diff
+      ~GradientDescent.jit
+      ~GradientDescent.maxiter
+      ~GradientDescent.maxls
+      ~GradientDescent.stepfactor
+      ~GradientDescent.stepsize
+      ~GradientDescent.tol
+      ~GradientDescent.unroll
+      ~GradientDescent.verbose
+      ~GradientDescent.fun
+   
+   

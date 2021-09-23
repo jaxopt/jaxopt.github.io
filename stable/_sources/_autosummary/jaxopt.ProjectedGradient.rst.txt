@@ -1,0 +1,46 @@
+﻿jaxopt.ProjectedGradient
+========================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: ProjectedGradient
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ProjectedGradient.__init__
+      ~ProjectedGradient.implicit_diff_solve
+      ~ProjectedGradient.init
+      ~ProjectedGradient.l2_optimality_error
+      ~ProjectedGradient.optimality_fun
+      ~ProjectedGradient.run
+      ~ProjectedGradient.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ProjectedGradient.acceleration
+      ~ProjectedGradient.has_aux
+      ~ProjectedGradient.implicit_diff
+      ~ProjectedGradient.jit
+      ~ProjectedGradient.maxiter
+      ~ProjectedGradient.maxls
+      ~ProjectedGradient.stepfactor
+      ~ProjectedGradient.stepsize
+      ~ProjectedGradient.tol
+      ~ProjectedGradient.unroll
+      ~ProjectedGradient.verbose
+      ~ProjectedGradient.fun
+      ~ProjectedGradient.projection
+   
+   

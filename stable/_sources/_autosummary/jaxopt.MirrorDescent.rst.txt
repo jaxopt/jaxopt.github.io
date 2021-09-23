@@ -1,0 +1,44 @@
+﻿jaxopt.MirrorDescent
+====================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: MirrorDescent
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MirrorDescent.__init__
+      ~MirrorDescent.implicit_diff_solve
+      ~MirrorDescent.init
+      ~MirrorDescent.l2_optimality_error
+      ~MirrorDescent.make_projection_grad
+      ~MirrorDescent.optimality_fun
+      ~MirrorDescent.run
+      ~MirrorDescent.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~MirrorDescent.has_aux
+      ~MirrorDescent.implicit_diff
+      ~MirrorDescent.jit
+      ~MirrorDescent.maxiter
+      ~MirrorDescent.tol
+      ~MirrorDescent.unroll
+      ~MirrorDescent.verbose
+      ~MirrorDescent.fun
+      ~MirrorDescent.projection_grad
+      ~MirrorDescent.stepsize
+   
+   

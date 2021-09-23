@@ -1,0 +1,532 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Implementation of sparse coding using jaxopt. &mdash; JAXopt 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-rendered-html.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Changelog" href="../changelog.html" />
+    <link rel="prev" title="VAE example with Haiku and JAXopt." href="haiku_vae.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JAXopt
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Example gallery</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="multiclass_linear_svm.html">Multiclass linear SVM (without intercept).</a></li>
+<li class="toctree-l2"><a class="reference internal" href="binary_kernel_svm_with_intercept.html">Binary kernel SVM with intercept.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_dataset_distillation.html">Dataset Distillation Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nmf.html">Non-negative matrix factorizaton (NMF) using alternating minimization.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lasso_implicit_diff.html">Implicit differentiation of lasso.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ridge_reg_implicit_diff.html">Implicit differentiation of ridge regression.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robust_training.html">Robust Training in JAXOpt.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haiku_mnist.html">MNIST example with Haiku and JAXopt.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flax_mnist.html">MNIST example with Flax and JAXopt.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Implementation of sparse coding using jaxopt.</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JAXopt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Example gallery</a> &raquo;</li>
+        
+      <li>Implementation of sparse coding using jaxopt.</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/auto_examples/sparse_coding.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-sparse-coding-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="implementation-of-sparse-coding-using-jaxopt">
+<span id="sphx-glr-auto-examples-sparse-coding-py"></span><h1>Implementation of sparse coding using jaxopt.<a class="headerlink" href="#implementation-of-sparse-coding-using-jaxopt" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Mapping</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">optim</span>
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">projection</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">prox</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">proximal_gradient</span>
+
+
+<span class="k">def</span> <span class="nf">dictionary_loss</span><span class="p">(</span>
+    <span class="n">codes</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">reconstruction_loss_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Computes reconstruction loss between data and dict/codes using loss fun.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    codes: a samples x components jnp.ndarray of codes.</span>
+<span class="sd">    params: Tuple containing dictionary and data matrix.</span>
+<span class="sd">    reconstruction_loss_fun: a callable loss(x, y) -&gt; a real number, where</span>
+<span class="sd">      x and y are either entries, slices or the matrices themselves.</span>
+<span class="sd">      Set to 1/2 squared L2 norm of difference by default.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    a float, the reconstruction loss.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">reconstruction_loss_fun</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">reconstruction_loss_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+  <span class="n">dic</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">params</span>
+  <span class="n">X_pred</span> <span class="o">=</span> <span class="n">codes</span> <span class="o">@</span> <span class="n">dic</span>
+  <span class="k">return</span> <span class="n">reconstruction_loss_fun</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">X_pred</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_task_driven_dictionary_learner</span><span class="p">(</span>
+    <span class="n">task_loss_fun</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">reconstruction_loss_fun</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+                                               <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">optimizer_cls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">optimizer_kw</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">sparse_coding_kw</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Makes a task driven sparse dictionary learning solver.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    task_loss_fun: loss as specified on (codes, dict, task_vars, params) that</span>
+<span class="sd">      supplements the usual reconstruction loss formulation. If None, only</span>
+<span class="sd">      dictionary learning is carried out, i.e. that term is assumed to be 0.</span>
+<span class="sd">    reconstruction_loss_fun: entry (or slice-) wise loss function, set to be</span>
+<span class="sd">      the Frobenius norm, || . - . ||^2 by default.</span>
+<span class="sd">    optimizer_cls: Optimizer to solve for dictionary and task_vars (if auxiliary</span>
+<span class="sd">      task is given). Either None, in which case Jaxopt proximal gradient</span>
+<span class="sd">      (with sphere projection on dictionary) is used, or a flax</span>
+<span class="sd">      optimizer class specifying projection on the sphere explicitly for dic.</span>
+<span class="sd">    optimizer_kw: Arguments to be passed to the optimizer class above, or to</span>
+<span class="sd">      jaxopt proximal gradient descent.</span>
+<span class="sd">    sparse_coding_kw: Jaxopt arguments to be passed to the proximal descent</span>
+<span class="sd">      algorithm computing codes, sparse_coding.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Function to learn dictionary from data, number of components and</span>
+<span class="sd">      elastic net regularization, using initialization for dictionary,</span>
+<span class="sd">      parameters for task and task variables initialization.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">learner</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+              <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+              <span class="n">regularization</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+              <span class="n">elastic_penalty</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+              <span class="n">dict_init</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">task_params</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">task_vars_init</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">return</span> <span class="n">_task_sparse_dictionary_learning</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">n_components</span><span class="p">,</span> <span class="n">regularization</span><span class="p">,</span>
+                                            <span class="n">elastic_penalty</span><span class="p">,</span> <span class="n">dict_init</span><span class="p">,</span>
+                                            <span class="n">task_params</span><span class="p">,</span> <span class="n">task_vars_init</span><span class="p">,</span>
+                                            <span class="n">reconstruction_loss_fun</span><span class="p">,</span>
+                                            <span class="n">task_loss_fun</span><span class="p">,</span>
+                                            <span class="n">optimizer_cls</span><span class="p">,</span> <span class="n">optimizer_kw</span><span class="p">,</span>
+                                            <span class="n">sparse_coding_kw</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">learner</span>
+
+
+<span class="k">def</span> <span class="nf">_task_sparse_dictionary_learning</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">regularization</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">elastic_penalty</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dict_init</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">task_params</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">task_vars_init</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">reconstruction_loss_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+                                      <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">task_loss_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">optimizer_cls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">optimizer_kw</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">sparse_coding_kw</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Computes task driven dictionary, w. implicitly defined sparse codes.</span>
+
+<span class="sd">  Given a N x d data matrix X, solves a bilevel optimization problem by seeking</span>
+<span class="sd">  a dictionary dic of size n_components x d such that, defining implicitly</span>
+<span class="sd">  codes = sparse_coding(dic, (X, regularization, elastic_penalty))</span>
+<span class="sd">  one has that dic minimizes</span>
+<span class="sd">  task_loss(codes, dic, task_var, task_params)</span>
+<span class="sd">  if such as task_loss was passed on. If None, then task_loss is replaced by</span>
+<span class="sd">  dictionary_loss(codes, (dic, X)).</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    X: N x d jnp.ndarray, data matrix with N samples of d features.</span>
+<span class="sd">    n_components: int, number of atoms in dictionary.</span>
+<span class="sd">    regularization: regularization strength of elastic penalty.</span>
+<span class="sd">    elastic_penalty: strength of L2 penalty relative to L1.</span>
+<span class="sd">    task_params: auxiliary parameters to define task loss, typically data.</span>
+<span class="sd">    dict_init: initialization for dictionary; that returned by SVD by default.</span>
+<span class="sd">    reconstruction_loss_fun: loss to be applied to compute reconstruction error.</span>
+<span class="sd">    task_loss_fun: task driven loss for codes and dictionary using task_vars and</span>
+<span class="sd">      task_params.</span>
+<span class="sd">    optimizer_cls: flax optimizer class. If None, falls back on jaxopt projected</span>
+<span class="sd">      gradient (with sphere normalization constraints). If not None, instantiate</span>
+<span class="sd">      that optimizer.</span>
+<span class="sd">    optimizer_kw: parameters passed on to optimizer</span>
+<span class="sd">    sparse_coding_kw: parameters passed on to jaxopt prox gradient solver.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    the n_components x d dictionary solution found by the algorithm, as well as</span>
+<span class="sd">    codes.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">if</span> <span class="n">dict_init</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">dict_init</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">dict_init</span> <span class="o">=</span> <span class="n">dict_init</span><span class="p">[:</span><span class="n">n_components</span><span class="p">,</span> <span class="p">:]</span>
+
+  <span class="n">has_task</span> <span class="o">=</span> <span class="n">task_loss_fun</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+  <span class="c1"># Loss function, dictionary learning in addition to task driven loss</span>
+  <span class="k">def</span> <span class="nf">loss_fun</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">dic</span><span class="p">,</span> <span class="n">task_vars</span> <span class="o">=</span> <span class="n">variables</span>
+    <span class="n">coding_params</span><span class="p">,</span> <span class="n">task_params</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="n">codes</span> <span class="o">=</span> <span class="n">sparse_coding</span><span class="p">(</span>
+        <span class="n">dic</span><span class="p">,</span>
+        <span class="n">coding_params</span><span class="p">,</span>
+        <span class="n">reconstruction_loss_fun</span><span class="o">=</span><span class="n">reconstruction_loss_fun</span><span class="p">,</span>
+        <span class="n">sparse_coding_kw</span><span class="o">=</span><span class="n">sparse_coding_kw</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">has_task</span><span class="p">:</span>  <span class="c1"># if there is a task, drop loss, replace it with proper value</span>
+      <span class="n">loss</span> <span class="o">=</span> <span class="n">task_loss_fun</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">dic</span><span class="p">,</span> <span class="n">task_vars</span><span class="p">,</span> <span class="n">task_params</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">loss</span> <span class="o">=</span> <span class="n">dictionary_loss</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="p">(</span><span class="n">dic</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span> <span class="n">reconstruction_loss_fun</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">codes</span>
+
+  <span class="n">init</span> <span class="o">=</span> <span class="p">(</span><span class="n">dict_init</span><span class="p">,</span> <span class="n">task_vars_init</span><span class="p">)</span>
+
+  <span class="n">optimizer_kw</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">optimizer_kw</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">optimizer_kw</span>
+
+  <span class="n">proj_sphere</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">projection</span><span class="o">.</span><span class="n">projection_l2_sphere</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">optimizer_cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># If no optimizer, use jaxopt projected gradient descent.</span>
+
+    <span class="c1"># Define projection-prox, here normalize each dict atom by its norm.</span>
+
+    <span class="n">prox_vars</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dic_vars</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">s</span> <span class="p">:</span> <span class="p">(</span>
+        <span class="n">proj_sphere</span><span class="p">(</span><span class="n">dic_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dic_vars</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">proximal_gradient</span><span class="o">.</span><span class="n">make_solver_fun</span><span class="p">(</span>
+        <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">prox</span><span class="o">=</span><span class="n">prox_vars</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="o">**</span><span class="n">optimizer_kw</span><span class="p">)</span>
+    <span class="n">dic</span><span class="p">,</span> <span class="n">task_vars</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(((</span><span class="n">X</span><span class="p">,</span> <span class="n">regularization</span><span class="p">,</span> <span class="n">elastic_penalty</span><span class="p">),</span> <span class="n">task_params</span><span class="p">))</span>
+
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">maxiter</span> <span class="o">=</span> <span class="n">optimizer_kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;maxiter&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>  <span class="c1"># Pop&#39;d to set loop size.</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer_cls</span><span class="p">(</span><span class="o">**</span><span class="n">optimizer_kw</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+
+    <span class="c1"># Use implicit jaxopt gradients to inform optimizer&#39;s steps.</span>
+    <span class="n">loss_normalized</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dic_vars</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">loss_fun</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">proj_sphere</span><span class="p">(</span><span class="n">dic_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dic_vars</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">grad_fn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">loss_normalized</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">train_step</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+      <span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">codes</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="n">grad_fn</span><span class="p">(</span><span class="n">optimizer</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+      <span class="n">new_optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradient</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">new_optimizer</span><span class="p">,</span> <span class="n">loss</span>
+
+    <span class="c1"># Training body fun.</span>
+    <span class="k">def</span> <span class="nf">body_fun</span><span class="p">(</span><span class="n">iteration</span><span class="p">,</span> <span class="n">in_vars</span><span class="p">):</span>
+      <span class="k">del</span> <span class="n">iteration</span>
+      <span class="n">optimizer</span><span class="p">,</span> <span class="n">pars</span> <span class="o">=</span> <span class="n">in_vars</span>
+      <span class="n">optimizer</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">train_step</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">pars</span><span class="p">)</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">pars</span><span class="p">)</span>
+
+    <span class="n">init_val</span> <span class="o">=</span> <span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">regularization</span><span class="p">,</span> <span class="n">elastic_penalty</span><span class="p">),</span> <span class="n">task_params</span><span class="p">))</span>
+
+    <span class="c1"># Run fori_loop, this will be converted to a scan.</span>
+    <span class="n">optimizer</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">fori_loop</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxiter</span><span class="p">,</span> <span class="n">body_fun</span><span class="p">,</span> <span class="n">init_val</span><span class="p">)</span>
+
+    <span class="n">dic</span><span class="p">,</span> <span class="n">task_vars</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">target</span>
+    <span class="c1"># Normalize dictionary before returning it.</span>
+    <span class="n">dic</span> <span class="o">=</span> <span class="n">proj_sphere</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">has_task</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dic</span><span class="p">,</span> <span class="n">task_vars</span>
+  <span class="k">return</span> <span class="n">dic</span>
+
+
+<span class="k">def</span> <span class="nf">sparse_coding</span><span class="p">(</span><span class="n">dic</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">reconstruction_loss_fun</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">sparse_coding_kw</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">codes_init</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Computes optimal codes for data X given a dictionary dic.&quot;&quot;&quot;</span>
+  <span class="n">sparse_coding_kw</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">sparse_coding_kw</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sparse_coding_kw</span>
+  <span class="n">loss_fun</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">dictionary_loss</span><span class="p">,</span>
+                               <span class="n">reconstruction_loss_fun</span><span class="o">=</span><span class="n">reconstruction_loss_fun</span><span class="p">)</span>
+  <span class="n">X</span><span class="p">,</span> <span class="n">regularization</span><span class="p">,</span> <span class="n">elastic_penalty</span> <span class="o">=</span> <span class="n">params</span>
+  <span class="n">n_components</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">dic</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">N</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+  <span class="k">if</span> <span class="n">codes_init</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">codes_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">n_components</span><span class="p">))</span>
+
+  <span class="n">solver</span> <span class="o">=</span> <span class="n">proximal_gradient</span><span class="o">.</span><span class="n">make_solver_fun</span><span class="p">(</span>
+      <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span>
+      <span class="n">prox</span><span class="o">=</span><span class="n">prox</span><span class="o">.</span><span class="n">prox_elastic_net</span><span class="p">,</span>
+      <span class="n">init</span><span class="o">=</span><span class="n">codes_init</span><span class="p">,</span>
+      <span class="o">**</span><span class="n">sparse_coding_kw</span><span class="p">)</span>
+
+  <span class="n">codes</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(</span><span class="n">params_fun</span><span class="o">=</span><span class="p">(</span><span class="n">dic</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span>
+                 <span class="n">params_prox</span><span class="o">=</span><span class="p">[</span><span class="n">regularization</span><span class="p">,</span> <span class="n">elastic_penalty</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">codes</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.000 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-sparse-coding-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/540a946c9065ebfe98c57e8c3e8cee40/sparse_coding.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">sparse_coding.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/009807698420f7a797e9b0406bd91aeb/sparse_coding.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">sparse_coding.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="haiku_vae.html" class="btn btn-neutral float-left" title="VAE example with Haiku and JAXopt." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the JAXopt authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
