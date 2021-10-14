@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -210,16 +211,15 @@
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">linear_solve</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">prox</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.proximal_gradient</span> <span class="kn">import</span> <span class="n">ProximalGradient</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.proximal_gradient</span> <span class="kn">import</span> <span class="n">ProximalGradient</span><span class="p">,</span> <span class="n">ProxGradState</span>
 
 
 <div class="viewcode-block" id="ProjectedGradient"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">ProjectedGradient</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Projected gradient solver.</span>
 
-<span class="sd">  This solver is a convenience wrapper around ``ProximalGradient``.</span>
+<span class="sd">  This solver is a convenience wrapper around :class:`jaxopt.ProximalGradient`.</span>
 
 <span class="sd">  Attributes:</span>
 <span class="sd">    fun: a smooth function of the form ``fun(parameters, *args, **kwargs)``,</span>
@@ -250,32 +250,30 @@
   <span class="n">maxls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
   <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
   <span class="n">acceleration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-  <span class="n">stepfactor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
+  <span class="n">decrease_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
   <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span>
+  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">jit</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
   <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
 
-<div class="viewcode-block" id="ProjectedGradient.init"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.init">[docs]</a>  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-           <span class="n">hyperparams_proj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Initialize the ``(params, state)`` pair.</span>
+<div class="viewcode-block" id="ProjectedGradient.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="n">hyperparams_proj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProxGradState</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Initialize the parameters and state.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
 <span class="sd">      hyperparams_proj: pytree containing hyperparameters of projection.</span>
 <span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
-<span class="sd">      (params, state)</span>
+<span class="sd">      state</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ProjectedGradient.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -291,12 +289,17 @@
 <span class="sd">      hyperparams_proj: pytree containing hyperparameters of projection.</span>
 <span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, state)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectedGradient.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+          <span class="n">hyperparams_proj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ProjectedGradient.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
@@ -312,7 +315,7 @@
                                 <span class="n">maxls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">maxls</span><span class="p">,</span>
                                 <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
                                 <span class="n">acceleration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span><span class="p">,</span>
-                                <span class="n">stepfactor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stepfactor</span><span class="p">,</span>
+                                <span class="n">decrease_factor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">,</span>
                                 <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
                                 <span class="n">implicit_diff</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_diff</span><span class="p">,</span>
                                 <span class="n">has_aux</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">)</span></div>

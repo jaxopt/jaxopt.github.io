@@ -105,6 +105,7 @@
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -231,8 +232,16 @@ algorithm iterations.</p></li>
 </ul>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>You may install JAXopt from GitHub with:</p>
+<p>To install the latest release of JAXopt, use the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install jaxopt
+</pre></div>
+</div>
+<p>To install the <strong>development</strong> version, use the following command instead:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install git+https://github.com/google/jaxopt
+</pre></div>
+</div>
+<p>Alternatively, it can be be installed from sources with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py install
 </pre></div>
 </div>
 <div class="toctree-wrapper compound">
@@ -245,6 +254,7 @@ algorithm iterations.</p></li>
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 </div>
@@ -257,7 +267,13 @@ algorithm iterations.</p></li>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#constrained-optimization">Constrained optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#deep-learning">Deep learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#fixed-point-resolution">Fixed point resolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#implicit-differentiation">Implicit differentiation</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">

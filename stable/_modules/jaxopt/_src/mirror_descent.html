@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -202,6 +203,8 @@
 
 <span class="sd">&quot;&quot;&quot;Implementation of mirror descent in JAX.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">inspect</span>
+
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
@@ -214,7 +217,6 @@
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">linear_solve</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_add_scalar_mul</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_l2_norm</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_sub</span>
@@ -224,6 +226,7 @@
   <span class="sd">&quot;&quot;&quot;Named tuple containing state information.&quot;&quot;&quot;</span>
   <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="MirrorDescent"><a class="viewcode-back" href="../../../_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent">[docs]</a><span class="nd">@dataclass</span>
@@ -270,8 +273,8 @@
   <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
   <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span>
   <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span>
+  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">jit</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
   <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
@@ -288,8 +291,6 @@
 <span class="sd">      mapping_fun: the mirror map, typically of the form</span>
 <span class="sd">        ``mapping_fun = grad(gen_fun)``, where `gen_fun` is the generating</span>
 <span class="sd">        function of the Bregman divergence.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      Callable</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      A function `projection_grad(x, g, stepsize, hyperparams_proj)`</span>
 <span class="sd">      representing the mirror descent update for iterate x and gradient g.</span>
@@ -299,23 +300,20 @@
       <span class="k">return</span> <span class="n">projection</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">projection_grad</span></div>
 
-<div class="viewcode-block" id="MirrorDescent.init"><a class="viewcode-back" href="../../../_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.init">[docs]</a>  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-           <span class="n">hyperparams_proj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Initialize the ``(params, state)`` pair.</span>
+<div class="viewcode-block" id="MirrorDescent.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="n">hyperparams_proj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Initialize the solver state.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
-<span class="sd">      (params, state)</span>
+<span class="sd">      state</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">del</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>  <span class="c1"># Not used.</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">MirrorDescentState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">init_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">MirrorDescentState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span></div>
 
   <span class="k">def</span> <span class="nf">_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">):</span>
     <span class="n">next_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">projection_grad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">)</span>
@@ -323,13 +321,13 @@
     <span class="k">return</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">diff_x</span><span class="p">)</span>
 
   <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">iter_num</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">iter_num</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">iter_num</span>
     <span class="n">stepsize</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">(</span><span class="n">iter_num</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span>
                 <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">)</span>
-    <span class="n">x_fun_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_with_aux</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">next_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">projection_grad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">)</span>
     <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">)</span>
-    <span class="n">next_state</span> <span class="o">=</span> <span class="n">MirrorDescentState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">)</span>
+    <span class="n">next_state</span> <span class="o">=</span> <span class="n">MirrorDescentState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span> <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">next_x</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">next_state</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MirrorDescent.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -346,15 +344,20 @@
 <span class="sd">      hyperparams_proj: pytree containing hyperparameters of projection.</span>
 <span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, state)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="MirrorDescent.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+          <span class="n">hyperparams_proj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
   <span class="k">def</span> <span class="nf">_fixed_point_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">sol_fun_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">sol_fun_grad</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_with_aux</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">projection_grad</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">sol_fun_grad</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MirrorDescent.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -364,12 +367,20 @@
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
-      <span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">par</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">par</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">fun_with_aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span>
+      <span class="n">fun_with_aux</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="c1"># Pre-compile useful functions.</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">fun</span><span class="p">)</span></div>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_grad_with_aux</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">fun_with_aux</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Sets up reference signature.</span>
+    <span class="n">fun</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="s2">&quot;subfun&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">fun</span><span class="p">)</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">new_param</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;hyperparams_proj&quot;</span><span class="p">,</span>
+                                  <span class="n">kind</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="o">.</span><span class="n">POSITIONAL_OR_KEYWORD</span><span class="p">)</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">new_param</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reference_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Signature</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

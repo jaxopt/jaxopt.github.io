@@ -117,6 +117,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -230,7 +231,7 @@
 <h1>jaxopt.QuadraticProgramming<a class="headerlink" href="#jaxopt-quadraticprogramming" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.QuadraticProgramming">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">QuadraticProgramming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">matvec_Q=None</span></em>, <em class="sig-param"><span class="pre">matvec_A=None</span></em>, <em class="sig-param"><span class="pre">maxiter=1000</span></em>, <em class="sig-param"><span class="pre">tol=1e-05</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/quadratic_prog.html#QuadraticProgramming"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.QuadraticProgramming" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">QuadraticProgramming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/quadratic_prog.html#QuadraticProgramming"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.QuadraticProgramming" title="Permalink to this definition">¶</a></dt>
 <dd><p>Quadratic programming solver.</p>
 <p>The objective function is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">T</span> <span class="n">Q</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span><span class="o">^</span><span class="n">T</span> <span class="n">x</span> <span class="n">subject</span> <span class="n">to</span> <span class="n">Gx</span> <span class="o">&lt;=</span> <span class="n">h</span><span class="p">,</span> <span class="n">Ax</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span>
@@ -243,7 +244,7 @@
 <li><p><strong>matvec_A</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -291,24 +292,14 @@ By default, matvec_A(A, u) = dot(A, u), where A = params_A.</p>
 <dd><p>the linear system solver to use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Callable</p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>matvec</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>b</strong> (<em>Any</em>) – </p></li>
-<li><p><strong>ridge</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
-</ul>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Any</p>
+<dd class="field-odd"><p>Optional[Callable]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.QuadraticProgramming.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">matvec_Q=None</span></em>, <em class="sig-param"><span class="pre">matvec_A=None</span></em>, <em class="sig-param"><span class="pre">maxiter=1000</span></em>, <em class="sig-param"><span class="pre">tol=1e-05</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.QuadraticProgramming.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.QuadraticProgramming.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -316,7 +307,7 @@ By default, matvec_A(A, u) = dot(A, u), where A = params_A.</p>
 <li><p><strong>matvec_A</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -335,13 +326,10 @@ By default, matvec_A(A, u) = dot(A, u), where A = params_A.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.__init__" title="jaxopt.QuadraticProgramming.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([matvec_Q, matvec_A, maxiter, tol, …])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id0" title="jaxopt.QuadraticProgramming.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a>(b[, ridge])</p></td>
-<td><p>Solves the normal equation <code class="docutils literal notranslate"><span class="pre">A^T</span> <span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A^T</span> <span class="pre">b</span></code> using conjugate gradient.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.l2_optimality_error" title="jaxopt.QuadraticProgramming.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, params_obj, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.l2_optimality_error" title="jaxopt.QuadraticProgramming.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, params_obj, …)</p></td>
 <td><p>Computes the L2 norm of the KKT residuals.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.run" title="jaxopt.QuadraticProgramming.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([init_params, params_obj, params_eq, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.run" title="jaxopt.QuadraticProgramming.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([init_params, params_obj, params_eq, …])</p></td>
 <td><p>Runs the quadratic programming solver in CVXPY.</p></td>
 </tr>
 </tbody>
@@ -353,44 +341,23 @@ By default, matvec_A(A, u) = dot(A, u), where A = params_A.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.matvec_A" title="jaxopt.QuadraticProgramming.matvec_A"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matvec_A</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.implicit_diff_solve" title="jaxopt.QuadraticProgramming.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.matvec_Q" title="jaxopt.QuadraticProgramming.matvec_Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matvec_Q</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.matvec_A" title="jaxopt.QuadraticProgramming.matvec_A"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matvec_A</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.maxiter" title="jaxopt.QuadraticProgramming.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.matvec_Q" title="jaxopt.QuadraticProgramming.matvec_Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matvec_Q</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.QuadraticProgramming.maxiter" title="jaxopt.QuadraticProgramming.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
-<dl class="py method">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
-<dd><p>Solves the normal equation <code class="docutils literal notranslate"><span class="pre">A^T</span> <span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A^T</span> <span class="pre">b</span></code> using conjugate gradient.</p>
-<p>This can be used to solve Ax=b using conjugate gradient when A is not
-hermitian, positive definite.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – product between <code class="docutils literal notranslate"><span class="pre">A</span></code> and a vector.</p></li>
-<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree.</p></li>
-<li><p><strong>ridge</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – optional ridge regularization.</p></li>
-<li><p><strong>**kwargs</strong> – additional keyword arguments for solver.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>pytree with same structure as <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.QuadraticProgramming.l2_optimality_error">
 <span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/quadratic_prog.html#QuadraticProgramming.l2_optimality_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.QuadraticProgramming.l2_optimality_error" title="Permalink to this definition">¶</a></dt>
@@ -425,27 +392,10 @@ hermitian, positive definite.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>jaxopt._src.base.OptStep</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Return type:</dt><dd><p>base.OptStep</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>(params, state), <code class="docutils literal notranslate"><span class="pre">params</span> <span class="pre">=</span> <span class="pre">(primal_var,</span> <span class="pre">dual_var_eq,</span> <span class="pre">dual_var_ineq)</span></code></p>
-</dd>
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>]</em>) – </p></li>
-<li><p><strong>params_obj</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>[</em><em>jax._src.numpy.lax_numpy.ndarray</em><em>, </em><em>jax._src.numpy.lax_numpy.ndarray</em><em>]</em><em>]</em>) – </p></li>
-<li><p><strong>params_eq</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>[</em><em>jax._src.numpy.lax_numpy.ndarray</em><em>, </em><em>jax._src.numpy.lax_numpy.ndarray</em><em>]</em><em>]</em>) – </p></li>
-<li><p><strong>params_ineq</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>[</em><em>jax._src.numpy.lax_numpy.ndarray</em><em>, </em><em>jax._src.numpy.lax_numpy.ndarray</em><em>]</em><em>]</em>) – </p></li>
-</ul>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(params, state), <code class="docutils literal notranslate"><span class="pre">params</span> <span class="pre">=</span> <span class="pre">(primal_var,</span> <span class="pre">dual_var_eq,</span> <span class="pre">dual_var_ineq)</span></code></p>
 </dd>
 </dl>
 </dd></dl>

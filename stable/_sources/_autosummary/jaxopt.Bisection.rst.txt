@@ -14,8 +14,8 @@
    .. autosummary::
    
       ~Bisection.__init__
-      ~Bisection.implicit_diff_solve
       ~Bisection.init
+      ~Bisection.init_state
       ~Bisection.l2_optimality_error
       ~Bisection.run
       ~Bisection.update
@@ -29,6 +29,8 @@
    .. autosummary::
    
       ~Bisection.check_bracket
+      ~Bisection.has_aux
+      ~Bisection.implicit_diff_solve
       ~Bisection.jit
       ~Bisection.maxiter
       ~Bisection.tol

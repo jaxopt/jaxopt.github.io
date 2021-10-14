@@ -114,6 +114,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -227,7 +228,7 @@
 <h1>jaxopt.BlockCoordinateDescent<a class="headerlink" href="#jaxopt-blockcoordinatedescent" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.BlockCoordinateDescent">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">BlockCoordinateDescent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fun</span></em>, <em class="sig-param"><span class="pre">block_prox</span></em>, <em class="sig-param"><span class="pre">maxiter=500</span></em>, <em class="sig-param"><span class="pre">tol=0.0001</span></em>, <em class="sig-param"><span class="pre">verbose=0</span></em>, <em class="sig-param"><span class="pre">implicit_diff=False</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></em>, <em class="sig-param"><span class="pre">jit='auto'</span></em>, <em class="sig-param"><span class="pre">unroll='auto'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/block_cd.html#BlockCoordinateDescent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BlockCoordinateDescent" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">BlockCoordinateDescent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_prox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/block_cd.html#BlockCoordinateDescent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BlockCoordinateDescent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Block coordinate solver.</p>
 <p>This solver minimizes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">objective</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">=</span>
@@ -243,7 +244,7 @@
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
 <li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
 </ul>
@@ -329,17 +330,7 @@ iterations.</p>
 <dd><p>the linear system solver to use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Callable</p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>matvec</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>b</strong> (<em>Any</em>) – </p></li>
-<li><p><strong>ridge</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
-</ul>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Any</p>
+<dd class="field-odd"><p>Optional[Callable]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -368,7 +359,7 @@ iterations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.BlockCoordinateDescent.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fun</span></em>, <em class="sig-param"><span class="pre">block_prox</span></em>, <em class="sig-param"><span class="pre">maxiter=500</span></em>, <em class="sig-param"><span class="pre">tol=0.0001</span></em>, <em class="sig-param"><span class="pre">verbose=0</span></em>, <em class="sig-param"><span class="pre">implicit_diff=False</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></em>, <em class="sig-param"><span class="pre">jit='auto'</span></em>, <em class="sig-param"><span class="pre">unroll='auto'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BlockCoordinateDescent.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_prox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BlockCoordinateDescent.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -378,7 +369,7 @@ iterations.</p>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
 <li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
 </ul>
@@ -399,11 +390,16 @@ iterations.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.__init__" title="jaxopt.BlockCoordinateDescent.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fun, block_prox[, maxiter, tol, …])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id0" title="jaxopt.BlockCoordinateDescent.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a>(b[, ridge])</p></td>
-<td><p>Solves the normal equation <code class="docutils literal notranslate"><span class="pre">A^T</span> <span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A^T</span> <span class="pre">b</span></code> using conjugate gradient.</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code>(init_params, *args, **kwargs)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+</dd>
+</dl>
+</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.init" title="jaxopt.BlockCoordinateDescent.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a>(init_params, hyperparams_prox, *args, …)</p></td>
-<td><p>Initialize the <code class="docutils literal notranslate"><span class="pre">(params,</span> <span class="pre">state)</span></code> pair.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.init_state" title="jaxopt.BlockCoordinateDescent.init_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_state</span></code></a>(init_params, hyperparams_prox, …)</p></td>
+<td><p>Initialize the solver state.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.l2_optimality_error" title="jaxopt.BlockCoordinateDescent.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
 <td><p>Computes the L2 optimality error.</p></td>
@@ -412,7 +408,7 @@ iterations.</p>
 <td><p>Proximal-gradient fixed point residual.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.run" title="jaxopt.BlockCoordinateDescent.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
-<td><p>Runs the solver until convergence or <cite>maxiter</cite> is reached.</p></td>
+<td><p>Runs the optimization loop.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.update" title="jaxopt.BlockCoordinateDescent.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, hyperparams_prox, …)</p></td>
 <td><p>Performs one epoch of block CD.</p></td>
@@ -429,57 +425,36 @@ iterations.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.implicit_diff" title="jaxopt.BlockCoordinateDescent.implicit_diff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.jit" title="jaxopt.BlockCoordinateDescent.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.implicit_diff_solve" title="jaxopt.BlockCoordinateDescent.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.maxiter" title="jaxopt.BlockCoordinateDescent.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.jit" title="jaxopt.BlockCoordinateDescent.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.tol" title="jaxopt.BlockCoordinateDescent.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.maxiter" title="jaxopt.BlockCoordinateDescent.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.unroll" title="jaxopt.BlockCoordinateDescent.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.tol" title="jaxopt.BlockCoordinateDescent.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.verbose" title="jaxopt.BlockCoordinateDescent.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.unroll" title="jaxopt.BlockCoordinateDescent.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.fun" title="jaxopt.BlockCoordinateDescent.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.verbose" title="jaxopt.BlockCoordinateDescent.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.block_prox" title="jaxopt.BlockCoordinateDescent.block_prox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_prox</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.fun" title="jaxopt.BlockCoordinateDescent.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BlockCoordinateDescent.block_prox" title="jaxopt.BlockCoordinateDescent.block_prox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_prox</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
-<dd><p>Solves the normal equation <code class="docutils literal notranslate"><span class="pre">A^T</span> <span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A^T</span> <span class="pre">b</span></code> using conjugate gradient.</p>
-<p>This can be used to solve Ax=b using conjugate gradient when A is not
-hermitian, positive definite.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – product between <code class="docutils literal notranslate"><span class="pre">A</span></code> and a vector.</p></li>
-<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree.</p></li>
-<li><p><strong>ridge</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – optional ridge regularization.</p></li>
-<li><p><strong>**kwargs</strong> – additional keyword arguments for solver.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>pytree with same structure as <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxopt.BlockCoordinateDescent.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_prox</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/block_cd.html#BlockCoordinateDescent.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BlockCoordinateDescent.init" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize the <code class="docutils literal notranslate"><span class="pre">(params,</span> <span class="pre">state)</span></code> pair.</p>
+<dt class="sig sig-object py" id="jaxopt.BlockCoordinateDescent.init_state">
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_prox</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/block_cd.html#BlockCoordinateDescent.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BlockCoordinateDescent.init_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the solver state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -490,25 +465,10 @@ hermitian, positive definite.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>jaxopt._src.base.OptStep</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BlockCDState</span></code></p>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Return type:</dt><dd><p>base.OptStep</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>(params, state)</p>
-</dd>
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<em>Any</em>) – </p></li>
-<li><p><strong>hyperparams_prox</strong> (<em>Any</em>) – </p></li>
-</ul>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>state</p>
 </dd>
 </dl>
 </dd></dl>
@@ -559,7 +519,7 @@ hermitian, positive definite.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.BlockCoordinateDescent.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BlockCoordinateDescent.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs the solver until convergence or <cite>maxiter</cite> is reached.</p>
+<dd><p>Runs the optimization loop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -569,22 +529,10 @@ hermitian, positive definite.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>jaxopt._src.base.OptStep</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Return type:</dt><dd><p>OptStep</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>(params, state)</p>
-</dd>
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>init_params</strong> (<em>Any</em>) – </p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(params, state)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -604,26 +552,10 @@ hermitian, positive definite.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>jaxopt._src.base.OptStep</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Return type:</dt><dd><p>base.OptStep</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>(params, state)</p>
-</dd>
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>params</strong> (<em>Any</em>) – </p></li>
-<li><p><strong>state</strong> (<em>NamedTuple</em>) – </p></li>
-<li><p><strong>hyperparams_prox</strong> (<em>Any</em>) – </p></li>
-</ul>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(params, state)</p>
 </dd>
 </dl>
 </dd></dl>

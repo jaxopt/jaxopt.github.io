@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -213,7 +214,6 @@
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">linear_solve</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add_scalar_mul</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_l2_norm</span>
@@ -228,6 +228,7 @@
   <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">value</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">aux</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">stepsize</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">velocity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
 
 
@@ -236,9 +237,9 @@
   <span class="sd">&quot;&quot;&quot;SGD with Polyak step size.</span>
 
 <span class="sd">  This solver computes step sizes in an adaptive manner. If the computed step</span>
-<span class="sd">  size at a given iteration is smaller than ``max_step_size``, it is accepted.</span>
-<span class="sd">  Otherwise, ``max_step_size`` is used. This ensures that the solver does not</span>
-<span class="sd">  take over-confident steps. This is why ``max_step_size`` is the most important</span>
+<span class="sd">  size at a given iteration is smaller than ``max_stepsize``, it is accepted.</span>
+<span class="sd">  Otherwise, ``max_stepsize`` is used. This ensures that the solver does not</span>
+<span class="sd">  take over-confident steps. This is why ``max_stepsize`` is the most important</span>
 <span class="sd">  hyper-parameter.</span>
 
 <span class="sd">  This implementation assumes that the interpolation property holds.</span>
@@ -247,7 +248,7 @@
 <span class="sd">    fun: a function of the form ``fun(params, *args, **kwargs)``, where</span>
 <span class="sd">      ``params`` are parameters of the model,</span>
 <span class="sd">      ``*args`` and ``**kwargs`` are additional arguments.</span>
-<span class="sd">    max_step_size: a maximum step size to use.</span>
+<span class="sd">    max_stepsize: a maximum step size to use.</span>
 <span class="sd">    delta: a value to add in the denominator of the update (default: 0).</span>
 <span class="sd">    momentum: momentum parameter, 0 corresponding to no momentum.</span>
 <span class="sd">    pre_update: a function to execute before the solver&#39;s update.</span>
@@ -281,7 +282,7 @@
 <span class="sd">    https://arxiv.org/abs/2002.10542</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span>
-  <span class="n">max_step_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+  <span class="n">max_stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
   <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
   <span class="n">momentum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
   <span class="n">pre_update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -289,25 +290,23 @@
   <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
   <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
   <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">jit</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
   <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
 
-<div class="viewcode-block" id="PolyakSGD.init"><a class="viewcode-back" href="../../../_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.init">[docs]</a>  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Initialize the ``(params, state)`` pair.</span>
+<div class="viewcode-block" id="PolyakSGD.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PolyakSGDState</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Initialize the solver state.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
 <span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
-<span class="sd">      (params, state)</span>
+<span class="sd">      state</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">del</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>  <span class="c1"># Not used.</span>
 
@@ -316,9 +315,8 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="n">velocity</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
 
-    <span class="n">state</span> <span class="o">=</span> <span class="n">PolyakSGDState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                           <span class="n">aux</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">init_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">PolyakSGDState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                          <span class="n">stepsize</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">aux</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PolyakSGD.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -332,8 +330,6 @@
 <span class="sd">      state: named tuple containing the solver state.</span>
 <span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, state)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -343,23 +339,24 @@
     <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">grad_sqnorm</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">step_size</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="p">(</span><span class="n">grad_sqnorm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">),</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">max_step_size</span><span class="p">)</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="p">(</span><span class="n">grad_sqnorm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">),</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-      <span class="n">new_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">-</span><span class="n">step_size</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
+      <span class="n">new_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">-</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
       <span class="n">new_velocity</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="c1"># new_v = momentum * v - step_size * grad</span>
       <span class="c1"># new_params = params + new_v</span>
       <span class="n">new_velocity</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">tree_scalar_mul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">velocity</span><span class="p">),</span>
-                              <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="n">grad</span><span class="p">))</span>
+                              <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">))</span>
       <span class="n">new_params</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">new_velocity</span><span class="p">)</span>
 
     <span class="n">new_state</span> <span class="o">=</span> <span class="n">PolyakSGDState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
                                <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">grad_sqnorm</span><span class="p">),</span>
                                <span class="n">velocity</span><span class="o">=</span><span class="n">new_velocity</span><span class="p">,</span>
                                <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+                               <span class="n">stepsize</span><span class="o">=</span><span class="n">stepsize</span><span class="p">,</span>
                                <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">new_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>
 
@@ -376,7 +373,9 @@
 
     <span class="c1"># Pre-compile useful functions.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">fun_with_aux</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">fun_with_aux</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">fun_with_aux</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">reference_signature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span></div>
 </pre></div>
 
            </div>

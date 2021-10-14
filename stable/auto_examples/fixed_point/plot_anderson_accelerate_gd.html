@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Anderson acceleration of gradient descent. &mdash; JAXopt 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery-rendered-html.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dataset distillation" href="../implicit_diff/plot_dataset_distillation.html" />
+    <link rel="prev" title="Anderson acceleration of block coordinate descent." href="plot_anderson_wrapper_cd.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> JAXopt
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="plot_picard_ode.html">Anderson acceleration in application to Picard–Lindelöf theorem.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_anderson_wrapper_cd.html">Anderson acceleration of block coordinate descent.</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Anderson acceleration of gradient descent.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JAXopt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Example gallery</a> &raquo;</li>
+        
+      <li>Anderson acceleration of gradient descent.</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/auto_examples/fixed_point/plot_anderson_accelerate_gd.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-fixed-point-plot-anderson-accelerate-gd-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="anderson-acceleration-of-gradient-descent">
+<span id="sphx-glr-auto-examples-fixed-point-plot-anderson-accelerate-gd-py"></span><h1>Anderson acceleration of gradient descent.<a class="headerlink" href="#anderson-acceleration-of-gradient-descent" title="Permalink to this headline">¶</a></h1>
+<p>For a strictly convex function f, <span class="math notranslate nohighlight">\(\nabla f(x)=0\)</span> implies that <span class="math notranslate nohighlight">\(x\)</span>
+is the global optimum <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>Consequently the fixed point of <span class="math notranslate nohighlight">\(T(x)=x-\eta\nabla f(x)\)</span> is the optimum of
+<span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>Note that repeated application of the operator <span class="math notranslate nohighlight">\(T\)</span> coincides exactlty with
+gradient descent with constant step size <span class="math notranslate nohighlight">\(\eta\)</span>.</p>
+<p>Hence, as any other fixed point iteration, gradient descent can benefit from
+Anderson acceleration. Here, we choose <span class="math notranslate nohighlight">\(f\)</span> as the objective function
+of ridge regression on some dummy dataset.  Anderson acceleration reaches the
+optimal parameters within few iterations, whereas gradient descent is slower.</p>
+<p>Here <cite>m</cite> denotes the history size, and <cite>K</cite> the frequency of Anderson updates.</p>
+<img alt="Trajectory in parameter space" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_anderson_accelerate_gd_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Error=0.000773 at parameters [77.47434682  1.4267236  34.21515479 61.47511077 82.19083885 70.05207228
+ 88.31264443 96.66062436  3.71396815 99.41857754]
+At this point the gradient [-0.00031523  0.00086909  0.00359021 -0.00070666  0.00059213 -0.00095857
+  0.00401723  0.00237965  0.00112486 -0.00347444] is close to zero vector so we found the minimum.
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonAcceleration</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">FixedPointIteration</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">objective</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span><span class="p">,</span> <span class="n">tree_sub</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_platform_name&quot;</span><span class="p">,</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># retrieve intermediate iterates.</span>
+<span class="k">def</span> <span class="nf">run_all</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span> <span class="n">w_init</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">w_init</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">sol</span> <span class="o">=</span> <span class="n">w_init</span>
+  <span class="n">sols</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+  <span class="k">def</span> <span class="nf">jitted_update</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">maxiter</span><span class="p">):</span>
+    <span class="n">sol</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">jitted_update</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="n">sols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">sols</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">errors</span>
+
+
+<span class="c1"># dummy dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">make_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ridge_regression_grad</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">objective</span><span class="o">.</span><span class="n">ridge_regression</span><span class="p">)</span>
+
+<span class="c1"># gradient step: x - grad_x f(x) with f the cost of learning task</span>
+<span class="c1"># the fixed point of this mapping verifies grad_x f(x) = 0</span>
+<span class="c1"># i.e the fixed point is an optimum</span>
+<span class="k">def</span> <span class="nf">T</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="n">g</span> <span class="o">=</span> <span class="n">ridge_regression_grad</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+  <span class="n">step</span> <span class="o">=</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+
+<span class="n">w_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># null vector</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1e-1</span>  <span class="c1"># small step size</span>
+<span class="n">l2reg</span> <span class="o">=</span> <span class="mf">0.</span>  <span class="c1"># no regularization</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-5</span>
+<span class="n">maxiter</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="n">aa</span> <span class="o">=</span> <span class="n">AndersonAcceleration</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">history_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">mixing_frequency</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">5e-5</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+<span class="n">aam</span> <span class="o">=</span> <span class="n">AndersonAcceleration</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">history_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">mixing_frequency</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">5e-5</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+<span class="n">fpi</span> <span class="o">=</span> <span class="n">FixedPointIteration</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+
+<span class="n">aa_sols</span><span class="p">,</span> <span class="n">aa_errors</span> <span class="o">=</span> <span class="n">run_all</span><span class="p">(</span><span class="n">aa</span><span class="p">,</span> <span class="n">w_init</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">aam_sols</span><span class="p">,</span> <span class="n">aam_errors</span> <span class="o">=</span> <span class="n">run_all</span><span class="p">(</span><span class="n">aam</span><span class="p">,</span> <span class="n">w_init</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">fp_sols</span><span class="p">,</span> <span class="n">fp_errors</span> <span class="o">=</span> <span class="n">run_all</span><span class="p">(</span><span class="n">fpi</span><span class="p">,</span> <span class="n">w_init</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">aa_sols</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error=</span><span class="si">{</span><span class="n">aa_errors</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1"> at parameters </span><span class="si">{</span><span class="n">sol</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;At this point the gradient </span><span class="si">{</span><span class="n">ridge_regression_grad</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">))</span><span class="si">}</span><span class="s1"> is close to zero vector so we found the minimum.&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Trajectory in parameter space&#39;</span><span class="p">)</span>
+<span class="n">spec</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Plot trajectory in parameter space (8 dimensions)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+  <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">])</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fp_sols</span><span class="p">[:,</span><span class="n">i</span><span class="p">],</span> <span class="n">fp_sols</span><span class="p">[:,</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">4.</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Gradient Descent&quot;</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aa_sols</span><span class="p">[:,</span><span class="n">i</span><span class="p">],</span> <span class="n">aa_sols</span><span class="p">[:,</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Anderson Accelerated GD (m=5, K=1)&quot;</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aam_sols</span><span class="p">[:,</span><span class="n">i</span><span class="p">],</span> <span class="n">aam_sols</span><span class="p">[:,</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Anderson Accelerated GD (m=5, K=5)&quot;</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;$x_</span><span class="se">{{</span><span class="si">{</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="se">}}</span><span class="s1">$&#39;</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;$x_</span><span class="se">{{</span><span class="si">{</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="si">}</span><span class="se">}}</span><span class="s1">$&#39;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.38</span><span class="p">),</span>
+              <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fancybox</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shadow</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot error as function of iteration num</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:])</span>
+<span class="n">iters</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">aa_errors</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">iters</span><span class="p">,</span> <span class="n">fp_errors</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">4.</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gradient Descent Error&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">iters</span><span class="p">,</span> <span class="n">aa_errors</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">4.</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Anderson Accelerated GD Error (m=5, K=1)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">iters</span><span class="p">,</span> <span class="n">aam_errors</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">4.</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Anderson Accelerated GD Error (m=5, K=5)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Iteration num&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.918 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-plot-anderson-accelerate-gd-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/5963f24a622c91b1802dd34447a715f2/plot_anderson_accelerate_gd.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_anderson_accelerate_gd.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/20a62e2aa593b4da9530b2040d4bf030/plot_anderson_accelerate_gd.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_anderson_accelerate_gd.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../implicit_diff/plot_dataset_distillation.html" class="btn btn-neutral float-right" title="Dataset distillation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="plot_anderson_wrapper_cd.html" class="btn btn-neutral float-left" title="Anderson acceleration of block coordinate descent." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the JAXopt authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

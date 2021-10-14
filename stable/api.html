@@ -106,6 +106,7 @@
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -146,6 +147,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#root-finding">Root finding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.Bisection.html">jaxopt.Bisection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html">jaxopt.ScipyRootFinding</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#fixed-point-resolution">Fixed point resolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.FixedPointIteration.html">jaxopt.FixedPointIteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.AndersonAcceleration.html">jaxopt.AndersonAcceleration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.AndersonWrapper.html">jaxopt.AndersonWrapper</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#implicit-differentiation">Implicit differentiation</a><ul>
@@ -331,7 +338,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, pre_update, …])</p></td>
 <td><p>Optax solver.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, max_step_size, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, max_stepsize, delta, …])</p></td>
 <td><p>SGD with Polyak step size.</p></td>
 </tr>
 </tbody>
@@ -374,6 +381,26 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding" title="jaxopt.ScipyRootFinding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyRootFinding</span></code></a>([method, dtype, …])</p></td>
 <td><p><cite>scipy.optimize.root</cite> wrapper.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fixed-point-resolution">
+<h2>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration" title="jaxopt.FixedPointIteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.FixedPointIteration</span></code></a>(fixed_point_fun)</p></td>
+<td><p>Fixed point iteration method.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration" title="jaxopt.AndersonAcceleration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.AndersonAcceleration</span></code></a>(fixed_point_fun)</p></td>
+<td><p>Anderson acceleration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.AndersonWrapper.html#jaxopt.AndersonWrapper" title="jaxopt.AndersonWrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.AndersonWrapper</span></code></a>(solver[, …])</p></td>
+<td><p>Wrapper for accelerating JAXopt solvers.</p></td>
 </tr>
 </tbody>
 </table>

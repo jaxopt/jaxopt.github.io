@@ -14,11 +14,8 @@
    .. autosummary::
    
       ~ScipyRootFinding.__init__
-      ~ScipyRootFinding.implicit_diff_solve
-      ~ScipyRootFinding.init
       ~ScipyRootFinding.l2_optimality_error
       ~ScipyRootFinding.run
-      ~ScipyRootFinding.update
    
    
 
@@ -29,7 +26,7 @@
    .. autosummary::
    
       ~ScipyRootFinding.has_aux
-      ~ScipyRootFinding.implicit_diff
+      ~ScipyRootFinding.implicit_diff_solve
       ~ScipyRootFinding.jit
       ~ScipyRootFinding.method
       ~ScipyRootFinding.optimality_fun

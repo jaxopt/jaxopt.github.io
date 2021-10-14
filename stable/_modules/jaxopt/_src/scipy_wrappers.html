@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -225,7 +226,6 @@
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">linear_solve</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">projection</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_sub</span>
 
@@ -296,8 +296,6 @@
 <span class="sd">  Args:</span>
 <span class="sd">    x_jnp: a PyTree of jnp.ndarray with structure identical to init.</span>
 <span class="sd">    dtype: if not None, ensure output is a NumPy array of this dtype.</span>
-<span class="sd">  Return type:</span>
-<span class="sd">    onp.ndarray.</span>
 <span class="sd">  Returns:</span>
 <span class="sd">    A single onp.ndarray&lt;dtype&gt;[n] array, consisting of all leaves of x_jnp</span>
 <span class="sd">    flattened and concatenated. If dtype is None, the output dtype will be</span>
@@ -332,8 +330,6 @@
 <span class="sd">    output_pytree_topology: a PyTreeTopology encoding the topology of the output</span>
 <span class="sd">      PyTree.</span>
 <span class="sd">    dtype: if not None, ensure output is a NumPy array of this dtype.</span>
-<span class="sd">  Return type:</span>
-<span class="sd">    Callable.</span>
 <span class="sd">  Returns:</span>
 <span class="sd">    A function &quot;flattening&quot; Jacobian for given input and output PyTree</span>
 <span class="sd">    topologies.</span>
@@ -365,8 +361,6 @@
 <span class="sd">  Args:</span>
 <span class="sd">    pytree_topology: a PyTreeTopology encoding the topology of the original</span>
 <span class="sd">      PyTree to be reconstructed.</span>
-<span class="sd">  Return type:</span>
-<span class="sd">    Callable.</span>
 <span class="sd">  Returns:</span>
 <span class="sd">    The inverse of `jnp_to_onp` for a specific PyTree topology.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
@@ -407,21 +401,8 @@
   <span class="n">method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">float64</span>
   <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-
-  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-        <span class="s1">&#39;ScipyWrapper subclasses do not support step by step iteration.&#39;</span><span class="p">)</span>
-
-  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-             <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-             <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span>
-             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-        <span class="s1">&#39;ScipyWrapper subclasses do not support step by step iteration.&#39;</span><span class="p">)</span>
 
   <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
@@ -429,15 +410,11 @@
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="c1"># Set up implicit diff.</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_diff</span><span class="p">:</span>
-      <span class="c1"># TODO(mblondel): when we resolve the kwargs issue, we should remove this</span>
-      <span class="c1"># option and do implicit diff by default.</span>
-
-      <span class="n">decorator</span> <span class="o">=</span> <span class="n">idf</span><span class="o">.</span><span class="n">custom_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">,</span>
-                                  <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                  <span class="n">solve</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_diff_solve</span><span class="p">)</span>
-      <span class="c1"># pylint: disable=g-missing-from-attributes</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">decorator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+    <span class="n">decorator</span> <span class="o">=</span> <span class="n">idf</span><span class="o">.</span><span class="n">custom_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">,</span>
+                                <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">solve</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_diff_solve</span><span class="p">)</span>
+    <span class="c1"># pylint: disable=g-missing-from-attributes</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">decorator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ScipyMinimize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize">[docs]</a><span class="nd">@dataclass</span>
@@ -501,14 +478,12 @@
           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Runs `scipy.optimize.minimize` until convergence or max number of iters.</span>
+    <span class="sd">&quot;&quot;&quot;Runs the solver.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
 <span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, info).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -563,7 +538,7 @@
           <span class="n">bounds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Runs `scipy.optimize.minimize` until convergence or max number of iters.</span>
+    <span class="sd">&quot;&quot;&quot;Runs the solver.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
@@ -571,8 +546,6 @@
 <span class="sd">        to `init_params`, representing box constraints.</span>
 <span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, info).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -612,14 +585,12 @@
           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Runs `scipy.optimize.root` until convergence or max number of iters.</span>
+    <span class="sd">&quot;&quot;&quot;Runs the solver.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
 <span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, info).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -776,14 +747,12 @@
           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Runs `scipy.optimize.least_squares`.</span>
+    <span class="sd">&quot;&quot;&quot;Runs the solver.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
 <span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, info).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -863,7 +832,7 @@
           <span class="n">bounds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Runs `scipy.optimize.least_squares`.</span>
+    <span class="sd">&quot;&quot;&quot;Runs the solver.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
@@ -871,8 +840,6 @@
 <span class="sd">        to `init_params`, representing box constraints.</span>
 <span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, info).</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -14,8 +14,8 @@
    .. autosummary::
    
       ~PolyakSGD.__init__
-      ~PolyakSGD.implicit_diff_solve
       ~PolyakSGD.init
+      ~PolyakSGD.init_state
       ~PolyakSGD.l2_optimality_error
       ~PolyakSGD.optimality_fun
       ~PolyakSGD.run
@@ -33,8 +33,9 @@
       ~PolyakSGD.delta
       ~PolyakSGD.has_aux
       ~PolyakSGD.implicit_diff
+      ~PolyakSGD.implicit_diff_solve
       ~PolyakSGD.jit
-      ~PolyakSGD.max_step_size
+      ~PolyakSGD.max_stepsize
       ~PolyakSGD.maxiter
       ~PolyakSGD.momentum
       ~PolyakSGD.pre_update

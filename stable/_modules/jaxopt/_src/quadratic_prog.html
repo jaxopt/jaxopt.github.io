@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -259,7 +260,7 @@
                              <span class="n">b</span><span class="p">,</span>
                              <span class="n">maxiter</span><span class="p">,</span>
                              <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
-                             <span class="n">solve</span><span class="o">=</span><span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_gmres</span><span class="p">):</span> 
+                             <span class="n">solve</span><span class="o">=</span><span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_gmres</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Solves 0.5 * x^T Q x + c^T x subject to Ax = b.</span>
 
 <span class="sd">  This solver returns both the primal solution (x) and the dual solution.</span>
@@ -361,7 +362,7 @@
   <span class="n">matvec_A</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
   <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span>
-  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="QuadraticProgramming.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.QuadraticProgramming.html#jaxopt.QuadraticProgramming.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
           <span class="n">init_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -377,8 +378,6 @@
 <span class="sd">      params_obj: (Q, c) or (params_Q, c) if matvec_Q is provided.</span>
 <span class="sd">      params_eq: (A, b) or (params_A, b) if matvec_A is provided.</span>
 <span class="sd">      params_ineq: = (G, h) or None if no inequality constraints.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, state), ``params = (primal_var, dual_var_eq, dual_var_ineq)``</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -147,6 +147,7 @@
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -281,7 +282,8 @@ set and <span class="math notranslate nohighlight">\(\upsilon\)</span> are param
 <p>To solve constrained optimization problems, we can use projected gradient
 descent, which is gradient descent with an additional projection onto the
 constraint set. Constraints are specified by setting the <code class="docutils literal notranslate"><span class="pre">projection</span></code>
-argument:</p>
+argument. For instance, non-negativity constraints can be specified using
+<a class="reference internal" href="_autosummary/jaxopt.projection.projection_non_negative.html#jaxopt.projection.projection_non_negative" title="jaxopt.projection.projection_non_negative"><code class="xref py py-func docutils literal notranslate"><span class="pre">projection_non_negative</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">ProjectedGradient</span>
 <span class="kn">from</span> <span class="nn">jaxopt.projection</span> <span class="kn">import</span> <span class="n">projection_non_negative</span>
 
@@ -306,7 +308,7 @@ This can be passed using the <code class="docutils literal notranslate"><span cl
 <div class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></p></li>
 </ul>
 </div>
 </div>

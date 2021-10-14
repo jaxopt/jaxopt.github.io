@@ -62,6 +62,16 @@ Root finding
     jaxopt.Bisection
     jaxopt.ScipyRootFinding
 
+Fixed point resolution
+----------------------
+
+.. autosummary::
+  :toctree: _autosummary
+
+    jaxopt.FixedPointIteration
+    jaxopt.AndersonAcceleration
+    jaxopt.AndersonWrapper
+
 Implicit differentiation
 ------------------------
 

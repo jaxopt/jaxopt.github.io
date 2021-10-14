@@ -14,12 +14,9 @@
    .. autosummary::
    
       ~ScipyBoundedMinimize.__init__
-      ~ScipyBoundedMinimize.implicit_diff_solve
-      ~ScipyBoundedMinimize.init
       ~ScipyBoundedMinimize.l2_optimality_error
       ~ScipyBoundedMinimize.optimality_fun
       ~ScipyBoundedMinimize.run
-      ~ScipyBoundedMinimize.update
    
    
 
@@ -31,7 +28,7 @@
    
       ~ScipyBoundedMinimize.fun
       ~ScipyBoundedMinimize.has_aux
-      ~ScipyBoundedMinimize.implicit_diff
+      ~ScipyBoundedMinimize.implicit_diff_solve
       ~ScipyBoundedMinimize.jit
       ~ScipyBoundedMinimize.method
       ~ScipyBoundedMinimize.options

@@ -14,8 +14,8 @@
    .. autosummary::
    
       ~MirrorDescent.__init__
-      ~MirrorDescent.implicit_diff_solve
       ~MirrorDescent.init
+      ~MirrorDescent.init_state
       ~MirrorDescent.l2_optimality_error
       ~MirrorDescent.make_projection_grad
       ~MirrorDescent.optimality_fun
@@ -32,6 +32,7 @@
    
       ~MirrorDescent.has_aux
       ~MirrorDescent.implicit_diff
+      ~MirrorDescent.implicit_diff_solve
       ~MirrorDescent.jit
       ~MirrorDescent.maxiter
       ~MirrorDescent.tol

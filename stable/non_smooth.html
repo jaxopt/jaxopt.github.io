@@ -108,7 +108,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#proximal-gradient">Proximal gradient</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.ProximalGradient.html">jaxopt.ProximalGradient</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#instantiating-and-running-the-solver">Instantiating and running the solver</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#specifying-prox-parameters">Specifying prox parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#differentiation">Differentiation</a></li>
 </ul>
 </li>
@@ -132,6 +131,7 @@
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -265,13 +265,14 @@ and <span class="math notranslate nohighlight">\(\lambda\)</span> are extra para
 <div class="section" id="instantiating-and-running-the-solver">
 <h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this headline">¶</a></h3>
 <p>Proximal gradient is a generalization of <a class="reference internal" href="constrained.html#constrained-optim"><span class="std std-ref">projected gradient descent</span></a>. The non-smooth term <span class="math notranslate nohighlight">\(g\)</span> above is specified by
-setting the corresponding <code class="docutils literal notranslate"><span class="pre">prox</span></code> argument.</p>
+setting the corresponding proximal operator, which is achieved using the
+<code class="docutils literal notranslate"><span class="pre">prox</span></code> attribute of <a class="reference internal" href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient" title="jaxopt.ProximalGradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProximalGradient</span></code></a>.</p>
 <p>For instance, suppose we want to solve the following optimization problem</p>
 <div class="math notranslate nohighlight">
-\[\min_{w} \frac{1}{2n} ||Xw - y||^2 + \lambda ||w||_1\]</div>
-<p>which corresponds to the choice <span class="math notranslate nohighlight">\(g(w, \lambda) = \lambda ||w||_1\)</span>.  The
+\[\min_{w} \frac{1}{2n} ||Xw - y||^2 + \text{l1reg} \cdot ||w||_1\]</div>
+<p>which corresponds to the choice <span class="math notranslate nohighlight">\(g(w, \text{l1reg}) = \text{l1reg} \cdot ||w||_1\)</span>.  The
 corresponding <code class="docutils literal notranslate"><span class="pre">prox</span></code> operator is <a class="reference internal" href="_autosummary/jaxopt.prox.prox_lasso.html#jaxopt.prox.prox_lasso" title="jaxopt.prox.prox_lasso"><code class="xref py py-func docutils literal notranslate"><span class="pre">prox_lasso</span></code></a>.
-This gives:</p>
+We can therefore write:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">ProximalGradient</span>
 <span class="kn">from</span> <span class="nn">jaxopt.prox</span> <span class="kn">import</span> <span class="n">prox_lasso</span>
 
@@ -280,22 +281,17 @@ This gives:</p>
   <span class="n">residuals</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>
   <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="n">pg</span> <span class="o">=</span> <span class="n">ProximalGradient</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">least_squares</span><span class="p">,</span> <span class="n">prox</span><span class="o">=</span><span class="n">prox_lasso</span><span class="p">)</span>
-<span class="n">pg_sol</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">w_init</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-<p>Numerous proximal operators are available, see below.</p>
-</div>
-<div class="section" id="specifying-prox-parameters">
-<h3>Specifying prox parameters<a class="headerlink" href="#specifying-prox-parameters" title="Permalink to this headline">¶</a></h3>
-<p>Most proximal operators have a hyperparameter that can be specified.  For
-instance, the hyperparameter of <a class="reference internal" href="_autosummary/jaxopt.prox.prox_lasso.html#jaxopt.prox.prox_lasso" title="jaxopt.prox.prox_lasso"><code class="xref py py-func docutils literal notranslate"><span class="pre">prox_lasso</span></code></a> is the <span class="math notranslate nohighlight">\(L_1\)</span> regularization strength.
-This can be passed using the <code class="docutils literal notranslate"><span class="pre">hyperparams_prox</span></code> argument of <code class="docutils literal notranslate"><span class="pre">run</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l1reg</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">l1reg</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">pg</span> <span class="o">=</span> <span class="n">ProximalGradient</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">least_squares</span><span class="p">,</span> <span class="n">prox</span><span class="o">=</span><span class="n">prox_lasso</span><span class="p">)</span>
 <span class="n">pg_sol</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">w_init</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="o">=</span><span class="n">l1reg</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
+<p>Note that <a class="reference internal" href="_autosummary/jaxopt.prox.prox_lasso.html#jaxopt.prox.prox_lasso" title="jaxopt.prox.prox_lasso"><code class="xref py py-func docutils literal notranslate"><span class="pre">prox_lasso</span></code></a> has a hyperparameter
+<code class="docutils literal notranslate"><span class="pre">l1reg</span></code>, which controls the <span class="math notranslate nohighlight">\(L_1\)</span> regularization strength.  As shown
+above, we can specify it in the <code class="docutils literal notranslate"><span class="pre">run</span></code> method using the <code class="docutils literal notranslate"><span class="pre">hyperparams_prox</span></code>
+argument The remaining arguments are passed to the objective function, here
+<code class="docutils literal notranslate"><span class="pre">least_squares</span></code>.</p>
+<p>Numerous proximal operators are available, see below.</p>
 </div>
 <div class="section" id="differentiation">
 <h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this headline">¶</a></h3>
@@ -315,8 +311,8 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 <div class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/lasso_implicit_diff.html#sphx-glr-auto-examples-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/sparse_coding.html#sphx-glr-auto-examples-sparse-coding-py"><span class="std std-ref">Implementation of sparse coding using jaxopt.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/lasso_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/sparse_coding.html#sphx-glr-auto-examples-implicit-diff-sparse-coding-py"><span class="std std-ref">Sparse coding.</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -349,8 +345,8 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 <div class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/multiclass_linear_svm.html#sphx-glr-auto-examples-multiclass-linear-svm-py"><span class="std std-ref">Multiclass linear SVM (without intercept).</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/nmf.html#sphx-glr-auto-examples-nmf-py"><span class="std std-ref">Non-negative matrix factorizaton (NMF) using alternating minimization.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/constrained/multiclass_linear_svm.html#sphx-glr-auto-examples-constrained-multiclass-linear-svm-py"><span class="std std-ref">Multiclass linear SVM (without intercept).</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/constrained/nmf.html#sphx-glr-auto-examples-constrained-nmf-py"><span class="std std-ref">Non-negative matrix factorizaton (NMF) using alternating minimization.</span></a></p></li>
 </ul>
 </div>
 </div>

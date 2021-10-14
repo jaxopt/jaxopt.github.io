@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -232,6 +233,7 @@
 
 <span class="c1"># Binary classification.</span>
 
+
 <div class="viewcode-block" id="binary_logistic_loss"><a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss">[docs]</a><span class="k">def</span> <span class="nf">binary_logistic_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logit</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
   <span class="sd">&quot;&quot;&quot;Binary logistic loss.</span>
 
@@ -246,7 +248,9 @@
   <span class="c1"># where xlogx(proba) = proba * log(proba).</span>
   <span class="k">return</span> <span class="n">softplus</span><span class="p">(</span><span class="n">logit</span><span class="p">)</span> <span class="o">-</span> <span class="n">label</span> <span class="o">*</span> <span class="n">logit</span></div>
 
+
 <span class="c1"># Multiclass classification.</span>
+
 
 <div class="viewcode-block" id="multiclass_logistic_loss"><a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.multiclass_logistic_loss.html#jaxopt.loss.multiclass_logistic_loss">[docs]</a><span class="k">def</span> <span class="nf">multiclass_logistic_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logits</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
   <span class="sd">&quot;&quot;&quot;Multiclass logistic loss.</span>

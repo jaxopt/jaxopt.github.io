@@ -14,8 +14,8 @@
    .. autosummary::
    
       ~ProjectedGradient.__init__
-      ~ProjectedGradient.implicit_diff_solve
       ~ProjectedGradient.init
+      ~ProjectedGradient.init_state
       ~ProjectedGradient.l2_optimality_error
       ~ProjectedGradient.optimality_fun
       ~ProjectedGradient.run
@@ -30,12 +30,13 @@
    .. autosummary::
    
       ~ProjectedGradient.acceleration
+      ~ProjectedGradient.decrease_factor
       ~ProjectedGradient.has_aux
       ~ProjectedGradient.implicit_diff
+      ~ProjectedGradient.implicit_diff_solve
       ~ProjectedGradient.jit
       ~ProjectedGradient.maxiter
       ~ProjectedGradient.maxls
-      ~ProjectedGradient.stepfactor
       ~ProjectedGradient.stepsize
       ~ProjectedGradient.tol
       ~ProjectedGradient.unroll

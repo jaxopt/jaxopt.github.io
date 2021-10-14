@@ -116,6 +116,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -229,7 +230,7 @@
 <h1>jaxopt.ScipyMinimize<a class="headerlink" href="#jaxopt-scipyminimize" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.ScipyMinimize">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ScipyMinimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">method=None</span></em>, <em class="sig-param"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></em>, <em class="sig-param"><span class="pre">jit=True</span></em>, <em class="sig-param"><span class="pre">implicit_diff=False</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></em>, <em class="sig-param"><span class="pre">has_aux=False</span></em>, <em class="sig-param"><span class="pre">fun=None</span></em>, <em class="sig-param"><span class="pre">tol=None</span></em>, <em class="sig-param"><span class="pre">options=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyMinimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyMinimize" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ScipyMinimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">method=None</span></em>, <em class="sig-param"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></em>, <em class="sig-param"><span class="pre">jit=True</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=None</span></em>, <em class="sig-param"><span class="pre">has_aux=False</span></em>, <em class="sig-param"><span class="pre">fun=None</span></em>, <em class="sig-param"><span class="pre">tol=None</span></em>, <em class="sig-param"><span class="pre">options=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyMinimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyMinimize" title="Permalink to this definition">¶</a></dt>
 <dd><p><cite>scipy.optimize.minimize</cite> wrapper</p>
 <p>This wrapper is for unconstrained minimization only.
 It supports pytrees and implicit diff.</p>
@@ -239,8 +240,7 @@ It supports pytrees and implicit diff.</p>
 <li><p><strong>method</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – </p></li>
 <li><p><strong>dtype</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
@@ -325,17 +325,7 @@ methods relying on FORTRAN code, such as the <cite>L-BFGS-B</cite> solver for
 <dd><p>the linear system solver to use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Callable</p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>matvec</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>b</strong> (<em>Any</em>) – </p></li>
-<li><p><strong>ridge</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
-</ul>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Any</p>
+<dd class="field-odd"><p>Optional[Callable]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -355,15 +345,14 @@ objective.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ScipyMinimize.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">method=None</span></em>, <em class="sig-param"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></em>, <em class="sig-param"><span class="pre">jit=True</span></em>, <em class="sig-param"><span class="pre">implicit_diff=False</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></em>, <em class="sig-param"><span class="pre">has_aux=False</span></em>, <em class="sig-param"><span class="pre">fun=None</span></em>, <em class="sig-param"><span class="pre">tol=None</span></em>, <em class="sig-param"><span class="pre">options=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyMinimize.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">method=None</span></em>, <em class="sig-param"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></em>, <em class="sig-param"><span class="pre">jit=True</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=None</span></em>, <em class="sig-param"><span class="pre">has_aux=False</span></em>, <em class="sig-param"><span class="pre">fun=None</span></em>, <em class="sig-param"><span class="pre">tol=None</span></em>, <em class="sig-param"><span class="pre">options=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyMinimize.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>method</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – </p></li>
 <li><p><strong>dtype</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
@@ -386,17 +375,6 @@ objective.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyMinimize.__init__" title="jaxopt.ScipyMinimize.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([method, dtype, jit, …])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id1" title="jaxopt.ScipyMinimize.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a>(b[, ridge])</p></td>
-<td><p>Solves the normal equation <code class="docutils literal notranslate"><span class="pre">A^T</span> <span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A^T</span> <span class="pre">b</span></code> using conjugate gradient.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code>(init_params)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-</dl>
-</p></td>
-</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyMinimize.l2_optimality_error" title="jaxopt.ScipyMinimize.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
 <td><p>Computes the L2 optimality error.</p></td>
 </tr>
@@ -404,15 +382,7 @@ objective.</p>
 <td><p>Optimality function mapping compatible with <cite>&#64;custom_root</cite>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyMinimize.run" title="jaxopt.ScipyMinimize.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
-<td><p>Runs <cite>scipy.optimize.minimize</cite> until convergence or max number of iters.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code>(params, state, *args, **kwargs)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-</dl>
-</p></td>
+<td><p>Runs the solver.</p></td>
 </tr>
 </tbody>
 </table>
@@ -429,7 +399,7 @@ objective.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyMinimize.has_aux" title="jaxopt.ScipyMinimize.has_aux"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_aux</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyMinimize.implicit_diff_solve" title="jaxopt.ScipyMinimize.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyMinimize.jit" title="jaxopt.ScipyMinimize.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
@@ -453,30 +423,6 @@ objective.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition">¶</a></dt>
-<dd><p>Solves the normal equation <code class="docutils literal notranslate"><span class="pre">A^T</span> <span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A^T</span> <span class="pre">b</span></code> using conjugate gradient.</p>
-<p>This can be used to solve Ax=b using conjugate gradient when A is not
-hermitian, positive definite.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – product between <code class="docutils literal notranslate"><span class="pre">A</span></code> and a vector.</p></li>
-<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree.</p></li>
-<li><p><strong>ridge</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – optional ridge regularization.</p></li>
-<li><p><strong>**kwargs</strong> – additional keyword arguments for solver.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>pytree with same structure as <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ScipyMinimize.l2_optimality_error">
 <span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyMinimize.l2_optimality_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the L2 optimality error.</p>
@@ -491,7 +437,7 @@ hermitian, positive definite.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ScipyMinimize.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyMinimize.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyMinimize.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs <cite>scipy.optimize.minimize</cite> until convergence or max number of iters.</p>
+<dd><p>Runs the solver.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -501,22 +447,10 @@ hermitian, positive definite.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>jaxopt._src.base.OptStep</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Return type:</dt><dd><p>base.OptStep.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>(params, info).</p>
-</dd>
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>init_params</strong> (<em>Any</em>) – </p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(params, info).</p>
 </dd>
 </dl>
 </dd></dl>

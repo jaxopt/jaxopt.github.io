@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -203,13 +204,14 @@
 <span class="sd">&quot;&quot;&quot;Implementation of gradient descent in JAX.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
 
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">loop</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.proximal_gradient</span> <span class="kn">import</span> <span class="n">ProximalGradient</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.proximal_gradient</span> <span class="kn">import</span> <span class="n">ProximalGradient</span><span class="p">,</span> <span class="n">ProxGradState</span>
 
 
 <div class="viewcode-block" id="GradientDescent"><a class="viewcode-back" href="../../../_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent">[docs]</a><span class="nd">@dataclass</span>
@@ -234,37 +236,33 @@
 <span class="sd">      When True it will be assumed by default that fun(...)[0] is the objective.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="GradientDescent.init"><a class="viewcode-back" href="../../../_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.init">[docs]</a>  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Initialize the ``(params, state)`` pair.</span>
+<div class="viewcode-block" id="GradientDescent.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProxGradState</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Initialize the solver state.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      init_params: pytree containing the initial parameters.</span>
 <span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
-<span class="sd">      (params, state)</span>
+<span class="sd">      state</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GradientDescent.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
              <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span>
              <span class="o">*</span><span class="n">args</span><span class="p">,</span>
              <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Performs one iteration of proximal gradient.</span>
+    <span class="sd">&quot;&quot;&quot;Performs one iteration of gradient descent.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      params: pytree containing the parameters.</span>
 <span class="sd">      state: named tuple containing the solver state.</span>
 <span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
 <span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
-<span class="sd">    Return type:</span>
-<span class="sd">      base.OptStep</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, state)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -272,7 +270,11 @@
 
 <div class="viewcode-block" id="GradientDescent.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reference_signature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span></div>
 </pre></div>
 
            </div>

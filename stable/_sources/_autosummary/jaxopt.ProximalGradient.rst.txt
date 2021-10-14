@@ -14,8 +14,8 @@
    .. autosummary::
    
       ~ProximalGradient.__init__
-      ~ProximalGradient.implicit_diff_solve
       ~ProximalGradient.init
+      ~ProximalGradient.init_state
       ~ProximalGradient.l2_optimality_error
       ~ProximalGradient.optimality_fun
       ~ProximalGradient.prox
@@ -31,12 +31,13 @@
    .. autosummary::
    
       ~ProximalGradient.acceleration
+      ~ProximalGradient.decrease_factor
       ~ProximalGradient.has_aux
       ~ProximalGradient.implicit_diff
+      ~ProximalGradient.implicit_diff_solve
       ~ProximalGradient.jit
       ~ProximalGradient.maxiter
       ~ProximalGradient.maxls
-      ~ProximalGradient.stepfactor
       ~ProximalGradient.stepsize
       ~ProximalGradient.tol
       ~ProximalGradient.unroll

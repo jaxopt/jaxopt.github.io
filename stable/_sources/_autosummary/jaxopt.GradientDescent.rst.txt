@@ -14,8 +14,8 @@
    .. autosummary::
    
       ~GradientDescent.__init__
-      ~GradientDescent.implicit_diff_solve
       ~GradientDescent.init
+      ~GradientDescent.init_state
       ~GradientDescent.l2_optimality_error
       ~GradientDescent.optimality_fun
       ~GradientDescent.prox
@@ -31,12 +31,13 @@
    .. autosummary::
    
       ~GradientDescent.acceleration
+      ~GradientDescent.decrease_factor
       ~GradientDescent.has_aux
       ~GradientDescent.implicit_diff
+      ~GradientDescent.implicit_diff_solve
       ~GradientDescent.jit
       ~GradientDescent.maxiter
       ~GradientDescent.maxls
-      ~GradientDescent.stepfactor
       ~GradientDescent.stepsize
       ~GradientDescent.tol
       ~GradientDescent.unroll

@@ -15,9 +15,9 @@ variable (typically a mini-batch).
 
 .. topic:: Examples
 
-   * :ref:`sphx_glr_auto_examples_haiku_mnist.py`
-   * :ref:`sphx_glr_auto_examples_flax_mnist.py`
-   * :ref:`sphx_glr_auto_examples_haiku_vae.py`
+   * :ref:`sphx_glr_auto_examples_deep_learning_haiku_image_classif.py`
+   * :ref:`sphx_glr_auto_examples_deep_learning_flax_image_classif.py`
+   * :ref:`sphx_glr_auto_examples_deep_learning_haiku_vae.py`
 
 
 Defining an objective function
@@ -86,7 +86,8 @@ The following::
 is equivalent to::
 
   iterator = data_iterator()
-  params, state = solver.init(init_params, l2reg=l2reg)
+  state = solver.init_state(init_params, l2reg=l2reg)
+  params = init_params
   for _ in range(maxiter):
     data = next(iterator)
     params, state = solver.update(params, state, l2reg=l2reg, data=data)

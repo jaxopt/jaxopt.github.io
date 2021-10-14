@@ -14,8 +14,8 @@
    .. autosummary::
    
       ~OptaxSolver.__init__
-      ~OptaxSolver.implicit_diff_solve
       ~OptaxSolver.init
+      ~OptaxSolver.init_state
       ~OptaxSolver.l2_optimality_error
       ~OptaxSolver.optimality_fun
       ~OptaxSolver.run
@@ -32,6 +32,7 @@
    
       ~OptaxSolver.has_aux
       ~OptaxSolver.implicit_diff
+      ~OptaxSolver.implicit_diff_solve
       ~OptaxSolver.jit
       ~OptaxSolver.maxiter
       ~OptaxSolver.pre_update

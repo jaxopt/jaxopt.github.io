@@ -1,0 +1,18 @@
+
+:orphan:
+
+.. _sphx_glr_auto_examples_implicit_diff_sg_execution_times:
+
+Computation times
+=================
+**00:47.509** total execution time for **auto_examples_implicit_diff** files:
+
++-------------------------------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_auto_examples_implicit_diff_plot_dataset_distillation.py` (``plot_dataset_distillation.py``) | 00:47.509 | 0.0 MB |
++-------------------------------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_auto_examples_implicit_diff_lasso_implicit_diff.py` (``lasso_implicit_diff.py``)             | 00:00.000 | 0.0 MB |
++-------------------------------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_auto_examples_implicit_diff_ridge_reg_implicit_diff.py` (``ridge_reg_implicit_diff.py``)     | 00:00.000 | 0.0 MB |
++-------------------------------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_auto_examples_implicit_diff_sparse_coding.py` (``sparse_coding.py``)                         | 00:00.000 | 0.0 MB |
++-------------------------------------------------------------------------------------------------------------+-----------+--------+

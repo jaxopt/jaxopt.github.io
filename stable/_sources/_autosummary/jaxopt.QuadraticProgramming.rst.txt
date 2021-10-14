@@ -14,7 +14,6 @@
    .. autosummary::
    
       ~QuadraticProgramming.__init__
-      ~QuadraticProgramming.implicit_diff_solve
       ~QuadraticProgramming.l2_optimality_error
       ~QuadraticProgramming.run
    
@@ -26,6 +25,7 @@
 
    .. autosummary::
    
+      ~QuadraticProgramming.implicit_diff_solve
       ~QuadraticProgramming.matvec_A
       ~QuadraticProgramming.matvec_Q
       ~QuadraticProgramming.maxiter

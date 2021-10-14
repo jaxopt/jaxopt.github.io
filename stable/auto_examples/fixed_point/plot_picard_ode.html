@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Anderson acceleration in application to Picard–Lindelöf theorem. &mdash; JAXopt 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery-rendered-html.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Anderson acceleration of block coordinate descent." href="plot_anderson_wrapper_cd.html" />
+    <link rel="prev" title="Image classification example with Haiku and JAXopt." href="../deep_learning/haiku_image_classif.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> JAXopt
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Anderson acceleration in application to Picard–Lindelöf theorem.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_anderson_wrapper_cd.html">Anderson acceleration of block coordinate descent.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_anderson_accelerate_gd.html">Anderson acceleration of gradient descent.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JAXopt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Example gallery</a> &raquo;</li>
+        
+      <li>Anderson acceleration in application to Picard–Lindelöf theorem.</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/auto_examples/fixed_point/plot_picard_ode.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-fixed-point-plot-picard-ode-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="anderson-acceleration-in-application-to-picardlindelof-theorem">
+<span id="sphx-glr-auto-examples-fixed-point-plot-picard-ode-py"></span><h1>Anderson acceleration in application to Picard–Lindelöf theorem.<a class="headerlink" href="#anderson-acceleration-in-application-to-picardlindelof-theorem" title="Permalink to this headline">¶</a></h1>
+<p>Thanks to the <a class="reference external" href="https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem">Picard–Lindelöf theorem,</a> we can
+reduce differential equation solving to fixed point computations and simple
+integration.  More precisely consider the ODE:</p>
+<div class="math notranslate nohighlight">
+\[y'(t)=f(t,y(t))\]</div>
+<p>of some time-dependant dynamic
+<span class="math notranslate nohighlight">\(f:\mathbb{R}\times\mathbb{R}^d\rightarrow\mathbb{R}^d\)</span> and initial
+conditions <span class="math notranslate nohighlight">\(y(0)=y_0\)</span>.  Then <span class="math notranslate nohighlight">\(y\)</span> is the fixed point of the following
+map:</p>
+<div class="math notranslate nohighlight">
+\[y(t)=T(y)(t)\mathrel{\mathop:}=y_0+\int_0^t f(s,y(s))\mathrm{d}s\]</div>
+<p>Then we can define the sequence of functions <span class="math notranslate nohighlight">\((\phi_k)\)</span> with
+<span class="math notranslate nohighlight">\(\phi_0=0\)</span> recursively as follows:</p>
+<div class="math notranslate nohighlight">
+\[\phi_{k+1}(t)=T(\phi_k)(t)\mathrel{\mathop:} =
+y_0+\int_0^t f(s,\phi_k(s))\mathrm{d}s\]</div>
+<p>Such sequence converges to the solution of the ODE, i.e.,
+<span class="math notranslate nohighlight">\(\lim_{k\rightarrow\infty}\phi_k=y\)</span>.</p>
+<p>In this example we choose <span class="math notranslate nohighlight">\(f(t,y(t))=1+y(t)^2\)</span>. We know that the
+analytical solution is <span class="math notranslate nohighlight">\(y(t)=\tan{t}\)</span> , which we use as a ground truth to
+evaluate our numerical scheme.
+We used <code class="docutils literal notranslate"><span class="pre">scipy.integrate.cumtrapz</span></code> to perform
+integration, but any other integration method can be used.</p>
+<img alt="Anderson acceleration for ODE solving" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_picard_ode_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Error of nan with ground truth tan(t)
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonAcceleration</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">objective</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span><span class="p">,</span> <span class="n">tree_sub</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">import</span> <span class="nn">scipy.integrate</span>
+
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_platform_name&quot;</span><span class="p">,</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># Solve the differential equation y&#39;(t)=1+t^2, with solution y(t) = tan(t)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">ti</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+  <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">phi</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">T</span><span class="p">(</span><span class="n">phi_cur</span><span class="p">,</span> <span class="n">ti</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Fixed point iteration in the Picard method.</span>
+<span class="sd">  See: https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem&quot;&quot;&quot;</span>
+  <span class="n">f_phi</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">ti</span><span class="p">,</span> <span class="n">phi_cur</span><span class="p">)</span>
+  <span class="n">phi_next</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">cumtrapz</span><span class="p">(</span><span class="n">f_phi</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">y0</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">phi_next</span>
+
+<span class="n">y0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">num_interpolating_points</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">tmax</span> <span class="o">=</span> <span class="mf">0.95</span> <span class="o">*</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># stop before pi/2 to ensure convergence</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">tmax</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_interpolating_points</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">phi0</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_interpolating_points</span><span class="p">)</span>
+<span class="n">ti</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">tmax</span><span class="p">,</span> <span class="n">num_interpolating_points</span><span class="p">)</span>
+
+<span class="n">sols</span> <span class="o">=</span> <span class="p">[</span><span class="n">phi0</span><span class="p">]</span>
+<span class="n">aa</span> <span class="o">=</span> <span class="n">AndersonAcceleration</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">history_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">jit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">aa</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">phi0</span><span class="p">,</span> <span class="n">ti</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">phi0</span>
+<span class="n">sols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">aa</span><span class="o">.</span><span class="n">maxiter</span><span class="p">):</span>
+  <span class="n">sol</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">aa</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">phi0</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">ti</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+  <span class="n">sols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sols</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error of </span><span class="si">{</span><span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="si">}</span><span class="s1"> with ground truth tan(t)&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># vizualize the first 8 iterates to make the figure easier to read</span>
+<span class="n">sols</span> <span class="o">=</span> <span class="n">sols</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">plasma</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sols</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sols</span><span class="p">,</span> <span class="n">colors</span><span class="p">)):</span>
+  <span class="n">desc</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;$\phi_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">$&#39;</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="sa">rf</span><span class="s1">&#39;$\phi_0=0$&#39;</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ti</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">desc</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ti</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">ti</span><span class="p">),</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y(t)=\tan{(t)}$ (ground truth)&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;wheat&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">formula</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;$\phi_</span><span class="se">{{</span><span class="s1">k+1</span><span class="se">}}</span><span class="s1">(t)=\phi_0+\int_0^</span><span class="se">{{</span><span class="si">{</span><span class="n">tmax</span><span class="o">/</span><span class="mi">2</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">\pi</span><span class="se">}}</span><span class="s1"> f(t,\phi_</span><span class="se">{{</span><span class="s1">k</span><span class="se">}}</span><span class="s1">(t))\mathrm</span><span class="se">{{</span><span class="s1">d</span><span class="se">}}</span><span class="s1">t$&#39;</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.42</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="n">formula</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="n">props</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Anderson acceleration for ODE solving&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  8.438 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-plot-picard-ode-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/98e1bf14a10586b1e53abfe4758d3664/plot_picard_ode.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_picard_ode.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/01a2d18af25acebddecd43811566c753/plot_picard_ode.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_picard_ode.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="plot_anderson_wrapper_cd.html" class="btn btn-neutral float-right" title="Anderson acceleration of block coordinate descent." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../deep_learning/haiku_image_classif.html" class="btn btn-neutral float-left" title="Image classification example with Haiku and JAXopt." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the JAXopt authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

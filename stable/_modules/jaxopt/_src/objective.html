@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -284,6 +285,35 @@
 
 <span class="n">least_squares</span> <span class="o">=</span> <span class="n">LeastSquares</span><span class="p">()</span>
 <span class="n">least_squares</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">least_squares</span><span class="o">.</span><span class="fm">__call__</span><span class="o">.</span><span class="vm">__doc__</span>
+
+
+<div class="viewcode-block" id="ridge_regression"><a class="viewcode-back" href="../../../_autosummary/jaxopt.objective.ridge_regression.html#jaxopt.objective.ridge_regression">[docs]</a><span class="k">def</span> <span class="nf">ridge_regression</span><span class="p">(</span>
+  <span class="n">params</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+  <span class="n">l2reg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+  <span class="n">data</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Ridge regression, i.e L2-regularized least squares.</span>
+
+<span class="sd">  .. math::</span>
+
+<span class="sd">    \frac{1}{2n} ||XW - y||_2^2 +</span>
+<span class="sd">    0.5 \cdot \text{l2reg} \cdot ||W||_2^2</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    W: parameters.</span>
+<span class="sd">    l2reg: strenght of regularization.</span>
+<span class="sd">    data: a tuple ``(X, y)`` where ``X`` is a matrix of shape ``(n_samples,</span>
+<span class="sd">      n_features)`` and ``y`` is a vector of shape ``(n_samples,)``.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    objective value.</span>
+
+<span class="sd">  Example::</span>
+
+<span class="sd">    value = ridge_regression(W, l2reg, (X, y))</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">least_squares</span> <span class="o">=</span> <span class="n">LeastSquares</span><span class="p">()(</span><span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+  <span class="n">ridge</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">params</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">least_squares</span> <span class="o">+</span> <span class="n">ridge</span></div>
 
 
 <span class="n">_logloss_vmap</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">multiclass_logistic_loss</span><span class="p">)</span>

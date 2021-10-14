@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="jaxopt.implicit_diff.custom_root" href="_autosummary/jaxopt.implicit_diff.custom_root.html" />
-    <link rel="prev" title="jaxopt.ScipyRootFinding" href="_autosummary/jaxopt.ScipyRootFinding.html" /> 
+    <link rel="prev" title="jaxopt.AndersonWrapper" href="_autosummary/jaxopt.AndersonWrapper.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -108,6 +108,7 @@
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Implicit differentiation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#argmin-differentiation">Argmin differentiation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#jaxopt-solvers">JAXopt solvers</a></li>
@@ -249,7 +250,7 @@ autodiff of unrolled iterates is used instead of implicit differentiation.</p>
 <p>Using the ridge regression example from the <a class="reference internal" href="unconstrained.html#unconstrained-optim"><span class="std std-ref">unconstrained optimization</span></a> section, we can write:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ridge_reg_objective</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
   <span class="n">residuals</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>
-  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">params</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">ridge_reg_solution</span><span class="p">(</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
   <span class="n">gd</span> <span class="o">=</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">GradientDescent</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">ridge_reg_objective</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -274,9 +275,9 @@ Since <code class="docutils literal notranslate"><span class="pre">ridge_reg_sol
 <div class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/plot_dataset_distillation.html#sphx-glr-auto-examples-plot-dataset-distillation-py"><span class="std std-ref">Dataset Distillation Example</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/lasso_implicit_diff.html#sphx-glr-auto-examples-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/sparse_coding.html#sphx-glr-auto-examples-sparse-coding-py"><span class="std std-ref">Implementation of sparse coding using jaxopt.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/plot_dataset_distillation.html#sphx-glr-auto-examples-implicit-diff-plot-dataset-distillation-py"><span class="std std-ref">Dataset distillation</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/lasso_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/sparse_coding.html#sphx-glr-auto-examples-implicit-diff-sparse-coding-py"><span class="std std-ref">Sparse coding.</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -301,7 +302,7 @@ for easily adding implicit differentiation on top of any existing solver.</p>
 <div class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/ridge_reg_implicit_diff.html#sphx-glr-auto-examples-ridge-reg-implicit-diff-py"><span class="std std-ref">Implicit differentiation of ridge regression.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/ridge_reg_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-ridge-reg-implicit-diff-py"><span class="std std-ref">Implicit differentiation of ridge regression.</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -341,7 +342,7 @@ ArXiv preprint.</p></li>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="_autosummary/jaxopt.implicit_diff.custom_root.html" class="btn btn-neutral float-right" title="jaxopt.implicit_diff.custom_root" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="_autosummary/jaxopt.ScipyRootFinding.html" class="btn btn-neutral float-left" title="jaxopt.ScipyRootFinding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.AndersonWrapper.html" class="btn btn-neutral float-left" title="jaxopt.AndersonWrapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

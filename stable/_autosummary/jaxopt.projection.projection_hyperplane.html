@@ -136,6 +136,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -258,8 +259,8 @@ a^\top y = b\]</div>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – pytree to project.</p></li>
-<li><p><strong>hyperparams</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>) – tuple <code class="docutils literal notranslate"><span class="pre">hyperparams</span> <span class="pre">=</span> <span class="pre">(a,</span> <span class="pre">b)</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code> is a vector and
-<code class="docutils literal notranslate"><span class="pre">b</span></code> is a scalar.</p></li>
+<li><p><strong>hyperparams</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>) – tuple <code class="docutils literal notranslate"><span class="pre">hyperparams</span> <span class="pre">=</span> <span class="pre">(a,</span> <span class="pre">b)</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code> is a pytree with
+the same structure as <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> is a scalar.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

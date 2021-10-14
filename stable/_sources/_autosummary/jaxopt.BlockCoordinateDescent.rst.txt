@@ -14,8 +14,8 @@
    .. autosummary::
    
       ~BlockCoordinateDescent.__init__
-      ~BlockCoordinateDescent.implicit_diff_solve
       ~BlockCoordinateDescent.init
+      ~BlockCoordinateDescent.init_state
       ~BlockCoordinateDescent.l2_optimality_error
       ~BlockCoordinateDescent.optimality_fun
       ~BlockCoordinateDescent.run
@@ -30,6 +30,7 @@
    .. autosummary::
    
       ~BlockCoordinateDescent.implicit_diff
+      ~BlockCoordinateDescent.implicit_diff_solve
       ~BlockCoordinateDescent.jit
       ~BlockCoordinateDescent.maxiter
       ~BlockCoordinateDescent.tol

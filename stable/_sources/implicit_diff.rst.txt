@@ -30,7 +30,7 @@ Using the ridge regression example from the :ref:`unconstrained optimization
 
   def ridge_reg_objective(params, l2reg, X, y):
     residuals = jnp.dot(X, params) - y
-    return jnp.mean(residuals ** 2) + 0.5 * l2reg * jnp.dot(w ** 2)
+    return jnp.mean(residuals ** 2) + 0.5 * l2reg * jnp.dot(params ** 2)
 
   def ridge_reg_solution(l2reg, X, y):
     gd = jaxopt.GradientDescent(fun=ridge_reg_objective, maxiter=500, implicit_diff=True)
@@ -54,9 +54,9 @@ We can also compose ``ridge_reg_solution`` with other functions::
 
 .. topic:: Examples
 
-   * :ref:`sphx_glr_auto_examples_plot_dataset_distillation.py`
-   * :ref:`sphx_glr_auto_examples_lasso_implicit_diff.py`
-   * :ref:`sphx_glr_auto_examples_sparse_coding.py`
+   * :ref:`sphx_glr_auto_examples_implicit_diff_plot_dataset_distillation.py`
+   * :ref:`sphx_glr_auto_examples_implicit_diff_lasso_implicit_diff.py`
+   * :ref:`sphx_glr_auto_examples_implicit_diff_sparse_coding.py`
 
 Custom solvers
 --------------
@@ -72,7 +72,7 @@ for easily adding implicit differentiation on top of any existing solver.
 
 .. topic:: Examples
 
-   * :ref:`sphx_glr_auto_examples_ridge_reg_implicit_diff.py`
+   * :ref:`sphx_glr_auto_examples_implicit_diff_ridge_reg_implicit_diff.py`
 
 JVPs and VJPs
 -------------

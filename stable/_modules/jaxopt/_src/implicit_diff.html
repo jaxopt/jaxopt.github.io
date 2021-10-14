@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -205,6 +206,7 @@
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">jax</span>
@@ -355,7 +357,8 @@
   <span class="k">return</span> <span class="n">out_args</span><span class="p">,</span> <span class="n">out_kwargs</span><span class="p">,</span> <span class="n">map_back</span>
 
 
-<span class="k">def</span> <span class="nf">_custom_root</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">optimality_fun</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">has_aux</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_custom_root</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">optimality_fun</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">has_aux</span><span class="p">,</span>
+                 <span class="n">reference_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
   <span class="c1"># When caling through `jax.custom_vjp`, jax attempts to resolve all</span>
   <span class="c1"># arguments passed by keyword to positions (this is in order to</span>
   <span class="c1"># match against a `nondiff_argnums` parameter that we do not use</span>
@@ -372,10 +375,19 @@
   <span class="c1"># flattening and unflattening around the `custom_vjp` boundary.</span>
   <span class="c1">#</span>
   <span class="c1"># Once we make it past the `custom_vjp` boundary, we do some more</span>
-  <span class="c1"># work to align arguments with the signature of `optimality_fun`.</span>
+  <span class="c1"># work to align arguments with the reference signature (which is, by</span>
+  <span class="c1"># default, the signature of `optimality_fun`).</span>
 
   <span class="n">solver_fun_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">)</span>
-  <span class="n">optimality_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">reference_signature</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">reference_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reference_signature</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Signature</span><span class="p">):</span>
+    <span class="c1"># If is a CompositeLinearFunction, accesses subfun.</span>
+    <span class="c1"># Otherwise, assumes a Callable.</span>
+    <span class="n">fun</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">reference_signature</span><span class="p">,</span> <span class="s2">&quot;subfun&quot;</span><span class="p">,</span> <span class="n">reference_signature</span><span class="p">)</span>
+    <span class="n">reference_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">fun</span><span class="p">)</span>
 
   <span class="k">def</span> <span class="nf">make_custom_vjp_solver_fun</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">kwarg_keys</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">solver_fun_fwd</span><span class="p">(</span><span class="o">*</span><span class="n">flat_args</span><span class="p">):</span>
@@ -395,14 +407,15 @@
         <span class="n">sol</span> <span class="o">=</span> <span class="n">res</span>
 
       <span class="n">ba_args</span><span class="p">,</span> <span class="n">ba_kwargs</span><span class="p">,</span> <span class="n">map_back</span> <span class="o">=</span> <span class="n">_signature_bind_and_match</span><span class="p">(</span>
-          <span class="n">optimality_signature</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+          <span class="n">reference_signature</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
       <span class="k">if</span> <span class="n">ba_kwargs</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
             <span class="s2">&quot;keyword arguments to solver_fun could not be resolved to &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;positional arguments based on the signature </span><span class="si">{</span><span class="n">signature</span><span class="si">}</span><span class="s2">. This &quot;</span>
-            <span class="s2">&quot;can happen under custom_root if optimality_fun takes catch-all &quot;</span>
-            <span class="s2">&quot;**kwargs, or under custom_fixed_point if fixed_point_fun takes &quot;</span>
-            <span class="s2">&quot;catch-all **kwargs, both of which are currently unsupported.&quot;</span><span class="p">)</span>
+            <span class="s2">&quot;positional arguments based on the signature &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">reference_signature</span><span class="si">}</span><span class="s2">. This can happen under custom_root if &quot;</span>
+            <span class="s2">&quot;optimality_fun takes catch-all **kwargs, or under &quot;</span>
+            <span class="s2">&quot;custom_fixed_point if fixed_point_fun takes catch-all **kwargs, &quot;</span>
+            <span class="s2">&quot;both of which are currently unsupported.&quot;</span><span class="p">)</span>
 
       <span class="c1"># Compute VJPs w.r.t. args.</span>
       <span class="n">vjps</span> <span class="o">=</span> <span class="n">root_vjp</span><span class="p">(</span><span class="n">optimality_fun</span><span class="o">=</span><span class="n">optimality_fun</span><span class="p">,</span> <span class="n">sol</span><span class="o">=</span><span class="n">sol</span><span class="p">,</span>
@@ -432,7 +445,8 @@
 
 <div class="viewcode-block" id="custom_root"><a class="viewcode-back" href="../../../_autosummary/jaxopt.implicit_diff.custom_root.html#jaxopt.implicit_diff.custom_root">[docs]</a><span class="k">def</span> <span class="nf">custom_root</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
                 <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="n">solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">):</span>
+                <span class="n">solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">,</span>
+                <span class="n">reference_signature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Decorator for adding implicit differentiation to a root solver.</span>
 
 <span class="sd">  Args:</span>
@@ -441,19 +455,34 @@
 <span class="sd">      solution / root ``sol``.</span>
 <span class="sd">    has_aux: whether the decorated solver function returns auxiliary data.</span>
 <span class="sd">    solve: a linear solver of the form ``solve(matvec, b)``.</span>
+<span class="sd">    reference_signature: optional function signature</span>
+<span class="sd">      (i.e. arguments and keyword arguments), with which the</span>
+<span class="sd">      solver and optimality functions are expected to agree. Defaults</span>
+<span class="sd">      to ``optimality_fun``. It is required that solver and optimality</span>
+<span class="sd">      functions share the same input signature, but both might be</span>
+<span class="sd">      defined in such a way that the signature correspondence is</span>
+<span class="sd">      ambiguous (e.g. if both accept catch-all ``**kwargs``). To</span>
+<span class="sd">      satisfy custom_root&#39;s requirement, any function with an</span>
+<span class="sd">      unambiguous signature can be provided here.</span>
 
 <span class="sd">  Returns:</span>
 <span class="sd">    A solver function decorator, i.e.,</span>
 <span class="sd">    ``custom_root(optimality_fun)(solver_fun)``.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">solve</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">solve</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span>
+
   <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">_custom_root</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">optimality_fun</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">has_aux</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_custom_root</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">optimality_fun</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">has_aux</span><span class="p">,</span>
+                        <span class="n">reference_signature</span><span class="p">)</span>
+
   <span class="k">return</span> <span class="n">wrapper</span></div>
 
 
 <div class="viewcode-block" id="custom_fixed_point"><a class="viewcode-back" href="../../../_autosummary/jaxopt.implicit_diff.custom_fixed_point.html#jaxopt.implicit_diff.custom_fixed_point">[docs]</a><span class="k">def</span> <span class="nf">custom_fixed_point</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
                        <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                       <span class="n">solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">):</span>
+                       <span class="n">solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">,</span>
+                       <span class="n">reference_signature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Decorator for adding implicit differentiation to a fixed point solver.</span>
 
 <span class="sd">  Args:</span>
@@ -462,6 +491,15 @@
 <span class="sd">      solution ``sol``.</span>
 <span class="sd">    has_aux: whether the decorated solver function returns auxiliary data.</span>
 <span class="sd">    solve: a linear solver of the form ``solve(matvec, b)``.</span>
+<span class="sd">    reference_signature: optional function whose signature</span>
+<span class="sd">      (i.e. arguments and keyword arguments) is one with which the</span>
+<span class="sd">      solver and fixed-point functions are expected to agree. Defaults</span>
+<span class="sd">      to ``fixed_point_fun``. It is required that solver and</span>
+<span class="sd">      fixed-point functions share the same input signature, but both</span>
+<span class="sd">      might be defined in such a way that the signature correspondence</span>
+<span class="sd">      is ambiguous (e.g. if both accept catch-all ``**kwargs``). To</span>
+<span class="sd">      satisfy custom_fixed_points&#39;s requirement, any function with an</span>
+<span class="sd">      unambiguous signature can be provided here.</span>
 
 <span class="sd">  Returns:</span>
 <span class="sd">    A solver function decorator, i.e.,</span>
@@ -475,7 +513,8 @@
 
   <span class="k">return</span> <span class="n">custom_root</span><span class="p">(</span><span class="n">optimality_fun</span><span class="o">=</span><span class="n">optimality_fun</span><span class="p">,</span>
                      <span class="n">has_aux</span><span class="o">=</span><span class="n">has_aux</span><span class="p">,</span>
-                     <span class="n">solve</span><span class="o">=</span><span class="n">solve</span><span class="p">)</span></div>
+                     <span class="n">solve</span><span class="o">=</span><span class="n">solve</span><span class="p">,</span>
+                     <span class="n">reference_signature</span><span class="o">=</span><span class="n">reference_signature</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">make_kkt_optimality_fun</span><span class="p">(</span><span class="n">obj_fun</span><span class="p">,</span> <span class="n">eq_fun</span><span class="p">,</span> <span class="n">ineq_fun</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
