@@ -19,7 +19,7 @@
 
 
 Sparse coding.
-=============
+==============
 
 .. GENERATED FROM PYTHON SOURCE LINES 19-241
 

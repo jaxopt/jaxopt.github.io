@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Multiclass linear SVM (without intercept). &mdash; JAXopt 0.1 documentation</title>
+  <title>Multiclass linear SVM (without intercept). &mdash; JAXopt 0.1.1 documentation</title>
   
 
   
@@ -245,9 +245,9 @@ to download the full example code</p>
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
 
 
-<span class="k">def</span> <span class="nf">multiclass_linear_svm_skl</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">multiclass_linear_svm_skl</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
   <span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">LinearSVC</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s2">&quot;hinge&quot;</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multi_class</span><span class="o">=</span><span class="s2">&quot;crammer_singer&quot;</span><span class="p">,</span>
-                      <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">lam</span><span class="p">,</span> <span class="n">fit_intercept</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                      <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">fit_intercept</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">svc</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">T</span>
 
 
@@ -266,19 +266,23 @@ to download the full example code</p>
   <span class="n">block_prox</span> <span class="o">=</span> <span class="n">prox</span><span class="o">.</span><span class="n">make_prox_from_projection</span><span class="p">(</span><span class="n">projection</span><span class="o">.</span><span class="n">projection_simplex</span><span class="p">)</span>
   <span class="n">fun</span> <span class="o">=</span> <span class="n">objective</span><span class="o">.</span><span class="n">multiclass_linear_svm_dual</span>
   <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
-  <span class="n">lam</span> <span class="o">=</span> <span class="mf">1000.0</span>
+  <span class="n">l2reg</span> <span class="o">=</span> <span class="mf">1000.0</span>
   <span class="n">beta_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_classes</span>
 
   <span class="c1"># Run solver.</span>
   <span class="n">bcd</span> <span class="o">=</span> <span class="n">BlockCoordinateDescent</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">block_prox</span><span class="o">=</span><span class="n">block_prox</span><span class="p">,</span>
                                <span class="n">maxiter</span><span class="o">=</span><span class="mi">3500</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
-  <span class="n">sol</span> <span class="o">=</span> <span class="n">bcd</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">beta_init</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="n">lam</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+  <span class="n">sol</span> <span class="o">=</span> <span class="n">bcd</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">beta_init</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 
   <span class="c1"># Compare against sklearn.</span>
-  <span class="n">W_skl</span> <span class="o">=</span> <span class="n">multiclass_linear_svm_skl</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lam</span><span class="p">)</span>
-  <span class="n">W_fit</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">sol</span><span class="o">.</span><span class="n">params</span><span class="p">))</span> <span class="o">/</span> <span class="n">lam</span>
+  <span class="n">W_skl</span> <span class="o">=</span> <span class="n">multiclass_linear_svm_skl</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">)</span>
+  <span class="n">W_fit</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">sol</span><span class="o">.</span><span class="n">params</span><span class="p">))</span> <span class="o">/</span> <span class="n">l2reg</span>
 
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;scikit-learn solution:&quot;</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">W_skl</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BlockCoordinateDescent solution:&quot;</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">W_fit</span><span class="p">)</span>
 
 

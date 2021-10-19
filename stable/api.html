@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>API at a glance &mdash; JAXopt 0.1 documentation</title>
+  <title>API at a glance &mdash; JAXopt 0.1.1 documentation</title>
   
 
   
@@ -131,6 +131,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#stochastic">Stochastic</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html">jaxopt.ArmijoSGD</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html">jaxopt.OptaxSolver</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html">jaxopt.PolyakSGD</a></li>
 </ul>
@@ -335,10 +336,13 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, pre_update, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a>(fun[, aggressiveness, …])</p></td>
+<td><p>SGD with Armijo line search.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, pre_update, …])</p></td>
 <td><p>Optax solver.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, max_stepsize, delta, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, max_stepsize, delta, …])</p></td>
 <td><p>SGD with Polyak step size.</p></td>
 </tr>
 </tbody>
