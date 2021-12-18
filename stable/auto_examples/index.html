@@ -1,43 +1,23 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Example gallery &mdash; JAXopt 0.1.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-rendered-html.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Example gallery &mdash; JAXopt 0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
@@ -45,39 +25,20 @@
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Multiclass linear SVM (without intercept)." href="constrained/multiclass_linear_svm.html" />
+    <link rel="next" title="Non-negative matrix factorizaton (NMF) using alternating minimization." href="constrained/nmf.html" />
     <link rel="prev" title="API at a glance" href="../api.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> JAXopt
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -85,26 +46,17 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../unconstrained.html">Unconstrained optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
@@ -117,9 +69,9 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example gallery</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#constrained-optimization">Constrained optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="constrained/nmf.html">Non-negative matrix factorizaton (NMF) using alternating minimization.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="constrained/multiclass_linear_svm.html">Multiclass linear SVM (without intercept).</a></li>
 <li class="toctree-l3"><a class="reference internal" href="constrained/binary_kernel_svm_with_intercept.html">Binary kernel SVM with intercept.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constrained/nmf.html">Non-negative matrix factorizaton (NMF) using alternating minimization.</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#deep-learning">Deep learning</a><ul>
@@ -128,6 +80,7 @@
 <li class="toctree-l3"><a class="reference internal" href="deep_learning/flax_image_classif.html">Image classification example with Flax and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="deep_learning/haiku_image_classif.html">Image classification example with Haiku and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="deep_learning/plot_sgd_solvers.html">Comparison of different SGD algorithms.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deep_learning/flax_resnet.html">Resnet example with Flax and JAXopt.</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#fixed-point-resolution">Fixed point resolution</a><ul>
@@ -155,71 +108,30 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">JAXopt</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Example gallery</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/auto_examples/index.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -244,8 +156,8 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="example-gallery">
-<span id="general-examples"></span><span id="sphx-glr-auto-examples"></span><h1>Example gallery<a class="headerlink" href="#example-gallery" title="Permalink to this headline">¶</a></h1>
+<section id="example-gallery">
+<span id="general-examples"></span><span id="sphx-glr-auto-examples"></span><h1>Example gallery<a class="headerlink" href="#example-gallery" title="Permalink to this headline"></a></h1>
 <p>To clone the repository and the examples, please run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/google/jaxopt.git
 </pre></div>
@@ -255,111 +167,151 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install -r examples/requirements.txt
 </pre></div>
 </div>
-<div class="sphx-glr-clear"></div><div class="section" id="constrained-optimization">
-<span id="constrained-examples"></span><span id="sphx-glr-auto-examples-constrained"></span><h2>Constrained optimization<a class="headerlink" href="#constrained-optimization" title="Permalink to this headline">¶</a></h2>
-<div class="sphx-glr-thumbcontainer" tooltip="Multiclass linear SVM (without intercept)."><div class="figure align-default" id="id1">
-<img alt="Multiclass linear SVM (without intercept)." src="../_images/sphx_glr_multiclass_linear_svm_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="constrained/multiclass_linear_svm.html#sphx-glr-auto-examples-constrained-multiclass-linear-svm-py"><span class="std std-ref">Multiclass linear SVM (without intercept).</span></a></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</div>
-</div><div class="toctree-wrapper compound">
-</div>
-<div class="sphx-glr-thumbcontainer" tooltip="The dual objective of binary kernel SVMs with an intercept contains both box constraints and an..."><div class="figure align-default" id="id2">
-<img alt="Binary kernel SVM with intercept." src="../_images/sphx_glr_binary_kernel_svm_with_intercept_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</div>
-</div><div class="toctree-wrapper compound">
-</div>
-<div class="sphx-glr-thumbcontainer" tooltip="Non-negative matrix factorizaton (NMF) using alternating minimization."><div class="figure align-default" id="id3">
+<div class="sphx-glr-clear"></div><section id="constrained-optimization">
+<span id="constrained-examples"></span><span id="sphx-glr-auto-examples-constrained"></span><h2>Constrained optimization<a class="headerlink" href="#constrained-optimization" title="Permalink to this headline"></a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="Non-negative matrix factorizaton (NMF) using alternating minimization."><figure class="align-default" id="id1">
 <img alt="Non-negative matrix factorizaton (NMF) using alternating minimization." src="../_images/sphx_glr_nmf_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="constrained/nmf.html#sphx-glr-auto-examples-constrained-nmf-py"><span class="std std-ref">Non-negative matrix factorizaton (NMF) using alternating minimization.</span></a></span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="constrained/nmf.html#sphx-glr-auto-examples-constrained-nmf-py"><span class="std std-ref">Non-negative matrix factorizaton (NMF) using alternating minimization.</span></a></span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-clear"></div></div>
-<div class="section" id="deep-learning">
-<span id="deep-learning-examples"></span><span id="sphx-glr-auto-examples-deep-learning"></span><h2>Deep learning<a class="headerlink" href="#deep-learning" title="Permalink to this headline">¶</a></h2>
-<div class="sphx-glr-thumbcontainer" tooltip="The following code trains a convolutional neural network (CNN) to be robust with respect to the..."><div class="figure align-default" id="id4">
+<div class="sphx-glr-thumbcontainer" tooltip="This quadratic program can be solved either with OSQP or with block coordinate descent.    Refe..."><figure class="align-default" id="id2">
+<img alt="Multiclass linear SVM (without intercept)." src="../_images/sphx_glr_multiclass_linear_svm_thumb.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="constrained/multiclass_linear_svm.html#sphx-glr-auto-examples-constrained-multiclass-linear-svm-py"><span class="std std-ref">Multiclass linear SVM (without intercept).</span></a></span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-thumbcontainer" tooltip="The dual objective of binary kernel SVMs with an intercept contains both box constraints and an..."><figure class="align-default" id="id3">
+<img alt="Binary kernel SVM with intercept." src="../_images/sphx_glr_binary_kernel_svm_with_intercept_thumb.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-clear"></div></section>
+<section id="deep-learning">
+<span id="deep-learning-examples"></span><span id="sphx-glr-auto-examples-deep-learning"></span><h2>Deep learning<a class="headerlink" href="#deep-learning" title="Permalink to this headline"></a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="The following code trains a convolutional neural network (CNN) to be robust with respect to the..."><figure class="align-default" id="id4">
 <img alt="Robust training." src="../_images/sphx_glr_robust_training_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="deep_learning/robust_training.html#sphx-glr-auto-examples-deep-learning-robust-training-py"><span class="std std-ref">Robust training.</span></a></span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/robust_training.html#sphx-glr-auto-examples-deep-learning-robust-training-py"><span class="std std-ref">Robust training.</span></a></span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="VAE example with Haiku and JAXopt."><div class="figure align-default" id="id5">
+<div class="sphx-glr-thumbcontainer" tooltip="VAE example with Haiku and JAXopt."><figure class="align-default" id="id5">
 <img alt="VAE example with Haiku and JAXopt." src="../_images/sphx_glr_haiku_vae_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="deep_learning/haiku_vae.html#sphx-glr-auto-examples-deep-learning-haiku-vae-py"><span class="std std-ref">VAE example with Haiku and JAXopt.</span></a></span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/haiku_vae.html#sphx-glr-auto-examples-deep-learning-haiku-vae-py"><span class="std std-ref">VAE example with Haiku and JAXopt.</span></a></span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="Image classification example with Flax and JAXopt."><div class="figure align-default" id="id6">
+<div class="sphx-glr-thumbcontainer" tooltip="Image classification example with Flax and JAXopt."><figure class="align-default" id="id6">
 <img alt="Image classification example with Flax and JAXopt." src="../_images/sphx_glr_flax_image_classif_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="deep_learning/flax_image_classif.html#sphx-glr-auto-examples-deep-learning-flax-image-classif-py"><span class="std std-ref">Image classification example with Flax and JAXopt.</span></a></span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/flax_image_classif.html#sphx-glr-auto-examples-deep-learning-flax-image-classif-py"><span class="std std-ref">Image classification example with Flax and JAXopt.</span></a></span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="Image classification example with Haiku and JAXopt."><div class="figure align-default" id="id7">
+<div class="sphx-glr-thumbcontainer" tooltip="Image classification example with Haiku and JAXopt."><figure class="align-default" id="id7">
 <img alt="Image classification example with Haiku and JAXopt." src="../_images/sphx_glr_haiku_image_classif_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="deep_learning/haiku_image_classif.html#sphx-glr-auto-examples-deep-learning-haiku-image-classif-py"><span class="std std-ref">Image classification example with Haiku and JAXopt.</span></a></span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/haiku_image_classif.html#sphx-glr-auto-examples-deep-learning-haiku-image-classif-py"><span class="std std-ref">Image classification example with Haiku and JAXopt.</span></a></span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="The purpose of this example is to illustrate the power of adaptive stepsize algorithms."><div class="figure align-default" id="id8">
+<div class="sphx-glr-thumbcontainer" tooltip="The purpose of this example is to illustrate the power of adaptive stepsize algorithms."><figure class="align-default" id="id8">
 <img alt="Comparison of different SGD algorithms." src="../_images/sphx_glr_plot_sgd_solvers_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="deep_learning/plot_sgd_solvers.html#sphx-glr-auto-examples-deep-learning-plot-sgd-solvers-py"><span class="std std-ref">Comparison of different SGD algorithms.</span></a></span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/plot_sgd_solvers.html#sphx-glr-auto-examples-deep-learning-plot-sgd-solvers-py"><span class="std std-ref">Comparison of different SGD algorithms.</span></a></span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-clear"></div></div>
-<div class="section" id="fixed-point-resolution">
-<span id="fixed-point-examples"></span><span id="sphx-glr-auto-examples-fixed-point"></span><h2>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Permalink to this headline">¶</a></h2>
-<div class="sphx-glr-thumbcontainer" tooltip="Thanks to the `Picard–Lindelöf theorem, &lt;https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3..."><div class="figure align-default" id="id9">
+<div class="sphx-glr-thumbcontainer" tooltip="Resnet example with Flax and JAXopt."><figure class="align-default" id="id9">
+<img alt="Resnet example with Flax and JAXopt." src="../_images/sphx_glr_flax_resnet_thumb.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/flax_resnet.html#sphx-glr-auto-examples-deep-learning-flax-resnet-py"><span class="std std-ref">Resnet example with Flax and JAXopt.</span></a></span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-clear"></div></section>
+<section id="fixed-point-resolution">
+<span id="fixed-point-examples"></span><span id="sphx-glr-auto-examples-fixed-point"></span><h2>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Permalink to this headline"></a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="Thanks to the `Picard–Lindelöf theorem, &lt;https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3..."><figure class="align-default" id="id10">
 <img alt="Anderson acceleration in application to Picard–Lindelöf theorem." src="../_images/sphx_glr_plot_picard_ode_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="fixed_point/plot_picard_ode.html#sphx-glr-auto-examples-fixed-point-plot-picard-ode-py"><span class="std std-ref">Anderson acceleration in application to Picard–Lindelöf theorem.</span></a></span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="fixed_point/plot_picard_ode.html#sphx-glr-auto-examples-fixed-point-plot-picard-ode-py"><span class="std std-ref">Anderson acceleration in application to Picard–Lindelöf theorem.</span></a></span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="Block coordinate descent converges to a fixed point. It can therefore be accelerated with Ander..."><div class="figure align-default" id="id10">
+<div class="sphx-glr-thumbcontainer" tooltip="Block coordinate descent converges to a fixed point. It can therefore be accelerated with Ander..."><figure class="align-default" id="id11">
 <img alt="Anderson acceleration of block coordinate descent." src="../_images/sphx_glr_plot_anderson_wrapper_cd_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="fixed_point/plot_anderson_wrapper_cd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"><span class="std std-ref">Anderson acceleration of block coordinate descent.</span></a></span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="fixed_point/plot_anderson_wrapper_cd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"><span class="std std-ref">Anderson acceleration of block coordinate descent.</span></a></span><a class="headerlink" href="#id11" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="For a strictly convex function f, \nabla f(x)=0 implies that x is the global optimum f."><div class="figure align-default" id="id11">
+<div class="sphx-glr-thumbcontainer" tooltip="For a strictly convex function f, \nabla f(x)=0 implies that x is the global optimum f."><figure class="align-default" id="id12">
 <img alt="Anderson acceleration of gradient descent." src="../_images/sphx_glr_plot_anderson_accelerate_gd_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="fixed_point/plot_anderson_accelerate_gd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-accelerate-gd-py"><span class="std std-ref">Anderson acceleration of gradient descent.</span></a></span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="fixed_point/plot_anderson_accelerate_gd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-accelerate-gd-py"><span class="std std-ref">Anderson acceleration of gradient descent.</span></a></span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="This implementation is strongly inspired by the Pytorch code snippets in [3]."><div class="figure align-default" id="id12">
+<div class="sphx-glr-thumbcontainer" tooltip="This implementation is strongly inspired by the Pytorch code snippets in [3]."><figure class="align-default" id="id13">
 <img alt="Deep Equilibrium (DEQ) model in Flax with Anderson acceleration." src="../_images/sphx_glr_deep_equilibrium_model_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="fixed_point/deep_equilibrium_model.html#sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"><span class="std std-ref">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</span></a></span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="fixed_point/deep_equilibrium_model.html#sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"><span class="std std-ref">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</span></a></span><a class="headerlink" href="#id13" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-clear"></div></div>
-<div class="section" id="implicit-differentiation">
-<span id="implicit-diff-examples"></span><span id="sphx-glr-auto-examples-implicit-diff"></span><h2>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this headline">¶</a></h2>
-<div class="sphx-glr-thumbcontainer" tooltip="Dataset distillation `[Maclaurin et al. 2015] &lt;https://arxiv.org/pdf/1502.03492.pdf&gt;`_, `[Wang ..."><div class="figure align-default" id="id13">
+<div class="sphx-glr-clear"></div></section>
+<section id="implicit-differentiation">
+<span id="implicit-diff-examples"></span><span id="sphx-glr-auto-examples-implicit-diff"></span><h2>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this headline"></a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="Dataset distillation `[Maclaurin et al. 2015] &lt;https://arxiv.org/pdf/1502.03492.pdf&gt;`_, `[Wang ..."><figure class="align-default" id="id14">
 <img alt="Dataset distillation" src="../_images/sphx_glr_plot_dataset_distillation_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="implicit_diff/plot_dataset_distillation.html#sphx-glr-auto-examples-implicit-diff-plot-dataset-distillation-py"><span class="std std-ref">Dataset distillation</span></a></span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="implicit_diff/plot_dataset_distillation.html#sphx-glr-auto-examples-implicit-diff-plot-dataset-distillation-py"><span class="std std-ref">Dataset distillation</span></a></span><a class="headerlink" href="#id14" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of lasso."><div class="figure align-default" id="id14">
+<div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of lasso."><figure class="align-default" id="id15">
 <img alt="Implicit differentiation of lasso." src="../_images/sphx_glr_lasso_implicit_diff_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="implicit_diff/lasso_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="implicit_diff/lasso_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of ridge regression."><div class="figure align-default" id="id15">
+<div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of ridge regression."><figure class="align-default" id="id16">
 <img alt="Implicit differentiation of ridge regression." src="../_images/sphx_glr_ridge_reg_implicit_diff_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="implicit_diff/ridge_reg_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-ridge-reg-implicit-diff-py"><span class="std std-ref">Implicit differentiation of ridge regression.</span></a></span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="implicit_diff/ridge_reg_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-ridge-reg-implicit-diff-py"><span class="std std-ref">Implicit differentiation of ridge regression.</span></a></span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbcontainer" tooltip="Sparse coding."><div class="figure align-default" id="id16">
+<div class="sphx-glr-thumbcontainer" tooltip="Sparse coding."><figure class="align-default" id="id17">
 <img alt="Sparse coding." src="../_images/sphx_glr_sparse_coding_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="implicit_diff/sparse_coding.html#sphx-glr-auto-examples-implicit-diff-sparse-coding-py"><span class="std std-ref">Sparse coding.</span></a></span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="implicit_diff/sparse_coding.html#sphx-glr-auto-examples-implicit-diff-sparse-coding-py"><span class="std std-ref">Sparse coding.</span></a></span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </div><div class="toctree-wrapper compound">
 </div>
 <div class="sphx-glr-clear"></div><div class="sphx-glr-footer class sphx-glr-footer-gallery docutils container">
@@ -371,55 +323,38 @@
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="constrained/multiclass_linear_svm.html" class="btn btn-neutral float-right" title="Multiclass linear SVM (without intercept)." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../api.html" class="btn btn-neutral float-left" title="API at a glance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constrained/nmf.html" class="btn btn-neutral float-right" title="Non-negative matrix factorizaton (NMF) using alternating minimization." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the JAXopt authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the JAXopt authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

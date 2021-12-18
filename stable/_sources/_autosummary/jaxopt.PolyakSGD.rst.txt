@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~PolyakSGD.__init__
-      ~PolyakSGD.init
+      ~PolyakSGD.attribute_names
+      ~PolyakSGD.attribute_values
       ~PolyakSGD.init_state
       ~PolyakSGD.l2_optimality_error
       ~PolyakSGD.optimality_fun

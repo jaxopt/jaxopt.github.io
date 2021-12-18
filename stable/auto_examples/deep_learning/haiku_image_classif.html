@@ -1,43 +1,23 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Image classification example with Haiku and JAXopt. &mdash; JAXopt 0.1.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-binder.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-dataframe.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-rendered-html.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Image classification example with Haiku and JAXopt. &mdash; JAXopt 0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
@@ -45,39 +25,20 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Comparison of different SGD algorithms." href="plot_sgd_solvers.html" />
     <link rel="prev" title="Image classification example with Flax and JAXopt." href="flax_image_classif.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> JAXopt
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -85,26 +46,17 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
@@ -123,6 +75,7 @@
 <li class="toctree-l3"><a class="reference internal" href="flax_image_classif.html">Image classification example with Flax and JAXopt.</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Image classification example with Haiku and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_sgd_solvers.html">Comparison of different SGD algorithms.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flax_resnet.html">Resnet example with Flax and JAXopt.</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
@@ -138,73 +91,31 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">JAXopt</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../index.html">Example gallery</a> &raquo;</li>
-        
       <li>Image classification example with Haiku and JAXopt.</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/auto_examples/deep_learning/haiku_image_classif.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -234,8 +145,8 @@
 <p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-deep-learning-haiku-image-classif-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<div class="sphx-glr-example-title section" id="image-classification-example-with-haiku-and-jaxopt">
-<span id="sphx-glr-auto-examples-deep-learning-haiku-image-classif-py"></span><h1>Image classification example with Haiku and JAXopt.<a class="headerlink" href="#image-classification-example-with-haiku-and-jaxopt" title="Permalink to this headline">¶</a></h1>
+<section class="sphx-glr-example-title" id="image-classification-example-with-haiku-and-jaxopt">
+<span id="sphx-glr-auto-examples-deep-learning-haiku-image-classif-py"></span><h1>Image classification example with Haiku and JAXopt.<a class="headerlink" href="#image-classification-example-with-haiku-and-jaxopt" title="Permalink to this headline"></a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
 
 <span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
@@ -255,6 +166,7 @@ to download the full example code</p>
 <span class="kn">import</span> <span class="nn">optax</span>
 
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 
 <span class="n">dataset_names</span> <span class="o">=</span> <span class="p">[</span>
@@ -265,13 +177,15 @@ to download the full example code</p>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;l2reg&quot;</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="s2">&quot;L2 regularization.&quot;</span><span class="p">)</span>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="s2">&quot;Learning rate (used in adam).&quot;</span><span class="p">)</span>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_bool</span><span class="p">(</span><span class="s2">&quot;manual_loop&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Whether to use a manual training loop.&quot;</span><span class="p">)</span>
-<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;maxiter&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;Maximum number of iterations.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;epochs&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Number of passes over the dataset.&quot;</span><span class="p">)</span>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;max_stepsize&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;Maximum step size (used in polyak-sgd, armijo-sgd).&quot;</span><span class="p">)</span>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;aggressiveness&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;Aggressiveness of line search in armijo-sgd.&quot;</span><span class="p">)</span>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;momentum&quot;</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s2">&quot;Momentum strength (used in adam, polyak-sgd, armijo-sgd).&quot;</span><span class="p">)</span>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s2">&quot;dataset&quot;</span><span class="p">,</span> <span class="s2">&quot;mnist&quot;</span><span class="p">,</span> <span class="n">dataset_names</span><span class="p">,</span> <span class="s2">&quot;Dataset to train on.&quot;</span><span class="p">)</span>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;cnn&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;cnn&quot;</span><span class="p">,</span> <span class="s2">&quot;mlp&quot;</span><span class="p">],</span> <span class="s2">&quot;Model architecture.&quot;</span><span class="p">)</span>
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s2">&quot;solver&quot;</span><span class="p">,</span> <span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="s2">&quot;sgd&quot;</span><span class="p">,</span> <span class="s2">&quot;polyak-sgd&quot;</span><span class="p">,</span> <span class="s2">&quot;armijo-sgd&quot;</span><span class="p">],</span> <span class="s2">&quot;Solver to use.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;train_batch_size&quot;</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="s2">&quot;Batch size at train time.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;test_batch_size&quot;</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="s2">&quot;Batch size at test time.&quot;</span><span class="p">)</span>
 <span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
 
 
@@ -322,9 +236,14 @@ to download the full example code</p>
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
   <span class="k">del</span> <span class="n">argv</span>
 
-  <span class="n">train_ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
-  <span class="n">test_ds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+  <span class="c1"># Hide any GPUs from TensorFlow. Otherwise TF might reserve memory and make</span>
+  <span class="c1"># it unavailable to JAX.</span>
+  <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">([],</span> <span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
+
+  <span class="n">train_ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">)</span>
+  <span class="n">test_ds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">)</span>
   <span class="n">num_classes</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_classes</span>
+  <span class="n">maxiter</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">epochs</span> <span class="o">*</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span>
 
   <span class="c1"># Initialize parameters.</span>
   <span class="n">net</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">net_fun</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">)</span>
@@ -357,28 +276,28 @@ to download the full example code</p>
   <span class="c1"># Initialize solver.</span>
 
   <span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s2">&quot;adam&quot;</span><span class="p">:</span>
-    <span class="c1"># Equilent to:</span>
+    <span class="c1"># Equivalent to:</span>
     <span class="c1"># opt = optax.chain(optax.scale_by_adam(b1=0.9, b2=0.999, eps=1e-8),</span>
     <span class="c1">#                   optax.scale(-FLAGS.learning_rate))</span>
     <span class="n">opt</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
-    <span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span>
                          <span class="n">pre_update</span><span class="o">=</span><span class="n">print_accuracy</span><span class="p">)</span>
 
   <span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s2">&quot;sgd&quot;</span><span class="p">:</span>
     <span class="n">opt</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">sgd</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">momentum</span><span class="p">)</span>
-    <span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span>
                          <span class="n">pre_update</span><span class="o">=</span><span class="n">print_accuracy</span><span class="p">)</span>
 
 
   <span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s2">&quot;polyak-sgd&quot;</span><span class="p">:</span>
-    <span class="n">solver</span> <span class="o">=</span> <span class="n">PolyakSGD</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">PolyakSGD</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span>
                        <span class="n">momentum</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span>
                        <span class="n">max_stepsize</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
                        <span class="n">pre_update</span><span class="o">=</span><span class="n">print_accuracy</span><span class="p">)</span>
 
 
   <span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s2">&quot;armijo-sgd&quot;</span><span class="p">:</span>
-    <span class="n">solver</span> <span class="o">=</span> <span class="n">ArmijoSGD</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">ArmijoSGD</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span>
                        <span class="n">aggressiveness</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">aggressiveness</span><span class="p">,</span>
                        <span class="n">momentum</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span>
                        <span class="n">max_stepsize</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
@@ -396,7 +315,7 @@ to download the full example code</p>
   <span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">manual_loop</span><span class="p">:</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">maxiter</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxiter</span><span class="p">):</span>
       <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
                                     <span class="n">l2reg</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span>
                                     <span class="n">data</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">))</span>
@@ -422,54 +341,37 @@ to download the full example code</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="plot_sgd_solvers.html" class="btn btn-neutral float-right" title="Comparison of different SGD algorithms." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="flax_image_classif.html" class="btn btn-neutral float-left" title="Image classification example with Flax and JAXopt." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plot_sgd_solvers.html" class="btn btn-neutral float-right" title="Comparison of different SGD algorithms." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the JAXopt authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the JAXopt authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

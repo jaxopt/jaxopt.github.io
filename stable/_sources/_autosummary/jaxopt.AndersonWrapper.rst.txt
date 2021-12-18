@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~AndersonWrapper.__init__
-      ~AndersonWrapper.init
+      ~AndersonWrapper.attribute_names
+      ~AndersonWrapper.attribute_values
       ~AndersonWrapper.init_state
       ~AndersonWrapper.l2_optimality_error
       ~AndersonWrapper.optimality_fun

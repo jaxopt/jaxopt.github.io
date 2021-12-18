@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~BlockCoordinateDescent.__init__
-      ~BlockCoordinateDescent.init
+      ~BlockCoordinateDescent.attribute_names
+      ~BlockCoordinateDescent.attribute_values
       ~BlockCoordinateDescent.init_state
       ~BlockCoordinateDescent.l2_optimality_error
       ~BlockCoordinateDescent.optimality_fun

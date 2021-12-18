@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~GradientDescent.__init__
-      ~GradientDescent.init
+      ~GradientDescent.attribute_names
+      ~GradientDescent.attribute_values
       ~GradientDescent.init_state
       ~GradientDescent.l2_optimality_error
       ~GradientDescent.optimality_fun

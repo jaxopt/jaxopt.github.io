@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~MirrorDescent.__init__
-      ~MirrorDescent.init
+      ~MirrorDescent.attribute_names
+      ~MirrorDescent.attribute_values
       ~MirrorDescent.init_state
       ~MirrorDescent.l2_optimality_error
       ~MirrorDescent.make_projection_grad

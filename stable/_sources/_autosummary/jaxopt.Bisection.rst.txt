@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~Bisection.__init__
-      ~Bisection.init
+      ~Bisection.attribute_names
+      ~Bisection.attribute_values
       ~Bisection.init_state
       ~Bisection.l2_optimality_error
       ~Bisection.run

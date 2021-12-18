@@ -38,7 +38,28 @@ Constrained optimization
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Multiclass linear SVM (without intercept).">
+    <div class="sphx-glr-thumbcontainer" tooltip="Non-negative matrix factorizaton (NMF) using alternating minimization.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/constrained/images/thumb/sphx_glr_nmf_thumb.png
+     :alt: Non-negative matrix factorizaton (NMF) using alternating minimization.
+
+     :ref:`sphx_glr_auto_examples_constrained_nmf.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/constrained/nmf
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This quadratic program can be solved either with OSQP or with block coordinate descent.    Refe...">
 
 .. only:: html
 
@@ -77,27 +98,6 @@ Constrained optimization
    :hidden:
 
    /auto_examples/constrained/binary_kernel_svm_with_intercept
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="Non-negative matrix factorizaton (NMF) using alternating minimization.">
-
-.. only:: html
-
- .. figure:: /auto_examples/constrained/images/thumb/sphx_glr_nmf_thumb.png
-     :alt: Non-negative matrix factorizaton (NMF) using alternating minimization.
-
-     :ref:`sphx_glr_auto_examples_constrained_nmf.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/constrained/nmf
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
@@ -218,6 +218,27 @@ Deep learning
    :hidden:
 
    /auto_examples/deep_learning/plot_sgd_solvers
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Resnet example with Flax and JAXopt.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/deep_learning/images/thumb/sphx_glr_flax_resnet_thumb.png
+     :alt: Resnet example with Flax and JAXopt.
+
+     :ref:`sphx_glr_auto_examples_deep_learning_flax_resnet.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/deep_learning/flax_resnet
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>

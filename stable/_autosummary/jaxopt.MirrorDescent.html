@@ -1,43 +1,23 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>jaxopt.MirrorDescent &mdash; JAXopt 0.1.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-rendered-html.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>jaxopt.MirrorDescent &mdash; JAXopt 0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
@@ -45,39 +25,20 @@
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="jaxopt.QuadraticProgramming" href="jaxopt.QuadraticProgramming.html" />
+    <link rel="next" title="jaxopt.ScipyBoundedMinimize" href="jaxopt.ScipyBoundedMinimize.html" />
     <link rel="prev" title="jaxopt.projection.projection_box_section" href="jaxopt.projection.projection_box_section.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> JAXopt
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -85,18 +46,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
@@ -107,13 +57,14 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.MirrorDescent</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../constrained.html#quadratic-programming">Quadratic programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../constrained.html#box-constraints">Box constraints</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
@@ -134,73 +85,31 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">JAXopt</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../constrained.html">Constrained optimization</a> &raquo;</li>
-        
       <li>jaxopt.MirrorDescent</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/_autosummary/jaxopt.MirrorDescent.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -225,11 +134,11 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="jaxopt-mirrordescent">
-<h1>jaxopt.MirrorDescent<a class="headerlink" href="#jaxopt-mirrordescent" title="Permalink to this headline">¶</a></h1>
+<section id="jaxopt-mirrordescent">
+<h1>jaxopt.MirrorDescent<a class="headerlink" href="#jaxopt-mirrordescent" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">MirrorDescent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_grad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">MirrorDescent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_grad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent" title="Permalink to this definition"></a></dt>
 <dd><p>Mirror descent solver.</p>
 <dl class="simple">
 <dt>This solver minimizes:</dt><dd><p>argmin_x fun(x, <a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs),</p>
@@ -263,7 +172,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.fun">
-<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.fun" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.fun" title="Permalink to this definition"></a></dt>
 <dd><p>a smooth function of the form <code class="docutils literal notranslate"><span class="pre">fun(x,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -274,7 +183,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.projection_grad">
-<span class="sig-name descname"><span class="pre">projection_grad</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.projection_grad" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">projection_grad</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.projection_grad" title="Permalink to this definition"></a></dt>
 <dd><p>a function of the form
 <code class="docutils literal notranslate"><span class="pre">projection_grad(x,</span> <span class="pre">g,</span> <span class="pre">stepsize,</span> <span class="pre">hyperparams_proj)</span></code> representing the
 mirror descent update for iterate x and gradient g. Optionally, it can be
@@ -289,7 +198,7 @@ method <cite>make_projection_grad</cite>.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.stepsize">
-<span class="sig-name descname"><span class="pre">stepsize</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.stepsize" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stepsize</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.stepsize" title="Permalink to this definition"></a></dt>
 <dd><p>a stepsize to use, or a callable specifying the stepsize to use at
 each iteration.</p>
 <dl class="field-list simple">
@@ -301,7 +210,7 @@ each iteration.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.maxiter">
-<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.maxiter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.maxiter" title="Permalink to this definition"></a></dt>
 <dd><p>maximum number of mirror descent iterations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -312,7 +221,7 @@ each iteration.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.tol">
-<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.tol" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.tol" title="Permalink to this definition"></a></dt>
 <dd><p>tolerance to use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -323,7 +232,7 @@ each iteration.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.verbose">
-<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.verbose" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.verbose" title="Permalink to this definition"></a></dt>
 <dd><p>whether to print error on every iteration or not. verbose=True will
 automatically disable jit.</p>
 <dl class="field-list simple">
@@ -335,7 +244,7 @@ automatically disable jit.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.implicit_diff">
-<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.implicit_diff" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.implicit_diff" title="Permalink to this definition"></a></dt>
 <dd><p>whether to enable implicit diff or autodiff of unrolled
 iterations.</p>
 <dl class="field-list simple">
@@ -347,7 +256,7 @@ iterations.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.implicit_diff_solve">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.implicit_diff_solve" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.implicit_diff_solve" title="Permalink to this definition"></a></dt>
 <dd><p>the linear system solver to use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -358,7 +267,7 @@ iterations.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.has_aux">
-<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.has_aux" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.has_aux" title="Permalink to this definition"></a></dt>
 <dd><p>whether function fun outputs one (False) or more values (True).
 When True it will be assumed by default that fun(…)[0] is the objective.</p>
 <dl class="field-list simple">
@@ -370,7 +279,7 @@ When True it will be assumed by default that fun(…)[0] is the objective.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.jit">
-<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.jit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.jit" title="Permalink to this definition"></a></dt>
 <dd><p>whether to JIT-compile the optimization loop (default: “auto”).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -381,7 +290,7 @@ When True it will be assumed by default that fun(…)[0] is the objective.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.unroll">
-<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.unroll" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.MirrorDescent.unroll" title="Permalink to this definition"></a></dt>
 <dd><p>whether to unroll the optimization loop (default: “auto”).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -396,7 +305,7 @@ complexity and method efficiency in optimization.” J. Wiley &#64; Sons, New
 York(1983).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_grad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.MirrorDescent.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_grad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.MirrorDescent.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -426,33 +335,31 @@ York(1983).</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.__init__" title="jaxopt.MirrorDescent.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fun, projection_grad, stepsize[, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.__init__" title="jaxopt.MirrorDescent.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fun, projection_grad, stepsize[, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code>(init_params, *args, **kwargs)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-</dl>
-</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_names</span></code>()</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.init_state" title="jaxopt.MirrorDescent.init_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_state</span></code></a>(init_params, hyperparams_proj, …)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_values</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.init_state" title="jaxopt.MirrorDescent.init_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_state</span></code></a>(init_params, hyperparams_proj, ...)</p></td>
 <td><p>Initialize the solver state.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.l2_optimality_error" title="jaxopt.MirrorDescent.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.l2_optimality_error" title="jaxopt.MirrorDescent.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
 <td><p>Computes the L2 optimality error.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.make_projection_grad" title="jaxopt.MirrorDescent.make_projection_grad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_projection_grad</span></code></a>(projection, mapping_fun)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.make_projection_grad" title="jaxopt.MirrorDescent.make_projection_grad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_projection_grad</span></code></a>(projection, mapping_fun)</p></td>
 <td><p>Instantiates <cite>projection_grad</cite> argument from projection and mirror map.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.optimality_fun" title="jaxopt.MirrorDescent.optimality_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code></a>(sol, hyperparams_proj, *args, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.optimality_fun" title="jaxopt.MirrorDescent.optimality_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code></a>(sol, hyperparams_proj, *args, ...)</p></td>
 <td><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.run" title="jaxopt.MirrorDescent.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params[, hyperparams_proj])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.run" title="jaxopt.MirrorDescent.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params[, hyperparams_proj])</p></td>
 <td><p>Runs the optimization loop.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.update" title="jaxopt.MirrorDescent.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, hyperparams_proj, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.MirrorDescent.update" title="jaxopt.MirrorDescent.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, hyperparams_proj, ...)</p></td>
 <td><p>Performs one iteration of mirror descent.</p></td>
 </tr>
 </tbody>
@@ -501,7 +408,7 @@ York(1983).</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.init_state">
-<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.init_state" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.init_state" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the solver state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -521,13 +428,13 @@ York(1983).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.l2_optimality_error">
-<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.MirrorDescent.l2_optimality_error" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.MirrorDescent.l2_optimality_error" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the L2 optimality error.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.make_projection_grad">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">make_projection_grad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping_fun</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.make_projection_grad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.make_projection_grad" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_projection_grad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping_fun</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.make_projection_grad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.make_projection_grad" title="Permalink to this definition"></a></dt>
 <dd><p>Instantiates <cite>projection_grad</cite> argument from projection and mirror map.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -552,13 +459,13 @@ representing the mirror descent update for iterate x and gradient g.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.optimality_fun">
-<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.optimality_fun" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.optimality_fun" title="Permalink to this definition"></a></dt>
 <dd><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.run" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.run" title="Permalink to this definition"></a></dt>
 <dd><p>Runs the optimization loop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -580,7 +487,7 @@ representing the mirror descent update for iterate x and gradient g.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.MirrorDescent.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/mirror_descent.html#MirrorDescent.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.MirrorDescent.update" title="Permalink to this definition"></a></dt>
 <dd><p>Performs one iteration of mirror descent.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -603,54 +510,37 @@ representing the mirror descent update for iterate x and gradient g.</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="jaxopt.QuadraticProgramming.html" class="btn btn-neutral float-right" title="jaxopt.QuadraticProgramming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="jaxopt.projection.projection_box_section.html" class="btn btn-neutral float-left" title="jaxopt.projection.projection_box_section" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jaxopt.ScipyBoundedMinimize.html" class="btn btn-neutral float-right" title="jaxopt.ScipyBoundedMinimize" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the JAXopt authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the JAXopt authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

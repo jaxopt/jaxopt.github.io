@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~AndersonAcceleration.__init__
-      ~AndersonAcceleration.init
+      ~AndersonAcceleration.attribute_names
+      ~AndersonAcceleration.attribute_values
       ~AndersonAcceleration.init_state
       ~AndersonAcceleration.l2_optimality_error
       ~AndersonAcceleration.optimality_fun

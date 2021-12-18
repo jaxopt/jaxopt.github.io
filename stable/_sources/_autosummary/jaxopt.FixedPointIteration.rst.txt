@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~FixedPointIteration.__init__
-      ~FixedPointIteration.init
+      ~FixedPointIteration.attribute_names
+      ~FixedPointIteration.attribute_values
       ~FixedPointIteration.init_state
       ~FixedPointIteration.l2_optimality_error
       ~FixedPointIteration.optimality_fun

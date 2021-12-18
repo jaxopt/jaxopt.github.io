@@ -1,0 +1,33 @@
+﻿jaxopt.CvxpyQP
+==============
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: CvxpyQP
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CvxpyQP.__init__
+      ~CvxpyQP.attribute_names
+      ~CvxpyQP.attribute_values
+      ~CvxpyQP.l2_optimality_error
+      ~CvxpyQP.run
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CvxpyQP.implicit_diff_solve
+      ~CvxpyQP.solver
+   
+   

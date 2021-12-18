@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~ProjectedGradient.__init__
-      ~ProjectedGradient.init
+      ~ProjectedGradient.attribute_names
+      ~ProjectedGradient.attribute_values
       ~ProjectedGradient.init_state
       ~ProjectedGradient.l2_optimality_error
       ~ProjectedGradient.optimality_fun

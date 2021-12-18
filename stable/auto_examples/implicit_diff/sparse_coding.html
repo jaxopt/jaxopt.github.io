@@ -1,43 +1,23 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Sparse coding. &mdash; JAXopt 0.1.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-binder.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-dataframe.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-rendered-html.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Sparse coding. &mdash; JAXopt 0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
@@ -45,39 +25,20 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Changelog" href="../../changelog.html" />
     <link rel="prev" title="Implicit differentiation of ridge regression." href="ridge_reg_implicit_diff.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> JAXopt
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -85,26 +46,17 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
@@ -137,73 +89,31 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">JAXopt</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../index.html">Example gallery</a> &raquo;</li>
-        
       <li>Sparse coding.</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/auto_examples/implicit_diff/sparse_coding.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -233,20 +143,42 @@
 <p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-implicit-diff-sparse-coding-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<div class="sphx-glr-example-title section" id="sparse-coding">
-<span id="sphx-glr-auto-examples-implicit-diff-sparse-coding-py"></span><h1>Sparse coding.<a class="headerlink" href="#sparse-coding" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+<section class="sphx-glr-example-title" id="sparse-coding">
+<span id="sphx-glr-auto-examples-implicit-diff-sparse-coding-py"></span><h1>Sparse coding.<a class="headerlink" href="#sparse-coding" title="Permalink to this headline"></a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
+
+<span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Mapping</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
+<span class="kn">import</span> <span class="nn">unittest</span>
+
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">from</span> <span class="nn">jax.nn</span> <span class="kn">import</span> <span class="n">softplus</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">loss</span>
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">projection</span>
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">prox</span>
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">ProximalGradient</span>
+
+<span class="kn">import</span> <span class="nn">optax</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;num_examples&quot;</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="s2">&quot;NUmber of examples.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;num_components&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;Number of atoms in dictionnary.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;num_features&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;Number of features.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;sparse_coding_maxiter&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;Number of iterations for sparse coding.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;maxiter&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;Number of iterations of the outer loop.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;elastic_penalty&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s2">&quot;Strength of L2 penalty relative to L1.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;regularization&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s2">&quot;Regularization strength of elastic penalty.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s2">&quot;reconstruction_loss&quot;</span><span class="p">,</span> <span class="s2">&quot;squared&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;squared&quot;</span><span class="p">,</span> <span class="s2">&quot;abs&quot;</span><span class="p">,</span> <span class="s2">&quot;huber&quot;</span><span class="p">],</span> <span class="s2">&quot;Loss used to build dictionnary.&quot;</span><span class="p">)</span>
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
 
 
 <span class="k">def</span> <span class="nf">dictionary_loss</span><span class="p">(</span>
@@ -456,6 +388,105 @@ to download the full example code</p>
   <span class="n">codes</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">codes_init</span><span class="p">,</span> <span class="p">[</span><span class="n">regularization</span><span class="p">,</span> <span class="n">elastic_penalty</span><span class="p">],</span>
                      <span class="n">dic</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">params</span>
   <span class="k">return</span> <span class="n">codes</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">argv</span>
+
+  <span class="c1"># needed for asserts</span>
+  <span class="n">tc</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">()</span>
+
+  <span class="n">N</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_examples</span>
+  <span class="n">k</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_components</span>
+  <span class="n">d</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_features</span>
+  <span class="c1"># X is N x d</span>
+  <span class="c1"># dic is k x d</span>
+  <span class="n">X</span><span class="p">,</span> <span class="n">dictionary_0</span><span class="p">,</span> <span class="n">codes_0</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">make_sparse_coded_signal</span><span class="p">(</span>
+      <span class="n">n_samples</span><span class="o">=</span><span class="n">N</span><span class="p">,</span>
+      <span class="n">n_components</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
+      <span class="n">n_features</span><span class="o">=</span><span class="n">d</span><span class="p">,</span>
+      <span class="n">n_nonzero_coefs</span><span class="o">=</span><span class="n">k</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span>
+      <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+  <span class="p">)</span>
+  <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="c1"># bug in https://github.com/scikit-learn/scikit-learn/issues/19894</span>
+  <span class="n">X</span> <span class="o">=</span> <span class="mf">.1</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="mf">.0001</span> <span class="o">*</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+
+  <span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">reconstruction_loss</span> <span class="o">==</span> <span class="s2">&quot;squared&quot;</span><span class="p">:</span>
+    <span class="n">reconstruction_loss_fun</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">reconstruction_loss</span> <span class="o">==</span> <span class="s2">&quot;abs&quot;</span><span class="p">:</span>
+    <span class="n">reconstruction_loss_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mf">2.1</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">reconstruction_loss</span> <span class="o">==</span> <span class="s2">&quot;huber&quot;</span><span class="p">:</span>
+    <span class="n">reconstruction_loss_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">huber_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mf">.01</span><span class="p">))</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unkwown reconstruction_loss </span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">reconstruction_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="n">elastic_penalty</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">elastic_penalty</span>
+  <span class="n">regularization</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">regularization</span>
+
+  <span class="c1"># slightly complicated Vanilla dictionary learning when no task.</span>
+  <span class="c1"># complicated in the sense that Danskin is not used. Here using prox from</span>
+  <span class="c1"># jaxopt.</span>
+  <span class="n">solver</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span>
+      <span class="n">make_task_driven_dictionary_learner</span><span class="p">(</span>
+          <span class="n">reconstruction_loss_fun</span><span class="o">=</span><span class="n">reconstruction_loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span>
+          <span class="n">sparse_coding_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">sparse_coding_maxiter</span><span class="p">}),</span>
+      <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>  <span class="c1"># n_components &amp; reconstruction_loss_fun</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Create dictionnary with no task:&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="c1"># Compute dictionary</span>
+  <span class="n">dic_jop_0</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(</span>
+      <span class="n">X</span><span class="p">,</span>
+      <span class="n">n_components</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
+      <span class="n">regularization</span><span class="o">=</span><span class="n">regularization</span><span class="p">,</span>
+      <span class="n">elastic_penalty</span><span class="o">=</span><span class="n">elastic_penalty</span><span class="p">)</span>
+  <span class="n">tc</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">dic_jop_0</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">dic_jop_0</span><span class="p">)</span>
+
+  <span class="c1"># Test now task driven dictionary learning using *arbitrary* labels computed</span>
+  <span class="c1"># from initial codes. This is a binary logistic regression problem.</span>
+  <span class="n">label</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">codes_0</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+  <span class="k">def</span> <span class="nf">task_loss_fun</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">dic</span><span class="p">,</span> <span class="n">task_vars</span><span class="p">,</span> <span class="n">task_params</span><span class="p">):</span>
+    <span class="k">del</span> <span class="n">dic</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">task_vars</span>
+    <span class="n">logit</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">softplus</span><span class="p">(</span><span class="n">logit</span><span class="p">)</span> <span class="o">-</span> <span class="n">label</span> <span class="o">*</span> <span class="n">logit</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">task_params</span> <span class="o">*</span>
+        <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span><span class="p">))</span>
+
+  <span class="c1"># Create a solver that will now use optax&#39;s Adam to learn both dic and</span>
+  <span class="c1"># logistic regression parameters.</span>
+  <span class="n">solver</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span>
+      <span class="n">make_task_driven_dictionary_learner</span><span class="p">(</span>
+          <span class="n">task_loss_fun</span><span class="o">=</span><span class="n">task_loss_fun</span><span class="p">,</span>
+          <span class="n">reconstruction_loss_fun</span><span class="o">=</span><span class="n">reconstruction_loss_fun</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span>
+          <span class="n">sparse_coding_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">sparse_coding_maxiter</span><span class="p">},</span>
+          <span class="n">optimizer</span><span class="o">=</span><span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">)),</span>
+      <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>  <span class="c1"># n_components &amp; reconstruction_loss_fun</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Compute task driven dictionnary:&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">dic_jop_task</span><span class="p">,</span> <span class="n">w_and_b</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(</span>
+      <span class="n">X</span><span class="p">,</span>
+      <span class="n">n_components</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
+      <span class="n">regularization</span><span class="o">=</span><span class="n">regularization</span><span class="p">,</span>
+      <span class="n">elastic_penalty</span><span class="o">=</span><span class="n">elastic_penalty</span><span class="p">,</span>
+      <span class="n">task_vars_init</span><span class="o">=</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span>
+      <span class="n">task_params</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">dic_jop_task</span><span class="p">)</span>
+
+  <span class="c1"># Check we have at least improved results using the very same w_and_b</span>
+  <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">dic</span> <span class="ow">in</span> <span class="p">[</span><span class="n">dic_jop_0</span><span class="p">,</span> <span class="n">dic_jop_task</span><span class="p">]:</span>
+    <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">task_loss_fun</span><span class="p">(</span>
+            <span class="n">sparse_coding</span><span class="p">(</span>
+                <span class="n">dic</span><span class="p">,</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">regularization</span><span class="p">,</span> <span class="n">elastic_penalty</span><span class="p">)),</span> <span class="n">dic</span><span class="p">,</span> <span class="n">w_and_b</span><span class="p">,</span>
+            <span class="mf">0.0</span><span class="p">))</span>
+  <span class="n">tc</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">losses</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">losses</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;With task the loss (</span><span class="si">{</span><span class="n">losses</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">) is smaller than without task (</span><span class="si">{</span><span class="n">losses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.000 seconds)</p>
@@ -468,54 +499,37 @@ to download the full example code</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../../changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="ridge_reg_implicit_diff.html" class="btn btn-neutral float-left" title="Implicit differentiation of ridge regression." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the JAXopt authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the JAXopt authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

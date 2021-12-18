@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~OptaxSolver.__init__
-      ~OptaxSolver.init
+      ~OptaxSolver.attribute_names
+      ~OptaxSolver.attribute_values
       ~OptaxSolver.init_state
       ~OptaxSolver.l2_optimality_error
       ~OptaxSolver.optimality_fun

@@ -1,43 +1,23 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>jaxopt.ProximalGradient &mdash; JAXopt 0.1.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/gallery-rendered-html.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>jaxopt.ProximalGradient &mdash; JAXopt 0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
@@ -45,41 +25,22 @@
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="jaxopt.BlockCoordinateDescent" href="jaxopt.BlockCoordinateDescent.html" />
     <link rel="prev" title="Non-smooth optimization" href="../non_smooth.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> JAXopt
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -87,23 +48,13 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../unconstrained.html">Unconstrained optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../non_smooth.html#proximal-gradient">Proximal gradient</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.ProximalGradient</a></li>
@@ -117,6 +68,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
@@ -137,73 +89,31 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">JAXopt</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../non_smooth.html">Non-smooth optimization</a> &raquo;</li>
-        
       <li>jaxopt.ProximalGradient</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/_autosummary/jaxopt.ProximalGradient.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -228,11 +138,11 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="jaxopt-proximalgradient">
-<h1>jaxopt.ProximalGradient<a class="headerlink" href="#jaxopt-proximalgradient" title="Permalink to this headline">¶</a></h1>
+<section id="jaxopt-proximalgradient">
+<h1>jaxopt.ProximalGradient<a class="headerlink" href="#jaxopt-proximalgradient" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ProximalGradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fun</span></em>, <em class="sig-param"><span class="pre">prox=&lt;function</span> <span class="pre">prox_none&gt;</span></em>, <em class="sig-param"><span class="pre">stepsize=0.0</span></em>, <em class="sig-param"><span class="pre">maxiter=500</span></em>, <em class="sig-param"><span class="pre">maxls=15</span></em>, <em class="sig-param"><span class="pre">tol=0.001</span></em>, <em class="sig-param"><span class="pre">acceleration=True</span></em>, <em class="sig-param"><span class="pre">decrease_factor=0.5</span></em>, <em class="sig-param"><span class="pre">verbose=0</span></em>, <em class="sig-param"><span class="pre">implicit_diff=True</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=None</span></em>, <em class="sig-param"><span class="pre">has_aux=False</span></em>, <em class="sig-param"><span class="pre">jit='auto'</span></em>, <em class="sig-param"><span class="pre">unroll='auto'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/proximal_gradient.html#ProximalGradient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProximalGradient" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ProximalGradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prox=&lt;function</span> <span class="pre">prox_none&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls=15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acceleration=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor=0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit='auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll='auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/proximal_gradient.html#ProximalGradient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProximalGradient" title="Permalink to this definition"></a></dt>
 <dd><p>Proximal gradient solver.</p>
 <p>This solver minimizes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">objective</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">=</span>
@@ -244,7 +154,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>prox</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>stepsize</strong> (<em>float</em>) – </p></li>
+<li><p><strong>stepsize</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>maxls</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
@@ -264,7 +174,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.fun">
-<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.fun" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.fun" title="Permalink to this definition"></a></dt>
 <dd><p>a smooth function of the form <code class="docutils literal notranslate"><span class="pre">fun(x,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -275,7 +185,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.prox">
-<span class="sig-name descname"><span class="pre">prox</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.prox" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">prox</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.prox" title="Permalink to this definition"></a></dt>
 <dd><p>proximity operator associated with the function <code class="docutils literal notranslate"><span class="pre">non_smooth</span></code>.
 It should be of the form <code class="docutils literal notranslate"><span class="pre">prox(params,</span> <span class="pre">hyperparams_prox,</span> <span class="pre">scale=1.0)</span></code>.
 See <code class="docutils literal notranslate"><span class="pre">jaxopt.prox</span></code> for examples.</p>
@@ -298,18 +208,19 @@ See <code class="docutils literal notranslate"><span class="pre">jaxopt.prox</sp
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.stepsize">
-<span class="sig-name descname"><span class="pre">stepsize</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.stepsize" title="Permalink to this definition">¶</a></dt>
-<dd><p>a stepsize to use (if &lt;= 0, use backtracking line search).</p>
+<span class="sig-name descname"><span class="pre">stepsize</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.stepsize" title="Permalink to this definition"></a></dt>
+<dd><p>a stepsize to use (if &lt;= 0, use backtracking line search),
+or a callable specifying the <strong>positive</strong> stepsize to use at each iteration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p>Union[float, Callable]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.maxiter">
-<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.maxiter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.maxiter" title="Permalink to this definition"></a></dt>
 <dd><p>maximum number of proximal gradient descent iterations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -320,7 +231,7 @@ See <code class="docutils literal notranslate"><span class="pre">jaxopt.prox</sp
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.maxls">
-<span class="sig-name descname"><span class="pre">maxls</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.maxls" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">maxls</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.maxls" title="Permalink to this definition"></a></dt>
 <dd><p>maximum number of iterations to use in the line search.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -331,7 +242,7 @@ See <code class="docutils literal notranslate"><span class="pre">jaxopt.prox</sp
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.tol">
-<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.tol" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.tol" title="Permalink to this definition"></a></dt>
 <dd><p>tolerance to use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -342,7 +253,7 @@ See <code class="docutils literal notranslate"><span class="pre">jaxopt.prox</sp
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.acceleration">
-<span class="sig-name descname"><span class="pre">acceleration</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.acceleration" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">acceleration</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.acceleration" title="Permalink to this definition"></a></dt>
 <dd><p>whether to use acceleration (also known as FISTA) or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -353,7 +264,7 @@ See <code class="docutils literal notranslate"><span class="pre">jaxopt.prox</sp
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.decrease_factor">
-<span class="sig-name descname"><span class="pre">decrease_factor</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.decrease_factor" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">decrease_factor</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.decrease_factor" title="Permalink to this definition"></a></dt>
 <dd><p>factor by which to reduce the stepsize during line search.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -364,7 +275,7 @@ See <code class="docutils literal notranslate"><span class="pre">jaxopt.prox</sp
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.verbose">
-<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.verbose" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.verbose" title="Permalink to this definition"></a></dt>
 <dd><p>whether to print error on every iteration or not.
 Warning: verbose=True will automatically disable jit.</p>
 <dl class="field-list simple">
@@ -376,7 +287,7 @@ Warning: verbose=True will automatically disable jit.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.implicit_diff">
-<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.implicit_diff" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.implicit_diff" title="Permalink to this definition"></a></dt>
 <dd><p>whether to enable implicit diff or autodiff of unrolled
 iterations.</p>
 <dl class="field-list simple">
@@ -388,7 +299,7 @@ iterations.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.implicit_diff_solve">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.implicit_diff_solve" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.implicit_diff_solve" title="Permalink to this definition"></a></dt>
 <dd><p>the linear system solver to use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -399,7 +310,7 @@ iterations.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.has_aux">
-<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.has_aux" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.has_aux" title="Permalink to this definition"></a></dt>
 <dd><p>whether function fun outputs one (False) or more values (True).
 When True it will be assumed by default that fun(…)[0] is the objective.</p>
 <dl class="field-list simple">
@@ -411,7 +322,7 @@ When True it will be assumed by default that fun(…)[0] is the objective.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.jit">
-<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.jit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.jit" title="Permalink to this definition"></a></dt>
 <dd><p>whether to JIT-compile the optimization loop (default: “auto”).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -422,7 +333,7 @@ When True it will be assumed by default that fun(…)[0] is the objective.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.unroll">
-<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.unroll" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.ProximalGradient.unroll" title="Permalink to this definition"></a></dt>
 <dd><p>whether to unroll the optimization loop (default: “auto”).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -438,13 +349,13 @@ algorithm for linear inverse problems.” SIAM imaging sciences (2009)</p>
 Mathematical Programming (2013).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fun</span></em>, <em class="sig-param"><span class="pre">prox=&lt;function</span> <span class="pre">prox_none&gt;</span></em>, <em class="sig-param"><span class="pre">stepsize=0.0</span></em>, <em class="sig-param"><span class="pre">maxiter=500</span></em>, <em class="sig-param"><span class="pre">maxls=15</span></em>, <em class="sig-param"><span class="pre">tol=0.001</span></em>, <em class="sig-param"><span class="pre">acceleration=True</span></em>, <em class="sig-param"><span class="pre">decrease_factor=0.5</span></em>, <em class="sig-param"><span class="pre">verbose=0</span></em>, <em class="sig-param"><span class="pre">implicit_diff=True</span></em>, <em class="sig-param"><span class="pre">implicit_diff_solve=None</span></em>, <em class="sig-param"><span class="pre">has_aux=False</span></em>, <em class="sig-param"><span class="pre">jit='auto'</span></em>, <em class="sig-param"><span class="pre">unroll='auto'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ProximalGradient.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prox=&lt;function</span> <span class="pre">prox_none&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls=15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acceleration=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor=0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit='auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll='auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ProximalGradient.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>prox</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>stepsize</strong> (<em>float</em>) – </p></li>
+<li><p><strong>stepsize</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>maxls</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
@@ -471,33 +382,31 @@ Mathematical Programming (2013).</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.__init__" title="jaxopt.ProximalGradient.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fun[, prox, stepsize, maxiter, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.__init__" title="jaxopt.ProximalGradient.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fun[, prox, stepsize, maxiter, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code>(init_params, *args, **kwargs)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
-</dd>
-</dl>
-</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_names</span></code>()</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.init_state" title="jaxopt.ProximalGradient.init_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_state</span></code></a>(init_params, hyperparams_prox, …)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_values</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.init_state" title="jaxopt.ProximalGradient.init_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_state</span></code></a>(init_params, hyperparams_prox, ...)</p></td>
 <td><p>Initialize the solver state.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.l2_optimality_error" title="jaxopt.ProximalGradient.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.l2_optimality_error" title="jaxopt.ProximalGradient.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
 <td><p>Computes the L2 optimality error.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.optimality_fun" title="jaxopt.ProximalGradient.optimality_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code></a>(sol, hyperparams_prox, *args, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.optimality_fun" title="jaxopt.ProximalGradient.optimality_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code></a>(sol, hyperparams_prox, *args, ...)</p></td>
 <td><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id0" title="jaxopt.ProximalGradient.prox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prox</span></code></a>([hyperparams, scaling])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="jaxopt.ProximalGradient.prox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prox</span></code></a>([hyperparams, scaling])</p></td>
 <td><p>Proximal operator for <span class="math notranslate nohighlight">\(g(x) = 0\)</span>, i.e., the identity function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.run" title="jaxopt.ProximalGradient.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.run" title="jaxopt.ProximalGradient.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
 <td><p>Runs the optimization loop.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.update" title="jaxopt.ProximalGradient.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, hyperparams_prox, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProximalGradient.update" title="jaxopt.ProximalGradient.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, hyperparams_prox, ...)</p></td>
 <td><p>Performs one iteration of proximal gradient.</p></td>
 </tr>
 </tbody>
@@ -552,7 +461,7 @@ Mathematical Programming (2013).</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.init_state">
-<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_prox</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/proximal_gradient.html#ProximalGradient.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProximalGradient.init_state" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_prox</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/proximal_gradient.html#ProximalGradient.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProximalGradient.init_state" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the solver state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -574,19 +483,19 @@ Mathematical Programming (2013).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.l2_optimality_error">
-<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ProximalGradient.l2_optimality_error" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ProximalGradient.l2_optimality_error" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the L2 optimality error.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.optimality_fun">
-<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_prox</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/proximal_gradient.html#ProximalGradient.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProximalGradient.optimality_fun" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_prox</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/proximal_gradient.html#ProximalGradient.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProximalGradient.optimality_fun" title="Permalink to this definition"></a></dt>
 <dd><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">prox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hyperparams</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">prox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hyperparams</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
 <dd><p>Proximal operator for <span class="math notranslate nohighlight">\(g(x) = 0\)</span>, i.e., the identity function.</p>
 <p>Since <span class="math notranslate nohighlight">\(g(x) = 0\)</span>, the output is:</p>
 <div class="math notranslate nohighlight">
@@ -610,7 +519,7 @@ Mathematical Programming (2013).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ProximalGradient.run" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ProximalGradient.run" title="Permalink to this definition"></a></dt>
 <dd><p>Runs the optimization loop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -631,7 +540,7 @@ Mathematical Programming (2013).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ProximalGradient.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_prox</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/proximal_gradient.html#ProximalGradient.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProximalGradient.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_prox</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/proximal_gradient.html#ProximalGradient.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProximalGradient.update" title="Permalink to this definition"></a></dt>
 <dd><p>Performs one iteration of proximal gradient.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -654,54 +563,37 @@ Mathematical Programming (2013).</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="jaxopt.BlockCoordinateDescent.html" class="btn btn-neutral float-right" title="jaxopt.BlockCoordinateDescent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../non_smooth.html" class="btn btn-neutral float-left" title="Non-smooth optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jaxopt.BlockCoordinateDescent.html" class="btn btn-neutral float-right" title="jaxopt.BlockCoordinateDescent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the JAXopt authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the JAXopt authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

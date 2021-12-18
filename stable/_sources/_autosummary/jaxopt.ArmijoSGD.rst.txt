@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~ArmijoSGD.__init__
-      ~ArmijoSGD.init
+      ~ArmijoSGD.attribute_names
+      ~ArmijoSGD.attribute_values
       ~ArmijoSGD.init_state
       ~ArmijoSGD.l2_optimality_error
       ~ArmijoSGD.optimality_fun

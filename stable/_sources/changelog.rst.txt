@@ -1,6 +1,47 @@
 Changelog
 =========
 
+Version 0.2
+-----------
+
+New features
+~~~~~~~~~~~~
+
+- Quadratic programming solvers :class:`jaxopt.CvxpyQP`, :class:`jaxopt.OSQP`, :class:`jaxopt.BoxOSQP` and
+  :class:`jaxopt.EqualityConstrainedQP`.
+- :class:`jaxopt.IterativeRefinement`.
+
+New examples
+~~~~~~~~~~~~
+
+- :ref:`sphx_glr_auto_examples_deep_learning_flax_resnet.py`
+
+Bug fixes and enhancements
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `Prevent recompilation of loops in solver.run if executing without jit
+  <https://github.com/google/jaxopt/pull/113>`_.
+- `Prevents recomputation of gradient in OptaxSolver
+  <https://github.com/google/jaxopt/pull/107>`_.
+- `Make solver.update jittable and ensure output states are consistent
+  <https://github.com/google/jaxopt/pull/106>`_.
+- Allow ``Callable`` for the ``stepsize`` argument in
+  :class:`jaxopt.ProximalGradient`, :class:`jaxopt.ProjectedGradient` and
+  :class:`jaxopt.GradientDescent`.
+
+Deprecated features
+~~~~~~~~~~~~~~~~~~~
+
+- :class:`jaxopt.QuadraticProgramming` is deprecated and will be removed in v0.3. Use
+  :class:`jaxopt.CvxpyQP`, :class:`jaxopt.OSQP`, :class:`jaxopt.BoxOSQP` and
+  :class:`jaxopt.EqualityConstrainedQP` instead.
+
+Contributors
+~~~~~~~~~~~~
+
+Fabian Pedregosa, Felipe Llinares, Geoffrey Negiar, Louis Bethune, Mathieu
+Blondel, Vikas Sindhwani.
+
 Version 0.1.1
 -------------
 
@@ -59,6 +100,7 @@ Examples
 - :ref:`sphx_glr_auto_examples_constrained_nmf.py`
 - :ref:`sphx_glr_auto_examples_implicit_diff_plot_dataset_distillation.py`
 - :ref:`sphx_glr_auto_examples_implicit_diff_ridge_reg_implicit_diff.py`
+- :ref:`sphx_glr_auto_examples_implicit_diff_sparse_coding.py`
 - :ref:`sphx_glr_auto_examples_deep_learning_robust_training.py`
 - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py`
 - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py`

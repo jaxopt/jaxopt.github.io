@@ -14,7 +14,8 @@
    .. autosummary::
    
       ~ProximalGradient.__init__
-      ~ProximalGradient.init
+      ~ProximalGradient.attribute_names
+      ~ProximalGradient.attribute_values
       ~ProximalGradient.init_state
       ~ProximalGradient.l2_optimality_error
       ~ProximalGradient.optimality_fun

@@ -40,13 +40,14 @@ on the current minibatch.
 This experiment was conducted without momentum, with popular default values for
 learning rate.
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-215
+.. GENERATED FROM PYTHON SOURCE LINES 38-220
 
 
 
-.. image:: /auto_examples/deep_learning/images/sphx_glr_plot_sgd_solvers_001.png
-    :alt: Classification on fashion_mnist
-    :class: sphx-glr-single-img
+.. image-sg:: /auto_examples/deep_learning/images/sphx_glr_plot_sgd_solvers_001.png
+   :alt: Classification on fashion_mnist
+   :srcset: /auto_examples/deep_learning/images/sphx_glr_plot_sgd_solvers_001.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -56,12 +57,12 @@ learning rate.
  .. code-block:: none
 
     [Polyak SGD] (   0), error=0.389, loss=2.306, stepsize=1.000000
-    [Polyak SGD] (  20), error=11.973, loss=3.701, stepsize=0.025814
-    [Polyak SGD] (  40), error=1.294, loss=1.160, stepsize=0.693072
-    [Polyak SGD] (  60), error=3.241, loss=1.577, stepsize=0.150135
-    [Polyak SGD] (  80), error=0.833, loss=0.846, stepsize=1.000000
-    [Polyak SGD] ( 100), error=2.856, loss=1.220, stepsize=0.149607
-    101 iterations of Polyak SGD took 17.30s
+    [Polyak SGD] (  20), error=11.852, loss=3.678, stepsize=0.026182
+    [Polyak SGD] (  40), error=1.864, loss=1.435, stepsize=0.413222
+    [Polyak SGD] (  60), error=0.719, loss=0.890, stepsize=1.000000
+    [Polyak SGD] (  80), error=1.026, loss=0.988, stepsize=0.938296
+    [Polyak SGD] ( 100), error=0.899, loss=0.768, stepsize=0.950206
+    101 iterations of Polyak SGD took 18.24s
 
     [Armijo SGD] (   0), error=0.285, loss=2.301, stepsize=1.000000
     [Armijo SGD] (  20), error=2.490, loss=1.399, stepsize=0.068719
@@ -69,23 +70,23 @@ learning rate.
     [Armijo SGD] (  60), error=2.737, loss=1.025, stepsize=0.035184
     [Armijo SGD] (  80), error=1.330, loss=0.839, stepsize=0.035184
     [Armijo SGD] ( 100), error=1.896, loss=0.828, stepsize=0.028148
-    101 iterations of Armijo SGD took 18.73s
+    101 iterations of Armijo SGD took 20.70s
 
-    [RMSProp] (   0), error=0.289, loss=2.327
-    [RMSProp] (  20), error=0.603, loss=2.070
-    [RMSProp] (  40), error=1.006, loss=1.629
-    [RMSProp] (  60), error=1.396, loss=1.303
-    [RMSProp] (  80), error=2.084, loss=1.113
-    [RMSProp] ( 100), error=3.377, loss=0.964
-    101 iterations of RMSProp took 17.61s
+    [RMSProp] (   0), error=0.461, loss=2.327
+    [RMSProp] (  20), error=0.667, loss=2.070
+    [RMSProp] (  40), error=1.219, loss=1.629
+    [RMSProp] (  60), error=1.883, loss=1.303
+    [RMSProp] (  80), error=2.516, loss=1.113
+    [RMSProp] ( 100), error=3.722, loss=0.964
+    101 iterations of RMSProp took 18.58s
 
-    [SGD] (   0), error=0.298, loss=2.314
-    [SGD] (  20), error=0.465, loss=2.186
-    [SGD] (  40), error=2.091, loss=1.745
-    [SGD] (  60), error=2.126, loss=1.199
-    [SGD] (  80), error=1.313, loss=1.062
-    [SGD] ( 100), error=2.870, loss=1.277
-    101 iterations of SGD took 17.34s
+    [SGD] (   0), error=0.341, loss=2.314
+    [SGD] (  20), error=0.527, loss=2.186
+    [SGD] (  40), error=2.117, loss=1.745
+    [SGD] (  60), error=2.314, loss=1.199
+    [SGD] (  80), error=1.911, loss=1.062
+    [SGD] ( 100), error=4.413, loss=1.277
+    101 iterations of SGD took 21.05s
 
 
 
@@ -120,6 +121,7 @@ learning rate.
     import matplotlib.pyplot as plt
     from scipy.signal import convolve
     import tensorflow_datasets as tfds
+    import tensorflow as tf
 
 
     dataset_names = [
@@ -176,6 +178,10 @@ learning rate.
       # manual flags parsing to avoid conflicts between absl.app.run and sphinx-gallery
       flags.FLAGS(argv)
       FLAGS = flags.FLAGS
+
+      # Hide any GPUs from TensorFlow. Otherwise TF might reserve memory and make
+      # it unavailable to JAX.
+      tf.config.experimental.set_visible_devices([], 'GPU')
 
       train_ds, ds_info = load_dataset(FLAGS.dataset, FLAGS.batch_size)
 
@@ -278,7 +284,7 @@ learning rate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  14.607 seconds)
+   **Total running time of the script:** ( 1 minutes  21.867 seconds)
 
 
 .. _sphx_glr_download_auto_examples_deep_learning_plot_sgd_solvers.py:
