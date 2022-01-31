@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resnet example with Flax and JAXopt. &mdash; JAXopt 0.2 documentation</title>
+  <title>Resnet example with Flax and JAXopt. &mdash; JAXopt 0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -60,6 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -74,6 +75,7 @@
 <li class="toctree-l3"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="flax_image_classif.html">Image classification example with Flax and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="haiku_image_classif.html">Image classification example with Haiku and JAXopt.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flax_resnet_wide.html">Resnet example with Flax and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_sgd_solvers.html">Comparison of different SGD algorithms.</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Resnet example with Flax and JAXopt.</a></li>
 </ul>
@@ -282,6 +284,7 @@ to download the full example code</p>
   <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
   <span class="n">num_classes</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_classes</span>
   <span class="n">iter_per_epoch</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span>
+  <span class="n">iter_per_epoch_test</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span>
 
   <span class="c1"># Set up model.</span>
   <span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;resnet1&quot;</span><span class="p">:</span>
@@ -349,7 +352,12 @@ to download the full example code</p>
     <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">%</span> <span class="n">iter_per_epoch</span> <span class="o">==</span> <span class="n">iter_per_epoch</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
       <span class="c1"># Once per epoch evaluate the model on the train and test sets.</span>
       <span class="n">train_acc</span><span class="p">,</span> <span class="n">train_loss</span> <span class="o">=</span> <span class="n">accuracy_and_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">train_minibatch</span><span class="p">,</span> <span class="n">batch_stats</span><span class="p">)</span>
-      <span class="n">test_acc</span><span class="p">,</span> <span class="n">test_loss</span> <span class="o">=</span> <span class="n">accuracy_and_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_ds</span><span class="p">),</span> <span class="n">batch_stats</span><span class="p">)</span>
+      <span class="n">test_acc</span><span class="p">,</span> <span class="n">test_loss</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span>
+      <span class="c1"># make a pass over test set to compute test accuracy</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_test</span><span class="p">):</span>
+          <span class="n">tmp</span> <span class="o">=</span> <span class="n">accuracy_and_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_ds</span><span class="p">),</span> <span class="n">batch_stats</span><span class="p">)</span>
+          <span class="n">test_acc</span> <span class="o">+=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">iter_per_epoch_test</span>
+          <span class="n">test_loss</span> <span class="o">+=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">iter_per_epoch_test</span>
 
       <span class="n">train_acc</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">device_get</span><span class="p">(</span><span class="n">train_acc</span><span class="p">)</span>
       <span class="n">train_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">device_get</span><span class="p">(</span><span class="n">train_loss</span><span class="p">)</span>

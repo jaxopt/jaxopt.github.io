@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Unconstrained optimization &mdash; JAXopt 0.2 documentation</title>
+  <title>Unconstrained optimization &mdash; JAXopt 0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -56,7 +56,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#defining-an-objective-function">Defining an objective function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#solvers">Solvers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html">jaxopt.GradientDescent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html">jaxopt.LBFGS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html">jaxopt.ScipyMinimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html">jaxopt.NonlinearCG</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#instantiating-and-running-the-solver">Instantiating and running the solver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#unpacking-results">Unpacking results</a></li>
 </ul>
@@ -72,6 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -147,7 +150,7 @@ are the parameters with respect to which the function is minimized and
 <span class="math notranslate nohighlight">\(\theta\)</span> are optional extra arguments.</p>
 <section id="defining-an-objective-function">
 <h2>Defining an objective function<a class="headerlink" href="#defining-an-objective-function" title="Permalink to this headline"></a></h2>
-<p>Objective functions must always include as first argument the variable with
+<p>Objective functions must always include as first argument the variables with
 respect to which the function is minimized. The function can also contain extra
 arguments.</p>
 <p>The following illustrates how to express the ridge regression objective:</p>
@@ -171,8 +174,14 @@ notation above.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent" title="jaxopt.GradientDescent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.GradientDescent</span></code></a>(fun[, prox, ...])</p></td>
 <td><p>Gradient Descent solver.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize" title="jaxopt.ScipyMinimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyMinimize</span></code></a>([method, dtype, jit, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a>(fun[, has_aux, maxiter, tol, ...])</p></td>
+<td><p>LBFGS solver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize" title="jaxopt.ScipyMinimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyMinimize</span></code></a>([method, dtype, jit, ...])</p></td>
 <td><p><cite>scipy.optimize.minimize</cite> wrapper</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG" title="jaxopt.NonlinearCG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.NonlinearCG</span></code></a>(fun[, has_aux, maxiter, ...])</p></td>
+<td><p>Nonlinear Conjugate Gradient Solver.</p></td>
 </tr>
 </tbody>
 </table>
@@ -180,8 +189,13 @@ notation above.</p>
 <h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this headline"></a></h3>
 <p>Continuing the ridge regression example above, gradient descent can be
 instantiated and run as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gd</span> <span class="o">=</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">GradientDescent</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">ridge_reg_objective</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span> <span class="o">=</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">LBFGS</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">ridge_reg_objective</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Alternatively, we could have used one of these solvers as well:</span>
+<span class="c1"># solver = jaxopt.GradientDescent(fun=ridge_reg_objective, maxiter=500)</span>
+<span class="c1"># solver = jaxopt.ScipyMinimize(fun=ridge_reg_objective, method=&quot;L-BFGS-B&quot;, maxiter=500)</span>
+<span class="c1"># solver = jaxopt.NonlinearCG(fun=ridge_reg_objective, method=&quot;polak-ribiere&quot;, maxiter=500)</span>
 </pre></div>
 </div>
 </section>

@@ -200,6 +200,27 @@ Deep learning
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Resnet example with Flax and JAXopt.">
+
+.. only:: html
+
+ .. figure:: /auto_examples/deep_learning/images/thumb/sphx_glr_flax_resnet_wide_thumb.png
+     :alt: Resnet example with Flax and JAXopt.
+
+     :ref:`sphx_glr_auto_examples_deep_learning_flax_resnet_wide.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/deep_learning/flax_resnet_wide
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="The purpose of this example is to illustrate the power of adaptive stepsize algorithms.">
 
 .. only:: html

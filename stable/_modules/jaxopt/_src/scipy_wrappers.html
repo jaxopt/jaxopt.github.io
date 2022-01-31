@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.2 documentation</title>
+  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -57,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -339,6 +340,21 @@
 <span class="sd">  Attributes:</span>
 <span class="sd">    fun: a smooth function of the form `fun(x, *args, **kwargs)`.</span>
 <span class="sd">    method: the `method` argument for `scipy.optimize.minimize`.</span>
+<span class="sd">      Should be one of</span>
+<span class="sd">        * &#39;Nelder-Mead&#39;</span>
+<span class="sd">        * &#39;Powell&#39;</span>
+<span class="sd">        * &#39;CG&#39;</span>
+<span class="sd">        * &#39;BFGS&#39;</span>
+<span class="sd">        * &#39;Newton-CG&#39;</span>
+<span class="sd">        * &#39;L-BFGS-B&#39;</span>
+<span class="sd">        * &#39;TNC&#39;</span>
+<span class="sd">        * &#39;COBYLA&#39;</span>
+<span class="sd">        * &#39;SLSQP&#39;</span>
+<span class="sd">        * &#39;trust-constr&#39;</span>
+<span class="sd">        * &#39;dogleg&#39;</span>
+<span class="sd">        * &#39;trust-ncg&#39;</span>
+<span class="sd">        * &#39;trust-exact&#39;</span>
+<span class="sd">        * &#39;trust-krylov&#39;</span>
 <span class="sd">    tol: the `tol` argument for `scipy.optimize.minimize`.</span>
 <span class="sd">    options: the `options` argument for `scipy.optimize.minimize`.</span>
 <span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>
@@ -475,6 +491,17 @@
 <span class="sd">      `optimality_fun(x, *args, **kwargs)` whose root is to be found. It must</span>
 <span class="sd">      return as output a PyTree with structure identical to x.</span>
 <span class="sd">    method: the `method` argument for `scipy.optimize.root`.</span>
+<span class="sd">      Should be one of</span>
+<span class="sd">        * &#39;hybr&#39;</span>
+<span class="sd">        * &#39;lm&#39;</span>
+<span class="sd">        * &#39;broyden1&#39;</span>
+<span class="sd">        * &#39;broyden2&#39;</span>
+<span class="sd">        * &#39;anderson&#39;</span>
+<span class="sd">        * &#39;linearmixing&#39;</span>
+<span class="sd">        * &#39;diagbroyden&#39;</span>
+<span class="sd">        * &#39;excitingmixing&#39;</span>
+<span class="sd">        * &#39;krylov&#39;</span>
+<span class="sd">        * &#39;df-sane&#39;</span>
 <span class="sd">    tol: the `tol` argument for `scipy.optimize.root`.</span>
 <span class="sd">    options: the `options` argument for `scipy.optimize.root`.</span>
 <span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>

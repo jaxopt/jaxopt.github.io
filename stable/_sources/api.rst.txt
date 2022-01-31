@@ -11,7 +11,9 @@ Unconstrained
   :toctree: _autosummary
 
     jaxopt.GradientDescent
+    jaxopt.LBFGS
     jaxopt.ScipyMinimize
+    jaxopt.NonlinearCG
 
 Constrained
 ~~~~~~~~~~~
@@ -78,6 +80,14 @@ Linear system solving
     jaxopt.linear_solve.solve_bicgstab
     jaxopt.IterativeRefinement
 
+Nonlinear least squares
+-----------------------
+
+.. autosummary::
+  :toctree: _autosummary
+
+    jaxopt.GaussNewton
+
 Root finding
 ------------
 
@@ -107,3 +117,28 @@ Implicit differentiation
     jaxopt.implicit_diff.custom_fixed_point
     jaxopt.implicit_diff.root_jvp
     jaxopt.implicit_diff.root_vjp
+
+Line search
+-----------
+
+.. autosummary::
+  :toctree: _autosummary
+
+    jaxopt.BacktrackingLineSearch
+
+Tree utilities
+--------------
+
+.. autosummary::
+  :toctree: _autosummary
+
+    jaxopt.tree_util.tree_add
+    jaxopt.tree_util.tree_sub
+    jaxopt.tree_util.tree_mul
+    jaxopt.tree_util.tree_div
+    jaxopt.tree_util.tree_scalar_mul
+    jaxopt.tree_util.tree_add_scalar_mul
+    jaxopt.tree_util.tree_vdot
+    jaxopt.tree_util.tree_sum
+    jaxopt.tree_util.tree_l2_norm
+    jaxopt.tree_util.tree_zeros_like

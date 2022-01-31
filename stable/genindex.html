@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; JAXopt 0.2 documentation</title>
+  <title>Index &mdash; JAXopt 0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -57,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -114,6 +115,7 @@
  | <a href="#J"><strong>J</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
@@ -133,6 +135,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.__init__">(jaxopt.ArmijoSGD method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.__init__">(jaxopt.BacktrackingLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.__init__">(jaxopt.Bisection method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.__init__">(jaxopt.BlockCoordinateDescent method)</a>
@@ -145,11 +149,17 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.__init__">(jaxopt.FixedPointIteration method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.__init__">(jaxopt.GaussNewton method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.__init__">(jaxopt.GradientDescent method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.__init__">(jaxopt.IterativeRefinement method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.__init__">(jaxopt.LBFGS method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.__init__">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.__init__">(jaxopt.NonlinearCG method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.__init__">(jaxopt.OptaxSolver method)</a>
 </li>
@@ -198,6 +208,8 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch">BacktrackingLineSearch (class in jaxopt)</a>
+</li>
       <li><a href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration.beta">beta (jaxopt.AndersonAcceleration attribute)</a>
 
       <ul>
@@ -206,10 +218,10 @@
       </ul></li>
       <li><a href="_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss">binary_logistic_loss() (in module jaxopt.loss)</a>
 </li>
-      <li><a href="_autosummary/jaxopt.objective.binary_logreg.html#jaxopt.objective.binary_logreg">binary_logreg (in module jaxopt.objective)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.objective.binary_logreg.html#jaxopt.objective.binary_logreg">binary_logreg (in module jaxopt.objective)</a>
+</li>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection">Bisection (class in jaxopt)</a>
 </li>
       <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.block_prox">block_prox (jaxopt.BlockCoordinateDescent attribute)</a>
@@ -224,6 +236,10 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.c1">c1 (jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.c2">c2 (jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.check_bracket">check_bracket (jaxopt.Bisection attribute)</a>
 </li>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.check_primal_dual_infeasability">check_primal_dual_infeasability (jaxopt.BoxOSQP attribute)</a>
@@ -234,6 +250,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.condition">condition (jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
       <li><a href="_autosummary/jaxopt.implicit_diff.custom_fixed_point.html#jaxopt.implicit_diff.custom_fixed_point">custom_fixed_point() (in module jaxopt.implicit_diff)</a>
 </li>
       <li><a href="_autosummary/jaxopt.implicit_diff.custom_root.html#jaxopt.implicit_diff.custom_root">custom_root() (in module jaxopt.implicit_diff)</a>
@@ -249,9 +267,17 @@
       <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.decrease_factor">decrease_factor (jaxopt.ArmijoSGD attribute)</a>
 
       <ul>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.decrease_factor">(jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.decrease_factor">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.decrease_factor">(jaxopt.NonlinearCG attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.decrease_factor">(jaxopt.ProximalGradient attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.delta">delta (jaxopt.PolyakSGD attribute)</a>
 </li>
       <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#id0">dtype (jaxopt.ScipyBoundedMinimize attribute)</a>, <a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.dtype">[1]</a>
@@ -262,8 +288,6 @@
         <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#id0">(jaxopt.ScipyRootFinding attribute)</a>, <a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.dtype">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.dual_infeasible_tol">dual_infeasible_tol (jaxopt.BoxOSQP attribute)</a>
 
       <ul>
@@ -299,11 +323,17 @@
       <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.fun">fun (jaxopt.ArmijoSGD attribute)</a>
 
       <ul>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.fun">(jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.fun">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.fun">(jaxopt.GradientDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.fun">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.fun">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.fun">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.fun">(jaxopt.OptaxSolver attribute)</a>
 </li>
@@ -324,6 +354,10 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton">GaussNewton (class in jaxopt)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent">GradientDescent (class in jaxopt)</a>
 </li>
   </ul></td>
@@ -341,7 +375,11 @@
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.has_aux">(jaxopt.GradientDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.has_aux">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.has_aux">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.has_aux">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.has_aux">(jaxopt.OptaxSolver attribute)</a>
 </li>
@@ -364,6 +402,8 @@
 
       <ul>
         <li><a href="_autosummary/jaxopt.AndersonWrapper.html#jaxopt.AndersonWrapper.history_size">(jaxopt.AndersonWrapper attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.history_size">(jaxopt.LBFGS attribute)</a>
 </li>
       </ul></li>
       <li><a href="_autosummary/jaxopt.loss.huber_loss.html#jaxopt.loss.huber_loss">huber_loss() (in module jaxopt.loss)</a>
@@ -389,11 +429,17 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.implicit_diff">(jaxopt.FixedPointIteration attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.implicit_diff">(jaxopt.GaussNewton attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.implicit_diff">(jaxopt.GradientDescent attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.implicit_diff">(jaxopt.IterativeRefinement attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.implicit_diff">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.implicit_diff">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.implicit_diff">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.implicit_diff">(jaxopt.OptaxSolver attribute)</a>
 </li>
@@ -421,11 +467,17 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.implicit_diff_solve">(jaxopt.FixedPointIteration attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.implicit_diff_solve">(jaxopt.GaussNewton attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.implicit_diff_solve">(jaxopt.GradientDescent attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.implicit_diff_solve">(jaxopt.IterativeRefinement attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.implicit_diff_solve">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.implicit_diff_solve">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.implicit_diff_solve">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.implicit_diff_solve">(jaxopt.OptaxSolver attribute)</a>
 </li>
@@ -447,7 +499,13 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.increase_factor">increase_factor (jaxopt.ArmijoSGD attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.increase_factor">(jaxopt.LBFGS attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.increase_factor">(jaxopt.NonlinearCG attribute)</a>
+</li>
+      </ul></li>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.init_params">init_params() (jaxopt.BoxOSQP method)</a>
 </li>
       <li><a href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration.init_state">init_state() (jaxopt.AndersonAcceleration method)</a>
@@ -455,15 +513,23 @@
       <ul>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.init_state">(jaxopt.ArmijoSGD method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.init_state">(jaxopt.BacktrackingLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.init_state">(jaxopt.Bisection method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.init_state">(jaxopt.BlockCoordinateDescent method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.init_state">(jaxopt.FixedPointIteration method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.init_state">(jaxopt.GaussNewton method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.init_state">(jaxopt.GradientDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.init_state">(jaxopt.LBFGS method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.init_state">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.init_state">(jaxopt.NonlinearCG method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.init_state">(jaxopt.OptaxSolver method)</a>
 </li>
@@ -489,6 +555,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.jit">(jaxopt.ArmijoSGD attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.jit">(jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.jit">(jaxopt.Bisection attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.jit">(jaxopt.BlockCoordinateDescent attribute)</a>
@@ -499,9 +567,15 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.jit">(jaxopt.FixedPointIteration attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.jit">(jaxopt.GaussNewton attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.jit">(jaxopt.IterativeRefinement attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.jit">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.jit">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.jit">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.jit">(jaxopt.OptaxSolver attribute)</a>
 </li>
@@ -535,6 +609,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.l2_optimality_error">(jaxopt.ArmijoSGD method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.l2_optimality_error">(jaxopt.BacktrackingLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.l2_optimality_error">(jaxopt.Bisection method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.l2_optimality_error">(jaxopt.BlockCoordinateDescent method)</a>
@@ -547,11 +623,17 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.l2_optimality_error">(jaxopt.FixedPointIteration method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.l2_optimality_error">(jaxopt.GaussNewton method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.l2_optimality_error">(jaxopt.GradientDescent method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.l2_optimality_error">(jaxopt.IterativeRefinement method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.l2_optimality_error">(jaxopt.LBFGS method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.l2_optimality_error">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.l2_optimality_error">(jaxopt.NonlinearCG method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.l2_optimality_error">(jaxopt.OptaxSolver method)</a>
 </li>
@@ -572,6 +654,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS">LBFGS (class in jaxopt)</a>
+</li>
       <li><a href="_autosummary/jaxopt.objective.least_squares.html#jaxopt.objective.least_squares">least_squares (in module jaxopt.objective)</a>
 </li>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.lower">lower (jaxopt.Bisection attribute)</a>
@@ -613,6 +697,8 @@
       <ul>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.maxiter">(jaxopt.ArmijoSGD attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.maxiter">(jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.maxiter">(jaxopt.Bisection attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.maxiter">(jaxopt.BlockCoordinateDescent attribute)</a>
@@ -623,11 +709,17 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.maxiter">(jaxopt.FixedPointIteration attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.maxiter">(jaxopt.GaussNewton attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.maxiter">(jaxopt.GradientDescent attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.maxiter">(jaxopt.IterativeRefinement attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.maxiter">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.maxiter">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.maxiter">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.maxiter">(jaxopt.OptaxSolver attribute)</a>
 </li>
@@ -647,14 +739,20 @@
       <ul>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.maxls">(jaxopt.GradientDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.maxls">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.maxls">(jaxopt.NonlinearCG attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient.maxls">(jaxopt.ProjectedGradient attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.maxls">(jaxopt.ProximalGradient attribute)</a>
 </li>
       </ul></li>
-      <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.method">method (jaxopt.ScipyBoundedMinimize attribute)</a>
+      <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.method">method (jaxopt.NonlinearCG attribute)</a>
 
       <ul>
+        <li><a href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.method">(jaxopt.ScipyBoundedMinimize attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.method">(jaxopt.ScipyMinimize attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.method">(jaxopt.ScipyRootFinding attribute)</a>
@@ -691,6 +789,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG">NonlinearCG (class in jaxopt)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -717,7 +823,11 @@
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.optimality_fun">(jaxopt.GradientDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.optimality_fun">(jaxopt.LBFGS method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.optimality_fun">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.optimality_fun">(jaxopt.NonlinearCG method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.optimality_fun">(jaxopt.OptaxSolver method)</a>
 </li>
@@ -838,6 +948,8 @@
 </li>
       <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.reset_stepsize">reset_stepsize() (jaxopt.ArmijoSGD method)</a>
 </li>
+      <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.residual_fun">residual_fun (jaxopt.GaussNewton attribute)</a>
+</li>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.rho_max">rho_max (jaxopt.BoxOSQP attribute)</a>
 
       <ul>
@@ -875,6 +987,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.run">(jaxopt.ArmijoSGD method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.run">(jaxopt.BacktrackingLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.run">(jaxopt.Bisection method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.run">(jaxopt.BlockCoordinateDescent method)</a>
@@ -887,11 +1001,17 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.run">(jaxopt.FixedPointIteration method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.run">(jaxopt.GaussNewton method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.run">(jaxopt.GradientDescent method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.run">(jaxopt.IterativeRefinement method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.run">(jaxopt.LBFGS method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.run">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.run">(jaxopt.NonlinearCG method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.run">(jaxopt.OptaxSolver method)</a>
 </li>
@@ -1003,6 +1123,8 @@
       <ul>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.tol">(jaxopt.ArmijoSGD attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.tol">(jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.tol">(jaxopt.Bisection attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.tol">(jaxopt.BlockCoordinateDescent attribute)</a>
@@ -1013,11 +1135,17 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.tol">(jaxopt.FixedPointIteration attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.tol">(jaxopt.GaussNewton attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.tol">(jaxopt.GradientDescent attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.tol">(jaxopt.IterativeRefinement attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.tol">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.tol">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.tol">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.tol">(jaxopt.OptaxSolver attribute)</a>
 </li>
@@ -1037,6 +1165,28 @@
 </li>
       </ul></li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_add.html#jaxopt.tree_util.tree_add">tree_add() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_add_scalar_mul.html#jaxopt.tree_util.tree_add_scalar_mul">tree_add_scalar_mul() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_div.html#jaxopt.tree_util.tree_div">tree_div() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_l2_norm.html#jaxopt.tree_util.tree_l2_norm">tree_l2_norm() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_mul.html#jaxopt.tree_util.tree_mul">tree_mul() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_scalar_mul.html#jaxopt.tree_util.tree_scalar_mul">tree_scalar_mul() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_sub.html#jaxopt.tree_util.tree_sub">tree_sub() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_sum.html#jaxopt.tree_util.tree_sum">tree_sum() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_vdot.html#jaxopt.tree_util.tree_vdot">tree_vdot() (in module jaxopt.tree_util)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.tree_util.tree_zeros_like.html#jaxopt.tree_util.tree_zeros_like">tree_zeros_like() (in module jaxopt.tree_util)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="U">U</h2>
@@ -1049,6 +1199,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.unroll">(jaxopt.ArmijoSGD attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.unroll">(jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.unroll">(jaxopt.Bisection attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.unroll">(jaxopt.BlockCoordinateDescent attribute)</a>
@@ -1057,9 +1209,15 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.unroll">(jaxopt.FixedPointIteration attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.unroll">(jaxopt.GaussNewton attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.unroll">(jaxopt.IterativeRefinement attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.unroll">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.unroll">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.unroll">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.unroll">(jaxopt.OptaxSolver attribute)</a>
 </li>
@@ -1077,6 +1235,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.update">(jaxopt.ArmijoSGD method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.update">(jaxopt.BacktrackingLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.update">(jaxopt.Bisection method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.update">(jaxopt.BlockCoordinateDescent method)</a>
@@ -1085,9 +1245,15 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.update">(jaxopt.FixedPointIteration method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.update">(jaxopt.GaussNewton method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.update">(jaxopt.GradientDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.update">(jaxopt.LBFGS method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.update">(jaxopt.MirrorDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.update">(jaxopt.NonlinearCG method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.update">(jaxopt.OptaxSolver method)</a>
 </li>
@@ -1102,6 +1268,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.upper">upper (jaxopt.Bisection attribute)</a>
 </li>
+      <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.use_gamma">use_gamma (jaxopt.LBFGS attribute)</a>
+</li>
       <li><a href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.use_jacrev">use_jacrev (jaxopt.ScipyRootFinding attribute)</a>
 </li>
   </ul></td>
@@ -1110,12 +1278,16 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.value_and_grad">value_and_grad (jaxopt.BacktrackingLineSearch attribute)</a>
+</li>
       <li><a href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration.verbose">verbose (jaxopt.AndersonAcceleration attribute)</a>
 
       <ul>
         <li><a href="_autosummary/jaxopt.AndersonWrapper.html#jaxopt.AndersonWrapper.verbose">(jaxopt.AndersonWrapper attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.verbose">(jaxopt.ArmijoSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.verbose">(jaxopt.BacktrackingLineSearch attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.verbose">(jaxopt.Bisection attribute)</a>
 </li>
@@ -1125,11 +1297,17 @@
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.verbose">(jaxopt.FixedPointIteration attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.verbose">(jaxopt.GaussNewton attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.verbose">(jaxopt.GradientDescent attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.verbose">(jaxopt.IterativeRefinement attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.verbose">(jaxopt.LBFGS attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.verbose">(jaxopt.MirrorDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.verbose">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.verbose">(jaxopt.OptaxSolver attribute)</a>
 </li>

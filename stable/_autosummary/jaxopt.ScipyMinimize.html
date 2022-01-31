@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.ScipyMinimize &mdash; JAXopt 0.2 documentation</title>
+  <title>jaxopt.ScipyMinimize &mdash; JAXopt 0.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Constrained optimization" href="../constrained.html" />
-    <link rel="prev" title="jaxopt.GradientDescent" href="jaxopt.GradientDescent.html" /> 
+    <link rel="next" title="jaxopt.NonlinearCG" href="jaxopt.NonlinearCG.html" />
+    <link rel="prev" title="jaxopt.LBFGS" href="jaxopt.LBFGS.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,7 +54,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../unconstrained.html#defining-an-objective-function">Defining an objective function</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../unconstrained.html#solvers">Solvers</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="jaxopt.GradientDescent.html">jaxopt.GradientDescent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxopt.LBFGS.html">jaxopt.LBFGS</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.ScipyMinimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxopt.NonlinearCG.html">jaxopt.NonlinearCG</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../unconstrained.html#instantiating-and-running-the-solver">Instantiating and running the solver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../unconstrained.html#unpacking-results">Unpacking results</a></li>
 </ul>
@@ -70,6 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../line_search.html">Line search</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -175,7 +178,26 @@ It supports pytrees and implicit diff.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyMinimize.method">
 <span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#jaxopt.ScipyMinimize.method" title="Permalink to this definition"></a></dt>
-<dd><p>the <cite>method</cite> argument for <cite>scipy.optimize.minimize</cite>.</p>
+<dd><p>the <cite>method</cite> argument for <cite>scipy.optimize.minimize</cite>.
+Should be one of</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>‘Nelder-Mead’</p></li>
+<li><p>‘Powell’</p></li>
+<li><p>‘CG’</p></li>
+<li><p>‘BFGS’</p></li>
+<li><p>‘Newton-CG’</p></li>
+<li><p>‘L-BFGS-B’</p></li>
+<li><p>‘TNC’</p></li>
+<li><p>‘COBYLA’</p></li>
+<li><p>‘SLSQP’</p></li>
+<li><p>‘trust-constr’</p></li>
+<li><p>‘dogleg’</p></li>
+<li><p>‘trust-ncg’</p></li>
+<li><p>‘trust-exact’</p></li>
+<li><p>‘trust-krylov’</p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[str]</p>
@@ -379,8 +401,8 @@ objective.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="jaxopt.GradientDescent.html" class="btn btn-neutral float-left" title="jaxopt.GradientDescent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../constrained.html" class="btn btn-neutral float-right" title="Constrained optimization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="jaxopt.LBFGS.html" class="btn btn-neutral float-left" title="jaxopt.LBFGS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jaxopt.NonlinearCG.html" class="btn btn-neutral float-right" title="jaxopt.NonlinearCG" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

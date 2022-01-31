@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.gradient_descent &mdash; JAXopt 0.2 documentation</title>
+  <title>jaxopt._src.gradient_descent &mdash; JAXopt 0.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -57,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -123,7 +124,6 @@
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">loop</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.proximal_gradient</span> <span class="kn">import</span> <span class="n">ProximalGradient</span><span class="p">,</span> <span class="n">ProxGradState</span>
 
 
