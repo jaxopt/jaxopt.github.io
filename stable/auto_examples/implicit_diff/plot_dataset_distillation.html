@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dataset distillation &mdash; JAXopt 0.3 documentation</title>
+  <title>Dataset distillation &mdash; JAXopt 0.3.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -167,7 +167,8 @@ X_{\text{tr}}; y_{\text{tr}})}_{\text{outer problem}} ~\text{ subject to }~
 x^\star(\theta) \in \underbrace{\text{argmin}_{x \in \mathbb{R}^{p \times k}}
 f(x, \theta; [k]) + \text{l2reg} \|x\|^2\,}_{\text{inner problem}},\]</div>
 <p>where <span class="math notranslate nohighlight">\(f(W, X; y) := \ell(y, XW)\)</span>, and <span class="math notranslate nohighlight">\(\ell\)</span> denotes the multiclass
-logistic regression loss, and <span class="math notranslate nohighlight">\(\text{l2reg} = 10^{-1}\)</span> is a regularization
+logistic regression loss, <span class="math notranslate nohighlight">\(X_{\text{tr}}, y_{\text{tr}}\)</span> are the samples and
+target values in the train set, and <span class="math notranslate nohighlight">\(\text{l2reg} = 10^{-1}\)</span> is a regularization
 parameter that we found improved convergence.</p>
 <img src="../../_images/sphx_glr_plot_dataset_distillation_001.png" srcset="../../_images/sphx_glr_plot_dataset_distillation_001.png" alt="Distilled images" class = "sphx-glr-single-img"/><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
@@ -233,7 +234,7 @@ parameter that we found improved convergence.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  0.398 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  44.710 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-implicit-diff-plot-dataset-distillation-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/9d0f2e2ed774ce1e7df307fd870278eb/plot_dataset_distillation.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_dataset_distillation.py</span></code></a></p>

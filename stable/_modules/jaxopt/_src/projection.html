@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.projection &mdash; JAXopt 0.3 documentation</title>
+  <title>jaxopt._src.projection &mdash; JAXopt 0.3.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -123,7 +123,8 @@
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt._src.bisection</span> <span class="kn">import</span> <span class="n">Bisection</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.quadratic_prog</span> <span class="kn">import</span> <span class="n">QuadraticProgramming</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.osqp</span> <span class="kn">import</span> <span class="n">OSQP</span><span class="p">,</span> <span class="n">BoxOSQP</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.eq_qp</span> <span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">tree_util</span>
 
 
@@ -371,15 +372,17 @@
 <span class="sd">  Returns:</span>
 <span class="sd">    output array, with the same shape as ``x``.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="c1"># todo: support matvec for A</span>
+  <span class="c1"># TODO: support matvec for A</span>
   <span class="n">A</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">hyperparams</span>
-  <span class="n">qp</span> <span class="o">=</span> <span class="n">QuadraticProgramming</span><span class="p">()</span>
-  <span class="n">I</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-  <span class="n">hyperparams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">params_ineq</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">hyperparams</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+  <span class="n">matvec_Q</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">vec</span><span class="p">:</span> <span class="n">vec</span>
+  <span class="n">osqp</span> <span class="o">=</span> <span class="n">EqualityConstrainedQP</span><span class="p">(</span><span class="n">matvec_Q</span><span class="o">=</span><span class="n">matvec_Q</span><span class="p">)</span>
+  <span class="n">hyperparams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+  <span class="n">kkt_sol</span> <span class="o">=</span> <span class="n">osqp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">hyperparams</span><span class="p">)</span><span class="o">.</span><span class="n">params</span>
+  <span class="k">return</span> <span class="n">kkt_sol</span><span class="o">.</span><span class="n">primal</span></div>
 
 
-<div class="viewcode-block" id="projection_polyhedron"><a class="viewcode-back" href="../../../_autosummary/jaxopt.projection.projection_polyhedron.html#jaxopt.projection.projection_polyhedron">[docs]</a><span class="k">def</span> <span class="nf">projection_polyhedron</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<div class="viewcode-block" id="projection_polyhedron"><a class="viewcode-back" href="../../../_autosummary/jaxopt.projection.projection_polyhedron.html#jaxopt.projection.projection_polyhedron">[docs]</a><span class="k">def</span> <span class="nf">projection_polyhedron</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span>
+                          <span class="n">check_feasible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
   <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Projection onto a polyhedron:</span>
 
 <span class="sd">  .. math::</span>
@@ -391,16 +394,22 @@
 <span class="sd">    x: pytree to project.</span>
 <span class="sd">    hyperparams: tuple ``hyperparams = (A, b, G, h)``, where ``A`` is a matrix,</span>
 <span class="sd">      ``b`` is a vector, ``G`` is a matrix and ``h`` is a vector.</span>
+<span class="sd">    check_feasible: if True (default: True) check the non emptyness of the polyhedron,</span>
+<span class="sd">      which disables jit compilation. If False, the function is jit compiled.</span>
 
 <span class="sd">  Returns:</span>
 <span class="sd">    output array, with the same shape as ``x``.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="c1"># todo: support matvecs for A and G</span>
   <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">hyperparams</span>
-  <span class="n">qp</span> <span class="o">=</span> <span class="n">QuadraticProgramming</span><span class="p">()</span>
-  <span class="n">I</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-  <span class="n">hyperparams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
-  <span class="k">return</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">hyperparams</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+  <span class="n">matvec_Q</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">vec</span><span class="p">:</span> <span class="n">vec</span>
+  <span class="n">osqp</span> <span class="o">=</span> <span class="n">OSQP</span><span class="p">(</span><span class="n">matvec_Q</span><span class="o">=</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="n">check_primal_dual_infeasability</span><span class="o">=</span><span class="n">check_feasible</span><span class="p">)</span>
+  <span class="c1"># check feasability by default; currently there is no way to return the info to the user inside @jit.</span>
+  <span class="n">hyperparams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+  <span class="n">kkt_sol</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">osqp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">hyperparams</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">check_feasible</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">PRIMAL_INFEASIBLE</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The polyhedron is empty.&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">kkt_sol</span><span class="o">.</span><span class="n">primal</span></div>
 
 
 <span class="k">def</span> <span class="nf">_optimality_fun_proj_box_sec</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">):</span>

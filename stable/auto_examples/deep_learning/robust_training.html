@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Robust training. &mdash; JAXopt 0.3 documentation</title>
+  <title>Robust training. &mdash; JAXopt 0.3.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="VAE example with Haiku and JAXopt." href="haiku_vae.html" />
-    <link rel="prev" title="Binary kernel SVM with intercept." href="../constrained/binary_kernel_svm_with_intercept.html" /> 
+    <link rel="next" title="SPMD ResNet example with Flax and JAXopt." href="distributed_flax_imagenet.html" />
+    <link rel="prev" title="Resnet example with Flax and JAXopt." href="flax_resnet.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -71,16 +71,17 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Robust training.</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="flax_image_classif.html">Image classification example with Flax and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="haiku_image_classif.html">Image classification example with Haiku and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="flax_resnet_wide.html">Resnet example with Flax and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_sgd_solvers.html">Comparison of different SGD algorithms.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="flax_resnet.html">Resnet example with Flax and JAXopt.</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Robust training.</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="distributed_flax_imagenet.html">SPMD ResNet example with Flax and JAXopt.</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
@@ -153,67 +154,73 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="robust-training">
 <span id="sphx-glr-auto-examples-deep-learning-robust-training-py"></span><h1>Robust training.<a class="headerlink" href="#robust-training" title="Permalink to this headline"></a></h1>
 <p>The following code trains a convolutional neural network (CNN) to be robust
-with respect to the fast sign gradient (FGSM) method.</p>
-<p>The Fast Gradient Sign Method (FGSM) is a simple yet effective method to
-generate adversarial images. It constructs an adversarial by adding a small
-perturbation in the direction of the sign of the gradient with respect to the
-input. The gradient ensures this perturbation locally maximizes the objective,
-while the sign ensures that the update is on the boundary of the L-infinity
-ball.</p>
+with respect to the projected gradient descent (PGD) method.</p>
+<p>The Projected Gradient Descent Method (PGD) is a simple yet effective method to
+generate adversarial images. At each iteration, it adds a small perturbation
+in the direction of the sign of the gradient with respect to the input followed
+by a projection onto the infinity ball. The gradient sign ensures this
+perturbation locally maximizes the objective, while the projection ensures this
+perturbation stays on the boundary of the infinity ball.</p>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
 <blockquote>
 <div><p>Goodfellow, Ian J., Jonathon Shlens, and Christian Szegedy. “Explaining
 and harnessing adversarial examples.” <a class="reference external" href="https://arxiv.org/abs/1412.6572">https://arxiv.org/abs/1412.6572</a></p>
+<p>Madry, Aleksander, et al. “Towards deep learning models resistant to
+adversarial attacks.” arXiv preprint arXiv:1706.06083 (2017).</p>
 </div></blockquote>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
+<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
-
-<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="nn">optax</span>
-
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">loss</span>
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">tree_util</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">optax</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
 
-<span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Normalizes images to lie in (0,1) and be float32.&quot;&quot;&quot;</span>
-  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">images</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span>
+<span class="n">dataset_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;mnist&quot;</span><span class="p">,</span> <span class="s2">&quot;kmnist&quot;</span><span class="p">,</span> <span class="s2">&quot;emnist&quot;</span><span class="p">,</span> <span class="s2">&quot;fashion_mnist&quot;</span><span class="p">,</span> <span class="s2">&quot;cifar10&quot;</span><span class="p">,</span> <span class="s2">&quot;cifar100&quot;</span>
+<span class="p">]</span>
 
-<span class="k">def</span> <span class="nf">load_datasets</span><span class="p">():</span>
-  <span class="sd">&quot;&quot;&quot;Load MNIST train and test datasets into memory.</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;l2reg&quot;</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="s2">&quot;L2 regularization.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="s2">&quot;Learning rate.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span>
+    <span class="s2">&quot;epsilon&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="s2">&quot;Adversarial perturbations will be constrained to lie within the L-infinity ball of radius epsilon.&quot;</span>
+<span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s2">&quot;dataset&quot;</span><span class="p">,</span> <span class="s2">&quot;mnist&quot;</span><span class="p">,</span> <span class="n">dataset_names</span><span class="p">,</span> <span class="s2">&quot;Dataset to train on.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;epochs&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Number of passes over the dataset.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;train_batch_size&quot;</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="s2">&quot;Batch size at train time.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;test_batch_size&quot;</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="s2">&quot;Batch size at test time.&quot;</span><span class="p">)</span>
 
-<span class="sd">  Taken from https://github.com/google/flax/blob/main/examples/mnist/train.py.</span>
-<span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">ds_builder</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">builder</span><span class="p">(</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
-  <span class="n">ds_builder</span><span class="o">.</span><span class="n">download_and_prepare</span><span class="p">()</span>
-  <span class="n">train_ds</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">as_numpy</span><span class="p">(</span><span class="n">ds_builder</span><span class="o">.</span><span class="n">as_dataset</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
-  <span class="n">test_ds</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">as_numpy</span><span class="p">(</span><span class="n">ds_builder</span><span class="o">.</span><span class="n">as_dataset</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
-  <span class="n">train_ds</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span> <span class="n">test_ds</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">normalize</span><span class="p">,</span> <span class="p">(</span><span class="n">train_ds</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span> <span class="n">test_ds</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]))</span>
-  <span class="k">return</span> <span class="n">train_ds</span><span class="p">,</span> <span class="n">test_ds</span>
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
 
 
-<span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Shuffles training data set, and returns batched examples.&quot;&quot;&quot;</span>
-  <span class="n">n_train</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">])</span>
-  <span class="n">rng_perm</span><span class="p">,</span> <span class="n">rng</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">load_dataset</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_training</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Load dataset using tensorflow_datasets.&quot;&quot;&quot;</span>
+  <span class="n">version</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">dataset</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.*.*&quot;</span><span class="p">,</span>
+      <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># remove useless keys</span>
+      <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">,</span>
+      <span class="n">with_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">is_training</span><span class="p">:</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">tfds</span><span class="o">.</span><span class="n">as_numpy</span><span class="p">(</span><span class="n">ds</span><span class="p">)),</span> <span class="n">ds_info</span>
 
-  <span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="n">n_train</span> <span class="o">//</span> <span class="n">batch_size</span>
-
-  <span class="n">permutation</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">rng_perm</span><span class="p">,</span> <span class="n">n_train</span><span class="p">)</span>
-  <span class="n">permutation</span> <span class="o">=</span> <span class="n">permutation</span><span class="p">[:</span><span class="n">steps_per_epoch</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">]</span>  <span class="c1"># skip incomplete batch</span>
-  <span class="n">permutation</span> <span class="o">=</span> <span class="n">permutation</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">steps_per_epoch</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">))</span>
-
-  <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">][</span><span class="n">permutation</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">][</span><span class="n">permutation</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-  <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">CNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;A simple CNN model.&quot;&quot;&quot;</span>
+  <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span>
 
   <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
   <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -223,99 +230,178 @@ and harnessing adversarial examples.” <a class="reference external" href="http
     <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">window_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># flatten</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="mi">256</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="mi">10</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">x</span>
 
 
-<span class="n">net</span> <span class="o">=</span> <span class="n">CNN</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">argv</span>
+
+  <span class="c1"># Hide any GPUs from TensorFlow. Otherwise TF might reserve memory and make</span>
+  <span class="c1"># it unavailable to JAX.</span>
+  <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">([],</span> <span class="s2">&quot;GPU&quot;</span><span class="p">)</span>
+  <span class="n">train_ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">)</span>
+  <span class="n">test_ds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">)</span>
+  <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">num_classes</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_classes</span>
+  <span class="n">iter_per_epoch_train</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span>
+  <span class="n">iter_per_epoch_test</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span>
 
 
-<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-  <span class="n">logits</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">images</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span>
+  <span class="n">net</span> <span class="o">=</span> <span class="n">CNN</span><span class="p">(</span><span class="n">num_classes</span><span class="p">)</span>
 
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+  <span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span>
 
-<span class="n">logistic_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">multiclass_logistic_loss</span><span class="p">)</span>
+  <span class="n">logistic_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">multiclass_logistic_loss</span><span class="p">)</span>
 
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+  <span class="k">def</span> <span class="nf">loss_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the loss of the network.&quot;&quot;&quot;</span>
+    <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">sqnorm</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">loss_value</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">logistic_loss</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">loss_value</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">sqnorm</span>
 
-<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">loss_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2_regul</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Compute the loss of the network.&quot;&quot;&quot;</span>
-  <span class="n">logits</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">images</span><span class="p">)</span>
-  <span class="n">sqnorm</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="n">loss_value</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">logistic_loss</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="p">))</span>
-  <span class="k">return</span> <span class="n">loss_value</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2_regul</span> <span class="o">*</span> <span class="n">sqnorm</span>
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+  <span class="k">def</span> <span class="nf">pgd_attack</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;PGD attack on the L-infinity ball with radius epsilon.</span>
 
+<span class="sd">    Args:</span>
+<span class="sd">      image: array-like, input data for the CNN</span>
+<span class="sd">      label: integer, class label corresponding to image</span>
+<span class="sd">      params: tree, parameters of the model to attack</span>
+<span class="sd">      epsilon: float, radius of the L-infinity ball.</span>
+<span class="sd">      maxiter: int, number of iterations of this algorithm.</span>
 
-<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">fsgm_attack</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">l2_regul</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Fast sign-gradient attack on the L-infinity ball with radius epsilon.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      perturbed_image: Adversarial image on the boundary of the L-infinity ball</span>
+<span class="sd">        of radius epsilon and centered at image.</span>
 
-<span class="sd">  Parameters:</span>
-<span class="sd">    image: array-like, input data for the CNN</span>
-<span class="sd">    label: integer, class label corresponding to image</span>
-<span class="sd">    params: tree, parameters of the model to attack</span>
-<span class="sd">    l2_regul: float, L2 regularization scale in the loss function</span>
-<span class="sd">    epsilon: float, radius of the L-infinity ball.</span>
+<span class="sd">    Notes:</span>
+<span class="sd">      PGD attack is described in (Madry et al. 2017),</span>
+<span class="sd">      https://arxiv.org/pdf/1706.06083.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_perturbation</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">adversarial_loss</span><span class="p">(</span><span class="n">perturbation</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">image</span> <span class="o">+</span> <span class="n">perturbation</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
 
-<span class="sd">  Returns:</span>
-<span class="sd">    perturbed_image: Adversarial image on the boundary of the L-infinity ball of radius</span>
-<span class="sd">      epsilon and centered at image.</span>
-<span class="sd">  &quot;&quot;&quot;</span>
-  <span class="c1"># compute gradient of the loss wrt to the image</span>
-  <span class="n">grad</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">2</span><span class="p">)(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2_regul</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-  <span class="n">adv_image</span> <span class="o">=</span> <span class="n">image</span> <span class="o">+</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
-  <span class="c1"># clip the image to ensure pixels are between 0 and 1</span>
-  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">adv_image</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">grad_adversarial</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">adversarial_loss</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxiter</span><span class="p">):</span>
+      <span class="c1"># compute gradient of the loss wrt to the image</span>
+      <span class="n">sign_grad</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">grad_adversarial</span><span class="p">(</span><span class="n">image_perturbation</span><span class="p">))</span>
 
-<span class="n">train_ds</span><span class="p">,</span> <span class="n">test_ds</span> <span class="o">=</span> <span class="n">load_datasets</span><span class="p">()</span>
+      <span class="c1"># heuristic step-size 2 eps / maxiter</span>
+      <span class="n">image_perturbation</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="n">maxiter</span><span class="p">)</span> <span class="o">*</span> <span class="n">sign_grad</span>
+      <span class="c1"># projection step onto the L-infinity ball centered at image</span>
+      <span class="n">image_perturbation</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image_perturbation</span><span class="p">,</span> <span class="o">-</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
 
-<span class="c1"># Initialize solver and parameters.</span>
-<span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">),</span> <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">)</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">params</span> <span class="o">=</span> <span class="n">CNN</span><span class="p">()</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))[</span><span class="s2">&quot;params&quot;</span><span class="p">]</span>
-<span class="n">l2_regul</span> <span class="o">=</span> <span class="mf">1e-4</span>
+    <span class="c1"># clip the image to ensure pixels are between 0 and 1</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image</span> <span class="o">+</span> <span class="n">image_perturbation</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+  <span class="c1"># Initialize solver and parameters.</span>
+  <span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span>
+      <span class="n">opt</span><span class="o">=</span><span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">),</span>
+      <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span>
+      <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epochs</span> <span class="o">*</span> <span class="n">iter_per_epoch_train</span><span class="p">)</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">input_shape</span><span class="p">))[</span><span class="s2">&quot;params&quot;</span><span class="p">]</span>
 
-<span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">jitted_update</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
-  <span class="c1"># Training</span>
-  <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">shuffle</span><span class="p">(</span><span class="n">train_ds</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">),</span>
-              <span class="n">total</span><span class="o">=</span><span class="n">train_ds</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">//</span> <span class="mi">128</span><span class="p">)</span>
-  <span class="n">acc</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="n">adv_acc</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+  <span class="n">accuracy_train</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">accuracy_test</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">adversarial_accuracy_train</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">adversarial_accuracy_test</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">maxiter</span><span class="p">):</span>
+    <span class="c1"># training loop</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">)</span>
+    <span class="c1"># convert images to float as attack requires to take gradients wrt to them</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
 
-    <span class="n">images_adv</span> <span class="o">=</span> <span class="n">fsgm_attack</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">l2_regul</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
-
+    <span class="n">adversarial_images_train</span> <span class="o">=</span> <span class="n">pgd_attack</span><span class="p">(</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
     <span class="c1"># train on adversarial images</span>
-    <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
-                              <span class="n">l2_regul</span><span class="o">=</span><span class="n">l2_regul</span><span class="p">,</span> <span class="n">images</span><span class="o">=</span><span class="n">images_adv</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
-    <span class="n">acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
-    <span class="n">adv_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">images_adv</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">jitted_update</span><span class="p">(</span>
+        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+        <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
+        <span class="n">l2reg</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">adversarial_images_train</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
 
-  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train accuracy: </span><span class="si">{</span><span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">acc</span><span class="p">))</span><span class="si">:</span><span class="s2"> .3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train adversarial accuracy: </span><span class="si">{</span><span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adv_acc</span><span class="p">))</span><span class="si">:</span><span class="s2"> .3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Once per epoch evaluate the model on the train and test sets.</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">%</span> <span class="n">iter_per_epoch_train</span> <span class="o">==</span> <span class="n">iter_per_epoch_train</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
 
-  <span class="c1"># Testing</span>
-  <span class="n">images_test</span> <span class="o">=</span> <span class="n">test_ds</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
-  <span class="n">labels_test</span> <span class="o">=</span> <span class="n">test_ds</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+      <span class="c1"># compute train set accuracy, both on clean and adversarial images</span>
+      <span class="n">adversarial_accuracy_train_sample</span> <span class="o">=</span> <span class="mf">0.</span>
+      <span class="n">accuracy_train_sample</span> <span class="o">=</span> <span class="mf">0.</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_train</span><span class="p">):</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">)</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+        <span class="n">accuracy_train_sample</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span> <span class="o">/</span> <span class="n">iter_per_epoch_train</span>
+        <span class="n">adversarial_images_train</span> <span class="o">=</span> <span class="n">pgd_attack</span><span class="p">(</span>
+          <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+        <span class="n">adversarial_accuracy_train_sample</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="n">adversarial_images_train</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span> <span class="o">/</span> <span class="n">iter_per_epoch_train</span>
+      <span class="n">accuracy_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy_train_sample</span><span class="p">)</span>
+      <span class="n">adversarial_accuracy_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adversarial_accuracy_train_sample</span><span class="p">)</span>
 
-  <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">images_test</span><span class="p">,</span> <span class="n">labels_test</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test accuracy:&quot;</span><span class="p">,</span> <span class="n">test_accuracy</span><span class="p">)</span>
+      <span class="c1"># compute train set accuracy, both on clean and adversarial images</span>
+      <span class="n">adversarial_accuracy_test_sample</span> <span class="o">=</span> <span class="mf">0.</span>
+      <span class="n">accuracy_test_sample</span> <span class="o">=</span> <span class="mf">0.</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_test</span><span class="p">):</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_ds</span><span class="p">)</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+        <span class="n">accuracy_test_sample</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span> <span class="o">/</span> <span class="n">iter_per_epoch_test</span>
+        <span class="n">adversarial_images_test</span> <span class="o">=</span> <span class="n">pgd_attack</span><span class="p">(</span>
+          <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+        <span class="n">adversarial_accuracy_test_sample</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="n">adversarial_images_test</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span> <span class="o">/</span> <span class="n">iter_per_epoch_test</span>
+      <span class="n">accuracy_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy_test_sample</span><span class="p">)</span>
+      <span class="n">adversarial_accuracy_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adversarial_accuracy_test_sample</span><span class="p">)</span>
 
-  <span class="n">images_adv_test</span> <span class="o">=</span> <span class="n">fsgm_attack</span><span class="p">(</span><span class="n">images_test</span><span class="p">,</span> <span class="n">labels_test</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">l2_regul</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
-  <span class="n">test_adversarial_accuracy</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">images_adv_test</span><span class="p">,</span> <span class="n">labels_test</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test adversarial accuracy:&quot;</span><span class="p">,</span> <span class="n">test_adversarial_accuracy</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">()</span>
+
+      <span class="n">time_elapsed</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">it</span> <span class="o">//</span> <span class="n">iter_per_epoch_train</span><span class="si">}</span><span class="s2"> out of </span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epochs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy on train set: </span><span class="si">{</span><span class="n">accuracy_train</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy on test set: </span><span class="si">{</span><span class="n">accuracy_test</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span>
+          <span class="sa">f</span><span class="s2">&quot;Adversarial accuracy on train set: </span><span class="si">{</span><span class="n">adversarial_accuracy_train</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span>
+          <span class="sa">f</span><span class="s2">&quot;Adversarial accuracy on test set: </span><span class="si">{</span><span class="n">adversarial_accuracy_test</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time elapsed: </span><span class="si">{</span><span class="n">time_elapsed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">()</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Adversarial training on </span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">dataset</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">accuracy_train</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;clean accuracy on train set.&quot;</span> <span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;&lt;&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">accuracy_test</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;clean accuracy on test set.&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+      <span class="n">adversarial_accuracy_train</span><span class="p">,</span>
+      <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+      <span class="n">label</span><span class="o">=</span><span class="s2">&quot;adversarial accuracy on train set.&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;^&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+      <span class="n">adversarial_accuracy_test</span><span class="p">,</span>
+      <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+      <span class="n">label</span><span class="o">=</span><span class="s2">&quot;adversarial accuracy on test set.&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.000 seconds)</p>
@@ -335,8 +421,8 @@ and harnessing adversarial examples.” <a class="reference external" href="http
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../constrained/binary_kernel_svm_with_intercept.html" class="btn btn-neutral float-left" title="Binary kernel SVM with intercept." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="haiku_vae.html" class="btn btn-neutral float-right" title="VAE example with Haiku and JAXopt." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="flax_resnet.html" class="btn btn-neutral float-left" title="Resnet example with Flax and JAXopt." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="distributed_flax_imagenet.html" class="btn btn-neutral float-right" title="SPMD ResNet example with Flax and JAXopt." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

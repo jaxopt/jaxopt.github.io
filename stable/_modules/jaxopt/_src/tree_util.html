@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.tree_util &mdash; JAXopt 0.3 documentation</title>
+  <title>jaxopt._src.tree_util &mdash; JAXopt 0.3.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -235,17 +235,30 @@
 
 
 <span class="k">def</span> <span class="nf">tree_where</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;jnp.where for trees. Mimic broadcasting semantic of jnp.where.&quot;&quot;&quot;</span>
-  <span class="n">la</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
-  <span class="n">lb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
-  <span class="n">lc</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">cond</span><span class="p">))</span>
-  <span class="k">if</span> <span class="n">la</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">lb</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">la</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">lb</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span><span class="n">u</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">la</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">lb</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">cond</span><span class="p">)</span>
+  <span class="sd">&quot;&quot;&quot;jnp.where for trees.</span>
+<span class="sd">  </span>
+<span class="sd">  Mimic broadcasting semantic of jnp.where.</span>
+<span class="sd">  a and b can be arrays (including scalars) broadcastable to the leaves of cond.</span>
+<span class="sd">  </span>
+<span class="sd">  Args:</span>
+<span class="sd">    cond: pytree of booleans arrays.</span>
+<span class="sd">    a   : pytree of arrays, or single array broadcastable</span>
+<span class="sd">      to the shapes of leaves of cond.</span>
+<span class="sd">    b   : pytree of arrays, or single array broadcastable</span>
+<span class="sd">      to the shapes of leaves of cond.</span>
+<span class="sd">    </span>
+<span class="sd">  Returns:</span>
+<span class="sd">    pytree of arrays, or single array</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">a_scalar</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">treedef_is_leaf</span><span class="p">(</span><span class="n">tu</span><span class="o">.</span><span class="n">tree_structure</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+  <span class="n">b_scalar</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">treedef_is_leaf</span><span class="p">(</span><span class="n">tu</span><span class="o">.</span><span class="n">tree_structure</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+  <span class="k">if</span> <span class="n">a_scalar</span> <span class="ow">and</span> <span class="n">b_scalar</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">cond</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">b_scalar</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">a_scalar</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">tree_negative</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>

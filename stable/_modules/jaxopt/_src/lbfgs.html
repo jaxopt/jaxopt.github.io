@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.lbfgs &mdash; JAXopt 0.3 documentation</title>
+  <title>jaxopt._src.lbfgs &mdash; JAXopt 0.3.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -236,6 +236,7 @@
 <span class="k">class</span> <span class="nc">LbfgsState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Named tuple containing state information.&quot;&quot;&quot;</span>
   <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">value</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">stepsize</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">s_history</span><span class="p">:</span> <span class="n">Any</span>
@@ -318,6 +319,7 @@
 <span class="sd">      state</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">LbfgsState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                      <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
                       <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
                       <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
                       <span class="n">s_history</span><span class="o">=</span><span class="n">init_history</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">history_size</span><span class="p">),</span>
@@ -359,12 +361,15 @@
                                 <span class="n">value_and_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                 <span class="n">maxiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">maxls</span><span class="p">,</span>
                                 <span class="n">decrease_factor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">,</span>
-                                <span class="n">condition</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">)</span>
+                                <span class="n">condition</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">,</span>
+                                <span class="n">jit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span>
+                                <span class="n">unroll</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unroll</span><span class="p">)</span>
     <span class="n">init_stepsize</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stepsize</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">increase_factor</span>
     <span class="n">new_stepsize</span><span class="p">,</span> <span class="n">ls_state</span> <span class="o">=</span> <span class="n">ls</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_stepsize</span><span class="o">=</span><span class="n">init_stepsize</span><span class="p">,</span>
                                     <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">grad</span><span class="o">=</span><span class="n">grad</span><span class="p">,</span>
                                     <span class="n">descent_direction</span><span class="o">=</span><span class="n">descent_direction</span><span class="p">,</span>
                                     <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">new_value</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">value</span>
     <span class="n">new_params</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">params</span>
     <span class="n">new_grad</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">grad</span>
 
@@ -378,11 +383,15 @@
     <span class="n">rho_history</span> <span class="o">=</span> <span class="n">update_history</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">rho_history</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
 
     <span class="n">new_state</span> <span class="o">=</span> <span class="n">LbfgsState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                           <span class="n">value</span><span class="o">=</span><span class="n">new_value</span><span class="p">,</span>
                            <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">new_stepsize</span><span class="p">),</span>
-                           <span class="n">error</span><span class="o">=</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">),</span>
+                           <span class="n">error</span><span class="o">=</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">new_grad</span><span class="p">),</span>
                            <span class="n">s_history</span><span class="o">=</span><span class="n">s_history</span><span class="p">,</span>
                            <span class="n">y_history</span><span class="o">=</span><span class="n">y_history</span><span class="p">,</span>
                            <span class="n">rho_history</span><span class="o">=</span><span class="n">rho_history</span><span class="p">,</span>
+                           <span class="c1"># FIXME: we should return new_aux here but</span>
+                           <span class="c1"># BacktrackingLineSearch currently doesn&#39;t support</span>
+                           <span class="c1"># an aux.</span>
                            <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">new_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>

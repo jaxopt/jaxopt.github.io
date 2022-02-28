@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.projection.projection_polyhedron &mdash; JAXopt 0.3 documentation</title>
+  <title>jaxopt.projection.projection_polyhedron &mdash; JAXopt 0.3.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -160,7 +160,7 @@
 <h1>jaxopt.projection.projection_polyhedron<a class="headerlink" href="#jaxopt-projection-projection-polyhedron" title="Permalink to this headline"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxopt.projection.projection_polyhedron">
-<span class="sig-prename descclassname"><span class="pre">jaxopt.projection.</span></span><span class="sig-name descname"><span class="pre">projection_polyhedron</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projection.html#projection_polyhedron"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.projection.projection_polyhedron" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jaxopt.projection.</span></span><span class="sig-name descname"><span class="pre">projection_polyhedron</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_feasible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projection.html#projection_polyhedron"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.projection.projection_polyhedron" title="Permalink to this definition"></a></dt>
 <dd><p>Projection onto a polyhedron:</p>
 <div class="math notranslate nohighlight">
 \[\underset{y}{\text{argmin}} ~ ||x - y||_2^2 \quad \textrm{subject to} \quad
@@ -171,6 +171,8 @@ A y = b, G y \le h\]</div>
 <li><p><strong>x</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – pytree to project.</p></li>
 <li><p><strong>hyperparams</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>) – tuple <code class="docutils literal notranslate"><span class="pre">hyperparams</span> <span class="pre">=</span> <span class="pre">(A,</span> <span class="pre">b,</span> <span class="pre">G,</span> <span class="pre">h)</span></code>, where <code class="docutils literal notranslate"><span class="pre">A</span></code> is a matrix,
 <code class="docutils literal notranslate"><span class="pre">b</span></code> is a vector, <code class="docutils literal notranslate"><span class="pre">G</span></code> is a matrix and <code class="docutils literal notranslate"><span class="pre">h</span></code> is a vector.</p></li>
+<li><p><strong>check_feasible</strong> – if True (default: True) check the non emptyness of the polyhedron,
+which disables jit compilation. If False, the function is jit compiled.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

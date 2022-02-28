@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.BoxOSQP &mdash; JAXopt 0.3 documentation</title>
+  <title>jaxopt.BoxOSQP &mdash; JAXopt 0.3.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -502,7 +502,7 @@ Journal of Parallel and Distributed Computing, 144, pp.55-67.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BoxOSQP.l2_optimality_error" title="jaxopt.BoxOSQP.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, params_obj, ...)</p></td>
 <td><p>Computes the L2 norm of the KKT residuals.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BoxOSQP.run" title="jaxopt.BoxOSQP.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, params_obj, params_eq, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BoxOSQP.run" title="jaxopt.BoxOSQP.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([init_params, params_obj, params_eq, ...])</p></td>
 <td><p>Return primal/dual variables.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BoxOSQP.update" title="jaxopt.BoxOSQP.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, params_obj, params_eq, ...)</p></td>
@@ -618,15 +618,15 @@ Journal of Parallel and Distributed Computing, 144, pp.55-67.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.BoxOSQP.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#BoxOSQP.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BoxOSQP.run" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#BoxOSQP.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BoxOSQP.run" title="Permalink to this definition"></a></dt>
 <dd><p>Return primal/dual variables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – initial KKTSolution (can be None).</p></li>
-<li><p><strong>params_obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – pair (params_Q, c).</p></li>
-<li><p><strong>params_eq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – params_A.</p></li>
-<li><p><strong>params_ineq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – pair (l, u).</p></li>
+<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – (optional) initial KKTSolution.</p></li>
+<li><p><strong>params_obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – pair (params_Q, c).</p></li>
+<li><p><strong>params_eq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – (optional) params_A.</p></li>
+<li><p><strong>params_ineq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – pair (l, u).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
