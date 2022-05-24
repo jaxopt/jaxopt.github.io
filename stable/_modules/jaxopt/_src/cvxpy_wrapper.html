@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.cvxpy_wrapper &mdash; JAXopt 0.3.1 documentation</title>
+  <title>jaxopt._src.cvxpy_wrapper &mdash; JAXopt 0.4 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
@@ -23,7 +25,11 @@
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/clipboard.min.js"></script>
         <script src="../../../_static/copybutton.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -52,12 +58,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -65,6 +73,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About</span></p>

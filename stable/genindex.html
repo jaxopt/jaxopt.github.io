@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; JAXopt 0.3.1 documentation</title>
+  <title>Index &mdash; JAXopt 0.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,7 +25,11 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -52,12 +58,14 @@
 <li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -65,6 +73,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About</span></p>
@@ -123,6 +132,7 @@
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#X"><strong>X</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -141,6 +151,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.__init__">(jaxopt.BlockCoordinateDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.__init__">(jaxopt.BoxCDQP method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.__init__">(jaxopt.BoxOSQP method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP.__init__">(jaxopt.CvxpyQP method)</a>
@@ -156,6 +168,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.__init__">(jaxopt.IterativeRefinement method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.__init__">(jaxopt.LBFGS method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.__init__">(jaxopt.LevenbergMarquardt method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.__init__">(jaxopt.MirrorDescent method)</a>
 </li>
@@ -218,15 +232,17 @@
       </ul></li>
       <li><a href="_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss">binary_logistic_loss() (in module jaxopt.loss)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.objective.binary_logreg.html#jaxopt.objective.binary_logreg">binary_logreg (in module jaxopt.objective)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection">Bisection (class in jaxopt)</a>
 </li>
       <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.block_prox">block_prox (jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
       <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent">BlockCoordinateDescent (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP">BoxCDQP (class in jaxopt)</a>
 </li>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP">BoxOSQP (class in jaxopt)</a>
 </li>
@@ -252,6 +268,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.condition">condition (jaxopt.BacktrackingLineSearch attribute)</a>
 </li>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.contribution_ratio_threshold">contribution_ratio_threshold (jaxopt.LevenbergMarquardt attribute)</a>
+</li>
       <li><a href="_autosummary/jaxopt.implicit_diff.custom_fixed_point.html#jaxopt.implicit_diff.custom_fixed_point">custom_fixed_point() (in module jaxopt.implicit_diff)</a>
 </li>
       <li><a href="_autosummary/jaxopt.implicit_diff.custom_root.html#jaxopt.implicit_diff.custom_root">custom_root() (in module jaxopt.implicit_diff)</a>
@@ -264,6 +282,8 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.damping_parameter">damping_parameter (jaxopt.LevenbergMarquardt attribute)</a>
+</li>
       <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.decrease_factor">decrease_factor (jaxopt.ArmijoSGD attribute)</a>
 
       <ul>
@@ -356,9 +376,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton">GaussNewton (class in jaxopt)</a>
 </li>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.geodesic">geodesic (jaxopt.LevenbergMarquardt attribute)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent">GradientDescent (class in jaxopt)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.gtol">gtol (jaxopt.LevenbergMarquardt attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -423,6 +447,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.implicit_diff">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.implicit_diff">(jaxopt.BoxCDQP attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.implicit_diff">(jaxopt.BoxOSQP attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.implicit_diff">(jaxopt.EqualityConstrainedQP attribute)</a>
@@ -436,6 +462,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.implicit_diff">(jaxopt.IterativeRefinement attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.implicit_diff">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.implicit_diff">(jaxopt.LevenbergMarquardt attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.implicit_diff">(jaxopt.MirrorDescent attribute)</a>
 </li>
@@ -461,6 +489,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.implicit_diff_solve">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.implicit_diff_solve">(jaxopt.BoxCDQP attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.implicit_diff_solve">(jaxopt.BoxOSQP attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.implicit_diff_solve">(jaxopt.EqualityConstrainedQP attribute)</a>
@@ -474,6 +504,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.implicit_diff_solve">(jaxopt.IterativeRefinement attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.implicit_diff_solve">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.implicit_diff_solve">(jaxopt.LevenbergMarquardt attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.implicit_diff_solve">(jaxopt.MirrorDescent attribute)</a>
 </li>
@@ -519,6 +551,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.init_state">(jaxopt.BlockCoordinateDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.init_state">(jaxopt.BoxCDQP method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.init_state">(jaxopt.FixedPointIteration method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.init_state">(jaxopt.GaussNewton method)</a>
@@ -526,6 +560,8 @@
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.init_state">(jaxopt.GradientDescent method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.init_state">(jaxopt.LBFGS method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.init_state">(jaxopt.LevenbergMarquardt method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.init_state">(jaxopt.MirrorDescent method)</a>
 </li>
@@ -561,6 +597,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.jit">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.jit">(jaxopt.BoxCDQP attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.jit">(jaxopt.BoxOSQP attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.jit">(jaxopt.EqualityConstrainedQP attribute)</a>
@@ -572,6 +610,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.jit">(jaxopt.IterativeRefinement attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.jit">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.jit">(jaxopt.LevenbergMarquardt attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.jit">(jaxopt.MirrorDescent attribute)</a>
 </li>
@@ -615,6 +655,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.l2_optimality_error">(jaxopt.BlockCoordinateDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.l2_optimality_error">(jaxopt.BoxCDQP method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.l2_optimality_error">(jaxopt.BoxOSQP method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP.l2_optimality_error">(jaxopt.CvxpyQP method)</a>
@@ -630,6 +672,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.l2_optimality_error">(jaxopt.IterativeRefinement method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.l2_optimality_error">(jaxopt.LBFGS method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.l2_optimality_error">(jaxopt.LevenbergMarquardt method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.l2_optimality_error">(jaxopt.MirrorDescent method)</a>
 </li>
@@ -657,6 +701,8 @@
       <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS">LBFGS (class in jaxopt)</a>
 </li>
       <li><a href="_autosummary/jaxopt.objective.least_squares.html#jaxopt.objective.least_squares">least_squares (in module jaxopt.objective)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt">LevenbergMarquardt (class in jaxopt)</a>
 </li>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.lower">lower (jaxopt.Bisection attribute)</a>
 </li>
@@ -703,6 +749,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.maxiter">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.maxiter">(jaxopt.BoxCDQP attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.maxiter">(jaxopt.BoxOSQP attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.maxiter">(jaxopt.EqualityConstrainedQP attribute)</a>
@@ -716,6 +764,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.maxiter">(jaxopt.IterativeRefinement attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.maxiter">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.maxiter">(jaxopt.LevenbergMarquardt attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.maxiter">(jaxopt.MirrorDescent attribute)</a>
 </li>
@@ -824,6 +874,8 @@
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.optimality_fun">(jaxopt.GradientDescent method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.optimality_fun">(jaxopt.LBFGS method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.optimality_fun">(jaxopt.LevenbergMarquardt method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.optimality_fun">(jaxopt.MirrorDescent method)</a>
 </li>
@@ -949,7 +1001,11 @@
       <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.reset_stepsize">reset_stepsize() (jaxopt.ArmijoSGD method)</a>
 </li>
       <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.residual_fun">residual_fun (jaxopt.GaussNewton attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.residual_fun">(jaxopt.LevenbergMarquardt attribute)</a>
 </li>
+      </ul></li>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.rho_max">rho_max (jaxopt.BoxOSQP attribute)</a>
 
       <ul>
@@ -993,6 +1049,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.run">(jaxopt.BlockCoordinateDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.run">(jaxopt.BoxCDQP method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.run">(jaxopt.BoxOSQP method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP.run">(jaxopt.CvxpyQP method)</a>
@@ -1008,6 +1066,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.run">(jaxopt.IterativeRefinement method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.run">(jaxopt.LBFGS method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.run">(jaxopt.LevenbergMarquardt method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.run">(jaxopt.MirrorDescent method)</a>
 </li>
@@ -1074,12 +1134,12 @@
 </li>
       <li><a href="_autosummary/jaxopt.linear_solve.solve_cg.html#jaxopt.linear_solve.solve_cg">solve_cg() (in module jaxopt.linear_solve)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.linear_solve.solve_cholesky.html#jaxopt.linear_solve.solve_cholesky">solve_cholesky() (in module jaxopt.linear_solve)</a>
 </li>
       <li><a href="_autosummary/jaxopt.linear_solve.solve_gmres.html#jaxopt.linear_solve.solve_gmres">solve_gmres() (in module jaxopt.linear_solve)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.linear_solve.solve_lu.html#jaxopt.linear_solve.solve_lu">solve_lu() (in module jaxopt.linear_solve)</a>
 </li>
       <li><a href="_autosummary/jaxopt.linear_solve.solve_normal_cg.html#jaxopt.linear_solve.solve_normal_cg">solve_normal_cg() (in module jaxopt.linear_solve)</a>
@@ -1089,7 +1149,11 @@
       <ul>
         <li><a href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP.solver">(jaxopt.CvxpyQP attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.solver">(jaxopt.LevenbergMarquardt attribute)</a>
+</li>
       </ul></li>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#id0">solver() (jaxopt.LevenbergMarquardt method)</a>
+</li>
       <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.stepsize">stepsize (jaxopt.GradientDescent attribute)</a>
 
       <ul>
@@ -1106,6 +1170,8 @@
         <li><a href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.stepsize_updates_frequency">(jaxopt.OSQP attribute)</a>
 </li>
       </ul></li>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.stop_criterion">stop_criterion (jaxopt.LevenbergMarquardt attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1129,6 +1195,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.tol">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.tol">(jaxopt.BoxCDQP attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.tol">(jaxopt.BoxOSQP attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.tol">(jaxopt.EqualityConstrainedQP attribute)</a>
@@ -1142,6 +1210,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.tol">(jaxopt.IterativeRefinement attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.tol">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.tol">(jaxopt.LevenbergMarquardt attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.tol">(jaxopt.MirrorDescent attribute)</a>
 </li>
@@ -1205,6 +1275,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.unroll">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.unroll">(jaxopt.BoxCDQP attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.unroll">(jaxopt.BoxOSQP attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.unroll">(jaxopt.FixedPointIteration attribute)</a>
@@ -1214,6 +1286,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.unroll">(jaxopt.IterativeRefinement attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.unroll">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.unroll">(jaxopt.LevenbergMarquardt attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.unroll">(jaxopt.MirrorDescent attribute)</a>
 </li>
@@ -1241,6 +1315,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.update">(jaxopt.BlockCoordinateDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.update">(jaxopt.BoxCDQP method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.update">(jaxopt.BoxOSQP method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.update">(jaxopt.FixedPointIteration method)</a>
@@ -1250,6 +1326,8 @@
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.update">(jaxopt.GradientDescent method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.update">(jaxopt.LBFGS method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update">(jaxopt.LevenbergMarquardt method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.update">(jaxopt.MirrorDescent method)</a>
 </li>
@@ -1266,6 +1344,10 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_delta_params">update_state_using_delta_params() (jaxopt.LevenbergMarquardt method)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_gain_ratio">update_state_using_gain_ratio() (jaxopt.LevenbergMarquardt method)</a>
+</li>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.upper">upper (jaxopt.Bisection attribute)</a>
 </li>
       <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.use_gamma">use_gamma (jaxopt.LBFGS attribute)</a>
@@ -1293,6 +1375,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.verbose">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP.verbose">(jaxopt.BoxCDQP attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.verbose">(jaxopt.BoxOSQP attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.verbose">(jaxopt.FixedPointIteration attribute)</a>
@@ -1304,6 +1388,8 @@
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.verbose">(jaxopt.IterativeRefinement attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.verbose">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.verbose">(jaxopt.LevenbergMarquardt attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.verbose">(jaxopt.MirrorDescent attribute)</a>
 </li>
@@ -1318,6 +1404,14 @@
         <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.verbose">(jaxopt.ProximalGradient attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.xtol">xtol (jaxopt.LevenbergMarquardt attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 

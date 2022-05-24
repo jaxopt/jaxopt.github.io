@@ -4,10 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.linear_solve.solve_cholesky &mdash; JAXopt 0.3.1 documentation</title>
+  <title>jaxopt.linear_solve.solve_cholesky &mdash; JAXopt 0.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
@@ -24,7 +26,11 @@
         <script src="../_static/doctools.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -55,7 +61,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nonlinear_least_squares.html">Nonlinear least squares</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../linear_system_solvers.html#indirect-solvers">Indirect solvers</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../linear_system_solvers.html#direct-solvers">Direct solvers</a><ul class="current">
@@ -66,10 +74,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../linear_system_solvers.html#iterative-refinement">Iterative refinement</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -77,6 +85,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Example gallery</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About</span></p>
@@ -112,35 +121,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="jaxopt-linear-solve-solve-cholesky">
+  <section id="jaxopt-linear-solve-solve-cholesky">
 <h1>jaxopt.linear_solve.solve_cholesky<a class="headerlink" href="#jaxopt-linear-solve-solve-cholesky" title="Permalink to this headline"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxopt.linear_solve.solve_cholesky">
-<span class="sig-prename descclassname"><span class="pre">jaxopt.linear_solve.</span></span><span class="sig-name descname"><span class="pre">solve_cholesky</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/linear_solve.html#solve_cholesky"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.linear_solve.solve_cholesky" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jaxopt.linear_solve.</span></span><span class="sig-name descname"><span class="pre">solve_cholesky</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/linear_solve.html#solve_cholesky"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.linear_solve.solve_cholesky" title="Permalink to this definition"></a></dt>
 <dd><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code>, using Cholesky decomposition.</p>
 <p>It will materialize the matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> in memory.</p>
 <dl class="field-list simple">
@@ -148,6 +133,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>matvec</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – product between positive definite matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> and a vector.</p></li>
 <li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – array.</p></li>
+<li><p><strong>ridge</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – optional ridge regularization.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

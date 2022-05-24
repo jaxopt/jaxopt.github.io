@@ -4,10 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.GaussNewton &mdash; JAXopt 0.3.1 documentation</title>
+  <title>jaxopt.GaussNewton &mdash; JAXopt 0.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
@@ -24,12 +26,16 @@
         <script src="../_static/doctools.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="jaxopt.tree_util.tree_add" href="jaxopt.tree_util.tree_add.html" />
-    <link rel="prev" title="API at a glance" href="../api.html" /> 
+    <link rel="next" title="jaxopt.LevenbergMarquardt" href="jaxopt.LevenbergMarquardt.html" />
+    <link rel="prev" title="Nonlinear least squares" href="../nonlinear_least_squares.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,39 +54,39 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../unconstrained.html">Unconstrained optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../constrained.html">Constrained optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../nonlinear_least_squares.html">Nonlinear least squares</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../nonlinear_least_squares.html#gauss-newton">Gauss-Newton</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.GaussNewton</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nonlinear_least_squares.html#update-equation">Update equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nonlinear_least_squares.html#instantiating-and-running-the-solver">Instantiating and running the solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nonlinear_least_squares.html#differentiation">Differentiation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nonlinear_least_squares.html#levenberg-marquardt">Levenberg Marquardt</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API at a glance</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../api.html#optimization">Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#linear-system-solving">Linear system solving</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../api.html#nonlinear-least-squares">Nonlinear least squares</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.GaussNewton</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#root-finding">Root finding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#fixed-point-resolution">Fixed point resolution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#implicit-differentiation">Implicit differentiation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#line-search">Line search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#tree-utilities">Tree utilities</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API at a glance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Example gallery</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About</span></p>
@@ -105,7 +111,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../api.html">API at a glance</a> &raquo;</li>
+          <li><a href="../nonlinear_least_squares.html">Nonlinear least squares</a> &raquo;</li>
       <li>jaxopt.GaussNewton</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/_autosummary/jaxopt.GaussNewton.rst.txt" rel="nofollow"> View page source</a>
@@ -116,37 +122,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="jaxopt-gaussnewton">
+  <section id="jaxopt-gaussnewton">
 <h1>jaxopt.GaussNewton<a class="headerlink" href="#jaxopt-gaussnewton" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.GaussNewton">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">GaussNewton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">residual_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/gauss_newton.html#GaussNewton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.GaussNewton" title="Permalink to this definition"></a></dt>
 <dd><p>Gauss-Newton nonlinear least-squares solver.</p>
-<p>Given the residual function <code class="docutils literal notranslate"><span class="pre">f(x):</span> <span class="pre">R^m</span> <span class="pre">-&gt;</span> <span class="pre">R^n</span></code>, where <code class="docutils literal notranslate"><span class="pre">f(x)</span> <span class="pre">=</span>
+<p>Given the residual function <code class="docutils literal notranslate"><span class="pre">f(x):</span> <span class="pre">R^n</span> <span class="pre">-&gt;</span> <span class="pre">R^m</span></code>, where <code class="docutils literal notranslate"><span class="pre">f(x)</span> <span class="pre">=</span>
 <span class="pre">residual_fun(x,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>, <code class="docutils literal notranslate"><span class="pre">GaussNewton</span></code> finds a local minimum of
 the cost function <code class="docutils literal notranslate"><span class="pre">argmin_x</span> <span class="pre">0.5</span> <span class="pre">*</span> <span class="pre">sum(f(x)</span> <span class="pre">**</span> <span class="pre">2)</span></code>.</p>
 <dl class="field-list simple">
@@ -423,8 +405,8 @@ Warning: verbose=True will automatically disable jit.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../api.html" class="btn btn-neutral float-left" title="API at a glance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="jaxopt.tree_util.tree_add.html" class="btn btn-neutral float-right" title="jaxopt.tree_util.tree_add" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../nonlinear_least_squares.html" class="btn btn-neutral float-left" title="Nonlinear least squares" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jaxopt.LevenbergMarquardt.html" class="btn btn-neutral float-right" title="jaxopt.LevenbergMarquardt" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

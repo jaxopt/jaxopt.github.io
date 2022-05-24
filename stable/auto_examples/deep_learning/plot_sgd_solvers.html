@@ -4,10 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comparison of different SGD algorithms. &mdash; JAXopt 0.3.1 documentation</title>
+  <title>Comparison of different SGD algorithms. &mdash; JAXopt 0.4 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
@@ -24,7 +26,11 @@
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -55,12 +61,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -68,11 +76,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="flax_image_classif.html">Image classification example with Flax and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="haiku_image_classif.html">Image classification example with Haiku and JAXopt.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="flax_resnet_wide.html">Resnet example with Flax and JAXopt.</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Comparison of different SGD algorithms.</a></li>
@@ -119,31 +127,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<div class="sphx-glr-download-link-note admonition note">
+  <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-deep-learning-plot-sgd-solvers-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
@@ -172,7 +156,7 @@ learning rate.</p>
 [Polyak SGD] (  60), error=0.719, loss=0.890, stepsize=1.000000
 [Polyak SGD] (  80), error=1.026, loss=0.988, stepsize=0.938296
 [Polyak SGD] ( 100), error=0.899, loss=0.768, stepsize=0.950206
-101 iterations of Polyak SGD took 20.85s
+101 iterations of Polyak SGD took 21.24s
 
 [Armijo SGD] (   0), error=0.285, loss=2.301, stepsize=1.000000
 [Armijo SGD] (  20), error=2.490, loss=1.399, stepsize=0.068719
@@ -180,7 +164,7 @@ learning rate.</p>
 [Armijo SGD] (  60), error=2.737, loss=1.025, stepsize=0.035184
 [Armijo SGD] (  80), error=1.330, loss=0.839, stepsize=0.035184
 [Armijo SGD] ( 100), error=1.896, loss=0.828, stepsize=0.028148
-101 iterations of Armijo SGD took 21.28s
+101 iterations of Armijo SGD took 22.27s
 
 [RMSProp] (   0), error=0.461, loss=2.327
 [RMSProp] (  20), error=0.667, loss=2.070
@@ -188,7 +172,7 @@ learning rate.</p>
 [RMSProp] (  60), error=1.883, loss=1.303
 [RMSProp] (  80), error=2.516, loss=1.113
 [RMSProp] ( 100), error=3.722, loss=0.964
-101 iterations of RMSProp took 19.11s
+101 iterations of RMSProp took 19.32s
 
 [SGD] (   0), error=0.341, loss=2.314
 [SGD] (  20), error=0.527, loss=2.186
@@ -196,7 +180,7 @@ learning rate.</p>
 [SGD] (  60), error=2.314, loss=1.199
 [SGD] (  80), error=1.911, loss=1.062
 [SGD] ( 100), error=4.413, loss=1.277
-101 iterations of SGD took 17.92s
+101 iterations of SGD took 18.97s
 </pre></div>
 </div>
 <div class="line-block">
@@ -385,7 +369,7 @@ learning rate.</p>
   <span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  22.495 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  25.977 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-deep-learning-plot-sgd-solvers-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/2d78f9431fa6d68ce6b255e334a87265/plot_sgd_solvers.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_sgd_solvers.py</span></code></a></p>

@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.tree_util &mdash; JAXopt 0.3.1 documentation</title>
+  <title>jaxopt._src.tree_util &mdash; JAXopt 0.4 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
@@ -23,7 +25,11 @@
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/clipboard.min.js"></script>
         <script src="../../../_static/copybutton.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -52,12 +58,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -65,6 +73,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About</span></p>
@@ -117,6 +126,7 @@
 <span class="sd">&quot;&quot;&quot;Tree utilities.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">operator</span>
 
 <span class="kn">import</span> <span class="nn">jax</span>
@@ -128,20 +138,57 @@
 <span class="n">tree_flatten</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_flatten</span>
 <span class="n">tree_leaves</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_leaves</span>
 <span class="n">tree_map</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_map</span>
-<span class="n">tree_multimap</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_multimap</span>
 <span class="n">tree_reduce</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_reduce</span>
 <span class="n">tree_unflatten</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_unflatten</span>
 
-<span class="n">tree_add</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_multimap</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">broadcast_pytrees</span><span class="p">(</span><span class="o">*</span><span class="n">trees</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Broadcasts leaf pytrees to match treedef shared by the other arguments.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    *trees: A `Sequence` of pytrees such that all elements that are *not* leaf</span>
+<span class="sd">      pytrees (i.e. single arrays) have the same treedef.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    The input `Sequence` of pytrees `*trees` with leaf pytrees (i.e. single</span>
+<span class="sd">    arrays) replaced by pytrees matching the treedef of non-shallow elements via</span>
+<span class="sd">    broadcasting.</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">    ValueError: If two or more pytrees in `*trees` that are not leaf pytrees</span>
+<span class="sd">      differ in their structure (treedef).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">leaves</span><span class="p">,</span> <span class="n">treedef</span><span class="p">,</span> <span class="n">is_leaf</span> <span class="o">=</span> <span class="p">[],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">trees</span><span class="p">:</span>
+    <span class="n">leaves_i</span><span class="p">,</span> <span class="n">treedef_i</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_flatten</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="n">is_leaf_i</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">treedef_is_leaf</span><span class="p">(</span><span class="n">treedef_i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_leaf_i</span><span class="p">:</span>
+      <span class="n">treedef</span> <span class="o">=</span> <span class="n">treedef</span> <span class="ow">or</span> <span class="n">treedef_i</span>
+      <span class="k">if</span> <span class="n">treedef_i</span> <span class="o">!=</span> <span class="n">treedef</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Pytrees are not broadcastable.: &#39;</span>
+                         <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">treedef</span><span class="si">}</span><span class="s1"> != </span><span class="si">{</span><span class="n">treedef_i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">leaves</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leaves_i</span><span class="p">)</span>
+    <span class="n">is_leaf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">is_leaf_i</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">treedef</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">max_num_leaves</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">leaves_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">leaves_i</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">)</span>
+    <span class="n">broadcast_leaf</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">leaf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">max_num_leaves</span><span class="p">)</span>
+    <span class="n">leaves</span> <span class="o">=</span> <span class="p">[</span><span class="n">broadcast_leaf</span><span class="p">(</span><span class="n">leaves_i</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_leaf_i</span> <span class="k">else</span> <span class="n">leaves_i</span>
+              <span class="k">for</span> <span class="p">(</span><span class="n">leaves_i</span><span class="p">,</span> <span class="n">is_leaf_i</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="n">is_leaf</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">treedef</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="n">leaves_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">leaves_i</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">)</span>
+  <span class="c1"># All Pytrees are leaves.</span>
+  <span class="k">return</span> <span class="n">trees</span>
+
+
+<span class="n">tree_add</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_map</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">)</span>
 <span class="n">tree_add</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree addition.&quot;</span>
 
-<span class="n">tree_sub</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_multimap</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">)</span>
+<span class="n">tree_sub</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_map</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">)</span>
 <span class="n">tree_sub</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree subtraction.&quot;</span>
 
-<span class="n">tree_mul</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_multimap</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">)</span>
+<span class="n">tree_mul</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_map</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">)</span>
 <span class="n">tree_mul</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree multiplication.&quot;</span>
 
-<span class="n">tree_div</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_multimap</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="p">)</span>
+<span class="n">tree_div</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_map</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="p">)</span>
 <span class="n">tree_div</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree division.&quot;</span>
 
 
@@ -152,7 +199,7 @@
 
 <div class="viewcode-block" id="tree_add_scalar_mul"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_add_scalar_mul.html#jaxopt.tree_util.tree_add_scalar_mul">[docs]</a><span class="k">def</span> <span class="nf">tree_add_scalar_mul</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Compute tree_x + scalar * tree_y.&quot;&quot;&quot;</span>
-  <span class="k">return</span> <span class="n">tree_multimap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">scalar</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span></div>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">scalar</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span></div>
 
 
 <span class="n">_vdot</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">Precision</span><span class="o">.</span><span class="n">HIGHEST</span><span class="p">)</span>
@@ -163,7 +210,7 @@
 
 <div class="viewcode-block" id="tree_vdot"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_vdot.html#jaxopt.tree_util.tree_vdot">[docs]</a><span class="k">def</span> <span class="nf">tree_vdot</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Compute the inner product &lt;tree_x, tree_y&gt;.&quot;&quot;&quot;</span>
-  <span class="n">vdots</span> <span class="o">=</span> <span class="n">tree_multimap</span><span class="p">(</span><span class="n">_vdot_safe</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span>
+  <span class="n">vdots</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">_vdot_safe</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">tree_reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">vdots</span><span class="p">)</span></div>
 
 
@@ -236,29 +283,24 @@
 
 <span class="k">def</span> <span class="nf">tree_where</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;jnp.where for trees.</span>
-<span class="sd">  </span>
+
 <span class="sd">  Mimic broadcasting semantic of jnp.where.</span>
-<span class="sd">  a and b can be arrays (including scalars) broadcastable to the leaves of cond.</span>
-<span class="sd">  </span>
+<span class="sd">  cond, a and b can be arrays (including scalars) broadcastable to the leaves of</span>
+<span class="sd">  the other input arguments.</span>
+
 <span class="sd">  Args:</span>
-<span class="sd">    cond: pytree of booleans arrays.</span>
-<span class="sd">    a   : pytree of arrays, or single array broadcastable</span>
-<span class="sd">      to the shapes of leaves of cond.</span>
-<span class="sd">    b   : pytree of arrays, or single array broadcastable</span>
-<span class="sd">      to the shapes of leaves of cond.</span>
-<span class="sd">    </span>
+<span class="sd">    cond: pytree of booleans arrays, or single array broadcastable to the shapes</span>
+<span class="sd">      of leaves of `a` and `b`.</span>
+<span class="sd">    a: pytree of arrays, or single array broadcastable to the shapes of leaves</span>
+<span class="sd">      of `cond` and `b`.</span>
+<span class="sd">    b: pytree of arrays, or single array broadcastable to the shapes of leaves</span>
+<span class="sd">      of `cond` and `a`.</span>
+
 <span class="sd">  Returns:</span>
 <span class="sd">    pytree of arrays, or single array</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">a_scalar</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">treedef_is_leaf</span><span class="p">(</span><span class="n">tu</span><span class="o">.</span><span class="n">tree_structure</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
-  <span class="n">b_scalar</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">treedef_is_leaf</span><span class="p">(</span><span class="n">tu</span><span class="o">.</span><span class="n">tree_structure</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
-  <span class="k">if</span> <span class="n">a_scalar</span> <span class="ow">and</span> <span class="n">b_scalar</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">cond</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">b_scalar</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">a_scalar</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">broadcast_pytrees</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">tree_negative</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>

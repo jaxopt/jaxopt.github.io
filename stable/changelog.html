@@ -4,10 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; JAXopt 0.3.1 documentation</title>
+  <title>Changelog &mdash; JAXopt 0.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -24,7 +26,11 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -54,12 +60,14 @@
 <li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -67,42 +75,49 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#version-0-3-1">Version 0.3.1.</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-4">Version 0.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#new-features">New features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#bug-fixes-and-enhancements">Bug fixes and enhancements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#contributors">Contributors</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#version-0-3">Version 0.3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-3-1">Version 0.3.1.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">New features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Bug fixes and enhancements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">Contributors</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#version-0-2">Version 0.2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-3">Version 0.3</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id4">New features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#new-examples">New examples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id5">Bug fixes and enhancements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#deprecations">Deprecations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id6">Contributors</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#version-0-1-1">Version 0.1.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-2">Version 0.2</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id7">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-examples">New examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deprecations">Deprecations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-1-1">Version 0.1.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">New features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#bug-fixes">Bug fixes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">Contributors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Contributors</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#version-0-1-initial-release">Version 0.1 (initial release)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#classes">Classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9">Contributors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Contributors</a></li>
 </ul>
 </li>
 </ul>
@@ -135,42 +150,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="changelog">
+  <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
-<section id="version-0-3-1">
-<h2>Version 0.3.1.<a class="headerlink" href="#version-0-3-1" title="Permalink to this headline"></a></h2>
+<section id="version-0-4">
+<h2>Version 0.4<a class="headerlink" href="#version-0-4" title="Permalink to this headline"></a></h2>
 <section id="new-features">
 <h3>New features<a class="headerlink" href="#new-features" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Pjit-based example of data parallel training using Flax, by Felipe Llinares.</p></li>
+<li><p>Added solver <a class="reference internal" href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt" title="jaxopt.LevenbergMarquardt"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LevenbergMarquardt</span></code></a>, by Amir Saadat.</p></li>
+<li><p>Added solver <a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a>, by Mathieu Blondel.</p></li>
+<li><p>Added <code class="xref py py-func docutils literal notranslate"><span class="pre">projection_hypercube</span></code>, by Mathieu Blondel.</p></li>
 </ul>
 </section>
 <section id="bug-fixes-and-enhancements">
 <h3>Bug fixes and enhancements<a class="headerlink" href="#bug-fixes-and-enhancements" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Fixed <a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_normal_cg.html#jaxopt.linear_solve.solve_normal_cg" title="jaxopt.linear_solve.solve_normal_cg"><code class="xref py py-func docutils literal notranslate"><span class="pre">solve_normal_cg</span></code></a>
+when the linear operator is “nonsquare” (does not map to a space of same dimension),
+by Mathieu Blondel.</p></li>
+<li><p>Fixed edge case in <a class="reference internal" href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection" title="jaxopt.Bisection"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.Bisection</span></code></a>, by Mathieu Blondel.</p></li>
+<li><p>Replaced deprecated tree_multimap with tree_map, by Fan Yang.</p></li>
+<li><p>Added support for leaf cond pytrees in <code class="xref py py-func docutils literal notranslate"><span class="pre">tree_where</span></code>, by Felipe Llinares.</p></li>
+<li><p>Added Python 3.10 support officially, by Jeppe Klitgaard.</p></li>
+<li><p>Replaced deprecated tree_multimap with tree_map, by Fan Yang.</p></li>
+<li><p>In scipy wrappers, converted pytree leaves to jax arrays to determine their shape/dtype, by Roy Frostig.</p></li>
+<li><p>Converted the “Resnet” and “Adversarial Training” examples to notebooks, by Fabian Pedregosa.</p></li>
+</ul>
+</section>
+<section id="contributors">
+<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline"></a></h3>
+<p>Amir Saadat, Fabian Pedregosa, Fan Yang, Felipe Llinares, Jeppe Klitgaard, Mathieu Blondel, Roy Frostig.</p>
+</section>
+</section>
+<section id="version-0-3-1">
+<h2>Version 0.3.1.<a class="headerlink" href="#version-0-3-1" title="Permalink to this headline"></a></h2>
+<section id="id1">
+<h3>New features<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Pjit-based example of data parallel training using Flax, by Felipe Llinares.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/139">Support for GPU and state of the art adversarial training algorithm (PGD) on the robust_training.py example</a> by <a class="reference external" href="https://fa.bianp.net/">Fabian Pedregosa</a></p></li>
 <li><p>Update line search in LBFGS to use jit and unroll from LBFGS, by Ian Williamson.</p></li>
@@ -180,15 +201,15 @@
 <li><p>Add missing ‘value’ attribute in LbfgsState, by Mathieu Blondel.</p></li>
 </ul>
 </section>
-<section id="contributors">
-<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline"></a></h3>
+<section id="id3">
+<h3>Contributors<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
 <p>Felipe Llinares, Fabian Pedregosa, Ian Williamson, Louis Bétune, Mathieu Blondel, Roy Frostig.</p>
 </section>
 </section>
 <section id="version-0-3">
 <h2>Version 0.3<a class="headerlink" href="#version-0-3" title="Permalink to this headline"></a></h2>
-<section id="id1">
-<h3>New features<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<section id="id4">
+<h3>New features<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a></p></li>
 <li><p><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch" title="jaxopt.BacktrackingLineSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BacktrackingLineSearch</span></code></a></p></li>
@@ -196,21 +217,21 @@
 <li><p><a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG" title="jaxopt.NonlinearCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.NonlinearCG</span></code></a></p></li>
 </ul>
 </section>
-<section id="id2">
-<h3>Bug fixes and enhancements<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<section id="id5">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/143">Support implicit AD in higher-order differentiation</a>.</p></li>
 </ul>
 </section>
-<section id="id3">
-<h3>Contributors<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<section id="id6">
+<h3>Contributors<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
 <p>Amir Saadat, Fabian Pedregosa, Geoffrey Négiar, Hyunsung Lee, Mathieu Blondel, Roy Frostig.</p>
 </section>
 </section>
 <section id="version-0-2">
 <h2>Version 0.2<a class="headerlink" href="#version-0-2" title="Permalink to this headline"></a></h2>
-<section id="id4">
-<h3>New features<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
+<section id="id7">
+<h3>New features<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Quadratic programming solvers <a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP" title="jaxopt.CvxpyQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.CvxpyQP</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a> and
 <a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP" title="jaxopt.EqualityConstrainedQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.EqualityConstrainedQP</span></code></a>.</p></li>
@@ -223,8 +244,8 @@
 <li><p><a class="reference internal" href="auto_examples/deep_learning/flax_resnet.html#sphx-glr-auto-examples-deep-learning-flax-resnet-py"><span class="std std-ref">Resnet example with Flax and JAXopt.</span></a></p></li>
 </ul>
 </section>
-<section id="id5">
-<h3>Bug fixes and enhancements<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
+<section id="id8">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/113">Prevent recompilation of loops in solver.run if executing without jit</a>.</p></li>
 <li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/107">Prevents recomputation of gradient in OptaxSolver</a>.</p></li>
@@ -243,16 +264,16 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">params,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">solver.init(...)</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">solver.init_state(...)</span></code> instead.</p></li>
 </ul>
 </section>
-<section id="id6">
-<h3>Contributors<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
+<section id="id9">
+<h3>Contributors<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h3>
 <p>Fabian Pedregosa, Felipe Llinares, Geoffrey Negiar, Louis Bethune, Mathieu
 Blondel, Vikas Sindhwani.</p>
 </section>
 </section>
 <section id="version-0-1-1">
 <h2>Version 0.1.1<a class="headerlink" href="#version-0-1-1" title="Permalink to this headline"></a></h2>
-<section id="id7">
-<h3>New features<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h3>
+<section id="id10">
+<h3>New features<a class="headerlink" href="#id10" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Added solver <a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a></p></li>
 <li><p>Added example <a class="reference internal" href="auto_examples/fixed_point/deep_equilibrium_model.html#sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"><span class="std std-ref">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</span></a></p></li>
@@ -266,8 +287,8 @@ Blondel, Vikas Sindhwani.</p>
 <li><p>Raise an exception if a quadratic program is infeasible or unbounded</p></li>
 </ul>
 </section>
-<section id="id8">
-<h3>Contributors<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h3>
+<section id="id11">
+<h3>Contributors<a class="headerlink" href="#id11" title="Permalink to this headline"></a></h3>
 <p>Fabian Pedregosa, Louis Bethune, Mathieu Blondel.</p>
 </section>
 </section>
@@ -300,7 +321,7 @@ Blondel, Vikas Sindhwani.</p>
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="auto_examples/constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/deep_learning/flax_image_classif.html#sphx-glr-auto-examples-deep-learning-flax-image-classif-py"><span class="std std-ref">Image classification example with Flax and JAXopt.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_deep_learning_flax_image_classif.py</span></p></li>
 <li><p><a class="reference internal" href="auto_examples/deep_learning/haiku_image_classif.html#sphx-glr-auto-examples-deep-learning-haiku-image-classif-py"><span class="std std-ref">Image classification example with Haiku and JAXopt.</span></a></p></li>
 <li><p><a class="reference internal" href="auto_examples/deep_learning/haiku_vae.html#sphx-glr-auto-examples-deep-learning-haiku-vae-py"><span class="std std-ref">VAE example with Haiku and JAXopt.</span></a></p></li>
 <li><p><a class="reference internal" href="auto_examples/implicit_diff/lasso_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></p></li>
@@ -315,8 +336,8 @@ Blondel, Vikas Sindhwani.</p>
 <li><p><a class="reference internal" href="auto_examples/fixed_point/plot_picard_ode.html#sphx-glr-auto-examples-fixed-point-plot-picard-ode-py"><span class="std std-ref">Anderson acceleration in application to Picard–Lindelöf theorem.</span></a></p></li>
 </ul>
 </section>
-<section id="id9">
-<h3>Contributors<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h3>
+<section id="id12">
+<h3>Contributors<a class="headerlink" href="#id12" title="Permalink to this headline"></a></h3>
 <p>Fabian Pedregosa, Felipe Llinares, Louis Bethune, Marco Cuturi, Mathieu
 Blondel, Peter Hawkins, Quentin Berthet, Robert Gower, Roy Frostig, Ta-Chu Kao</p>
 </section>

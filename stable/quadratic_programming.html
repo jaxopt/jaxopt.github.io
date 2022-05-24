@@ -4,10 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quadratic programming &mdash; JAXopt 0.3.1 documentation</title>
+  <title>Quadratic programming &mdash; JAXopt 0.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -24,9 +26,12 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -71,8 +76,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#box-constrained-qps">Box-constrained QPs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#box-constrained-qps-with-equality">Box-constrained QPs, with equality</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html">jaxopt.BoxOSQP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#box-constrained-qps-without-equality">Box-constrained QPs, without equality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html">jaxopt.BoxCDQP</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#unconstrained-qps">Unconstrained QPs</a></li>
@@ -80,12 +89,14 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -93,6 +104,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About</span></p>
@@ -127,31 +139,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="quadratic-programming">
+  <section id="quadratic-programming">
 <h1>Quadratic programming<a class="headerlink" href="#quadratic-programming" title="Permalink to this headline"></a></h1>
 <p>This section is concerned with minimizing quadratic functions subject
 to equality and/or inequality constraints, also known as
@@ -272,7 +260,7 @@ or with redundant constraints.</p>
 it is possible to enable
 <a class="reference external" href="https://en.wikipedia.org/wiki/Iterative_refinement">iterative refinement</a>.
 This can be done by setting <code class="docutils literal notranslate"><span class="pre">refine_regularization</span></code> and <code class="docutils literal notranslate"><span class="pre">refine_maxiter</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt._src.eq_qp</span> <span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt.eq_qp</span> <span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
 
 <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">3000.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
@@ -375,8 +363,8 @@ lower than <code class="xref py py-class docutils literal notranslate"><span cla
 </div>
 </section>
 </section>
-<section id="box-constrained-qps">
-<h2>Box-constrained QPs<a class="headerlink" href="#box-constrained-qps" title="Permalink to this headline"></a></h2>
+<section id="box-constrained-qps-with-equality">
+<h2>Box-constrained QPs, with equality<a class="headerlink" href="#box-constrained-qps-with-equality" title="Permalink to this headline"></a></h2>
 <p>The problem takes the form:</p>
 <div class="math notranslate nohighlight">
 \[\min_{x,z} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } A x = z, l \le z \le u\]</div>
@@ -427,6 +415,40 @@ instead.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="auto_examples/constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></p></li>
 </ul>
+</div>
+</section>
+<section id="box-constrained-qps-without-equality">
+<h2>Box-constrained QPs, without equality<a class="headerlink" href="#box-constrained-qps-without-equality" title="Permalink to this headline"></a></h2>
+<p>The problem takes the form:</p>
+<div class="math notranslate nohighlight">
+\[\min_{x} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } l \le x \le u\]</div>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a>([maxiter, tol, verbose, ...])</p></td>
+<td><p>Coordinate descent solver for box-constrained QPs.</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a> uses a coordinate descent solver. The solver returns only
+the primal solution.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BoxCDQP</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">qp</span> <span class="o">=</span> <span class="n">BoxCDQP</span><span class="p">()</span>
+<span class="n">init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+</pre></div>
 </div>
 </section>
 <section id="unconstrained-qps">

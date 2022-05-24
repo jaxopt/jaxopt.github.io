@@ -31,9 +31,10 @@ Quadratic programming
 .. autosummary::
   :toctree: _autosummary
 
-    jaxopt.EqualityConstrainedQP
-    jaxopt.CvxpyQP
+    jaxopt.BoxCDQP
     jaxopt.BoxOSQP
+    jaxopt.CvxpyQP
+    jaxopt.EqualityConstrainedQP
     jaxopt.OSQP
 
 Non-smooth
@@ -87,6 +88,7 @@ Nonlinear least squares
   :toctree: _autosummary
 
     jaxopt.GaussNewton
+    jaxopt.LevenbergMarquardt
 
 Root finding
 ------------
