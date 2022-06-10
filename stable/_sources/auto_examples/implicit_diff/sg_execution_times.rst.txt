@@ -5,10 +5,10 @@
 
 Computation times
 =================
-**00:45.656** total execution time for **auto_examples_implicit_diff** files:
+**00:42.852** total execution time for **auto_examples_implicit_diff** files:
 
 +-------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_implicit_diff_plot_dataset_distillation.py` (``plot_dataset_distillation.py``) | 00:45.656 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_implicit_diff_plot_dataset_distillation.py` (``plot_dataset_distillation.py``) | 00:42.852 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_auto_examples_implicit_diff_lasso_implicit_diff.py` (``lasso_implicit_diff.py``)             | 00:00.000 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------+-----------+--------+

@@ -62,7 +62,7 @@ learning rate.
     [Polyak SGD] (  60), error=0.719, loss=0.890, stepsize=1.000000
     [Polyak SGD] (  80), error=1.026, loss=0.988, stepsize=0.938296
     [Polyak SGD] ( 100), error=0.899, loss=0.768, stepsize=0.950206
-    101 iterations of Polyak SGD took 21.24s
+    101 iterations of Polyak SGD took 20.81s
 
     [Armijo SGD] (   0), error=0.285, loss=2.301, stepsize=1.000000
     [Armijo SGD] (  20), error=2.490, loss=1.399, stepsize=0.068719
@@ -70,7 +70,7 @@ learning rate.
     [Armijo SGD] (  60), error=2.737, loss=1.025, stepsize=0.035184
     [Armijo SGD] (  80), error=1.330, loss=0.839, stepsize=0.035184
     [Armijo SGD] ( 100), error=1.896, loss=0.828, stepsize=0.028148
-    101 iterations of Armijo SGD took 22.27s
+    101 iterations of Armijo SGD took 21.53s
 
     [RMSProp] (   0), error=0.461, loss=2.327
     [RMSProp] (  20), error=0.667, loss=2.070
@@ -78,7 +78,7 @@ learning rate.
     [RMSProp] (  60), error=1.883, loss=1.303
     [RMSProp] (  80), error=2.516, loss=1.113
     [RMSProp] ( 100), error=3.722, loss=0.964
-    101 iterations of RMSProp took 19.32s
+    101 iterations of RMSProp took 17.99s
 
     [SGD] (   0), error=0.341, loss=2.314
     [SGD] (  20), error=0.527, loss=2.186
@@ -86,7 +86,7 @@ learning rate.
     [SGD] (  60), error=2.314, loss=1.199
     [SGD] (  80), error=1.911, loss=1.062
     [SGD] ( 100), error=4.413, loss=1.277
-    101 iterations of SGD took 18.97s
+    101 iterations of SGD took 16.16s
 
 
 
@@ -284,7 +284,7 @@ learning rate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  25.977 seconds)
+   **Total running time of the script:** ( 1 minutes  19.819 seconds)
 
 
 .. _sphx_glr_download_auto_examples_deep_learning_plot_sgd_solvers.py:

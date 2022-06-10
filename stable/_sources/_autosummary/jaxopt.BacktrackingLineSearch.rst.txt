@@ -34,6 +34,7 @@
       ~BacktrackingLineSearch.condition
       ~BacktrackingLineSearch.decrease_factor
       ~BacktrackingLineSearch.jit
+      ~BacktrackingLineSearch.max_stepsize
       ~BacktrackingLineSearch.maxiter
       ~BacktrackingLineSearch.tol
       ~BacktrackingLineSearch.unroll

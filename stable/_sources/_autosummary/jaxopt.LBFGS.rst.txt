@@ -38,8 +38,11 @@
       ~LBFGS.implicit_diff_solve
       ~LBFGS.increase_factor
       ~LBFGS.jit
+      ~LBFGS.max_stepsize
       ~LBFGS.maxiter
       ~LBFGS.maxls
+      ~LBFGS.min_stepsize
+      ~LBFGS.stepsize
       ~LBFGS.tol
       ~LBFGS.unroll
       ~LBFGS.use_gamma
