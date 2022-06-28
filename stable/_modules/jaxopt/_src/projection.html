@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.projection &mdash; JAXopt 0.4.1 documentation</title>
+  <title>jaxopt._src.projection &mdash; JAXopt 0.4.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -205,12 +205,11 @@
   <span class="n">s</span> <span class="o">=</span> <span class="mf">1.0</span>
   <span class="n">n_features</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
   <span class="n">u</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">x</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-  <span class="n">cssv</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">-</span> <span class="n">s</span>
+  <span class="n">cumsum_u</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
   <span class="n">ind</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-  <span class="n">cond</span> <span class="o">=</span> <span class="n">u</span> <span class="o">-</span> <span class="n">cssv</span> <span class="o">/</span> <span class="n">ind</span> <span class="o">&gt;</span> <span class="mi">0</span>
+  <span class="n">cond</span> <span class="o">=</span> <span class="n">s</span> <span class="o">/</span> <span class="n">ind</span> <span class="o">+</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">cumsum_u</span> <span class="o">/</span> <span class="n">ind</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
   <span class="n">idx</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">cond</span><span class="p">)</span>
-  <span class="n">threshold</span> <span class="o">=</span> <span class="n">cssv</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">idx</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">threshold</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">s</span> <span class="o">/</span> <span class="n">idx</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">cumsum_u</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">idx</span><span class="p">))</span>
 
 
 <span class="nd">@_projection_unit_simplex</span><span class="o">.</span><span class="n">defjvp</span>
@@ -438,7 +437,7 @@
   <span class="c1"># check feasability by default; currently there is no way to return the info to the user inside @jit.</span>
   <span class="n">hyperparams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
   <span class="n">kkt_sol</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">osqp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">hyperparams</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">check_feasible</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">PRIMAL_INFEASIBLE</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">check_feasible</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="n">BoxOSQP</span><span class="o">.</span><span class="n">PRIMAL_INFEASIBLE</span><span class="p">,</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">DUAL_INFEASIBLE</span><span class="p">]:</span>
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The polyhedron is empty.&quot;</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">kkt_sol</span><span class="o">.</span><span class="n">primal</span></div>
 

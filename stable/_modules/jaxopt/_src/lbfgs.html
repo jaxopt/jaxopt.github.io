@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.lbfgs &mdash; JAXopt 0.4.1 documentation</title>
+  <title>jaxopt._src.lbfgs &mdash; JAXopt 0.4.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -140,6 +140,7 @@
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.backtracking_linesearch</span> <span class="kn">import</span> <span class="n">BacktrackingLineSearch</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.zoom_linesearch</span> <span class="kn">import</span> <span class="n">zoom_linesearch</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_map</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_vdot</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add_scalar_mul</span>
@@ -268,6 +269,8 @@
 
 <span class="sd">    stepsize: a stepsize to use (if &lt;= 0, use backtracking line search),</span>
 <span class="sd">      or a callable specifying the **positive** stepsize to use at each iteration.</span>
+<span class="sd">    linesearch: the type of line search to use: &quot;backtracking&quot; for backtracking</span>
+<span class="sd">      line search or &quot;zoom&quot; for zoom line search.</span>
 <span class="sd">    maxls: maximum number of iterations to use in the line search.</span>
 <span class="sd">    decrease_factor: factor by which to decrease the stepsize during line search</span>
 <span class="sd">      (default: 0.8).</span>
@@ -305,6 +308,7 @@
   <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
 
   <span class="n">stepsize</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">linesearch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;backtracking&quot;</span>
   <span class="n">condition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;strong-wolfe&quot;</span>
   <span class="n">maxls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
   <span class="n">decrease_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>
@@ -339,7 +343,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">LbfgsState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
                       <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
-                      <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+                      <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">),</span>
                       <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
                       <span class="n">s_history</span><span class="o">=</span><span class="n">init_history</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">history_size</span><span class="p">),</span>
                       <span class="n">y_history</span><span class="o">=</span><span class="n">init_history</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">history_size</span><span class="p">),</span>
@@ -378,26 +382,42 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
       <span class="c1"># with line search</span>
-      <span class="n">ls</span> <span class="o">=</span> <span class="n">BacktrackingLineSearch</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">,</span>
-                                  <span class="n">value_and_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                  <span class="n">maxiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">maxls</span><span class="p">,</span>
-                                  <span class="n">decrease_factor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">,</span>
-                                  <span class="n">max_stepsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
-                                  <span class="n">condition</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">,</span>
-                                  <span class="n">jit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span>
-                                  <span class="n">unroll</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unroll</span><span class="p">)</span>
-      <span class="n">init_stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">stepsize</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_stepsize</span><span class="p">,</span>
-                                <span class="c1"># If stepsize became too small, we restart it.</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
-                                <span class="c1"># Otherwise, we increase a bit the previous one.</span>
-                                <span class="n">state</span><span class="o">.</span><span class="n">stepsize</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">increase_factor</span><span class="p">)</span>
-      <span class="n">new_stepsize</span><span class="p">,</span> <span class="n">ls_state</span> <span class="o">=</span> <span class="n">ls</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_stepsize</span><span class="o">=</span><span class="n">init_stepsize</span><span class="p">,</span>
-                                      <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">grad</span><span class="o">=</span><span class="n">grad</span><span class="p">,</span>
-                                      <span class="n">descent_direction</span><span class="o">=</span><span class="n">descent_direction</span><span class="p">,</span>
-                                      <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-      <span class="n">new_value</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">value</span>
-      <span class="n">new_params</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">params</span>
-      <span class="n">new_grad</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">grad</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">linesearch</span> <span class="o">==</span> <span class="s2">&quot;backtracking&quot;</span><span class="p">:</span>
+        <span class="n">ls</span> <span class="o">=</span> <span class="n">BacktrackingLineSearch</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">,</span>
+                                    <span class="n">value_and_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">maxiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">maxls</span><span class="p">,</span>
+                                    <span class="n">decrease_factor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">,</span>
+                                    <span class="n">max_stepsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
+                                    <span class="n">condition</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">,</span>
+                                    <span class="n">jit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span>
+                                    <span class="n">unroll</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unroll</span><span class="p">)</span>
+        <span class="n">init_stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">stepsize</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_stepsize</span><span class="p">,</span>
+                                  <span class="c1"># If stepsize became too small, we restart it.</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
+                                  <span class="c1"># Else, we increase a bit the previous one.</span>
+                                  <span class="n">state</span><span class="o">.</span><span class="n">stepsize</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">increase_factor</span><span class="p">)</span>
+        <span class="n">new_stepsize</span><span class="p">,</span> <span class="n">ls_state</span> <span class="o">=</span> <span class="n">ls</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_stepsize</span><span class="p">,</span>
+                                        <span class="n">params</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span>
+                                        <span class="n">descent_direction</span><span class="p">,</span>
+                                        <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">new_params</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">params</span>
+        <span class="n">new_grad</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">grad</span>
+
+      <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">linesearch</span> <span class="o">==</span> <span class="s2">&quot;zoom&quot;</span><span class="p">:</span>
+        <span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ls_state</span> <span class="o">=</span> <span class="n">zoom_linesearch</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">xk</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">descent_direction</span><span class="p">,</span>
+                              <span class="n">old_fval</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">gfk</span><span class="o">=</span><span class="n">grad</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">maxls</span><span class="p">)</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">f_k</span>
+        <span class="n">new_stepsize</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">a_k</span>
+        <span class="n">new_grad</span> <span class="o">=</span> <span class="n">ls_state</span><span class="o">.</span><span class="n">g_k</span>
+        <span class="c1"># FIXME: zoom_linesearch currently doesn&#39;t return new_params</span>
+        <span class="c1"># so we have to recompute it.</span>
+        <span class="n">new_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">new_stepsize</span><span class="p">,</span> <span class="n">descent_direction</span><span class="p">)</span>
+
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid name in &#39;linesearch&#39; option.&quot;</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
       <span class="c1"># without line search</span>

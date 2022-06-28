@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Multiclass linear SVM (without intercept). &mdash; JAXopt 0.4.1 documentation</title>
+  <title>Multiclass linear SVM (without intercept). &mdash; JAXopt 0.4.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -214,7 +214,6 @@ Journal of machine learning research, 2(Dec), pp.265-292.</p>
                       <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span>
                       <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
 
-  <span class="n">init_params</span> <span class="o">=</span> <span class="n">osqp</span><span class="o">.</span><span class="n">_box_osqp</span><span class="o">.</span><span class="n">init_params</span><span class="p">(</span><span class="n">init_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span>
   <span class="n">sol</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">osqp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">primal</span>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Adversarial training &mdash; JAXopt 0.4.1 documentation</title>
+  <title>Adversarial training &mdash; JAXopt 0.4.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -111,7 +111,7 @@
              
   <section id="adversarial-training">
 <h1>Adversarial training<a class="headerlink" href="#adversarial-training" title="Permalink to this headline"></a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/google/jaxopt/blob/main/docs/notebooks/resnet_flax.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p><a class="reference external" href="https://colab.research.google.com/github/google/jaxopt/blob/main/docs/notebooks/deep_learning/adversarial_training.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p><a class="reference external" href="https://fa.bianp.net"><em>Fabian Pedregosa</em></a>, <a class="reference external" href="http://geoffreynegiar.com/"><em>Geoffrey Negiar</em></a></p>
 <p>The following code trains a convolutional neural network (CNN) to be robust
 with respect to the projected gradient descent (PGD) method.</p>
@@ -165,10 +165,7 @@ adversarial attacks.”, https://arxiv.org/pdf/1706.06083.pdf</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JAX running on CPU
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JAX running on GPU
 </pre></div>
 </div>
 </div>
@@ -392,23 +389,79 @@ adversarial attacks.”, https://arxiv.org/pdf/1706.06083.pdf</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">p9</span><span class="o">/</span><span class="n">pn75jx2d36v2x8mn_drx52g400nvlb</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_23094</span><span class="o">/</span><span class="mf">891365093.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>       <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span>   <span class="c1"># train on adversarial images</span>
-<span class="ne">---&gt; </span><span class="mi">26</span>   <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">jitted_update</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>       <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span>       <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/envs/jaxopt/lib/python3.10/site-packages/jax/_src/tree_util.py:188: FutureWarning: jax.tree_util.tree_multimap() is deprecated. Please use jax.tree_util.tree_map() instead as a drop-in replacement.
+  warnings.warn(&#39;jax.tree_util.tree_multimap() is deprecated. Please use jax.tree_util.tree_map() &#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0 out of 10
+Accuracy on train set: 0.982
+Accuracy on test set: 0.982
+Adversarial accuracy on train set: 0.979
+Adversarial accuracy on test set: 0.979
+Time elapsed: 0:00:14
 
-<span class="nn">~/envs/work/lib/python3.8/site-packages/flax/core/frozen_dict.py</span> in <span class="ni">tree_unflatten</span><span class="nt">(cls, _, data)</span>
-<span class="g g-Whitespace">    </span><span class="mi">155</span>     <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">,),</span> <span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">156</span> 
-<span class="ne">--&gt; </span><span class="mi">157</span>   <span class="nd">@classmethod</span>
-<span class="g g-Whitespace">    </span><span class="mi">158</span>   <span class="k">def</span> <span class="nf">tree_unflatten</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">159</span>     <span class="c1"># data is already deep copied due to tree map mechanism</span>
+Epoch 1 out of 10
+Accuracy on train set: 0.987
+Accuracy on test set: 0.986
+Adversarial accuracy on train set: 0.984
+Adversarial accuracy on test set: 0.982
+Time elapsed: 0:00:21
 
-<span class="ne">KeyboardInterrupt</span>: 
+Epoch 2 out of 10
+Accuracy on train set: 0.989
+Accuracy on test set: 0.987
+Adversarial accuracy on train set: 0.986
+Adversarial accuracy on test set: 0.984
+Time elapsed: 0:00:29
+
+Epoch 3 out of 10
+Accuracy on train set: 0.992
+Accuracy on test set: 0.990
+Adversarial accuracy on train set: 0.990
+Adversarial accuracy on test set: 0.988
+Time elapsed: 0:00:36
+
+Epoch 4 out of 10
+Accuracy on train set: 0.994
+Accuracy on test set: 0.990
+Adversarial accuracy on train set: 0.992
+Adversarial accuracy on test set: 0.988
+Time elapsed: 0:00:43
+
+Epoch 5 out of 10
+Accuracy on train set: 0.994
+Accuracy on test set: 0.990
+Adversarial accuracy on train set: 0.992
+Adversarial accuracy on test set: 0.987
+Time elapsed: 0:00:51
+
+Epoch 6 out of 10
+Accuracy on train set: 0.995
+Accuracy on test set: 0.991
+Adversarial accuracy on train set: 0.994
+Adversarial accuracy on test set: 0.988
+Time elapsed: 0:00:58
+
+Epoch 7 out of 10
+Accuracy on train set: 0.995
+Accuracy on test set: 0.990
+Adversarial accuracy on train set: 0.993
+Adversarial accuracy on test set: 0.988
+Time elapsed: 0:01:05
+
+Epoch 8 out of 10
+Accuracy on train set: 0.995
+Accuracy on test set: 0.989
+Adversarial accuracy on train set: 0.993
+Adversarial accuracy on test set: 0.987
+Time elapsed: 0:01:13
+
+Epoch 9 out of 10
+Accuracy on train set: 0.995
+Accuracy on test set: 0.990
+Adversarial accuracy on train set: 0.993
+Adversarial accuracy on test set: 0.988
+Time elapsed: 0:01:20
 </pre></div>
 </div>
 </div>

@@ -16,6 +16,7 @@
       ~OSQP.__init__
       ~OSQP.attribute_names
       ~OSQP.attribute_values
+      ~OSQP.init_params
       ~OSQP.l2_optimality_error
       ~OSQP.run
    

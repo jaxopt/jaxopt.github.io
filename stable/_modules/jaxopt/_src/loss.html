@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.loss &mdash; JAXopt 0.4.1 documentation</title>
+  <title>jaxopt._src.loss &mdash; JAXopt 0.4.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -168,7 +168,9 @@
   <span class="c1"># Softplus is the Fenchel conjugate of the Fermi-Dirac negentropy on [0, 1].</span>
   <span class="c1"># softplus = proba * logit - xlogx(proba) - xlogx(1 - proba),</span>
   <span class="c1"># where xlogx(proba) = proba * log(proba).</span>
-  <span class="k">return</span> <span class="n">softplus</span><span class="p">(</span><span class="n">logit</span><span class="p">)</span> <span class="o">-</span> <span class="n">label</span> <span class="o">*</span> <span class="n">logit</span></div>
+  <span class="c1"># Use -log sigmoid(logit) = softplus(-logit)</span>
+  <span class="c1"># and 1 - sigmoid(logit) = sigmoid(-logit).</span>
+  <span class="k">return</span> <span class="n">softplus</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="o">-</span><span class="n">logit</span><span class="p">,</span> <span class="n">logit</span><span class="p">))</span></div>
 
 
 <span class="c1"># Multiclass classification.</span>
@@ -183,11 +185,13 @@
 <span class="sd">  Returns:</span>
 <span class="sd">    loss value</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">n_classes</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="n">one_hot</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">)</span>
+  <span class="n">logits</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
   <span class="c1"># Logsumexp is the Fenchel conjugate of the Shannon negentropy on the simplex.</span>
   <span class="c1"># logsumexp = jnp.dot(proba, logits) - jnp.dot(proba, jnp.log(proba))</span>
-  <span class="k">return</span> <span class="n">logsumexp</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">one_hot</span><span class="p">)</span></div>
+  <span class="c1"># To avoid roundoff error, subtract target inside logsumexp.</span>
+  <span class="c1"># logsumexp(logits) - logits[y] = logsumexp(logits - logits[y])</span>
+  <span class="n">logits</span> <span class="o">=</span> <span class="p">(</span><span class="n">logits</span> <span class="o">-</span> <span class="n">logits</span><span class="p">[</span><span class="n">label</span><span class="p">])</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">logsumexp</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="multiclass_sparsemax_loss"><a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html#jaxopt.loss.multiclass_sparsemax_loss">[docs]</a><span class="k">def</span> <span class="nf">multiclass_sparsemax_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -204,13 +208,13 @@
 <span class="sd">    Classification. André F. T. Martins, Ramón Fernandez Astudillo.</span>
 <span class="sd">    ICML 2016.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">n_classes</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="n">one_hot</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">)</span>
+  <span class="n">scores</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
   <span class="n">proba</span> <span class="o">=</span> <span class="n">projection_simplex</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
   <span class="c1"># Fenchel conjugate of the Gini negentropy, defined by:</span>
   <span class="c1"># cumulant = jnp.dot(proba, scores) + 0.5 * jnp.dot(proba, (1 - proba)).</span>
-  <span class="n">cumulant</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">proba</span> <span class="p">,</span> <span class="n">scores</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">proba</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">cumulant</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">one_hot</span><span class="p">)</span></div>
+  <span class="n">scores</span> <span class="o">=</span> <span class="p">(</span><span class="n">scores</span> <span class="o">-</span> <span class="n">scores</span><span class="p">[</span><span class="n">label</span><span class="p">])</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+          <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">proba</span><span class="p">)))</span></div>
 </pre></div>
 
            </div>

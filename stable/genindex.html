@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; JAXopt 0.4.1 documentation</title>
+  <title>Index &mdash; JAXopt 0.4.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -347,6 +347,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.fun">(jaxopt.BlockCoordinateDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.fun">(jaxopt.BoxOSQP attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.fun">(jaxopt.GradientDescent attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.fun">(jaxopt.LBFGS attribute)</a>
@@ -356,6 +358,8 @@
         <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.fun">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.fun">(jaxopt.OptaxSolver attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.fun">(jaxopt.OSQP attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.fun">(jaxopt.PolyakSGD attribute)</a>
 </li>
@@ -539,7 +543,11 @@
 </li>
       </ul></li>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.init_params">init_params() (jaxopt.BoxOSQP method)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.init_params">(jaxopt.OSQP method)</a>
 </li>
+      </ul></li>
       <li><a href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration.init_state">init_state() (jaxopt.AndersonAcceleration method)</a>
 
       <ul>
@@ -704,6 +712,8 @@
 </li>
       <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt">LevenbergMarquardt (class in jaxopt)</a>
 </li>
+      <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.linesearch">linesearch (jaxopt.LBFGS attribute)</a>
+</li>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.lower">lower (jaxopt.Bisection attribute)</a>
 </li>
   </ul></td>
@@ -723,13 +733,19 @@
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.matvec_A">(jaxopt.IterativeRefinement attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.matvec_A">(jaxopt.OSQP attribute)</a>
+</li>
       </ul></li>
       <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.matvec_A_bar">matvec_A_bar (jaxopt.IterativeRefinement attribute)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.matvec_G">matvec_G (jaxopt.OSQP attribute)</a>
 </li>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.matvec_Q">matvec_Q (jaxopt.BoxOSQP attribute)</a>
 
       <ul>
         <li><a href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.matvec_Q">(jaxopt.EqualityConstrainedQP attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.matvec_Q">(jaxopt.OSQP attribute)</a>
 </li>
       </ul></li>
       <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.max_stepsize">max_stepsize (jaxopt.ArmijoSGD attribute)</a>
@@ -738,6 +754,8 @@
         <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.max_stepsize">(jaxopt.BacktrackingLineSearch attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.max_stepsize">(jaxopt.LBFGS attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.max_stepsize">(jaxopt.NonlinearCG attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.max_stepsize">(jaxopt.PolyakSGD attribute)</a>
 </li>
@@ -813,7 +831,11 @@
 </li>
       </ul></li>
       <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.min_stepsize">min_stepsize (jaxopt.LBFGS attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.min_stepsize">(jaxopt.NonlinearCG attribute)</a>
 </li>
+      </ul></li>
       <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent">MirrorDescent (class in jaxopt)</a>
 </li>
       <li><a href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration.mixing_frequency">mixing_frequency (jaxopt.AndersonAcceleration attribute)</a>

@@ -38,6 +38,7 @@
       ~LBFGS.implicit_diff_solve
       ~LBFGS.increase_factor
       ~LBFGS.jit
+      ~LBFGS.linesearch
       ~LBFGS.max_stepsize
       ~LBFGS.maxiter
       ~LBFGS.maxls

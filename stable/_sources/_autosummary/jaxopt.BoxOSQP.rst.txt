@@ -37,6 +37,7 @@
       ~BoxOSQP.check_primal_dual_infeasability
       ~BoxOSQP.dual_infeasible_tol
       ~BoxOSQP.eq_qp_solve
+      ~BoxOSQP.fun
       ~BoxOSQP.implicit_diff
       ~BoxOSQP.implicit_diff_solve
       ~BoxOSQP.jit

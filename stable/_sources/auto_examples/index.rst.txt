@@ -377,27 +377,6 @@ Implicit differentiation
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Dataset distillation `[Maclaurin et al. 2015] &lt;https://arxiv.org/pdf/1502.03492.pdf&gt;`_, `[Wang ...">
-
-.. only:: html
-
- .. figure:: /auto_examples/implicit_diff/images/thumb/sphx_glr_plot_dataset_distillation_thumb.png
-     :alt: Dataset distillation
-
-     :ref:`sphx_glr_auto_examples_implicit_diff_plot_dataset_distillation.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/implicit_diff/plot_dataset_distillation
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of lasso.">
 
 .. only:: html

@@ -28,7 +28,7 @@ Reference:
   Crammer, K. and Singer, Y., 2001. On the algorithmic implementation of multiclass kernel-based vector machines.
   Journal of machine learning research, 2(Dec), pp.265-292.
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-145
+.. GENERATED FROM PYTHON SOURCE LINES 26-144
 
 .. code-block:: default
 
@@ -111,7 +111,6 @@ Reference:
                           params_eq=(None, b),
                           params_ineq=(None, h))
   
-      init_params = osqp._box_osqp.init_params(init_x=None, **hyper_params)
       sol, _ = osqp.run(init_params=None, **hyper_params)
       return sol.primal
 
