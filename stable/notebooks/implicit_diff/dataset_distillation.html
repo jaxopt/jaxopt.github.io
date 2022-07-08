@@ -31,6 +31,8 @@
         <script>let toggleOpenOnPrint = 'true';</script>
         <script src="../../_static/togglebutton.js"></script>
         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -109,7 +111,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="dataset-distillation">
+  <section class="tex2jax_ignore mathjax_ignore" id="dataset-distillation">
 <h1>Dataset distillation<a class="headerlink" href="#dataset-distillation" title="Permalink to this headline"></a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/google/jaxopt/blob/main/docs/notebooks/implicit_diff/dataset_distillation.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>Dataset distillation <a class="reference external" href="https://arxiv.org/pdf/1502.03492.pdf">Maclaurin et al. 2015</a>, <a class="reference external" href="https://arxiv.org/pdf/1811.10959.pdf">Wang et al. 2020</a> aims to learn a small synthetic
@@ -117,14 +119,15 @@ training dataset such that a model trained on this learned data set achieves
 small loss on the original training set.</p>
 <p><strong>Bi-level formulation</strong></p>
 <p>Dataset distillation can be written formally as a bi-level problem, where in the
-inner problem we estimate a logistic regression model $x^\star(\theta) \in
-\mathbb{R}^{p \times k}$ trained on the distilled images $\theta \in
-\mathbb{R}^{k \times p}$, while in the outer problem we want to minimize the
-loss achieved by $x^\star(\theta)$ over the training set:</p>
-<p>$$\underbrace{\min_{\theta \in \mathbb{R}^{k \times p}} f(x^\star(\theta), X_{\text{tr}}; y_{\text{tr}})}<em>{\text{outer problem}} ~\text{ subject to }~ x^\star(\theta) \in \underbrace{\text{argmin}</em>{x \in \mathbb{R}^{p \times k}} f(x, \theta; [k]) + \text{l2reg} |x|^2,}_{\text{inner problem}}$$</p>
-<p>where $f(W, X; y) := \ell(y, XW)$, and $\ell$ denotes the multiclass
-logistic regression loss, $X_{\text{tr}}, y_{\text{tr}}$ are the samples and
-target values in the train set, and $\text{l2reg} = 10^{-1}$ is a regularization
+inner problem we estimate a logistic regression model <span class="math notranslate nohighlight">\(x^\star(\theta) \in
+\mathbb{R}^{p \times k}\)</span> trained on the distilled images <span class="math notranslate nohighlight">\(\theta \in
+\mathbb{R}^{k \times p}\)</span>, while in the outer problem we want to minimize the
+loss achieved by <span class="math notranslate nohighlight">\(x^\star(\theta)\)</span> over the training set:</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\min_{\theta \in \mathbb{R}^{k \times p}} f(x^\star(\theta), X_{\text{tr}}; y_{\text{tr}})}_{\text{outer problem}} ~\text{ subject to }~ x^\star(\theta) \in \underbrace{\text{argmin}_{x \in \mathbb{R}^{p \times k}} f(x, \theta; [k]) + \text{l2reg} \|x\|^2\,}_{\text{inner problem}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(f(W, X; y) := \ell(y, XW)\)</span>, and <span class="math notranslate nohighlight">\(\ell\)</span> denotes the multiclass
+logistic regression loss, <span class="math notranslate nohighlight">\(X_{\text{tr}}, y_{\text{tr}}\)</span> are the samples and
+target values in the train set, and <span class="math notranslate nohighlight">\(\text{l2reg} = 10^{-1}\)</span> is a regularization
 parameter that we found improved convergence.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
