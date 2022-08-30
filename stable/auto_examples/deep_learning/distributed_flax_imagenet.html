@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SPMD ResNet example with Flax and JAXopt. &mdash; JAXopt 0.4.3 documentation</title>
+  <title>SPMD ResNet example with Flax and JAXopt. &mdash; JAXopt 0.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -210,7 +210,7 @@ yet supported.</p>
 
 
 <span class="c1">### Type aliases.</span>
-<span class="n">ArrayDType</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">_src</span><span class="o">.</span><span class="n">numpy</span><span class="o">.</span><span class="n">lax_numpy</span><span class="o">.</span><span class="n">_ScalarMeta</span>  <span class="c1"># pylint: disable=protected-access</span>
+<span class="n">ArrayDType</span> <span class="o">=</span> <span class="nb">type</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
 <span class="n">Batch</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 <span class="n">DataIter</span> <span class="o">=</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Batch</span><span class="p">]</span>
 <span class="n">LearningRateFn</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Numeric</span><span class="p">]</span>

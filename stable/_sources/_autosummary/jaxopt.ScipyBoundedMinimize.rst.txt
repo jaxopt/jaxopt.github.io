@@ -32,6 +32,7 @@
       ~ScipyBoundedMinimize.has_aux
       ~ScipyBoundedMinimize.implicit_diff_solve
       ~ScipyBoundedMinimize.jit
+      ~ScipyBoundedMinimize.maxiter
       ~ScipyBoundedMinimize.method
       ~ScipyBoundedMinimize.options
       ~ScipyBoundedMinimize.tol

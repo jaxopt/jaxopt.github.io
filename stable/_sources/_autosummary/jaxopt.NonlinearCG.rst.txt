@@ -37,6 +37,7 @@
       ~NonlinearCG.implicit_diff_solve
       ~NonlinearCG.increase_factor
       ~NonlinearCG.jit
+      ~NonlinearCG.linesearch
       ~NonlinearCG.max_stepsize
       ~NonlinearCG.maxiter
       ~NonlinearCG.maxls

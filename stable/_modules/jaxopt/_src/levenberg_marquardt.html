@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.levenberg_marquardt &mdash; JAXopt 0.4.3 documentation</title>
+  <title>jaxopt._src.levenberg_marquardt &mdash; JAXopt 0.5 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -293,13 +293,12 @@
 <span class="sd">      Data Fitting&quot; by K. Madsen &amp; H. B. Nielsen for details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">gain_ratio_test_true_func</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span>
-                                  <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span>
-                                  <span class="n">updated_params</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">gain_ratio_test_true_func</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span>
+                                  <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">updated_params</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
 
       <span class="n">params</span> <span class="o">=</span> <span class="n">updated_params</span>
 
-      <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
       <span class="c1"># Calculate gradient based on Eq. 6.6 of &quot;Introduction to optimization</span>
       <span class="c1"># and data fitting&quot; g=JT * r, where J is jacobian and r is residual.</span>
@@ -309,15 +308,14 @@
                                                     <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gain_ratio</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
       <span class="n">increase_factor</span> <span class="o">=</span> <span class="mi">2</span>
 
-      <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span>
+      <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span>
 
-    <span class="k">def</span> <span class="nf">gain_ratio_test_false_func</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span>
-                                   <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span>
-                                   <span class="n">updated_params</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">gain_ratio_test_false_func</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span>
+                                   <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">updated_params</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
 
       <span class="n">damping_factor</span> <span class="o">=</span> <span class="n">damping_factor</span> <span class="o">*</span> <span class="n">increase_factor</span>
       <span class="n">increase_factor</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">increase_factor</span>
-      <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span>
+      <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span>
 
     <span class="c1"># Calling the jax condition function:</span>
     <span class="c1"># Note that only the parameters that are used in the rest of the program</span>
@@ -338,15 +336,15 @@
         <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">gain_ratio_test_is_met</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span>
         <span class="n">gain_ratio_test_not_met_ret</span><span class="p">)</span>
 
-    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">gain_ratio_test_is_met_ret</span><span class="p">,</span>
-        <span class="n">gain_ratio_test_not_met_ret</span><span class="p">)</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">gain_ratio_test_is_met_ret</span><span class="p">,</span>
+                     <span class="n">gain_ratio_test_not_met_ret</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span></div>
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span></div>
 
 <div class="viewcode-block" id="LevenbergMarquardt.update_state_using_delta_params"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_delta_params">[docs]</a>  <span class="k">def</span> <span class="nf">update_state_using_delta_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_curr</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">delta_params</span><span class="p">,</span>
                                       <span class="n">contribution_ratio_diff</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span>
-                                      <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span>
+                                      <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span><span class="p">,</span>
                                       <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The function to return state variables based on delta_params.</span>
 
@@ -370,18 +368,18 @@
     <span class="n">gain_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss_curr</span> <span class="o">-</span> <span class="n">loss_next</span><span class="p">)</span> <span class="o">/</span> <span class="n">gain_ratio_denom</span>
 
     <span class="n">gain_ratio_test_init_state</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span>
-                                  <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">updated_params</span><span class="p">)</span>
+                                  <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">updated_params</span><span class="p">,</span> <span class="n">aux</span><span class="p">)</span>
 
     <span class="c1"># Calling the jax condition function:</span>
     <span class="c1"># Note that only the parameters that are used in the rest of the program</span>
     <span class="c1"># are returned by this function.</span>
 
-    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_state_using_gain_ratio</span><span class="p">(</span><span class="n">gain_ratio</span><span class="p">,</span> <span class="n">contribution_ratio_diff</span><span class="p">,</span>
                                            <span class="n">gain_ratio_test_init_state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
                                            <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span></div>
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span></div>
 
 <div class="viewcode-block" id="LevenbergMarquardt.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Performs one iteration of the least-squares solver.</span>
@@ -440,13 +438,13 @@
     <span class="n">delta_params</span> <span class="o">=</span> <span class="o">-</span><span class="n">delta_params</span>
 
     <span class="c1"># Checking if the dparams satisfy the &quot;sufficiently small&quot; criteria.</span>
-    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_state_using_delta_params</span><span class="p">(</span><span class="n">loss_curr</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">delta_params</span><span class="p">,</span>
                                              <span class="n">contribution_ratio_diff</span><span class="p">,</span>
                                              <span class="n">state</span><span class="o">.</span><span class="n">damping_factor</span><span class="p">,</span>
                                              <span class="n">state</span><span class="o">.</span><span class="n">increase_factor</span><span class="p">,</span>
                                              <span class="n">state</span><span class="o">.</span><span class="n">gradient</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">residual</span><span class="p">,</span>
-                                             <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+                                             <span class="n">state</span><span class="o">.</span><span class="n">aux</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
 
     <span class="n">state</span> <span class="o">=</span> <span class="n">LevenbergMarquardtState</span><span class="p">(</span>
         <span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
@@ -456,14 +454,15 @@
         <span class="n">residual</span><span class="o">=</span><span class="n">residual</span><span class="p">,</span>
         <span class="n">loss</span><span class="o">=</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">residual</span><span class="p">,</span> <span class="n">residual</span><span class="p">),</span>
         <span class="n">delta</span><span class="o">=</span><span class="n">delta_params</span><span class="p">,</span>
-        <span class="n">gradient</span><span class="o">=</span><span class="n">gradient</span><span class="p">)</span>
+        <span class="n">gradient</span><span class="o">=</span><span class="n">gradient</span><span class="p">,</span>
+        <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_fun</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_fun</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_fun</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">residual_fun</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>

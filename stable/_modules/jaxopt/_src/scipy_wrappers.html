@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.4.3 documentation</title>
+  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.5 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -128,6 +128,8 @@
 <span class="sd"># TODO(fllinares): add support for `LinearConstraint`s.</span>
 <span class="sd"># TODO(fllinares): add support for methods requiring Hessian / Hessian prods.</span>
 <span class="sd"># TODO(fllinares): possibly hardcode `dtype` attribute, as likely useless.</span>
+<span class="sd"># TODO(pedregosa): add a &#39;maxiter&#39; keyword option for all wrappers,</span>
+<span class="sd">#   currently only ScipyMinimize exposes this option.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">abc</span>
@@ -311,6 +313,8 @@
 
 <span class="sd">  Attributes:</span>
 <span class="sd">    method: the `method` argument for `scipy.optimize`.</span>
+<span class="sd">    maxiter: Maximum number of iterations to perform. Depending on the method,</span>
+<span class="sd">      each iteration may use several function evaluations.</span>
 <span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>
 <span class="sd">      methods relying on FORTRAN code, such as the `L-BFGS-B` solver for</span>
 <span class="sd">      `scipy.optimize.minimize`, require casting to float64.</span>
@@ -378,6 +382,7 @@
   <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
 
 <div class="viewcode-block" id="ScipyMinimize.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
@@ -400,6 +405,7 @@
 
     <span class="n">res</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">scipy_fun</span><span class="p">,</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
                                 <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
                                 <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
                                 <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
                                 <span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
@@ -437,7 +443,13 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">)</span></div>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="s1">&#39;maxiter&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot pass maxiter through options dictionary, use maxiter keyword argument instead.&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;maxiter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span></div>
 
 
 <div class="viewcode-block" id="ScipyBoundedMinimize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -549,13 +561,20 @@
                                          <span class="n">pytree_topology</span><span class="p">,</span>
                                          <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">scipy_fun</span><span class="p">(</span><span class="n">x_onp</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">scipy_fun</span><span class="p">(</span><span class="n">x_onp</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">scipy_args</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+      <span class="c1"># scipy_args is unused but must appear in the signature since</span>
+      <span class="c1"># the `args` argument passed to osp.optimize.root is not None.</span>
+      <span class="k">del</span> <span class="n">scipy_args</span>  <span class="c1"># unused</span>
       <span class="n">x_jnp</span> <span class="o">=</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">x_onp</span><span class="p">)</span>
       <span class="n">value_jnp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
       <span class="n">jacs_jnp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
       <span class="k">return</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">value_jnp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">jac_jnp_to_onp</span><span class="p">(</span><span class="n">jacs_jnp</span><span class="p">)</span>
 
+    <span class="c1"># Argument `args` is unused but must be not None to ensure that some sanity checks are performed</span>
+    <span class="c1"># correctly in Scipy for optimizers that don&#39;t use the Jacobian (such as Broyden).</span>
+    <span class="c1"># See the related issue: https://github.com/google/jaxopt/issues/290</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">scipy_fun</span><span class="p">,</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span>  
                             <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
                             <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>

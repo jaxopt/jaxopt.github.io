@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Constrained optimization &mdash; JAXopt 0.4.3 documentation</title>
+  <title>Constrained optimization &mdash; JAXopt 0.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -79,12 +79,19 @@
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_affine_set.html">jaxopt.projection.projection_affine_set</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_polyhedron.html">jaxopt.projection.projection_polyhedron</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_box_section.html">jaxopt.projection.projection_box_section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_transport.html">jaxopt.projection.projection_transport</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_birkhoff.html">jaxopt.projection.projection_birkhoff</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mirror-descent">Mirror descent</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.MirrorDescent.html">jaxopt.MirrorDescent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kullback-leibler-projections">Kullback-Leibler projections</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_transport.html">jaxopt.projection.kl_projection_transport</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_birkhoff.html">jaxopt.projection.kl_projection_birkhoff</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#box-constraints">Box constraints</a><ul>
@@ -271,6 +278,12 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_box_section.html#jaxopt.projection.projection_box_section" title="jaxopt.projection.projection_box_section"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_box_section</span></code></a>(x, ...)</p></td>
 <td><p>Projection onto a box section:</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_transport.html#jaxopt.projection.projection_transport" title="jaxopt.projection.projection_transport"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_transport</span></code></a>(...)</p></td>
+<td><p>Projection onto the transportation polytope.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_birkhoff.html#jaxopt.projection.projection_birkhoff" title="jaxopt.projection.projection_birkhoff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_birkhoff</span></code></a>(sim_matrix)</p></td>
+<td><p>Projection onto the Birkhoff polytope, the set of doubly stochastic matrices.</p></td>
+</tr>
 </tbody>
 </table>
 <p>Projections always have two arguments: the input to be projected and the
@@ -290,6 +303,28 @@ parameters of the convex set.</p>
 </tr>
 </tbody>
 </table>
+<section id="kullback-leibler-projections">
+<h3>Kullback-Leibler projections<a class="headerlink" href="#kullback-leibler-projections" title="Permalink to this headline"></a></h3>
+<p>The Kullback-Leibler projection onto <span class="math notranslate nohighlight">\(\mathcal{C}(\upsilon)\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\text{proj}_{\mathcal{C}}(x', \upsilon) :=
+\underset{x}{\text{argmin}} ~ \text{KL}(x, \exp(x')) \textrm{ subject to } x \in \mathcal{C}(\upsilon).\]</div>
+<p>The following operators are available.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_transport.html#jaxopt.projection.kl_projection_transport" title="jaxopt.projection.kl_projection_transport"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.kl_projection_transport</span></code></a>(...)</p></td>
+<td><p>Kullback-Leibler projection onto the transportation polytope.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_birkhoff.html#jaxopt.projection.kl_projection_birkhoff" title="jaxopt.projection.kl_projection_birkhoff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.kl_projection_birkhoff</span></code></a>(...)</p></td>
+<td><p>Kullback-Leibler projection onto the Birkhoff polytope, the set of doubly stochastic matrices.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="box-constraints">
 <h2>Box constraints<a class="headerlink" href="#box-constraints" title="Permalink to this headline"></a></h2>
