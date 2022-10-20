@@ -41,6 +41,7 @@
       ~ProjectedGradient.stepsize
       ~ProjectedGradient.tol
       ~ProjectedGradient.unroll
+      ~ProjectedGradient.value_and_grad
       ~ProjectedGradient.verbose
       ~ProjectedGradient.fun
       ~ProjectedGradient.projection

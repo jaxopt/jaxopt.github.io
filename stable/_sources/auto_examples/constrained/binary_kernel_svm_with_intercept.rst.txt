@@ -191,23 +191,18 @@ it with BoxOSQP too.
 
 .. _sphx_glr_download_auto_examples_constrained_binary_kernel_svm_with_intercept.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: binary_kernel_svm_with_intercept.py <binary_kernel_svm_with_intercept.py>`
 
-     :download:`Download Python source code: binary_kernel_svm_with_intercept.py <binary_kernel_svm_with_intercept.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: binary_kernel_svm_with_intercept.ipynb <binary_kernel_svm_with_intercept.ipynb>`
+      :download:`Download Jupyter notebook: binary_kernel_svm_with_intercept.ipynb <binary_kernel_svm_with_intercept.ipynb>`
 
 
 .. only:: html

@@ -42,6 +42,7 @@
       ~ProximalGradient.stepsize
       ~ProximalGradient.tol
       ~ProximalGradient.unroll
+      ~ProximalGradient.value_and_grad
       ~ProximalGradient.verbose
       ~ProximalGradient.fun
    

@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JAXopt &mdash; JAXopt 0.5 documentation</title>
+  <title>JAXopt &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,14 +22,11 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -67,7 +63,6 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -84,6 +79,7 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -112,7 +108,7 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt">
-<h1>JAXopt<a class="headerlink" href="#jaxopt" title="Permalink to this headline"></a></h1>
+<h1>JAXopt<a class="headerlink" href="#jaxopt" title="Permalink to this heading"></a></h1>
 <p>Hardware accelerated, batchable and differentiable optimizers in
 <a class="reference external" href="https://github.com/google/jax">JAX</a>.</p>
 <ul class="simple">
@@ -125,17 +121,17 @@ respect to their inputs either implicitly or via autodiff of unrolled
 algorithm iterations.</p></li>
 </ul>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <p>To install the latest release of JAXopt, use the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install jaxopt
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">jaxopt</span>
 </pre></div>
 </div>
 <p>To install the <strong>development</strong> version, use the following command instead:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install git+https://github.com/google/jaxopt
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">google</span><span class="o">/</span><span class="n">jaxopt</span>
 </pre></div>
 </div>
 <p>Alternatively, it can be be installed from sources with the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py install
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
 <div class="toctree-wrapper compound">
@@ -154,7 +150,6 @@ algorithm iterations.</p></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -187,37 +182,38 @@ algorithm iterations.</p></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 </div>
 </section>
 <section id="support">
-<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline"></a></h2>
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this heading"></a></h2>
 <p>If you are having issues, please let us know by filing an issue on our
 <a class="reference external" href="https://github.com/google/jaxopt/issues">issue tracker</a>.</p>
 </section>
 <section id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline"></a></h2>
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
 <p>JAXopt is licensed under the Apache 2.0 License.</p>
 </section>
 <section id="citing">
-<h2>Citing<a class="headerlink" href="#citing" title="Permalink to this headline"></a></h2>
+<h2>Citing<a class="headerlink" href="#citing" title="Permalink to this heading"></a></h2>
 <p>If this software is useful for you, please consider citing
 <a class="reference external" href="https://arxiv.org/abs/2105.15183">the paper</a> that describes
 its implicit differentiation framework:</p>
-<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">jaxopt_implicit_diff</span><span class="p">,</span>
-  <span class="na">title</span><span class="p">=</span><span class="s">{Efficient and Modular Implicit Differentiation}</span><span class="p">,</span>
-  <span class="na">author</span><span class="p">=</span><span class="s">{Blondel, Mathieu and Berthet, Quentin and Cuturi, Marco and Frostig, Roy</span>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">jaxopt_implicit_diff</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Efficient and Modular Implicit Differentiation}</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Blondel, Mathieu and Berthet, Quentin and Cuturi, Marco and Frostig, Roy</span>
 <span class="s">   and Hoyer, Stephan and Llinares-L{\&#39;o}pez, Felipe and Pedregosa, Fabian</span>
-<span class="s">   and Vert, Jean-Philippe}</span><span class="p">,</span>
-  <span class="na">journal</span><span class="p">=</span><span class="s">{arXiv preprint arXiv:2105.15183}</span><span class="p">,</span>
-  <span class="na">year</span><span class="p">=</span><span class="s">{2021}</span>
-<span class="p">}</span>
+<span class="s">   and Vert, Jean-Philippe}</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{arXiv preprint arXiv:2105.15183}</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2021}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 </ul>

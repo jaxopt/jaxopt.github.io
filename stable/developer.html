@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Development &mdash; JAXopt 0.5 documentation</title>
+  <title>Development &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,19 +22,15 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API at a glance" href="api.html" />
-    <link rel="prev" title="jaxopt.BacktrackingLineSearch" href="_autosummary/jaxopt.BacktrackingLineSearch.html" /> 
+    <link rel="prev" title="Changelog" href="changelog.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,7 +49,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
@@ -68,6 +63,22 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Development</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#update-notebooks">Update notebooks</a></li>
@@ -80,22 +91,6 @@
 </li>
 </ul>
 </li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">About</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
 </ul>
 
         </div>
@@ -123,9 +118,9 @@
            <div itemprop="articleBody">
              
   <section id="development">
-<h1>Development<a class="headerlink" href="#development" title="Permalink to this headline"></a></h1>
+<h1>Development<a class="headerlink" href="#development" title="Permalink to this heading"></a></h1>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>To rebuild the documentation, install several packages:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">docs</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
@@ -141,14 +136,14 @@ if you’d prefer to build the docs without executing the notebooks, you can run
 </div>
 <p>You can then see the generated documentation in <code class="docutils literal notranslate"><span class="pre">docs/_build/html/index.html</span></code>.</p>
 <section id="update-notebooks">
-<h3>Update notebooks<a class="headerlink" href="#update-notebooks" title="Permalink to this headline"></a></h3>
+<h3>Update notebooks<a class="headerlink" href="#update-notebooks" title="Permalink to this heading"></a></h3>
 <p>We use <a class="reference external" href="https://jupytext.readthedocs.io">jupytext</a> to maintain two synced copies of the notebooks
 in <code class="docutils literal notranslate"><span class="pre">docs/notebooks</span></code>: one in <code class="docutils literal notranslate"><span class="pre">ipynb</span></code> format, and one in <code class="docutils literal notranslate"><span class="pre">md</span></code> format. The advantage of the former
 is that it can be opened and executed directly in Colab; the advantage of the latter is that
 it makes it much easier to track diffs within version control.</p>
 </section>
 <section id="editing-ipynb">
-<h3>Editing ipynb<a class="headerlink" href="#editing-ipynb" title="Permalink to this headline"></a></h3>
+<h3>Editing ipynb<a class="headerlink" href="#editing-ipynb" title="Permalink to this heading"></a></h3>
 <p>For making large changes that substantially modify code and outputs, it is easiest to
 edit the notebooks in Jupyter or in Colab. To edit notebooks in the Colab interface,
 open <a class="reference external" href="http://colab.research.google.com">http://colab.research.google.com</a> and <code class="docutils literal notranslate"><span class="pre">Upload</span></code> from your local repo.
@@ -156,12 +151,12 @@ Update it as needed, <code class="docutils literal notranslate"><span class="pre
 You may want to test that it executes properly, using <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> as explained above.</p>
 </section>
 <section id="editing-md">
-<h3>Editing md<a class="headerlink" href="#editing-md" title="Permalink to this headline"></a></h3>
+<h3>Editing md<a class="headerlink" href="#editing-md" title="Permalink to this heading"></a></h3>
 <p>For making smaller changes to the text content of the notebooks, it is easiest to edit the
 <code class="docutils literal notranslate"><span class="pre">.md</span></code> versions using a text editor.</p>
 </section>
 <section id="syncing-notebooks">
-<h3>Syncing notebooks<a class="headerlink" href="#syncing-notebooks" title="Permalink to this headline"></a></h3>
+<h3>Syncing notebooks<a class="headerlink" href="#syncing-notebooks" title="Permalink to this heading"></a></h3>
 <p>After editing either the ipynb or md versions of the notebooks, you can sync the two versions
 using <a class="reference external" href="https://jupytext.readthedocs.io">jupytext</a>. For example, to sync the files inside the <code class="docutils literal notranslate"><span class="pre">docs/notebooks/deep_learning/</span></code>, run the command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupytext</span> <span class="o">--</span><span class="n">sync</span> <span class="n">docs</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">deep_learning</span><span class="o">/*.*</span>
@@ -178,7 +173,7 @@ on all staged files in your git repository, automatically using the correct jupy
 environment to execute this automatically.</p>
 </section>
 <section id="creating-new-notebooks">
-<h3>Creating new notebooks<a class="headerlink" href="#creating-new-notebooks" title="Permalink to this headline"></a></h3>
+<h3>Creating new notebooks<a class="headerlink" href="#creating-new-notebooks" title="Permalink to this heading"></a></h3>
 <p>If you are adding a new notebook to the documentation and would like to use the <code class="docutils literal notranslate"><span class="pre">jupytext</span> <span class="pre">--sync</span></code>
 command discussed here, you can set up your notebook for jupytext by using the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupytext</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">formats</span> <span class="n">ipynb</span><span class="p">,</span><span class="n">md</span><span class="p">:</span><span class="n">myst</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">the</span><span class="o">/</span><span class="n">notebook</span><span class="o">.</span><span class="n">ipynb</span>
@@ -188,7 +183,7 @@ command discussed here, you can set up your notebook for jupytext by using the f
 desired formats, and which the <code class="docutils literal notranslate"><span class="pre">jupytext</span> <span class="pre">--sync</span></code> command recognizes when invoked.</p>
 </section>
 <section id="notebooks-within-the-sphinx-build">
-<h3>Notebooks within the sphinx build<a class="headerlink" href="#notebooks-within-the-sphinx-build" title="Permalink to this headline"></a></h3>
+<h3>Notebooks within the sphinx build<a class="headerlink" href="#notebooks-within-the-sphinx-build" title="Permalink to this heading"></a></h3>
 <p>We exclude some notebooks from the build, e.g., because they contain long computations.
 See <code class="docutils literal notranslate"><span class="pre">exclude_patterns</span></code> in <a class="reference external" href="https://github.com/google/jaxopt/blob/main/docs/conf.py">conf.py</a>.</p>
 </section>
@@ -199,8 +194,7 @@ See <code class="docutils literal notranslate"><span class="pre">exclude_pattern
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="_autosummary/jaxopt.BacktrackingLineSearch.html" class="btn btn-neutral float-left" title="jaxopt.BacktrackingLineSearch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="api.html" class="btn btn-neutral float-right" title="API at a glance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

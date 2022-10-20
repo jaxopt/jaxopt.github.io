@@ -45,6 +45,7 @@
       ~NonlinearCG.min_stepsize
       ~NonlinearCG.tol
       ~NonlinearCG.unroll
+      ~NonlinearCG.value_and_grad
       ~NonlinearCG.verbose
       ~NonlinearCG.fun
    

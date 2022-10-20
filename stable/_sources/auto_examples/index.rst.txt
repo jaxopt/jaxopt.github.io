@@ -1,9 +1,5 @@
 :orphan:
 
-
-
-.. _sphx_glr_auto_examples:
-
 .. _general_examples:
 
 Example gallery
@@ -20,15 +16,16 @@ To install the libraries that the examples depend on, please run::
   $ pip install -r examples/requirements.txt
 
 
+
 .. raw:: html
 
-    <div class="sphx-glr-clear"></div>
+    <div class="sphx-glr-thumbnails">
 
 
+.. raw:: html
 
-.. _sphx_glr_auto_examples_constrained:
+    </div>
 
-.. _constrained_examples:
 
 Constrained optimization
 ------------------------
@@ -38,24 +35,25 @@ Constrained optimization
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Non-negative matrix factorizaton (NMF) using alternating minimization.">
 
 .. only:: html
 
- .. figure:: /auto_examples/constrained/images/thumb/sphx_glr_nmf_thumb.png
-     :alt: Non-negative matrix factorizaton (NMF) using alternating minimization.
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_nmf_thumb.png
+    :alt: Non-negative matrix factorizaton (NMF) using alternating minimization.
 
-     :ref:`sphx_glr_auto_examples_constrained_nmf.py`
+  :ref:`sphx_glr_auto_examples_constrained_nmf.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Non-negative matrix factorizaton (NMF) using alternating minimization.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/constrained/nmf
 
 .. raw:: html
 
@@ -63,20 +61,16 @@ Constrained optimization
 
 .. only:: html
 
- .. figure:: /auto_examples/constrained/images/thumb/sphx_glr_multiclass_linear_svm_thumb.png
-     :alt: Multiclass linear SVM (without intercept).
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_multiclass_linear_svm_thumb.png
+    :alt: Multiclass linear SVM (without intercept).
 
-     :ref:`sphx_glr_auto_examples_constrained_multiclass_linear_svm.py`
+  :ref:`sphx_glr_auto_examples_constrained_multiclass_linear_svm.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Multiclass linear SVM (without intercept).</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/constrained/multiclass_linear_svm
 
 .. raw:: html
 
@@ -84,29 +78,21 @@ Constrained optimization
 
 .. only:: html
 
- .. figure:: /auto_examples/constrained/images/thumb/sphx_glr_binary_kernel_svm_with_intercept_thumb.png
-     :alt: Binary kernel SVM with intercept.
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_binary_kernel_svm_with_intercept_thumb.png
+    :alt: Binary kernel SVM with intercept.
 
-     :ref:`sphx_glr_auto_examples_constrained_binary_kernel_svm_with_intercept.py`
+  :ref:`sphx_glr_auto_examples_constrained_binary_kernel_svm_with_intercept.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Binary kernel SVM with intercept.</div>
+    </div>
+
 
 .. raw:: html
 
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/constrained/binary_kernel_svm_with_intercept
-.. raw:: html
-
-    <div class="sphx-glr-clear"></div>
-
-
-
-.. _sphx_glr_auto_examples_deep_learning:
-
-.. _deep_learning_examples:
 
 Deep learning
 -------------
@@ -116,24 +102,25 @@ Deep learning
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="VAE example with Haiku and JAXopt.">
 
 .. only:: html
 
- .. figure:: /auto_examples/deep_learning/images/thumb/sphx_glr_haiku_vae_thumb.png
-     :alt: VAE example with Haiku and JAXopt.
+  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_haiku_vae_thumb.png
+    :alt: VAE example with Haiku and JAXopt.
 
-     :ref:`sphx_glr_auto_examples_deep_learning_haiku_vae.py`
+  :ref:`sphx_glr_auto_examples_deep_learning_haiku_vae.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">VAE example with Haiku and JAXopt.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/deep_learning/haiku_vae
 
 .. raw:: html
 
@@ -141,20 +128,16 @@ Deep learning
 
 .. only:: html
 
- .. figure:: /auto_examples/deep_learning/images/thumb/sphx_glr_haiku_image_classif_thumb.png
-     :alt: Image classification example with Haiku and JAXopt.
+  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_haiku_image_classif_thumb.png
+    :alt: Image classification example with Haiku and JAXopt.
 
-     :ref:`sphx_glr_auto_examples_deep_learning_haiku_image_classif.py`
+  :ref:`sphx_glr_auto_examples_deep_learning_haiku_image_classif.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Image classification example with Haiku and JAXopt.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/deep_learning/haiku_image_classif
 
 .. raw:: html
 
@@ -162,20 +145,16 @@ Deep learning
 
 .. only:: html
 
- .. figure:: /auto_examples/deep_learning/images/thumb/sphx_glr_plot_sgd_solvers_thumb.png
-     :alt: Comparison of different SGD algorithms.
+  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_plot_sgd_solvers_thumb.png
+    :alt: Comparison of different SGD algorithms.
 
-     :ref:`sphx_glr_auto_examples_deep_learning_plot_sgd_solvers.py`
+  :ref:`sphx_glr_auto_examples_deep_learning_plot_sgd_solvers.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Comparison of different SGD algorithms.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/deep_learning/plot_sgd_solvers
 
 .. raw:: html
 
@@ -183,20 +162,16 @@ Deep learning
 
 .. only:: html
 
- .. figure:: /auto_examples/deep_learning/images/thumb/sphx_glr_flax_resnet_thumb.png
-     :alt: Resnet example with Flax and JAXopt.
+  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_flax_resnet_thumb.png
+    :alt: Resnet example with Flax and JAXopt.
 
-     :ref:`sphx_glr_auto_examples_deep_learning_flax_resnet.py`
+  :ref:`sphx_glr_auto_examples_deep_learning_flax_resnet.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Resnet example with Flax and JAXopt.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/deep_learning/flax_resnet
 
 .. raw:: html
 
@@ -204,29 +179,21 @@ Deep learning
 
 .. only:: html
 
- .. figure:: /auto_examples/deep_learning/images/thumb/sphx_glr_distributed_flax_imagenet_thumb.png
-     :alt: SPMD ResNet example with Flax and JAXopt.
+  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_distributed_flax_imagenet_thumb.png
+    :alt: SPMD ResNet example with Flax and JAXopt.
 
-     :ref:`sphx_glr_auto_examples_deep_learning_distributed_flax_imagenet.py`
+  :ref:`sphx_glr_auto_examples_deep_learning_distributed_flax_imagenet.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">SPMD ResNet example with Flax and JAXopt.</div>
+    </div>
+
 
 .. raw:: html
 
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/deep_learning/distributed_flax_imagenet
-.. raw:: html
-
-    <div class="sphx-glr-clear"></div>
-
-
-
-.. _sphx_glr_auto_examples_fixed_point:
-
-.. _fixed_point_examples:
 
 Fixed point resolution
 ----------------------
@@ -236,24 +203,25 @@ Fixed point resolution
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Thanks to the `Picard–Lindelöf theorem, &lt;https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3...">
 
 .. only:: html
 
- .. figure:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_picard_ode_thumb.png
-     :alt: Anderson acceleration in application to Picard–Lindelöf theorem.
+  .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_picard_ode_thumb.png
+    :alt: Anderson acceleration in application to Picard–Lindelöf theorem.
 
-     :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py`
+  :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Anderson acceleration in application to Picard–Lindelöf theorem.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/fixed_point/plot_picard_ode
 
 .. raw:: html
 
@@ -261,20 +229,16 @@ Fixed point resolution
 
 .. only:: html
 
- .. figure:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_anderson_wrapper_cd_thumb.png
-     :alt: Anderson acceleration of block coordinate descent.
+  .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_anderson_wrapper_cd_thumb.png
+    :alt: Anderson acceleration of block coordinate descent.
 
-     :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py`
+  :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Anderson acceleration of block coordinate descent.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/fixed_point/plot_anderson_wrapper_cd
 
 .. raw:: html
 
@@ -282,20 +246,16 @@ Fixed point resolution
 
 .. only:: html
 
- .. figure:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_anderson_accelerate_gd_thumb.png
-     :alt: Anderson acceleration of gradient descent.
+  .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_anderson_accelerate_gd_thumb.png
+    :alt: Anderson acceleration of gradient descent.
 
-     :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py`
+  :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Anderson acceleration of gradient descent.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/fixed_point/plot_anderson_accelerate_gd
 
 .. raw:: html
 
@@ -303,29 +263,21 @@ Fixed point resolution
 
 .. only:: html
 
- .. figure:: /auto_examples/fixed_point/images/thumb/sphx_glr_deep_equilibrium_model_thumb.png
-     :alt: Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.
+  .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_deep_equilibrium_model_thumb.png
+    :alt: Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.
 
-     :ref:`sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py`
+  :ref:`sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</div>
+    </div>
+
 
 .. raw:: html
 
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/fixed_point/deep_equilibrium_model
-.. raw:: html
-
-    <div class="sphx-glr-clear"></div>
-
-
-
-.. _sphx_glr_auto_examples_implicit_diff:
-
-.. _implicit_diff_examples:
 
 Implicit differentiation
 ------------------------
@@ -335,24 +287,25 @@ Implicit differentiation
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of lasso.">
 
 .. only:: html
 
- .. figure:: /auto_examples/implicit_diff/images/thumb/sphx_glr_lasso_implicit_diff_thumb.png
-     :alt: Implicit differentiation of lasso.
+  .. image:: /auto_examples/implicit_diff/images/thumb/sphx_glr_lasso_implicit_diff_thumb.png
+    :alt: Implicit differentiation of lasso.
 
-     :ref:`sphx_glr_auto_examples_implicit_diff_lasso_implicit_diff.py`
+  :ref:`sphx_glr_auto_examples_implicit_diff_lasso_implicit_diff.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Implicit differentiation of lasso.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/implicit_diff/lasso_implicit_diff
 
 .. raw:: html
 
@@ -360,20 +313,16 @@ Implicit differentiation
 
 .. only:: html
 
- .. figure:: /auto_examples/implicit_diff/images/thumb/sphx_glr_ridge_reg_implicit_diff_thumb.png
-     :alt: Implicit differentiation of ridge regression.
+  .. image:: /auto_examples/implicit_diff/images/thumb/sphx_glr_ridge_reg_implicit_diff_thumb.png
+    :alt: Implicit differentiation of ridge regression.
 
-     :ref:`sphx_glr_auto_examples_implicit_diff_ridge_reg_implicit_diff.py`
+  :ref:`sphx_glr_auto_examples_implicit_diff_ridge_reg_implicit_diff.py`
 
 .. raw:: html
 
+      <div class="sphx-glr-thumbnail-title">Implicit differentiation of ridge regression.</div>
     </div>
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/implicit_diff/ridge_reg_implicit_diff
 
 .. raw:: html
 
@@ -381,10 +330,16 @@ Implicit differentiation
 
 .. only:: html
 
- .. figure:: /auto_examples/implicit_diff/images/thumb/sphx_glr_sparse_coding_thumb.png
-     :alt: Sparse coding.
+  .. image:: /auto_examples/implicit_diff/images/thumb/sphx_glr_sparse_coding_thumb.png
+    :alt: Sparse coding.
 
-     :ref:`sphx_glr_auto_examples_implicit_diff_sparse_coding.py`
+  :ref:`sphx_glr_auto_examples_implicit_diff_sparse_coding.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Sparse coding.</div>
+    </div>
+
 
 .. raw:: html
 
@@ -393,29 +348,25 @@ Implicit differentiation
 
 .. toctree::
    :hidden:
+   :includehidden:
 
-   /auto_examples/implicit_diff/sparse_coding
-.. raw:: html
-
-    <div class="sphx-glr-clear"></div>
-
-
-
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-gallery
+   /auto_examples/constrained/index.rst
+   /auto_examples/deep_learning/index.rst
+   /auto_examples/fixed_point/index.rst
+   /auto_examples/implicit_diff/index.rst
 
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+.. only:: html
 
-    :download:`Download all examples in Python source code: auto_examples_python.zip </auto_examples/auto_examples_python.zip>`
+  .. container:: sphx-glr-footer sphx-glr-footer-gallery
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
+      :download:`Download all examples in Python source code: auto_examples_python.zip </auto_examples/auto_examples_python.zip>`
 
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-    :download:`Download all examples in Jupyter notebooks: auto_examples_jupyter.zip </auto_examples/auto_examples_jupyter.zip>`
+      :download:`Download all examples in Jupyter notebooks: auto_examples_jupyter.zip </auto_examples/auto_examples_jupyter.zip>`
 
 
 .. only:: html

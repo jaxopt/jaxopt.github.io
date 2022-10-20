@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Non-smooth optimization &mdash; JAXopt 0.5 documentation</title>
+  <title>Non-smooth optimization &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,16 +22,13 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -93,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -110,6 +105,7 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -137,7 +133,7 @@
            <div itemprop="articleBody">
              
   <section id="non-smooth-optimization">
-<h1>Non-smooth optimization<a class="headerlink" href="#non-smooth-optimization" title="Permalink to this headline"></a></h1>
+<h1>Non-smooth optimization<a class="headerlink" href="#non-smooth-optimization" title="Permalink to this heading"></a></h1>
 <p>This section is concerned with problems of the form</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} f(x, \theta) + g(x, \lambda)\]</div>
@@ -147,8 +143,8 @@
 <span class="math notranslate nohighlight">\(g(x, \lambda)\)</span> is possibly non-smooth,
 and <span class="math notranslate nohighlight">\(\lambda\)</span> are extra parameters <span class="math notranslate nohighlight">\(g\)</span> may depend on.</p>
 <section id="proximal-gradient">
-<h2>Proximal gradient<a class="headerlink" href="#proximal-gradient" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Proximal gradient<a class="headerlink" href="#proximal-gradient" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -160,7 +156,7 @@ and <span class="math notranslate nohighlight">\(\lambda\)</span> are extra para
 </tbody>
 </table>
 <section id="instantiating-and-running-the-solver">
-<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this headline"></a></h3>
+<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this heading"></a></h3>
 <p>Proximal gradient is a generalization of <a class="reference internal" href="constrained.html#constrained-optim"><span class="std std-ref">projected gradient descent</span></a>. The non-smooth term <span class="math notranslate nohighlight">\(g\)</span> above is specified by
 setting the corresponding proximal operator, which is achieved using the
 <code class="docutils literal notranslate"><span class="pre">prox</span></code> attribute of <a class="reference internal" href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient" title="jaxopt.ProximalGradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProximalGradient</span></code></a>.</p>
@@ -191,7 +187,7 @@ argument The remaining arguments are passed to the objective function, here
 <p>Numerous proximal operators are available, see below.</p>
 </section>
 <section id="differentiation">
-<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this headline"></a></h3>
+<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this heading"></a></h3>
 <p>In some applications, it is useful to differentiate the solution of the solver
 with respect to some hyperparameters.  Continuing the previous example, we can
 now differentiate the solution w.r.t. <code class="docutils literal notranslate"><span class="pre">l1reg</span></code>:</p>
@@ -215,8 +211,8 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 </section>
 </section>
 <section id="block-coordinate-descent">
-<span id="id1"></span><h2>Block coordinate descent<a class="headerlink" href="#block-coordinate-descent" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<span id="id1"></span><h2>Block coordinate descent<a class="headerlink" href="#block-coordinate-descent" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -248,14 +244,14 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 </div>
 </section>
 <section id="proximal-operators">
-<h2>Proximal operators<a class="headerlink" href="#proximal-operators" title="Permalink to this headline"></a></h2>
+<h2>Proximal operators<a class="headerlink" href="#proximal-operators" title="Permalink to this heading"></a></h2>
 <p>Proximal gradient and block coordinate descent do not access <span class="math notranslate nohighlight">\(g(x, \lambda)\)</span>
 directly but instead require its associated proximal operator. It is defined as:</p>
 <div class="math notranslate nohighlight">
 \[\text{prox}_{g}(x', \lambda, \eta) :=
 \underset{x}{\text{argmin}} ~ \frac{1}{2} ||x' - x||^2 + \eta g(x, \lambda).\]</div>
 <p>The following operators are available.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />

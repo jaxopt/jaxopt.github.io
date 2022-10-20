@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stochastic optimization &mdash; JAXopt 0.5 documentation</title>
+  <title>Stochastic optimization &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,16 +22,13 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -83,7 +79,6 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -100,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -127,7 +123,7 @@
            <div itemprop="articleBody">
              
   <section id="stochastic-optimization">
-<h1>Stochastic optimization<a class="headerlink" href="#stochastic-optimization" title="Permalink to this headline"></a></h1>
+<h1>Stochastic optimization<a class="headerlink" href="#stochastic-optimization" title="Permalink to this heading"></a></h1>
 <p>This section is concerned with problems of the form</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} \mathbb{E}_{D}[f(x, \theta, D)],\]</div>
@@ -145,7 +141,7 @@ variable (typically a mini-batch).</p>
 </ul>
 </div>
 <section id="defining-an-objective-function">
-<h2>Defining an objective function<a class="headerlink" href="#defining-an-objective-function" title="Permalink to this headline"></a></h2>
+<h2>Defining an objective function<a class="headerlink" href="#defining-an-objective-function" title="Permalink to this heading"></a></h2>
 <p>Objective functions must contain a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument corresponding to <span class="math notranslate nohighlight">\(D\)</span> above.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ridge_reg_objective</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -156,7 +152,7 @@ variable (typically a mini-batch).</p>
 </div>
 </section>
 <section id="data-iterator">
-<h2>Data iterator<a class="headerlink" href="#data-iterator" title="Permalink to this headline"></a></h2>
+<h2>Data iterator<a class="headerlink" href="#data-iterator" title="Permalink to this heading"></a></h2>
 <p>Sampling realizations of the random variable <span class="math notranslate nohighlight">\(D\)</span> can be done using an iterator.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">data_iterator</span><span class="p">():</span>
@@ -167,26 +163,26 @@ variable (typically a mini-batch).</p>
 </div>
 </section>
 <section id="solvers">
-<h2>Solvers<a class="headerlink" href="#solvers" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Solvers<a class="headerlink" href="#solvers" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a>(fun[, aggressiveness, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
 <td><p>SGD with Armijo line search.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, pre_update, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, ...])</p></td>
 <td><p>Optax solver.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, max_stepsize, delta, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
 <td><p>SGD with Polyak step size.</p></td>
 </tr>
 </tbody>
 </table>
 <section id="optax-solvers">
-<h3>Optax solvers<a class="headerlink" href="#optax-solvers" title="Permalink to this headline"></a></h3>
+<h3>Optax solvers<a class="headerlink" href="#optax-solvers" title="Permalink to this heading"></a></h3>
 <p><a class="reference external" href="https://optax.readthedocs.io">Optax</a> solvers can be used in JAXopt using
 <a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptaxSolver</span></code></a>. Here’s an example with Adam:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
@@ -199,7 +195,7 @@ variable (typically a mini-batch).</p>
 optax documentation for a list of available stochastic solvers.</p>
 </section>
 <section id="adaptive-solvers">
-<h3>Adaptive solvers<a class="headerlink" href="#adaptive-solvers" title="Permalink to this headline"></a></h3>
+<h3>Adaptive solvers<a class="headerlink" href="#adaptive-solvers" title="Permalink to this heading"></a></h3>
 <p>Adaptive solvers update the step size at each iteration dynamically.
 An example is <a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolyakSGD</span></code></a>, a solver
 which computes step sizes adaptively using function values.</p>
@@ -214,7 +210,7 @@ in classification tasks with separable classes, or on regression tasks without n
 </section>
 </section>
 <section id="run-iterator-vs-manual-loop">
-<h2>Run iterator vs. manual loop<a class="headerlink" href="#run-iterator-vs-manual-loop" title="Permalink to this headline"></a></h2>
+<h2>Run iterator vs. manual loop<a class="headerlink" href="#run-iterator-vs-manual-loop" title="Permalink to this heading"></a></h2>
 <p>The following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iterator</span> <span class="o">=</span> <span class="n">data_iterator</span><span class="p">()</span>
 <span class="n">solver</span><span class="o">.</span><span class="n">run_iterator</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">)</span>

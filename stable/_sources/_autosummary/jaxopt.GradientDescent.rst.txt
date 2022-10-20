@@ -42,6 +42,7 @@
       ~GradientDescent.stepsize
       ~GradientDescent.tol
       ~GradientDescent.unroll
+      ~GradientDescent.value_and_grad
       ~GradientDescent.verbose
       ~GradientDescent.fun
    

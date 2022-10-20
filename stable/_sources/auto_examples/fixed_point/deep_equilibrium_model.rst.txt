@@ -330,23 +330,18 @@ pp.930-958.
 
 .. _sphx_glr_download_auto_examples_fixed_point_deep_equilibrium_model.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: deep_equilibrium_model.py <deep_equilibrium_model.py>`
 
-     :download:`Download Python source code: deep_equilibrium_model.py <deep_equilibrium_model.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: deep_equilibrium_model.ipynb <deep_equilibrium_model.ipynb>`
+      :download:`Download Jupyter notebook: deep_equilibrium_model.ipynb <deep_equilibrium_model.ipynb>`
 
 
 .. only:: html

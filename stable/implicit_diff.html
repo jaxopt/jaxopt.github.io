@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Implicit differentiation &mdash; JAXopt 0.5 documentation</title>
+  <title>Implicit differentiation &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,16 +22,13 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -84,7 +80,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -101,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -128,9 +124,9 @@
            <div itemprop="articleBody">
              
   <section id="implicit-differentiation">
-<span id="implicit-diff"></span><h1>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this headline"></a></h1>
+<span id="implicit-diff"></span><h1>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this heading"></a></h1>
 <section id="argmin-differentiation">
-<h2>Argmin differentiation<a class="headerlink" href="#argmin-differentiation" title="Permalink to this headline"></a></h2>
+<h2>Argmin differentiation<a class="headerlink" href="#argmin-differentiation" title="Permalink to this heading"></a></h2>
 <p>Argmin differentiation is the task of differentiating a minimization problem’s
 solution with respect to its inputs. Namely, given</p>
 <div class="math notranslate nohighlight">
@@ -140,7 +136,7 @@ is usually done either by implicit differentiation or by autodiff through an
 algorithm’s unrolled iterates.</p>
 </section>
 <section id="jaxopt-solvers">
-<h2>JAXopt solvers<a class="headerlink" href="#jaxopt-solvers" title="Permalink to this headline"></a></h2>
+<h2>JAXopt solvers<a class="headerlink" href="#jaxopt-solvers" title="Permalink to this heading"></a></h2>
 <p>All solvers in JAXopt support implicit differentiation <strong>out-of-the-box</strong>.
 Most solvers have an <code class="docutils literal notranslate"><span class="pre">implicit_diff=True|False</span></code> option. When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 autodiff of unrolled iterates is used instead of implicit differentiation.</p>
@@ -179,8 +175,8 @@ Since <code class="docutils literal notranslate"><span class="pre">ridge_reg_sol
 </div>
 </section>
 <section id="custom-solvers">
-<h2>Custom solvers<a class="headerlink" href="#custom-solvers" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Custom solvers<a class="headerlink" href="#custom-solvers" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -204,10 +200,10 @@ for easily adding implicit differentiation on top of any existing solver.</p>
 </div>
 </section>
 <section id="jvps-and-vjps">
-<h2>JVPs and VJPs<a class="headerlink" href="#jvps-and-vjps" title="Permalink to this headline"></a></h2>
+<h2>JVPs and VJPs<a class="headerlink" href="#jvps-and-vjps" title="Permalink to this heading"></a></h2>
 <p>Finally, we also provide lower-level routines for computing the JVPs and VJPs
 of roots of functions.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />

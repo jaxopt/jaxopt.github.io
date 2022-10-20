@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comparison of different SGD algorithms. &mdash; JAXopt 0.5 documentation</title>
+  <title>Comparison of different SGD algorithms. &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
@@ -23,14 +22,11 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -68,7 +64,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -79,16 +74,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../../notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="haiku_image_classif.html">Image classification example with Haiku and JAXopt.</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Comparison of different SGD algorithms.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="flax_resnet.html">Resnet example with Flax and JAXopt.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="distributed_flax_imagenet.html">SPMD ResNet example with Flax and JAXopt.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../constrained/index.html">Constrained optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Deep learning</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="haiku_image_classif.html">Image classification example with Haiku and JAXopt.</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Comparison of different SGD algorithms.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flax_resnet.html">Resnet example with Flax and JAXopt.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="distributed_flax_imagenet.html">SPMD ResNet example with Flax and JAXopt.</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fixed_point/index.html">Fixed point resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../implicit_diff/index.html">Implicit differentiation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -98,6 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -115,6 +117,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Example gallery</a> &raquo;</li>
+          <li><a href="index.html">Deep learning</a> &raquo;</li>
       <li>Comparison of different SGD algorithms.</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/auto_examples/deep_learning/plot_sgd_solvers.rst.txt" rel="nofollow"> View page source</a>
@@ -131,7 +134,7 @@
 to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="comparison-of-different-sgd-algorithms">
-<span id="sphx-glr-auto-examples-deep-learning-plot-sgd-solvers-py"></span><h1>Comparison of different SGD algorithms.<a class="headerlink" href="#comparison-of-different-sgd-algorithms" title="Permalink to this headline"></a></h1>
+<span id="sphx-glr-auto-examples-deep-learning-plot-sgd-solvers-py"></span><h1>Comparison of different SGD algorithms.<a class="headerlink" href="#comparison-of-different-sgd-algorithms" title="Permalink to this heading"></a></h1>
 <p>The purpose of this example is to illustrate the power
 of adaptive stepsize algorithms.</p>
 <p>We chose a classification task with classes that are easily separable
@@ -147,14 +150,13 @@ and no regularization (interpolating regime).</p>
 on the current minibatch.</p>
 <p>This experiment was conducted without momentum, with popular default values for
 learning rate.</p>
-<img src="../../_images/sphx_glr_plot_sgd_solvers_001.png" srcset="../../_images/sphx_glr_plot_sgd_solvers_001.png" alt="Classification on fashion_mnist" class = "sphx-glr-single-img"/><p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[Polyak SGD] (   0), error=0.272, loss=2.301, stepsize=1.000000
+<img src="../../_images/sphx_glr_plot_sgd_solvers_001.png" srcset="../../_images/sphx_glr_plot_sgd_solvers_001.png" alt="Classification on fashion_mnist" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[Polyak SGD] (   0), error=0.272, loss=2.301, stepsize=1.000000
 [Polyak SGD] (  20), error=1.919, loss=1.482, stepsize=0.402169
 [Polyak SGD] (  40), error=4.585, loss=1.666, stepsize=0.079269
 [Polyak SGD] (  60), error=1.422, loss=0.891, stepsize=0.440547
 [Polyak SGD] (  80), error=2.356, loss=1.200, stepsize=0.216168
 [Polyak SGD] ( 100), error=3.512, loss=1.183, stepsize=0.095881
-101 iterations of Polyak SGD took 18.14s
+101 iterations of Polyak SGD took 20.29s
 
 [Armijo SGD] (   0), error=0.227, loss=2.313, stepsize=1.000000
 [Armijo SGD] (  20), error=2.221, loss=1.331, stepsize=0.065971
@@ -162,7 +164,7 @@ learning rate.</p>
 [Armijo SGD] (  60), error=3.499, loss=1.059, stepsize=0.027022
 [Armijo SGD] (  80), error=1.456, loss=0.863, stepsize=0.021617
 [Armijo SGD] ( 100), error=1.689, loss=0.819, stepsize=0.021617
-101 iterations of Armijo SGD took 27.92s
+101 iterations of Armijo SGD took 22.58s
 
 [RMSProp] (   0), error=0.223, loss=2.299
 [RMSProp] (  20), error=0.869, loss=1.913
@@ -170,7 +172,7 @@ learning rate.</p>
 [RMSProp] (  60), error=1.115, loss=1.211
 [RMSProp] (  80), error=1.627, loss=1.088
 [RMSProp] ( 100), error=1.581, loss=1.002
-101 iterations of RMSProp took 17.28s
+101 iterations of RMSProp took 17.06s
 
 [SGD] (   0), error=0.190, loss=2.306
 [SGD] (  20), error=0.384, loss=2.236
@@ -178,7 +180,7 @@ learning rate.</p>
 [SGD] (  60), error=1.222, loss=1.092
 [SGD] (  80), error=1.637, loss=1.146
 [SGD] ( 100), error=4.392, loss=1.671
-101 iterations of SGD took 16.90s
+101 iterations of SGD took 17.16s
 </pre></div>
 </div>
 <div class="line-block">
@@ -367,8 +369,8 @@ learning rate.</p>
   <span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  23.814 seconds)</p>
-<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-deep-learning-plot-sgd-solvers-py">
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  20.900 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-deep-learning-plot-sgd-solvers-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/2d78f9431fa6d68ce6b255e334a87265/plot_sgd_solvers.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_sgd_solvers.py</span></code></a></p>
 </div>

@@ -47,6 +47,7 @@
       ~ArmijoSGD.reset_option
       ~ArmijoSGD.tol
       ~ArmijoSGD.unroll
+      ~ArmijoSGD.value_and_grad
       ~ArmijoSGD.verbose
       ~ArmijoSGD.fun
    

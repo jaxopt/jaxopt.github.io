@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deep Equilibrium (DEQ) model in Flax with Anderson acceleration. &mdash; JAXopt 0.5 documentation</title>
+  <title>Deep Equilibrium (DEQ) model in Flax with Anderson acceleration. &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
@@ -23,18 +22,15 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Implicit differentiation of lasso." href="../implicit_diff/lasso_implicit_diff.html" />
+    <link rel="next" title="Implicit differentiation" href="../implicit_diff/index.html" />
     <link rel="prev" title="Anderson acceleration of gradient descent." href="plot_anderson_accelerate_gd.html" /> 
 </head>
 
@@ -68,7 +64,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -80,14 +75,20 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="plot_picard_ode.html">Anderson acceleration in application to Picard–Lindelöf theorem.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="plot_anderson_wrapper_cd.html">Anderson acceleration of block coordinate descent.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="plot_anderson_accelerate_gd.html">Anderson acceleration of gradient descent.</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../constrained/index.html">Constrained optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deep_learning/index.html">Deep learning</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Fixed point resolution</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="plot_picard_ode.html">Anderson acceleration in application to Picard–Lindelöf theorem.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plot_anderson_wrapper_cd.html">Anderson acceleration of block coordinate descent.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plot_anderson_accelerate_gd.html">Anderson acceleration of gradient descent.</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../implicit_diff/index.html">Implicit differentiation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -97,6 +98,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -114,6 +116,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Example gallery</a> &raquo;</li>
+          <li><a href="index.html">Fixed point resolution</a> &raquo;</li>
       <li>Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/auto_examples/fixed_point/deep_equilibrium_model.rst.txt" rel="nofollow"> View page source</a>
@@ -130,7 +133,7 @@
 to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="deep-equilibrium-deq-model-in-flax-with-anderson-acceleration">
-<span id="sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"></span><h1>Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.<a class="headerlink" href="#deep-equilibrium-deq-model-in-flax-with-anderson-acceleration" title="Permalink to this headline"></a></h1>
+<span id="sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"></span><h1>Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.<a class="headerlink" href="#deep-equilibrium-deq-model-in-flax-with-anderson-acceleration" title="Permalink to this heading"></a></h1>
 <p>This implementation is strongly inspired by the Pytorch code snippets in [3].</p>
 <p>A similar model called “implicit deep learning” is also proposed in [2].</p>
 <p>In practice BatchNormalization and initialization of weights in convolutions are
@@ -423,7 +426,7 @@ pp.930-958.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.000 seconds)</p>
-<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-deep-equilibrium-model-py">
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-deep-equilibrium-model-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/f1a99bab28e2124350df2f48e8eb2453/deep_equilibrium_model.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">deep_equilibrium_model.py</span></code></a></p>
 </div>
@@ -439,7 +442,7 @@ pp.930-958.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="plot_anderson_accelerate_gd.html" class="btn btn-neutral float-left" title="Anderson acceleration of gradient descent." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../implicit_diff/lasso_implicit_diff.html" class="btn btn-neutral float-right" title="Implicit differentiation of lasso." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../implicit_diff/index.html" class="btn btn-neutral float-right" title="Implicit differentiation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

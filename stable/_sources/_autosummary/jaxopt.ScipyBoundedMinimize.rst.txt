@@ -28,6 +28,7 @@
 
    .. autosummary::
    
+      ~ScipyBoundedMinimize.callback
       ~ScipyBoundedMinimize.fun
       ~ScipyBoundedMinimize.has_aux
       ~ScipyBoundedMinimize.implicit_diff_solve

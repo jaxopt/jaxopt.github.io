@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quadratic programming &mdash; JAXopt 0.5 documentation</title>
+  <title>Quadratic programming &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,16 +22,13 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -97,7 +93,6 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -114,6 +109,7 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -141,7 +137,7 @@
            <div itemprop="articleBody">
              
   <section id="quadratic-programming">
-<h1>Quadratic programming<a class="headerlink" href="#quadratic-programming" title="Permalink to this headline"></a></h1>
+<h1>Quadratic programming<a class="headerlink" href="#quadratic-programming" title="Permalink to this heading"></a></h1>
 <p>This section is concerned with minimizing quadratic functions subject
 to equality and/or inequality constraints, also known as
 <a class="reference external" href="https://en.wikipedia.org/wiki/Quadratic_programming">quadratic programming</a>.</p>
@@ -167,11 +163,11 @@ algorithms, <code class="docutils literal notranslate"><span class="pre">maxiter
 Hence, the matrix <span class="math notranslate nohighlight">\(Q\)</span> <em>must</em> be positive semi-definite (PSD).</p>
 </div>
 <section id="equality-constrained-qps">
-<h2>Equality-constrained QPs<a class="headerlink" href="#equality-constrained-qps" title="Permalink to this headline"></a></h2>
+<h2>Equality-constrained QPs<a class="headerlink" href="#equality-constrained-qps" title="Permalink to this heading"></a></h2>
 <p>The problem takes the form:</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } A x = b\]</div>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -199,7 +195,7 @@ Hence, the matrix <span class="math notranslate nohighlight">\(Q\)</span> <em>mu
 </pre></div>
 </div>
 <section id="ill-posed-problems">
-<h3>Ill-posed problems<a class="headerlink" href="#ill-posed-problems" title="Permalink to this headline"></a></h3>
+<h3>Ill-posed problems<a class="headerlink" href="#ill-posed-problems" title="Permalink to this heading"></a></h3>
 <p>This solver is the fastest for well-posed problems, but can behave poorly on badly scaled matrices,
 or with redundant constraints.</p>
 <p>If the solver struggles to converge,
@@ -224,17 +220,17 @@ This can be done by setting <code class="docutils literal notranslate"><span cla
 </section>
 </section>
 <section id="general-qps">
-<h2>General QPs<a class="headerlink" href="#general-qps" title="Permalink to this headline"></a></h2>
+<h2>General QPs<a class="headerlink" href="#general-qps" title="Permalink to this heading"></a></h2>
 <p>The problem takes the form:</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } A x = b, G x \le h\]</div>
 <section id="cvxpyqp">
-<h3>CvxpyQP<a class="headerlink" href="#cvxpyqp" title="Permalink to this headline"></a></h3>
+<h3>CvxpyQP<a class="headerlink" href="#cvxpyqp" title="Permalink to this heading"></a></h3>
 <p>The wrapper over
 <a class="reference external" href="https://www.cvxpy.org">CVXPY</a>
 is a solver that runs in <code class="docutils literal notranslate"><span class="pre">float64</span></code> precision.
 However, it is not jittable, and does not support matvec and pytrees.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -267,11 +263,11 @@ However, it is not jittable, and does not support matvec and pytrees.</p>
 constraints by setting <code class="docutils literal notranslate"><span class="pre">params_eq</span></code> or <code class="docutils literal notranslate"><span class="pre">params_ineq</span></code> to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </section>
 <section id="osqp">
-<h3>OSQP<a class="headerlink" href="#osqp" title="Permalink to this headline"></a></h3>
+<h3>OSQP<a class="headerlink" href="#osqp" title="Permalink to this heading"></a></h3>
 <p>This solver is a pure JAX re-implementation of the OSQP algorithm.
 It is jittable, supports pytrees and matvecs, but the precision is usually
 lower than <code class="xref py py-class docutils literal notranslate"><span class="pre">CvxpyQP</span></code> when run in float32 precision.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -310,11 +306,11 @@ lower than <code class="xref py py-class docutils literal notranslate"><span cla
 </section>
 </section>
 <section id="box-constrained-qps-with-equality">
-<h2>Box-constrained QPs, with equality<a class="headerlink" href="#box-constrained-qps-with-equality" title="Permalink to this headline"></a></h2>
+<h2>Box-constrained QPs, with equality<a class="headerlink" href="#box-constrained-qps-with-equality" title="Permalink to this heading"></a></h2>
 <p>The problem takes the form:</p>
 <div class="math notranslate nohighlight">
 \[\min_{x,z} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } A x = z, l \le z \le u\]</div>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -364,11 +360,11 @@ instead.</p>
 </div>
 </section>
 <section id="box-constrained-qps-without-equality">
-<h2>Box-constrained QPs, without equality<a class="headerlink" href="#box-constrained-qps-without-equality" title="Permalink to this headline"></a></h2>
+<h2>Box-constrained QPs, without equality<a class="headerlink" href="#box-constrained-qps-without-equality" title="Permalink to this heading"></a></h2>
 <p>The problem takes the form:</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } l \le x \le u\]</div>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -398,7 +394,7 @@ the primal solution.</p>
 </div>
 </section>
 <section id="unconstrained-qps">
-<h2>Unconstrained QPs<a class="headerlink" href="#unconstrained-qps" title="Permalink to this headline"></a></h2>
+<h2>Unconstrained QPs<a class="headerlink" href="#unconstrained-qps" title="Permalink to this heading"></a></h2>
 <p>For completeness, we also briefly describe how to solve unconstrained
 quadratics of the form:</p>
 <div class="math notranslate nohighlight">

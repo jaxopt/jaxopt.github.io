@@ -139,23 +139,18 @@ Non-negative matrix factorizaton (NMF) using alternating minimization.
 
 .. _sphx_glr_download_auto_examples_constrained_nmf.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: nmf.py <nmf.py>`
 
-     :download:`Download Python source code: nmf.py <nmf.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: nmf.ipynb <nmf.ipynb>`
+      :download:`Download Jupyter notebook: nmf.ipynb <nmf.ipynb>`
 
 
 .. only:: html

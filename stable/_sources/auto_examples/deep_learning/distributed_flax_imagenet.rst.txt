@@ -885,23 +885,18 @@ yet supported.
 
 .. _sphx_glr_download_auto_examples_deep_learning_distributed_flax_imagenet.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: distributed_flax_imagenet.py <distributed_flax_imagenet.py>`
 
-     :download:`Download Python source code: distributed_flax_imagenet.py <distributed_flax_imagenet.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: distributed_flax_imagenet.ipynb <distributed_flax_imagenet.ipynb>`
+      :download:`Download Jupyter notebook: distributed_flax_imagenet.ipynb <distributed_flax_imagenet.ipynb>`
 
 
 .. only:: html

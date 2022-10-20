@@ -44,9 +44,11 @@
       ~LBFGS.maxls
       ~LBFGS.min_stepsize
       ~LBFGS.stepsize
+      ~LBFGS.stop_if_linesearch_fails
       ~LBFGS.tol
       ~LBFGS.unroll
       ~LBFGS.use_gamma
+      ~LBFGS.value_and_grad
       ~LBFGS.verbose
       ~LBFGS.fun
    

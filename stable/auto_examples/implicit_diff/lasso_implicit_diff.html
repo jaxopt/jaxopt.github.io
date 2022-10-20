@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Implicit differentiation of lasso. &mdash; JAXopt 0.5 documentation</title>
+  <title>Implicit differentiation of lasso. &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
@@ -23,19 +22,16 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Implicit differentiation of ridge regression." href="ridge_reg_implicit_diff.html" />
-    <link rel="prev" title="Deep Equilibrium (DEQ) model in Flax with Anderson acceleration." href="../fixed_point/deep_equilibrium_model.html" /> 
+    <link rel="prev" title="Implicit differentiation" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -68,7 +64,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -82,9 +77,15 @@
 <li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Implicit differentiation of lasso.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ridge_reg_implicit_diff.html">Implicit differentiation of ridge regression.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sparse_coding.html">Sparse coding.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../constrained/index.html">Constrained optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deep_learning/index.html">Deep learning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fixed_point/index.html">Fixed point resolution</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Implicit differentiation</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Implicit differentiation of lasso.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ridge_reg_implicit_diff.html">Implicit differentiation of ridge regression.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_coding.html">Sparse coding.</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -96,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -113,6 +115,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Example gallery</a> &raquo;</li>
+          <li><a href="index.html">Implicit differentiation</a> &raquo;</li>
       <li>Implicit differentiation of lasso.</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/auto_examples/implicit_diff/lasso_implicit_diff.rst.txt" rel="nofollow"> View page source</a>
@@ -129,7 +132,7 @@
 to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="implicit-differentiation-of-lasso">
-<span id="sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"></span><h1>Implicit differentiation of lasso.<a class="headerlink" href="#implicit-differentiation-of-lasso" title="Permalink to this headline"></a></h1>
+<span id="sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"></span><h1>Implicit differentiation of lasso.<a class="headerlink" href="#implicit-differentiation-of-lasso" title="Permalink to this heading"></a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
 <span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
 
@@ -200,8 +203,8 @@ to download the full example code</p>
   <span class="c1"># Initialize solver.</span>
   <span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">),</span> <span class="n">fun</span><span class="o">=</span><span class="n">outer_objective</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
   <span class="n">theta</span> <span class="o">=</span> <span class="mf">1.0</span>
-  <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
   <span class="n">init_w</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">init_inner</span><span class="o">=</span><span class="n">init_w</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 
   <span class="c1"># Run outer loop.</span>
   <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
@@ -216,7 +219,7 @@ to download the full example code</p>
 </pre></div>
 </div>
 <p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.000 seconds)</p>
-<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-implicit-diff-lasso-implicit-diff-py">
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-implicit-diff-lasso-implicit-diff-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/787c3b81fbb3e9be03528d92d8a694a1/lasso_implicit_diff.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">lasso_implicit_diff.py</span></code></a></p>
 </div>
@@ -231,7 +234,7 @@ to download the full example code</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../fixed_point/deep_equilibrium_model.html" class="btn btn-neutral float-left" title="Deep Equilibrium (DEQ) model in Flax with Anderson acceleration." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Implicit differentiation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="ridge_reg_implicit_diff.html" class="btn btn-neutral float-right" title="Implicit differentiation of ridge regression." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

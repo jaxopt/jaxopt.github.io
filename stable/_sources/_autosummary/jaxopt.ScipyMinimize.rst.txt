@@ -28,6 +28,7 @@
 
    .. autosummary::
    
+      ~ScipyMinimize.callback
       ~ScipyMinimize.fun
       ~ScipyMinimize.has_aux
       ~ScipyMinimize.implicit_diff_solve

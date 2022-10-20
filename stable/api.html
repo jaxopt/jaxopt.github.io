@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API at a glance &mdash; JAXopt 0.5 documentation</title>
+  <title>API at a glance &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,19 +22,16 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="jaxopt.tree_util.tree_add" href="_autosummary/jaxopt.tree_util.tree_add.html" />
-    <link rel="prev" title="Development" href="developer.html" /> 
+    <link rel="prev" title="jaxopt.BacktrackingLineSearch" href="_autosummary/jaxopt.BacktrackingLineSearch.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -68,13 +64,13 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API at a glance</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#optimization">Optimization</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#unconstrained">Unconstrained</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.BFGS.html">jaxopt.BFGS</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html">jaxopt.GradientDescent</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html">jaxopt.LBFGS</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html">jaxopt.ScipyMinimize</a></li>
@@ -179,6 +175,7 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -206,35 +203,38 @@
            <div itemprop="articleBody">
              
   <section id="api-at-a-glance">
-<h1>API at a glance<a class="headerlink" href="#api-at-a-glance" title="Permalink to this headline"></a></h1>
+<h1>API at a glance<a class="headerlink" href="#api-at-a-glance" title="Permalink to this heading"></a></h1>
 <section id="optimization">
-<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline"></a></h2>
+<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this heading"></a></h2>
 <section id="unconstrained">
-<h3>Unconstrained<a class="headerlink" href="#unconstrained" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Unconstrained<a class="headerlink" href="#unconstrained" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent" title="jaxopt.GradientDescent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.GradientDescent</span></code></a>(fun[, prox, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BFGS.html#jaxopt.BFGS" title="jaxopt.BFGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BFGS</span></code></a>(fun[, value_and_grad, has_aux, ...])</p></td>
+<td><p>BFGS solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent" title="jaxopt.GradientDescent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.GradientDescent</span></code></a>(fun[, prox, ...])</p></td>
 <td><p>Gradient Descent solver.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a>(fun[, has_aux, maxiter, tol, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a>(fun[, value_and_grad, has_aux, ...])</p></td>
 <td><p>LBFGS solver.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize" title="jaxopt.ScipyMinimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyMinimize</span></code></a>([method, dtype, jit, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize" title="jaxopt.ScipyMinimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyMinimize</span></code></a>([method, dtype, jit, ...])</p></td>
 <td><p><cite>scipy.optimize.minimize</cite> wrapper</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG" title="jaxopt.NonlinearCG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.NonlinearCG</span></code></a>(fun[, has_aux, maxiter, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG" title="jaxopt.NonlinearCG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.NonlinearCG</span></code></a>(fun[, value_and_grad, ...])</p></td>
 <td><p>Nonlinear conjugate gradient solver.</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="constrained">
-<h3>Constrained<a class="headerlink" href="#constrained" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Constrained<a class="headerlink" href="#constrained" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -253,8 +253,8 @@
 </table>
 </section>
 <section id="quadratic-programming">
-<h3>Quadratic programming<a class="headerlink" href="#quadratic-programming" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Quadratic programming<a class="headerlink" href="#quadratic-programming" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -279,8 +279,8 @@
 </table>
 </section>
 <section id="non-smooth">
-<h3>Non-smooth<a class="headerlink" href="#non-smooth" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Non-smooth<a class="headerlink" href="#non-smooth" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -296,28 +296,28 @@
 </table>
 </section>
 <section id="stochastic">
-<h3>Stochastic<a class="headerlink" href="#stochastic" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Stochastic<a class="headerlink" href="#stochastic" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a>(fun[, aggressiveness, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
 <td><p>SGD with Armijo line search.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, pre_update, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, ...])</p></td>
 <td><p>Optax solver.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, max_stepsize, delta, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
 <td><p>SGD with Polyak step size.</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="loss-functions">
-<h3>Loss functions<a class="headerlink" href="#loss-functions" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Loss functions<a class="headerlink" href="#loss-functions" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -340,8 +340,8 @@
 </section>
 </section>
 <section id="linear-system-solving">
-<h2>Linear system solving<a class="headerlink" href="#linear-system-solving" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Linear system solving<a class="headerlink" href="#linear-system-solving" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -372,8 +372,8 @@
 </table>
 </section>
 <section id="nonlinear-least-squares">
-<h2>Nonlinear least squares<a class="headerlink" href="#nonlinear-least-squares" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Nonlinear least squares<a class="headerlink" href="#nonlinear-least-squares" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -389,8 +389,8 @@
 </table>
 </section>
 <section id="root-finding">
-<h2>Root finding<a class="headerlink" href="#root-finding" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Root finding<a class="headerlink" href="#root-finding" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -406,8 +406,8 @@
 </table>
 </section>
 <section id="fixed-point-resolution">
-<h2>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -426,8 +426,8 @@
 </table>
 </section>
 <section id="implicit-differentiation">
-<h2>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -449,8 +449,8 @@
 </table>
 </section>
 <section id="line-search">
-<h2>Line search<a class="headerlink" href="#line-search" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Line search<a class="headerlink" href="#line-search" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -463,8 +463,8 @@
 </table>
 </section>
 <section id="tree-utilities">
-<h2>Tree utilities<a class="headerlink" href="#tree-utilities" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Tree utilities<a class="headerlink" href="#tree-utilities" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -509,7 +509,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="developer.html" class="btn btn-neutral float-left" title="Development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.BacktrackingLineSearch.html" class="btn btn-neutral float-left" title="jaxopt.BacktrackingLineSearch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="_autosummary/jaxopt.tree_util.tree_add.html" class="btn btn-neutral float-right" title="jaxopt.tree_util.tree_add" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

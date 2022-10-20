@@ -42,8 +42,6 @@ AISTATS, 2021.
 
 .. rst-class:: sphx-glr-script-out
 
- Out:
-
  .. code-block:: none
 
     Error=0.005844 at parameters [41.41567342 24.42725366 84.72518529 65.29784113 55.85775041 -0.
@@ -148,28 +146,23 @@ AISTATS, 2021.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.006 seconds)
+   **Total running time of the script:** ( 0 minutes  4.147 seconds)
 
 
 .. _sphx_glr_download_auto_examples_fixed_point_plot_anderson_wrapper_cd.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_anderson_wrapper_cd.py <plot_anderson_wrapper_cd.py>`
 
-     :download:`Download Python source code: plot_anderson_wrapper_cd.py <plot_anderson_wrapper_cd.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_anderson_wrapper_cd.ipynb <plot_anderson_wrapper_cd.ipynb>`
+      :download:`Download Jupyter notebook: plot_anderson_wrapper_cd.ipynb <plot_anderson_wrapper_cd.ipynb>`
 
 
 .. only:: html

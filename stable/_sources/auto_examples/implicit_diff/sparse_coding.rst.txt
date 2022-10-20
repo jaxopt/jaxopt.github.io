@@ -21,7 +21,7 @@
 Sparse coding.
 ==============
 
-.. GENERATED FROM PYTHON SOURCE LINES 19-362
+.. GENERATED FROM PYTHON SOURCE LINES 19-369
 
 .. code-block:: default
 
@@ -220,7 +220,11 @@ Sparse coding.
       if optimizer is None:
         solver = ProximalGradient(fun=loss_fun, prox=prox_dic, has_aux=True)
         params = (dic_init, task_vars_init)
-        state = solver.init_state(params, None)
+        state = solver.init_state(
+          params,
+          None,
+          hyper_params=((data, regularization, elastic_penalty), task_params),
+        )
 
         for _ in range(maxiter):
           params, state = solver.update(
@@ -233,7 +237,10 @@ Sparse coding.
       else:
         solver = OptaxSolver(opt=optimizer, fun=loss_fun, has_aux=True)
         params = (dic_init, task_vars_init)
-        state = solver.init_state(params)
+        state = solver.init_state(
+          params,
+          hyper_params=((data, regularization, elastic_penalty), task_params),
+        )
 
         for _ in range(maxiter):
           params, state = solver.update(
@@ -377,23 +384,18 @@ Sparse coding.
 
 .. _sphx_glr_download_auto_examples_implicit_diff_sparse_coding.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: sparse_coding.py <sparse_coding.py>`
 
-     :download:`Download Python source code: sparse_coding.py <sparse_coding.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: sparse_coding.ipynb <sparse_coding.ipynb>`
+      :download:`Download Jupyter notebook: sparse_coding.ipynb <sparse_coding.ipynb>`
 
 
 .. only:: html

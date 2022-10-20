@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anderson acceleration of block coordinate descent. &mdash; JAXopt 0.5 documentation</title>
+  <title>Anderson acceleration of block coordinate descent. &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
@@ -23,14 +22,11 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -68,7 +64,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -80,14 +75,20 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="plot_picard_ode.html">Anderson acceleration in application to Picard–Lindelöf theorem.</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Anderson acceleration of block coordinate descent.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="plot_anderson_accelerate_gd.html">Anderson acceleration of gradient descent.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="deep_equilibrium_model.html">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../constrained/index.html">Constrained optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deep_learning/index.html">Deep learning</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Fixed point resolution</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="plot_picard_ode.html">Anderson acceleration in application to Picard–Lindelöf theorem.</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Anderson acceleration of block coordinate descent.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plot_anderson_accelerate_gd.html">Anderson acceleration of gradient descent.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deep_equilibrium_model.html">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../implicit_diff/index.html">Implicit differentiation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -97,6 +98,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -114,6 +116,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Example gallery</a> &raquo;</li>
+          <li><a href="index.html">Fixed point resolution</a> &raquo;</li>
       <li>Anderson acceleration of block coordinate descent.</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/auto_examples/fixed_point/plot_anderson_wrapper_cd.rst.txt" rel="nofollow"> View page source</a>
@@ -130,15 +133,14 @@
 to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="anderson-acceleration-of-block-coordinate-descent">
-<span id="sphx-glr-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"></span><h1>Anderson acceleration of block coordinate descent.<a class="headerlink" href="#anderson-acceleration-of-block-coordinate-descent" title="Permalink to this headline"></a></h1>
+<span id="sphx-glr-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"></span><h1>Anderson acceleration of block coordinate descent.<a class="headerlink" href="#anderson-acceleration-of-block-coordinate-descent" title="Permalink to this heading"></a></h1>
 <p>Block coordinate descent converges to a fixed point. It can therefore be
 accelerated with Anderson acceleration.</p>
 <p>Here <cite>m</cite> denotes the history size, and <cite>K</cite> the frequency of Anderson updates.</p>
 <p>Bertrand, Q. and Massias, M.
 Anderson acceleration of coordinate descent.
 AISTATS, 2021.</p>
-<img src="../../_images/sphx_glr_plot_anderson_wrapper_cd_001.png" srcset="../../_images/sphx_glr_plot_anderson_wrapper_cd_001.png" alt="Least Square linear regression with Lasso penalty" class = "sphx-glr-single-img"/><p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Error=0.005844 at parameters [41.41567342 24.42725366 84.72518529 65.29784113 55.85775041 -0.
+<img src="../../_images/sphx_glr_plot_anderson_wrapper_cd_001.png" srcset="../../_images/sphx_glr_plot_anderson_wrapper_cd_001.png" alt="Least Square linear regression with Lasso penalty" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Error=0.005844 at parameters [41.41567342 24.42725366 84.72518529 65.29784113 55.85775041 -0.
   1.90997369 -0.        ] for Anderson (m=5, K=1)
 Error=0.006948 at parameters [41.48824252 24.40273141 84.62864931 65.2343065  55.75704819 -0.
   1.89223564 -0.        ] for Anderson (m=5, K=5)
@@ -231,8 +233,8 @@ Error=0.210910 at parameters [41.96279774 22.87172541 82.24353772 62.41637252 52
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.006 seconds)</p>
-<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-plot-anderson-wrapper-cd-py">
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.147 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-plot-anderson-wrapper-cd-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/92c8449f2d30e00dc7b5416acba96844/plot_anderson_wrapper_cd.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_anderson_wrapper_cd.py</span></code></a></p>
 </div>

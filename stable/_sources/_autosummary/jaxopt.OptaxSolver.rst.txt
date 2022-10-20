@@ -39,6 +39,7 @@
       ~OptaxSolver.pre_update
       ~OptaxSolver.tol
       ~OptaxSolver.unroll
+      ~OptaxSolver.value_and_grad
       ~OptaxSolver.verbose
       ~OptaxSolver.fun
       ~OptaxSolver.opt

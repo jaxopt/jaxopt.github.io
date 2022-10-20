@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nonlinear least squares &mdash; JAXopt 0.5 documentation</title>
+  <title>Nonlinear least squares &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
@@ -23,16 +22,13 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -84,7 +80,6 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -101,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -128,7 +124,7 @@
            <div itemprop="articleBody">
              
   <section id="nonlinear-least-squares">
-<span id="id1"></span><h1>Nonlinear least squares<a class="headerlink" href="#nonlinear-least-squares" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Nonlinear least squares<a class="headerlink" href="#nonlinear-least-squares" title="Permalink to this heading"></a></h1>
 <p>This section is concerned with problems of the form</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} \frac{1}{2} ||\textbf{r}(x, \theta)||^2,\]</div>
@@ -136,8 +132,8 @@
 parameters with respect to which the function is minimized, and <span class="math notranslate nohighlight">\(\theta\)</span>
 are optional additional arguments.</p>
 <section id="gauss-newton">
-<h2>Gauss-Newton<a class="headerlink" href="#gauss-newton" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Gauss-Newton<a class="headerlink" href="#gauss-newton" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -150,7 +146,7 @@ are optional additional arguments.</p>
 </table>
 <p>We can use the Gauss-Newton method, which is the standard approach for nonlinear least squares problems.</p>
 <section id="update-equation">
-<h3>Update equation<a class="headerlink" href="#update-equation" title="Permalink to this headline"></a></h3>
+<h3>Update equation<a class="headerlink" href="#update-equation" title="Permalink to this heading"></a></h3>
 <p>The following equation is solved for every iteration to find the update to the
 parameters:</p>
 <div class="math notranslate nohighlight">
@@ -159,7 +155,7 @@ parameters:</p>
 parameters.</p>
 </section>
 <section id="instantiating-and-running-the-solver">
-<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this headline"></a></h3>
+<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this heading"></a></h3>
 <p>As an example, let us see how to minimize the Rosenbrock residual function:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">GaussNewton</span>
 
@@ -181,7 +177,7 @@ parameters.</p>
 </div>
 </section>
 <section id="differentiation">
-<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this headline"></a></h3>
+<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this heading"></a></h3>
 <p>In some applications, it is useful to differentiate the solution of the solver
 with respect to some hyperparameters.  Continuing the previous example, we can
 now differentiate the solution w.r.t. <code class="docutils literal notranslate"><span class="pre">y</span></code>:</p>
@@ -198,8 +194,8 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 </section>
 </section>
 <section id="levenberg-marquardt">
-<h2>Levenberg Marquardt<a class="headerlink" href="#levenberg-marquardt" title="Permalink to this headline"></a></h2>
-<table class="longtable docutils align-default">
+<h2>Levenberg Marquardt<a class="headerlink" href="#levenberg-marquardt" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -213,7 +209,7 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 <p>We can also use the Levenberg-Marquardt method, which is a more advanced method compared to Gauss-Newton, in
 that it regularizes the update equation. It helps for cases where Gauss-Newton method fails to converge.</p>
 <section id="id2">
-<h3>Update equation<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<h3>Update equation<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <p>The following equation is solved for every iteration to find the update to the
 parameters:</p>
 <div class="math notranslate nohighlight">

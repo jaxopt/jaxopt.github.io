@@ -68,11 +68,9 @@ integration, but any other integration method can be used.
 
 .. rst-class:: sphx-glr-script-out
 
- Out:
-
  .. code-block:: none
 
-    Error of 0.0362665057182312 with ground truth tan(t)
+    Error of 0.036270879209041595 with ground truth tan(t)
 
 
 
@@ -154,28 +152,23 @@ integration, but any other integration method can be used.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.367 seconds)
+   **Total running time of the script:** ( 0 minutes  9.895 seconds)
 
 
 .. _sphx_glr_download_auto_examples_fixed_point_plot_picard_ode.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_picard_ode.py <plot_picard_ode.py>`
 
-     :download:`Download Python source code: plot_picard_ode.py <plot_picard_ode.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_picard_ode.ipynb <plot_picard_ode.ipynb>`
+      :download:`Download Jupyter notebook: plot_picard_ode.ipynb <plot_picard_ode.ipynb>`
 
 
 .. only:: html

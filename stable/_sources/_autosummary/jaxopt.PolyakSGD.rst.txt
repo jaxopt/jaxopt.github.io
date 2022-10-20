@@ -42,6 +42,7 @@
       ~PolyakSGD.pre_update
       ~PolyakSGD.tol
       ~PolyakSGD.unroll
+      ~PolyakSGD.value_and_grad
       ~PolyakSGD.verbose
       ~PolyakSGD.fun
    

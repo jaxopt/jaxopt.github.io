@@ -40,7 +40,9 @@
       ~LevenbergMarquardt.has_aux
       ~LevenbergMarquardt.implicit_diff
       ~LevenbergMarquardt.implicit_diff_solve
+      ~LevenbergMarquardt.jac_fun
       ~LevenbergMarquardt.jit
+      ~LevenbergMarquardt.materialize_jac
       ~LevenbergMarquardt.maxiter
       ~LevenbergMarquardt.stop_criterion
       ~LevenbergMarquardt.tol

@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image classification example with Haiku and JAXopt. &mdash; JAXopt 0.5 documentation</title>
+  <title>Image classification example with Haiku and JAXopt. &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
@@ -23,14 +22,11 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -68,7 +64,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -79,16 +74,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../../notebooks/index.html">Notebook gallery</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Image classification example with Haiku and JAXopt.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="plot_sgd_solvers.html">Comparison of different SGD algorithms.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="flax_resnet.html">Resnet example with Flax and JAXopt.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="distributed_flax_imagenet.html">SPMD ResNet example with Flax and JAXopt.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../constrained/index.html">Constrained optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Deep learning</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Image classification example with Haiku and JAXopt.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plot_sgd_solvers.html">Comparison of different SGD algorithms.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flax_resnet.html">Resnet example with Flax and JAXopt.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="distributed_flax_imagenet.html">SPMD ResNet example with Flax and JAXopt.</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fixed_point/index.html">Fixed point resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../implicit_diff/index.html">Implicit differentiation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -98,6 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -115,6 +117,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Example gallery</a> &raquo;</li>
+          <li><a href="index.html">Deep learning</a> &raquo;</li>
       <li>Image classification example with Haiku and JAXopt.</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/auto_examples/deep_learning/haiku_image_classif.rst.txt" rel="nofollow"> View page source</a>
@@ -131,7 +134,7 @@
 to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="image-classification-example-with-haiku-and-jaxopt">
-<span id="sphx-glr-auto-examples-deep-learning-haiku-image-classif-py"></span><h1>Image classification example with Haiku and JAXopt.<a class="headerlink" href="#image-classification-example-with-haiku-and-jaxopt" title="Permalink to this headline"></a></h1>
+<span id="sphx-glr-auto-examples-deep-learning-haiku-image-classif-py"></span><h1>Image classification example with Haiku and JAXopt.<a class="headerlink" href="#image-classification-example-with-haiku-and-jaxopt" title="Permalink to this heading"></a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
 
 <span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
@@ -317,7 +320,7 @@ to download the full example code</p>
 </pre></div>
 </div>
 <p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.000 seconds)</p>
-<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-deep-learning-haiku-image-classif-py">
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-deep-learning-haiku-image-classif-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/bcb0efc76c7c714897eae804120a2058/haiku_image_classif.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">haiku_image_classif.py</span></code></a></p>
 </div>

@@ -216,23 +216,18 @@ Image classification example with Haiku and JAXopt.
 
 .. _sphx_glr_download_auto_examples_deep_learning_haiku_image_classif.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: haiku_image_classif.py <haiku_image_classif.py>`
 
-     :download:`Download Python source code: haiku_image_classif.py <haiku_image_classif.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: haiku_image_classif.ipynb <haiku_image_classif.ipynb>`
+      :download:`Download Jupyter notebook: haiku_image_classif.ipynb <haiku_image_classif.ipynb>`
 
 
 .. only:: html

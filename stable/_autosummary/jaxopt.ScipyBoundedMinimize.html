@@ -4,12 +4,11 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.ScipyBoundedMinimize &mdash; JAXopt 0.5 documentation</title>
+  <title>jaxopt.ScipyBoundedMinimize &mdash; JAXopt 0.5.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/mystnb.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
@@ -23,14 +22,11 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
-        <script>let toggleHintShow = 'Click to show';</script>
-        <script>let toggleHintHide = 'Click to hide';</script>
-        <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="../_static/togglebutton.js"></script>
-        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -61,7 +57,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../constrained.html#projected-gradient">Projected gradient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../constrained.html#mirror-descent">Mirror descent</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../constrained.html#box-constraints">Box constraints</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.ScipyBoundedMinimize</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.ScipyBoundedMinimize</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize"><code class="docutils literal notranslate"><span class="pre">ScipyBoundedMinimize</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -76,7 +75,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../line_search.html">Line search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developer.html">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -93,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Development</a></li>
 </ul>
 
         </div>
@@ -121,10 +120,10 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-scipyboundedminimize">
-<h1>jaxopt.ScipyBoundedMinimize<a class="headerlink" href="#jaxopt-scipyboundedminimize" title="Permalink to this headline"></a></h1>
+<h1>jaxopt.ScipyBoundedMinimize<a class="headerlink" href="#jaxopt-scipyboundedminimize" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ScipyBoundedMinimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyBoundedMinimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ScipyBoundedMinimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyBoundedMinimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize" title="Permalink to this definition"></a></dt>
 <dd><p><cite>scipy.optimize.minimize</cite> wrapper.</p>
 <p>This wrapper is for minimization subject to box constraints only.</p>
 <dl class="field-list simple">
@@ -136,13 +135,11 @@
 <li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>callback</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
 <li><p><strong>options</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -239,7 +236,7 @@ objective.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -249,6 +246,7 @@ objective.</p>
 <li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>callback</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
 <li><p><strong>options</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
@@ -261,7 +259,7 @@ objective.</p>
 </dd></dl>
 
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -288,34 +286,37 @@ objective.</p>
 </tbody>
 </table>
 <p class="rubric">Attributes</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.fun" title="jaxopt.ScipyBoundedMinimize.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">callback</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.has_aux" title="jaxopt.ScipyBoundedMinimize.has_aux"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_aux</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.fun" title="jaxopt.ScipyBoundedMinimize.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.implicit_diff_solve" title="jaxopt.ScipyBoundedMinimize.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.has_aux" title="jaxopt.ScipyBoundedMinimize.has_aux"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_aux</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.jit" title="jaxopt.ScipyBoundedMinimize.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.implicit_diff_solve" title="jaxopt.ScipyBoundedMinimize.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.jit" title="jaxopt.ScipyBoundedMinimize.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.method" title="jaxopt.ScipyBoundedMinimize.method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">method</span></code></a></p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.options" title="jaxopt.ScipyBoundedMinimize.options"><code class="xref py py-obj docutils literal notranslate"><span class="pre">options</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.method" title="jaxopt.ScipyBoundedMinimize.method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">method</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.tol" title="jaxopt.ScipyBoundedMinimize.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.options" title="jaxopt.ScipyBoundedMinimize.options"><code class="xref py py-obj docutils literal notranslate"><span class="pre">options</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ScipyBoundedMinimize.tol" title="jaxopt.ScipyBoundedMinimize.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -323,7 +324,7 @@ objective.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id0">
 <span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.float64</span></code></p>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code></p>
 </dd></dl>
 
 <dl class="py method">
