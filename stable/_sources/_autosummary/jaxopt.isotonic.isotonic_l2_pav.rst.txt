@@ -1,0 +1,6 @@
+﻿jaxopt.isotonic.isotonic\_l2\_pav
+=================================
+
+.. currentmodule:: jaxopt.isotonic
+
+.. autofunction:: isotonic_l2_pav

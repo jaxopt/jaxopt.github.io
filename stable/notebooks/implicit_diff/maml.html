@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Few-shot Adaptation with Model Agnostic Meta-Learning (MAML) &mdash; JAXopt 0.5.5 documentation</title>
+  <title>Few-shot Adaptation with Model Agnostic Meta-Learning (MAML) &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -64,6 +64,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -107,13 +108,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="few-shot-adaptation-with-model-agnostic-meta-learning-maml">
+  <p>Copyright 2022 Google LLC</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> https://www.apache.org/licenses/LICENSE-2.0
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="few-shot-adaptation-with-model-agnostic-meta-learning-maml">
 <h1>Few-shot Adaptation with Model Agnostic Meta-Learning (MAML)<a class="headerlink" href="#few-shot-adaptation-with-model-agnostic-meta-learning-maml" title="Permalink to this heading"></a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/google/jaxopt/blob/main/docs/notebooks/implicit_diff/maml.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>This notebook shows how to use Model Agnostic Meta-Learning (MAML) for few-shot adaptation on a simple regression task. This example appears in section 5.1 of <a class="reference external" href="https://arxiv.org/pdf/1703.03400.pdf">(Finn et al. 2017)</a>. The problem is however solved using <em>implicit</em> MAML formulation of <a class="reference external" href="https://arxiv.org/pdf/1909.04630.pdf">(Rajeswaran et al., 2019)</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">jaxopt</span> <span class="n">flax</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span>
+
+<span class="c1"># activate TPUs if available</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">jax.tools.colab_tpu</span>
+    <span class="n">jax</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">colab_tpu</span><span class="o">.</span><span class="n">setup_tpu</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TPU not found, continuing without it.&quot;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">jax.config</span> <span class="kn">import</span> <span class="n">config</span>
 <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -256,7 +284,7 @@
 <a class="reference external" href="https://arxiv.org/pdf/1909.04630.pdf">(Rajeswaran et al., 2019)</a> frame this as the following bi-level problem</p>
 <div class="math notranslate nohighlight">
 \[
-\text{argmin}_{\theta} \sum_{i=1}^K \hat{\mathcal{L_i}}(x_i(\theta)) \text{ subject to } x_i(\theta) \in \text{argmin}_{x} {\mathcal{L}}_i(x) + \frac{\lambda}{2}\|x - \theta\|^2\,,
+\text{argmin}_{\theta} \sum_{i=1}^K \hat{\mathcal{L}_i}(x_i(\theta)) \text{ subject to } x_i(\theta) \in \text{argmin}_{x} {\mathcal{L}}_i(x) + \frac{\lambda}{2}\|x - \theta\|^2\,,
 \]</div>
 <p>In the following cells we’ll define the inner objective <span class="math notranslate nohighlight">\({\mathcal{L}}_i(x) + \frac{\lambda}{2}\|x - \theta\|^2\)</span> as <code class="docutils literal notranslate"><span class="pre">inner_loss</span></code> and the outer objective <span class="math notranslate nohighlight">\(\hat{\mathcal{L_i}}\)</span> as <code class="docutils literal notranslate"><span class="pre">outer_loss</span></code>. Both losses are a quadratic loss using as predictive model a multi-layer perceptron.</p>
 <div class="cell docutils container">

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.BacktrackingLineSearch &mdash; JAXopt 0.5.5 documentation</title>
+  <title>jaxopt.BacktrackingLineSearch &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -30,7 +30,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API at a glance" href="../api.html" />
+    <link rel="next" title="jaxopt.HagerZhangLineSearch" href="jaxopt.HagerZhangLineSearch.html" />
     <link rel="prev" title="Line search" href="../line_search.html" /> 
 </head>
 
@@ -70,10 +70,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#jaxopt.BacktrackingLineSearch"><code class="docutils literal notranslate"><span class="pre">BacktrackingLineSearch</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="jaxopt.HagerZhangLineSearch.html">jaxopt.HagerZhangLineSearch</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -122,13 +124,14 @@
 <h1>jaxopt.BacktrackingLineSearch<a class="headerlink" href="#jaxopt-backtrackinglinesearch" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.BacktrackingLineSearch">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">BacktrackingLineSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strong-wolfe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/backtracking_linesearch.html#BacktrackingLineSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BacktrackingLineSearch" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">BacktrackingLineSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strong-wolfe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/backtracking_linesearch.html#BacktrackingLineSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BacktrackingLineSearch" title="Permalink to this definition"></a></dt>
 <dd><p>Backtracking line search.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>value_and_grad</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>condition</strong> (<em>str</em>) – </p></li>
@@ -169,9 +172,22 @@ gradient.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.BacktrackingLineSearch.has_aux">
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.BacktrackingLineSearch.has_aux" title="Permalink to this definition"></a></dt>
+<dd><p>if <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">fun</span></code> should return the function value only.
+If <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">fun</span></code> should return a pair <code class="docutils literal notranslate"><span class="pre">(value,</span> <span class="pre">aux)</span></code> where <code class="docutils literal notranslate"><span class="pre">aux</span></code>
+is a pytree of auxiliary values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.BacktrackingLineSearch.condition">
 <span class="sig-name descname"><span class="pre">condition</span></span><a class="headerlink" href="#jaxopt.BacktrackingLineSearch.condition" title="Permalink to this definition"></a></dt>
-<dd><p>either “strong-wolfe” or “wolfe”.</p>
+<dd><p>either “armijo”, “goldstein”, “strong-wolfe” or “wolfe”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
@@ -282,12 +298,13 @@ automatically disable jit.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.BacktrackingLineSearch.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strong-wolfe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BacktrackingLineSearch.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strong-wolfe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BacktrackingLineSearch.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>value_and_grad</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>condition</strong> (<em>str</em>) – </p></li>
@@ -313,7 +330,7 @@ automatically disable jit.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.__init__" title="jaxopt.BacktrackingLineSearch.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fun[, value_and_grad, maxiter, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.__init__" title="jaxopt.BacktrackingLineSearch.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fun[, value_and_grad, has_aux, ...])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_names</span></code>()</p></td>
@@ -355,28 +372,31 @@ automatically disable jit.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.decrease_factor" title="jaxopt.BacktrackingLineSearch.decrease_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decrease_factor</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.jit" title="jaxopt.BacktrackingLineSearch.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.has_aux" title="jaxopt.BacktrackingLineSearch.has_aux"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_aux</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.max_stepsize" title="jaxopt.BacktrackingLineSearch.max_stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_stepsize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.jit" title="jaxopt.BacktrackingLineSearch.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.maxiter" title="jaxopt.BacktrackingLineSearch.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.max_stepsize" title="jaxopt.BacktrackingLineSearch.max_stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_stepsize</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.tol" title="jaxopt.BacktrackingLineSearch.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.maxiter" title="jaxopt.BacktrackingLineSearch.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.unroll" title="jaxopt.BacktrackingLineSearch.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.tol" title="jaxopt.BacktrackingLineSearch.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.value_and_grad" title="jaxopt.BacktrackingLineSearch.value_and_grad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value_and_grad</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.unroll" title="jaxopt.BacktrackingLineSearch.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.verbose" title="jaxopt.BacktrackingLineSearch.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.value_and_grad" title="jaxopt.BacktrackingLineSearch.value_and_grad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value_and_grad</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.fun" title="jaxopt.BacktrackingLineSearch.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.verbose" title="jaxopt.BacktrackingLineSearch.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BacktrackingLineSearch.fun" title="jaxopt.BacktrackingLineSearch.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -473,7 +493,7 @@ automatically disable jit.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../line_search.html" class="btn btn-neutral float-left" title="Line search" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../api.html" class="btn btn-neutral float-right" title="API at a glance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="jaxopt.HagerZhangLineSearch.html" class="btn btn-neutral float-right" title="jaxopt.HagerZhangLineSearch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

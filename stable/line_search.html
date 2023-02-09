@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Line search &mdash; JAXopt 0.5.5 documentation</title>
+  <title>Line search &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -69,10 +69,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#sufficient-decrease-and-curvature-conditions">Sufficient decrease and curvature conditions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#algorithms">Algorithms</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html">jaxopt.BacktrackingLineSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.HagerZhangLineSearch.html">jaxopt.HagerZhangLineSearch</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -159,6 +161,9 @@ f(x_k + \alpha_k p_k) &amp;\le f(x_k) + c_1 \alpha_k \nabla f(x_k)^\top p_k \\
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch" title="jaxopt.BacktrackingLineSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BacktrackingLineSearch</span></code></a>(fun[, ...])</p></td>
 <td><p>Backtracking line search.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch" title="jaxopt.HagerZhangLineSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.HagerZhangLineSearch</span></code></a>(fun[, ...])</p></td>
+<td><p>Hager-Zhang line search.</p></td>
 </tr>
 </tbody>
 </table>

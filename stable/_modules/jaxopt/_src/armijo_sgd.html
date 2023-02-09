@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.armijo_sgd &mdash; JAXopt 0.5.5 documentation</title>
+  <title>jaxopt._src.armijo_sgd &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -61,6 +61,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -305,15 +306,15 @@
 <span class="sd">    Lacoste-Julien, S., 2019.</span>
 <span class="sd">    Painless stochastic gradient: Interpolation, line-search, and convergence</span>
 <span class="sd">    rates.</span>
-<span class="sd">    Advances in neural information processing systems, 32, pp.3732-3745.</span>
+<span class="sd">    Advances in Neural Information Processing Systems 32.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span>
   <span class="n">value_and_grad</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
-  <span class="n">aggressiveness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span>  <span class="c1"># default value recommanded by authors</span>
-  <span class="n">decrease_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>  <span class="c1"># default value recommanded by authors</span>
-  <span class="n">increase_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c1"># default value recommanded by authors</span>
+  <span class="n">aggressiveness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span>  <span class="c1"># default value recommended by Vaswani et al.</span>
+  <span class="n">decrease_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>  <span class="c1"># default value recommended by Vaswani et al.</span>
+  <span class="n">increase_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c1"># default value recommended by Vaswani et al.</span>
   <span class="n">reset_option</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;increase&quot;</span>
 
   <span class="n">momentum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -406,7 +407,7 @@
     <span class="n">next_state</span> <span class="o">=</span> <span class="n">ArmijoState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
                              <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
                              <span class="n">value</span><span class="o">=</span><span class="n">f_next</span><span class="p">,</span>
-                             <span class="n">aux</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">aux</span><span class="p">,</span>
+                             <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
                              <span class="n">stepsize</span><span class="o">=</span><span class="n">stepsize</span><span class="p">,</span>
                              <span class="n">velocity</span><span class="o">=</span><span class="n">next_velocity</span><span class="p">)</span>
 

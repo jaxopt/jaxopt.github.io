@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.polyak_sgd &mdash; JAXopt 0.5.5 documentation</title>
+  <title>jaxopt._src.polyak_sgd &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -61,6 +61,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -138,6 +139,7 @@
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_sub</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_zeros_like</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_single_dtype</span>
 
 
 <span class="k">class</span> <span class="nc">PolyakSGDState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
@@ -252,10 +254,12 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="n">velocity</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
 
+    <span class="n">param_dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">PolyakSGDState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
                           <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
                           <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
-                          <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+                          <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">param_dtype</span><span class="p">),</span>
                           <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
                           <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span></div>
 
@@ -280,8 +284,9 @@
     <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">grad_sqnorm</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="p">(</span><span class="n">grad_sqnorm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">),</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="p">(</span><span class="n">grad_sqnorm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">),</span>
                            <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">)</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">stepsize</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">stepsize</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
       <span class="n">new_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">-</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>

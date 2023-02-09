@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.eq_qp &mdash; JAXopt 0.5.5 documentation</title>
+  <title>jaxopt._src.eq_qp &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -61,6 +61,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -132,7 +133,7 @@
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_sub</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_sub</span><span class="p">,</span> <span class="n">tree_add_scalar_mul</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_vdot</span><span class="p">,</span> <span class="n">tree_negative</span><span class="p">,</span> <span class="n">tree_l2_norm</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.linear_operator</span> <span class="kn">import</span> <span class="n">_make_linear_operator</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.cvxpy_wrapper</span> <span class="kn">import</span> <span class="n">_check_params</span>
@@ -250,7 +251,9 @@
     <span class="k">def</span> <span class="nf">matvec_regularized_qp</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
       <span class="n">primal</span><span class="p">,</span> <span class="n">dual_eq</span> <span class="o">=</span> <span class="n">x</span>
       <span class="n">Stop</span><span class="p">,</span> <span class="n">Sbottom</span> <span class="o">=</span> <span class="n">matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-      <span class="k">return</span> <span class="n">Stop</span> <span class="o">+</span> <span class="n">ridge</span> <span class="o">*</span> <span class="n">primal</span><span class="p">,</span> <span class="n">Sbottom</span> <span class="o">-</span> <span class="n">ridge</span> <span class="o">*</span> <span class="n">dual_eq</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">Stop</span><span class="p">,</span> <span class="n">ridge</span><span class="p">,</span> <span class="n">primal</span><span class="p">)</span>
+      <span class="n">b</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">Sbottom</span><span class="p">,</span> <span class="o">-</span><span class="n">ridge</span><span class="p">,</span> <span class="n">dual_eq</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
 
     <span class="n">solver</span> <span class="o">=</span> <span class="n">IterativeRefinement</span><span class="p">(</span>
       <span class="n">matvec_A</span><span class="o">=</span><span class="n">matvec_qp</span><span class="p">,</span>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loss and objective functions &mdash; JAXopt 0.5.5 documentation</title>
+  <title>Loss and objective functions &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -70,11 +70,18 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#binary-classification">Binary classification</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_logistic_loss.html">jaxopt.loss.binary_logistic_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_sparsemax_loss.html">jaxopt.loss.binary_sparsemax_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_hinge_loss.html">jaxopt.loss.binary_hinge_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_perceptron_loss.html">jaxopt.loss.binary_perceptron_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_plus.html">jaxopt.loss.sparse_plus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_sigmoid.html">jaxopt.loss.sparse_sigmoid</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#multiclass-classification">Multiclass classification</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html">jaxopt.loss.multiclass_logistic_loss</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html">jaxopt.loss.multiclass_sparsemax_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_hinge_loss.html">jaxopt.loss.multiclass_hinge_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_perceptron_loss.html">jaxopt.loss.multiclass_perceptron_loss</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#applying-loss-functions-on-a-batch">Applying loss functions on a batch</a></li>
@@ -100,6 +107,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -174,10 +182,34 @@ where <code class="docutils literal notranslate"><span class="pre">target</span>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss" title="jaxopt.loss.binary_logistic_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_logistic_loss</span></code></a>(label, logit)</p></td>
 <td><p>Binary logistic loss.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_sparsemax_loss.html#jaxopt.loss.binary_sparsemax_loss" title="jaxopt.loss.binary_sparsemax_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_sparsemax_loss</span></code></a>(label, logit)</p></td>
+<td><p>Binary sparsemax loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_hinge_loss.html#jaxopt.loss.binary_hinge_loss" title="jaxopt.loss.binary_hinge_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_hinge_loss</span></code></a>(label, score)</p></td>
+<td><p>Binary hinge loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_perceptron_loss.html#jaxopt.loss.binary_perceptron_loss" title="jaxopt.loss.binary_perceptron_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_perceptron_loss</span></code></a>(label, score)</p></td>
+<td><p>Binary perceptron loss.</p></td>
+</tr>
 </tbody>
 </table>
 <p>Binary classification losses are of the form <code class="docutils literal notranslate"><span class="pre">loss(int:</span> <span class="pre">label,</span> <span class="pre">float:</span> <span class="pre">score)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code>,
 where <code class="docutils literal notranslate"><span class="pre">label</span></code> is the ground-truth (<code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>) and <code class="docutils literal notranslate"><span class="pre">score</span></code> is the model’s output.</p>
+<p>The following utility functions are useful for the binary sparsemax loss.</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_plus.html#jaxopt.loss.sparse_plus" title="jaxopt.loss.sparse_plus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.sparse_plus</span></code></a>(x)</p></td>
+<td><p>Sparse plus function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_sigmoid.html#jaxopt.loss.sparse_sigmoid" title="jaxopt.loss.sparse_sigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.sparse_sigmoid</span></code></a>(x)</p></td>
+<td><p>Sparse sigmoid function.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="multiclass-classification">
 <h3>Multiclass classification<a class="headerlink" href="#multiclass-classification" title="Permalink to this heading"></a></h3>
@@ -192,6 +224,12 @@ where <code class="docutils literal notranslate"><span class="pre">label</span><
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html#jaxopt.loss.multiclass_sparsemax_loss" title="jaxopt.loss.multiclass_sparsemax_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_sparsemax_loss</span></code></a>(label, ...)</p></td>
 <td><p>Multiclass sparsemax loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_hinge_loss.html#jaxopt.loss.multiclass_hinge_loss" title="jaxopt.loss.multiclass_hinge_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_hinge_loss</span></code></a>(label, scores)</p></td>
+<td><p>Multiclass hinge loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_perceptron_loss.html#jaxopt.loss.multiclass_perceptron_loss" title="jaxopt.loss.multiclass_perceptron_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_perceptron_loss</span></code></a>(...)</p></td>
+<td><p>Binary perceptron loss.</p></td>
 </tr>
 </tbody>
 </table>

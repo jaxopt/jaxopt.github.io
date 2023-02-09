@@ -158,23 +158,6 @@ Deep learning
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Resnet example with Flax and JAXopt.">
-
-.. only:: html
-
-  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_flax_resnet_thumb.png
-    :alt: Resnet example with Flax and JAXopt.
-
-  :ref:`sphx_glr_auto_examples_deep_learning_flax_resnet.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Resnet example with Flax and JAXopt.</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="The purpose of this example is to illustrate how JAXopt solvers can be easily used for distribu...">
 
 .. only:: html

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API at a glance &mdash; JAXopt 0.5.5 documentation</title>
+  <title>API at a glance &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -30,8 +30,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="jaxopt.tree_util.tree_add" href="_autosummary/jaxopt.tree_util.tree_add.html" />
-    <link rel="prev" title="jaxopt.BacktrackingLineSearch" href="_autosummary/jaxopt.BacktrackingLineSearch.html" /> 
+    <link rel="next" title="jaxopt.isotonic.isotonic_l2_pav" href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html" />
+    <link rel="prev" title="jaxopt.perturbations.Gumbel" href="_autosummary/jaxopt.perturbations.Gumbel.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -64,6 +64,7 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
@@ -104,9 +105,16 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#loss-functions">Loss functions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_logistic_loss.html">jaxopt.loss.binary_logistic_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_sparsemax_loss.html">jaxopt.loss.binary_sparsemax_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_hinge_loss.html">jaxopt.loss.binary_hinge_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_perceptron_loss.html">jaxopt.loss.binary_perceptron_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_plus.html">jaxopt.loss.sparse_plus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_sigmoid.html">jaxopt.loss.sparse_sigmoid</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.huber_loss.html">jaxopt.loss.huber_loss</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html">jaxopt.loss.multiclass_logistic_loss</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html">jaxopt.loss.multiclass_sparsemax_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_hinge_loss.html">jaxopt.loss.multiclass_hinge_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_perceptron_loss.html">jaxopt.loss.multiclass_perceptron_loss</a></li>
 </ul>
 </li>
 </ul>
@@ -146,6 +154,18 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#line-search">Line search</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html">jaxopt.BacktrackingLineSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.HagerZhangLineSearch.html">jaxopt.HagerZhangLineSearch</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#perturbed-optimizers">Perturbed optimizers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html">jaxopt.perturbations.make_perturbed_argmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html">jaxopt.perturbations.make_perturbed_max</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.Gumbel.html">jaxopt.perturbations.Gumbel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.Normal.html">jaxopt.perturbations.Normal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#isotonic-regression">Isotonic regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html">jaxopt.isotonic.isotonic_l2_pav</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#tree-utilities">Tree utilities</a><ul>
@@ -326,14 +346,35 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss" title="jaxopt.loss.binary_logistic_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_logistic_loss</span></code></a>(label, logit)</p></td>
 <td><p>Binary logistic loss.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.huber_loss.html#jaxopt.loss.huber_loss" title="jaxopt.loss.huber_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.huber_loss</span></code></a>(target, pred[, delta])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_sparsemax_loss.html#jaxopt.loss.binary_sparsemax_loss" title="jaxopt.loss.binary_sparsemax_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_sparsemax_loss</span></code></a>(label, logit)</p></td>
+<td><p>Binary sparsemax loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_hinge_loss.html#jaxopt.loss.binary_hinge_loss" title="jaxopt.loss.binary_hinge_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_hinge_loss</span></code></a>(label, score)</p></td>
+<td><p>Binary hinge loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_perceptron_loss.html#jaxopt.loss.binary_perceptron_loss" title="jaxopt.loss.binary_perceptron_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_perceptron_loss</span></code></a>(label, score)</p></td>
+<td><p>Binary perceptron loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_plus.html#jaxopt.loss.sparse_plus" title="jaxopt.loss.sparse_plus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.sparse_plus</span></code></a>(x)</p></td>
+<td><p>Sparse plus function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_sigmoid.html#jaxopt.loss.sparse_sigmoid" title="jaxopt.loss.sparse_sigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.sparse_sigmoid</span></code></a>(x)</p></td>
+<td><p>Sparse sigmoid function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.huber_loss.html#jaxopt.loss.huber_loss" title="jaxopt.loss.huber_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.huber_loss</span></code></a>(target, pred[, delta])</p></td>
 <td><p>Huber loss.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html#jaxopt.loss.multiclass_logistic_loss" title="jaxopt.loss.multiclass_logistic_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_logistic_loss</span></code></a>(label, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html#jaxopt.loss.multiclass_logistic_loss" title="jaxopt.loss.multiclass_logistic_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_logistic_loss</span></code></a>(label, ...)</p></td>
 <td><p>Multiclass logistic loss.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html#jaxopt.loss.multiclass_sparsemax_loss" title="jaxopt.loss.multiclass_sparsemax_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_sparsemax_loss</span></code></a>(label, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html#jaxopt.loss.multiclass_sparsemax_loss" title="jaxopt.loss.multiclass_sparsemax_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_sparsemax_loss</span></code></a>(label, ...)</p></td>
 <td><p>Multiclass sparsemax loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_hinge_loss.html#jaxopt.loss.multiclass_hinge_loss" title="jaxopt.loss.multiclass_hinge_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_hinge_loss</span></code></a>(label, scores)</p></td>
+<td><p>Multiclass hinge loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_perceptron_loss.html#jaxopt.loss.multiclass_perceptron_loss" title="jaxopt.loss.multiclass_perceptron_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_perceptron_loss</span></code></a>(...)</p></td>
+<td><p>Binary perceptron loss.</p></td>
 </tr>
 </tbody>
 </table>
@@ -459,6 +500,46 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch" title="jaxopt.BacktrackingLineSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BacktrackingLineSearch</span></code></a>(fun[, ...])</p></td>
 <td><p>Backtracking line search.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch" title="jaxopt.HagerZhangLineSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.HagerZhangLineSearch</span></code></a>(fun[, ...])</p></td>
+<td><p>Hager-Zhang line search.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="perturbed-optimizers">
+<h2>Perturbed optimizers<a class="headerlink" href="#perturbed-optimizers" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax" title="jaxopt.perturbations.make_perturbed_argmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_argmax</span></code></a>(...)</p></td>
+<td><p>Transforms a function into a differentiable version with perturbations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max" title="jaxopt.perturbations.make_perturbed_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_max</span></code></a>(...)</p></td>
+<td><p>Turns an argmax in a differentiable version of the max with perturbations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.Gumbel.html#jaxopt.perturbations.Gumbel" title="jaxopt.perturbations.Gumbel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.Gumbel</span></code></a>()</p></td>
+<td><p>Gumbel distribution.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.Normal.html#jaxopt.perturbations.Normal" title="jaxopt.perturbations.Normal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.Normal</span></code></a>()</p></td>
+<td><p>Normal distribution.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="isotonic-regression">
+<h2>Isotonic regression<a class="headerlink" href="#isotonic-regression" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html#jaxopt.isotonic.isotonic_l2_pav" title="jaxopt.isotonic.isotonic_l2_pav"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.isotonic.isotonic_l2_pav</span></code></a>(y[, y_min, ...])</p></td>
+<td><p>Solves an isotonic regression problem using PAV.</p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -509,8 +590,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="_autosummary/jaxopt.BacktrackingLineSearch.html" class="btn btn-neutral float-left" title="jaxopt.BacktrackingLineSearch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="_autosummary/jaxopt.tree_util.tree_add.html" class="btn btn-neutral float-right" title="jaxopt.tree_util.tree_add" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="_autosummary/jaxopt.perturbations.Gumbel.html" class="btn btn-neutral float-left" title="jaxopt.perturbations.Gumbel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html" class="btn btn-neutral float-right" title="jaxopt.isotonic.isotonic_l2_pav" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

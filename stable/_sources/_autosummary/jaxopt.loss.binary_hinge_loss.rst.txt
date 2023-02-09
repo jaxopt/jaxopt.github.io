@@ -1,0 +1,6 @@
+﻿jaxopt.loss.binary\_hinge\_loss
+===============================
+
+.. currentmodule:: jaxopt.loss
+
+.. autofunction:: binary_hinge_loss

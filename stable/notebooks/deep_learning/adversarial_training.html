@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Adversarial training &mdash; JAXopt 0.5.5 documentation</title>
+  <title>Adversarial training &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -62,6 +62,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -105,10 +106,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="adversarial-training">
+  <p>Copyright 2022 Google LLC</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> https://www.apache.org/licenses/LICENSE-2.0
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="adversarial-training">
 <h1>Adversarial training<a class="headerlink" href="#adversarial-training" title="Permalink to this heading"></a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/google/jaxopt/blob/main/docs/notebooks/deep_learning/adversarial_training.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<p><a class="reference external" href="https://fa.bianp.net"><em>Fabian Pedregosa</em></a>, <a class="reference external" href="http://geoffreynegiar.com/"><em>Geoffrey Negiar</em></a></p>
 <p>The following code trains a convolutional neural network (CNN) to be robust
 with respect to the projected gradient descent (PGD) method.</p>
 <p>The Projected Gradient Descent Method (PGD) is a simple yet effective method to
@@ -136,6 +148,12 @@ adversarial attacks.”, https://arxiv.org/pdf/1706.06083.pdf</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">collections</span>
 
+<span class="c1"># activate TPUs if available</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">jax.tools.colab_tpu</span>
+    <span class="n">jax</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">colab_tpu</span><span class="o">.</span><span class="n">setup_tpu</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TPU not found, continuing without it.&quot;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>

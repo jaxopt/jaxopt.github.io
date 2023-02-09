@@ -33,6 +33,7 @@
       ~BacktrackingLineSearch.c2
       ~BacktrackingLineSearch.condition
       ~BacktrackingLineSearch.decrease_factor
+      ~BacktrackingLineSearch.has_aux
       ~BacktrackingLineSearch.jit
       ~BacktrackingLineSearch.max_stepsize
       ~BacktrackingLineSearch.maxiter

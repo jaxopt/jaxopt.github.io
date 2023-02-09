@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.backtracking_linesearch &mdash; JAXopt 0.5.5 documentation</title>
+  <title>jaxopt._src.backtracking_linesearch &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -61,6 +61,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -142,8 +143,12 @@
   <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">value</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">done</span><span class="p">:</span> <span class="nb">bool</span>
   <span class="n">params</span><span class="p">:</span> <span class="n">Any</span>
   <span class="n">grad</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">num_grad_eval</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="BacktrackingLineSearch"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -157,8 +162,11 @@
 <span class="sd">    value_and_grad: if ``False``, ``fun`` should return the function value only.</span>
 <span class="sd">      If ``True``, ``fun`` should return both the function value and the</span>
 <span class="sd">      gradient.</span>
+<span class="sd">    has_aux: if ``False``, ``fun`` should return the function value only.</span>
+<span class="sd">      If ``True``, ``fun`` should return a pair ``(value, aux)`` where ``aux``</span>
+<span class="sd">      is a pytree of auxiliary values.</span>
 
-<span class="sd">    condition: either &quot;strong-wolfe&quot; or &quot;wolfe&quot;.</span>
+<span class="sd">    condition: either &quot;armijo&quot;, &quot;goldstein&quot;, &quot;strong-wolfe&quot; or &quot;wolfe&quot;.</span>
 <span class="sd">    c1: constant used by the (strong) Wolfe condition.</span>
 <span class="sd">    c2: constant strictly less than 1 used by the (strong) Wolfe condition.</span>
 <span class="sd">    decrease_factor: factor by which to decrease the stepsize during line search</span>
@@ -176,6 +184,7 @@
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span>
   <span class="n">value_and_grad</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
   <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
   <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -213,13 +222,25 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">del</span> <span class="n">descent_direction</span>  <span class="c1"># Not used.</span>
 
+    <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">num_grad_eval</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">grad</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">value</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">num_fun_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">num_grad_eval</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">return</span> <span class="n">BacktrackingLineSearchState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
                                        <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+                                       <span class="n">aux</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># we do not need to have aux in the</span>
+                                       <span class="c1"># initial state</span>
                                        <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
                                        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+                                       <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">num_fun_eval</span><span class="p">,</span>
+                                       <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">num_grad_eval</span><span class="p">,</span>
+                                       <span class="n">done</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="kc">False</span><span class="p">),</span>
                                        <span class="n">grad</span><span class="o">=</span><span class="n">grad</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BacktrackingLineSearch.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -246,50 +267,89 @@
 <span class="sd">      (params, state)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Ensure that stepsize does not exceed upper bound.</span>
-    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">)</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">)</span>
+    <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">num_fun_eval</span>
+    <span class="n">num_grad_eval</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">num_grad_eval</span>
 
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">grad</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">value</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">num_fun_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">num_grad_eval</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">if</span> <span class="n">descent_direction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">descent_direction</span> <span class="o">=</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
 
     <span class="n">gd_vdot</span> <span class="o">=</span> <span class="n">tree_vdot</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">descent_direction</span><span class="p">)</span>
+    <span class="c1"># For backtracking linesearches, we want to compute the next point</span>
+    <span class="c1"># from the basepoint. i.e. x_i  = x_0 + s_i * p</span>
     <span class="n">new_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">descent_direction</span><span class="p">)</span>
-    <span class="n">new_value</span><span class="p">,</span> <span class="n">new_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">new_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+      <span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">new_aux</span><span class="p">),</span> <span class="n">new_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">new_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">new_value</span><span class="p">,</span> <span class="n">new_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">new_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">new_aux</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">new_gd_vdot</span> <span class="o">=</span> <span class="n">tree_vdot</span><span class="p">(</span><span class="n">new_grad</span><span class="p">,</span> <span class="n">descent_direction</span><span class="p">)</span>
+
+    <span class="c1"># Every condition requires the new function value, but not every one</span>
+    <span class="c1"># requires the new gradient value (we&#39;ll assume that this code is called</span>
+    <span class="c1"># under `jit`).</span>
+    <span class="n">num_fun_eval</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="c1"># Armijo condition (upper bound on admissible step size).</span>
     <span class="c1"># cond1 = new_value &lt;= value + self.c1 * stepsize * gd_vdot</span>
     <span class="c1"># See equation (3.6a), Numerical Optimization, Second edition.</span>
-    <span class="n">diff_cond1</span> <span class="o">=</span> <span class="n">new_value</span> <span class="o">-</span> <span class="n">value</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c1</span> <span class="o">*</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">gd_vdot</span>
-    <span class="n">error_cond1</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">diff_cond1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">diff_cond1</span> <span class="o">=</span> <span class="n">new_value</span> <span class="o">-</span> <span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c1</span> <span class="o">*</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">gd_vdot</span><span class="p">)</span>
+    <span class="n">error_cond1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">diff_cond1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;strong-wolfe&quot;</span><span class="p">:</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">error_cond1</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;armijo&quot;</span><span class="p">:</span>
+      <span class="c1"># We don&#39;t need to do any extra work, since this is covered by the</span>
+      <span class="c1"># sufficient decrease condition above.</span>
+      <span class="k">pass</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;strong-wolfe&quot;</span><span class="p">:</span>
       <span class="c1"># cond2 = abs(new_gd_vdot) &lt;= c2 * abs(gd_vdot)</span>
       <span class="c1"># See equation (3.7b), Numerical Optimization, Second edition.</span>
       <span class="n">diff_cond2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_gd_vdot</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">gd_vdot</span><span class="p">)</span>
-      <span class="n">error_cond2</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">diff_cond2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+      <span class="n">error_cond2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">diff_cond2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+      <span class="n">error</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">error_cond1</span><span class="p">,</span> <span class="n">error_cond2</span><span class="p">)</span>
+      <span class="n">num_grad_eval</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;wolfe&quot;</span><span class="p">:</span>
       <span class="c1"># cond2 = new_gd_vdot &gt;= c2 * gd_vdot</span>
       <span class="c1"># See equation (3.6b), Numerical Optimization, Second edition.</span>
       <span class="n">diff_cond2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c2</span> <span class="o">*</span> <span class="n">gd_vdot</span> <span class="o">-</span> <span class="n">new_gd_vdot</span>
-      <span class="n">error_cond2</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">diff_cond2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+      <span class="n">error_cond2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">diff_cond2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+      <span class="n">error</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">error_cond1</span><span class="p">,</span> <span class="n">error_cond2</span><span class="p">)</span>
+      <span class="n">num_grad_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;goldstein&quot;</span><span class="p">:</span>
+      <span class="c1"># cond2 = new_value &gt;= value + (1 - self.c1) * stepsize * gd_vdot</span>
+      <span class="n">diff_cond2</span> <span class="o">=</span> <span class="n">value</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">gd_vdot</span> <span class="o">-</span> <span class="n">new_value</span>
+      <span class="n">error_cond2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">diff_cond2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+      <span class="n">error</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">error_cond1</span><span class="p">,</span> <span class="n">error_cond2</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
-      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;condition should be &#39;strong-wolfe&#39; or &#39;wolfe&#39;.&quot;</span><span class="p">)</span>
-
-    <span class="n">error</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">error_cond1</span><span class="p">,</span> <span class="n">error_cond2</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;condition should be one of &quot;</span>
+                       <span class="s2">&quot;&#39;armijo&#39;, &#39;goldstein&#39;, &#39;strong-wolfe&#39; or &#39;wolfe&#39;.&quot;</span><span class="p">)</span>
 
     <span class="n">new_stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">error</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
                              <span class="n">stepsize</span><span class="p">,</span>
                              <span class="n">stepsize</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">)</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">done</span> <span class="o">|</span> <span class="p">(</span><span class="n">error</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">)</span>
 
     <span class="n">new_state</span> <span class="o">=</span> <span class="n">BacktrackingLineSearchState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
                                             <span class="n">value</span><span class="o">=</span><span class="n">new_value</span><span class="p">,</span>
+                                            <span class="n">aux</span><span class="o">=</span><span class="n">new_aux</span><span class="p">,</span>
                                             <span class="n">grad</span><span class="o">=</span><span class="n">new_grad</span><span class="p">,</span>
                                             <span class="n">params</span><span class="o">=</span><span class="n">new_params</span><span class="p">,</span>
+                                            <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">num_fun_eval</span><span class="p">,</span>
+                                            <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">num_grad_eval</span><span class="p">,</span>
+                                            <span class="n">done</span><span class="o">=</span><span class="n">done</span><span class="p">,</span>
                                             <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">LineSearchStep</span><span class="p">(</span><span class="n">stepsize</span><span class="o">=</span><span class="n">new_stepsize</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>
@@ -298,7 +358,7 @@
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span></div>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

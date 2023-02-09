@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; JAXopt 0.5.5 documentation</title>
+  <title>Index &mdash; JAXopt 0.6 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -61,6 +61,7 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -164,6 +165,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.__init__">(jaxopt.GradientDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.__init__">(jaxopt.HagerZhangLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.__init__">(jaxopt.IterativeRefinement method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.__init__">(jaxopt.LBFGS method)</a>
@@ -177,6 +180,10 @@
         <li><a href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver.__init__">(jaxopt.OptaxSolver method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.__init__">(jaxopt.OSQP method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.perturbations.Gumbel.html#jaxopt.perturbations.Gumbel.__init__">(jaxopt.perturbations.Gumbel method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.perturbations.Normal.html#jaxopt.perturbations.Normal.__init__">(jaxopt.perturbations.Normal method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.__init__">(jaxopt.PolyakSGD method)</a>
 </li>
@@ -231,11 +238,17 @@
       </ul></li>
       <li><a href="_autosummary/jaxopt.BFGS.html#jaxopt.BFGS">BFGS (class in jaxopt)</a>
 </li>
+      <li><a href="_autosummary/jaxopt.loss.binary_hinge_loss.html#jaxopt.loss.binary_hinge_loss">binary_hinge_loss() (in module jaxopt.loss)</a>
+</li>
       <li><a href="_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss">binary_logistic_loss() (in module jaxopt.loss)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.objective.binary_logreg.html#jaxopt.objective.binary_logreg">binary_logreg (in module jaxopt.objective)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_autosummary/jaxopt.objective.binary_logreg.html#jaxopt.objective.binary_logreg">binary_logreg (in module jaxopt.objective)</a>
+      <li><a href="_autosummary/jaxopt.loss.binary_perceptron_loss.html#jaxopt.loss.binary_perceptron_loss">binary_perceptron_loss() (in module jaxopt.loss)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.loss.binary_sparsemax_loss.html#jaxopt.loss.binary_sparsemax_loss">binary_sparsemax_loss() (in module jaxopt.loss)</a>
 </li>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection">Bisection (class in jaxopt)</a>
 </li>
@@ -254,21 +267,29 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.c1">c1 (jaxopt.BacktrackingLineSearch attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.c1">(jaxopt.HagerZhangLineSearch attribute)</a>
 </li>
+      </ul></li>
       <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.c2">c2 (jaxopt.BacktrackingLineSearch attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.c2">(jaxopt.HagerZhangLineSearch attribute)</a>
 </li>
+      </ul></li>
       <li><a href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.callback">callback (jaxopt.ScipyMinimize attribute)</a>
 </li>
       <li><a href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.check_bracket">check_bracket (jaxopt.Bisection attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.check_primal_dual_infeasability">check_primal_dual_infeasability (jaxopt.BoxOSQP attribute)</a>
 
       <ul>
         <li><a href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.check_primal_dual_infeasability">(jaxopt.OSQP attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.condition">condition (jaxopt.BacktrackingLineSearch attribute)</a>
 </li>
       <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.contribution_ratio_threshold">contribution_ratio_threshold (jaxopt.LevenbergMarquardt attribute)</a>
@@ -358,6 +379,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.fun">(jaxopt.GradientDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.fun">(jaxopt.HagerZhangLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.fun">(jaxopt.LBFGS attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.fun">(jaxopt.MirrorDescent attribute)</a>
@@ -395,22 +418,30 @@
 </li>
       <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.gtol">gtol (jaxopt.LevenbergMarquardt attribute)</a>
 </li>
+      <li><a href="_autosummary/jaxopt.perturbations.Gumbel.html#jaxopt.perturbations.Gumbel">Gumbel (class in jaxopt.perturbations)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch">HagerZhangLineSearch (class in jaxopt)</a>
+</li>
       <li><a href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration.has_aux">has_aux (jaxopt.AndersonAcceleration attribute)</a>
 
       <ul>
         <li><a href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.has_aux">(jaxopt.ArmijoSGD attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.has_aux">(jaxopt.BacktrackingLineSearch attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.BFGS.html#jaxopt.BFGS.has_aux">(jaxopt.BFGS attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.has_aux">(jaxopt.FixedPointIteration attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.has_aux">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.has_aux">(jaxopt.HagerZhangLineSearch attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.has_aux">(jaxopt.LBFGS attribute)</a>
 </li>
@@ -584,6 +615,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.init_state">(jaxopt.GradientDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.init_state">(jaxopt.HagerZhangLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.init_state">(jaxopt.LBFGS method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.init_state">(jaxopt.LevenbergMarquardt method)</a>
@@ -601,6 +634,8 @@
         <li><a href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.init_state">(jaxopt.ProximalGradient method)</a>
 </li>
       </ul></li>
+      <li><a href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html#jaxopt.isotonic.isotonic_l2_pav">isotonic_l2_pav() (in module jaxopt.isotonic)</a>
+</li>
       <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement">IterativeRefinement (class in jaxopt)</a>
 </li>
   </ul></td>
@@ -633,6 +668,8 @@
         <li><a href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.jit">(jaxopt.FixedPointIteration attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.jit">(jaxopt.GaussNewton attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.jit">(jaxopt.HagerZhangLineSearch attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.jit">(jaxopt.IterativeRefinement attribute)</a>
 </li>
@@ -710,6 +747,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.l2_optimality_error">(jaxopt.GradientDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.l2_optimality_error">(jaxopt.HagerZhangLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.l2_optimality_error">(jaxopt.IterativeRefinement method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.l2_optimality_error">(jaxopt.LBFGS method)</a>
@@ -761,6 +800,10 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax">make_perturbed_argmax() (in module jaxopt.perturbations)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max">make_perturbed_max() (in module jaxopt.perturbations)</a>
+</li>
       <li><a href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent.make_projection_grad">make_projection_grad() (jaxopt.MirrorDescent static method)</a>
 </li>
       <li><a href="_autosummary/jaxopt.prox.make_prox_from_projection.html#jaxopt.prox.make_prox_from_projection">make_prox_from_projection() (in module jaxopt.prox)</a>
@@ -794,6 +837,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.BFGS.html#jaxopt.BFGS.max_stepsize">(jaxopt.BFGS attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.max_stepsize">(jaxopt.HagerZhangLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.max_stepsize">(jaxopt.LBFGS attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.max_stepsize">(jaxopt.NonlinearCG attribute)</a>
@@ -825,6 +870,8 @@
         <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.maxiter">(jaxopt.GaussNewton attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.maxiter">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.maxiter">(jaxopt.HagerZhangLineSearch attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.maxiter">(jaxopt.IterativeRefinement attribute)</a>
 </li>
@@ -901,6 +948,8 @@
         <li><a href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.momentum">(jaxopt.PolyakSGD attribute)</a>
 </li>
       </ul></li>
+      <li><a href="_autosummary/jaxopt.loss.multiclass_hinge_loss.html#jaxopt.loss.multiclass_hinge_loss">multiclass_hinge_loss() (in module jaxopt.loss)</a>
+</li>
       <li><a href="_autosummary/jaxopt.objective.multiclass_linear_svm_dual.html#jaxopt.objective.multiclass_linear_svm_dual">multiclass_linear_svm_dual (in module jaxopt.objective)</a>
 </li>
       <li><a href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html#jaxopt.loss.multiclass_logistic_loss">multiclass_logistic_loss() (in module jaxopt.loss)</a>
@@ -908,6 +957,8 @@
       <li><a href="_autosummary/jaxopt.objective.multiclass_logreg.html#jaxopt.objective.multiclass_logreg">multiclass_logreg (in module jaxopt.objective)</a>
 </li>
       <li><a href="_autosummary/jaxopt.objective.multiclass_logreg_with_intercept.html#jaxopt.objective.multiclass_logreg_with_intercept">multiclass_logreg_with_intercept() (in module jaxopt.objective)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.loss.multiclass_perceptron_loss.html#jaxopt.loss.multiclass_perceptron_loss">multiclass_perceptron_loss() (in module jaxopt.loss)</a>
 </li>
       <li><a href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html#jaxopt.loss.multiclass_sparsemax_loss">multiclass_sparsemax_loss() (in module jaxopt.loss)</a>
 </li>
@@ -918,6 +969,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG">NonlinearCG (class in jaxopt)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/jaxopt.perturbations.Normal.html#jaxopt.perturbations.Normal">Normal (class in jaxopt.perturbations)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1148,6 +1203,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.run">(jaxopt.GradientDescent method)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.run">(jaxopt.HagerZhangLineSearch method)</a>
+</li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.run">(jaxopt.IterativeRefinement method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.run">(jaxopt.LBFGS method)</a>
@@ -1225,10 +1282,10 @@
 </li>
       <li><a href="_autosummary/jaxopt.linear_solve.solve_lu.html#jaxopt.linear_solve.solve_lu">solve_lu() (in module jaxopt.linear_solve)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.linear_solve.solve_normal_cg.html#jaxopt.linear_solve.solve_normal_cg">solve_normal_cg() (in module jaxopt.linear_solve)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/jaxopt.AndersonWrapper.html#jaxopt.AndersonWrapper.solver">solver (jaxopt.AndersonWrapper attribute)</a>
 
       <ul>
@@ -1238,6 +1295,10 @@
 </li>
       </ul></li>
       <li><a href="_autosummary/jaxopt.LevenbergMarquardt.html#id0">solver() (jaxopt.LevenbergMarquardt method)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.loss.sparse_plus.html#jaxopt.loss.sparse_plus">sparse_plus() (in module jaxopt.loss)</a>
+</li>
+      <li><a href="_autosummary/jaxopt.loss.sparse_sigmoid.html#jaxopt.loss.sparse_sigmoid">sparse_sigmoid() (in module jaxopt.loss)</a>
 </li>
       <li><a href="_autosummary/jaxopt.BFGS.html#jaxopt.BFGS.stepsize">stepsize (jaxopt.BFGS attribute)</a>
 
@@ -1299,6 +1360,8 @@
         <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.tol">(jaxopt.GaussNewton attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.tol">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.tol">(jaxopt.HagerZhangLineSearch attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.tol">(jaxopt.IterativeRefinement attribute)</a>
 </li>
@@ -1378,6 +1441,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.unroll">(jaxopt.GaussNewton attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.unroll">(jaxopt.HagerZhangLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.unroll">(jaxopt.IterativeRefinement attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.unroll">(jaxopt.LBFGS attribute)</a>
@@ -1421,6 +1486,8 @@
         <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.update">(jaxopt.GaussNewton method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.update">(jaxopt.GradientDescent method)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.update">(jaxopt.HagerZhangLineSearch method)</a>
 </li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.update">(jaxopt.LBFGS method)</a>
 </li>
@@ -1466,6 +1533,8 @@
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.value_and_grad">(jaxopt.GradientDescent attribute)</a>
 </li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.value_and_grad">(jaxopt.HagerZhangLineSearch attribute)</a>
+</li>
         <li><a href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS.value_and_grad">(jaxopt.LBFGS attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG.value_and_grad">(jaxopt.NonlinearCG attribute)</a>
@@ -1501,6 +1570,8 @@
         <li><a href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton.verbose">(jaxopt.GaussNewton attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent.verbose">(jaxopt.GradientDescent attribute)</a>
+</li>
+        <li><a href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.verbose">(jaxopt.HagerZhangLineSearch attribute)</a>
 </li>
         <li><a href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement.verbose">(jaxopt.IterativeRefinement attribute)</a>
 </li>

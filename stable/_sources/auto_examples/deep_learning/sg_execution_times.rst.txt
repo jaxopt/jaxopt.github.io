@@ -5,14 +5,12 @@
 
 Computation times
 =================
-**01:20.900** total execution time for **auto_examples_deep_learning** files:
+**01:27.907** total execution time for **auto_examples_deep_learning** files:
 
 +-------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_deep_learning_plot_sgd_solvers.py` (``plot_sgd_solvers.py``)                   | 01:20.900 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_deep_learning_plot_sgd_solvers.py` (``plot_sgd_solvers.py``)                   | 01:27.907 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_auto_examples_deep_learning_distributed_flax_imagenet.py` (``distributed_flax_imagenet.py``) | 00:00.000 | 0.0 MB |
-+-------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_deep_learning_flax_resnet.py` (``flax_resnet.py``)                             | 00:00.000 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_auto_examples_deep_learning_haiku_image_classif.py` (``haiku_image_classif.py``)             | 00:00.000 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------+-----------+--------+
