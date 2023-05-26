@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perturbed optimizers &mdash; JAXopt 0.6 documentation</title>
+  <title>Perturbed optimizers &mdash; JAXopt 0.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -142,7 +142,36 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TPU not found, continuing without it.
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="kn">import</span> <span class="nn">jax.tools.colab_tpu</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="n">jax</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">colab_tpu</span><span class="o">.</span><span class="n">setup_tpu</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TPU not found, continuing without it.&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~/Desktop/projects/jax/jax/tools/colab_tpu.py:39,</span> in <span class="ni">setup_tpu</span><span class="nt">(tpu_driver_version)</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="k">def</span> <span class="nf">setup_tpu</span><span class="p">(</span><span class="n">tpu_driver_version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span>   <span class="sd">&quot;&quot;&quot;Returns an error. Do not use.&quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">39</span>   <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+
+<span class="ne">RuntimeError</span>: 
+<span class="n">As</span> <span class="n">of</span> <span class="n">JAX</span> <span class="mf">0.4.0</span><span class="p">,</span> <span class="n">JAX</span> <span class="n">only</span> <span class="n">supports</span> <span class="n">TPU</span> <span class="n">VMs</span><span class="p">,</span> <span class="ow">not</span> <span class="n">the</span> <span class="n">older</span> <span class="n">Colab</span> <span class="n">TPUs</span><span class="o">.</span>
+
+<span class="n">We</span> <span class="n">recommend</span> <span class="n">trying</span> <span class="n">Kaggle</span> <span class="n">Notebooks</span>
+<span class="p">(</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">kaggle</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">code</span><span class="p">,</span> <span class="n">click</span> <span class="n">on</span> <span class="s2">&quot;New Notebook&quot;</span> <span class="n">near</span> <span class="n">the</span> <span class="n">top</span><span class="p">)</span> <span class="n">which</span> <span class="n">offer</span>
+<span class="n">TPU</span> <span class="n">VMs</span><span class="o">.</span> <span class="n">You</span> <span class="n">have</span> <span class="n">to</span> <span class="n">create</span> <span class="n">an</span> <span class="n">account</span><span class="p">,</span> <span class="n">log</span> <span class="ow">in</span><span class="p">,</span> <span class="ow">and</span> <span class="n">verify</span> <span class="n">your</span> <span class="n">account</span> <span class="n">to</span> <span class="n">get</span>
+<span class="n">accelerator</span> <span class="n">support</span><span class="o">.</span>
+<span class="n">Once</span> <span class="n">you</span> <span class="n">do</span> <span class="n">that</span><span class="p">,</span> <span class="n">there</span><span class="s1">&#39;s a new &quot;TPU 1VM v3-8&quot; accelerator option. This gives</span>
+<span class="n">you</span> <span class="n">a</span> <span class="n">TPU</span> <span class="n">notebook</span> <span class="n">environment</span> <span class="n">similar</span> <span class="n">to</span> <span class="n">Colab</span><span class="p">,</span> <span class="n">but</span> <span class="n">using</span> <span class="n">the</span> <span class="n">newer</span> <span class="n">TPU</span> <span class="n">VM</span>
+<span class="n">architecture</span><span class="o">.</span> <span class="n">This</span> <span class="n">should</span> <span class="n">be</span> <span class="n">a</span> <span class="n">less</span> <span class="n">buggy</span><span class="p">,</span> <span class="n">more</span> <span class="n">performant</span><span class="p">,</span> <span class="ow">and</span> <span class="n">overall</span> <span class="n">better</span>
+<span class="n">experience</span> <span class="n">than</span> <span class="n">the</span> <span class="n">older</span> <span class="n">TPU</span> <span class="n">node</span> <span class="n">architecture</span><span class="o">.</span>
+
+<span class="n">It</span> <span class="ow">is</span> <span class="n">also</span> <span class="n">possible</span> <span class="n">to</span> <span class="n">use</span> <span class="n">Colab</span> <span class="n">together</span> <span class="k">with</span> <span class="n">a</span> <span class="bp">self</span><span class="o">-</span><span class="n">hosted</span> <span class="n">Jupyter</span> <span class="n">kernel</span>
+<span class="n">running</span> <span class="n">on</span> <span class="n">a</span> <span class="n">Cloud</span> <span class="n">TPU</span> <span class="n">VM</span><span class="o">.</span> <span class="n">See</span>
+<span class="ne">https</span>://research.google.com/colaboratory/local-runtimes.html
+<span class="k">for</span> <span class="n">details</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
@@ -281,7 +310,7 @@ square norm of difference = 4.40e-03
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.02052321  0.46736264 -0.02747887 -0.39873552 -0.00571656]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.02052322  0.46736273 -0.02747887 -0.39873555 -0.00571656]
 </pre></div>
 </div>
 </div>
@@ -328,7 +357,7 @@ square norm of difference = 4.40e-03
 initial one-hot = [0. 1. 0. 0. 0.]
 initial diff. one-hot = [0.0056     0.81554997 0.01239    0.16398999 0.00247   ]
 
-values after GD = [-0.07073383  0.13270932  0.27688548  0.38671604  0.47820118]
+values after GD = [-0.07073233  0.13270897  0.2768847   0.38671777  0.4782017 ]
 ranks after GD = [0. 0. 0. 0. 1.]
 diff. one-hot after GD = [0.09843    0.15089999 0.19826    0.25197    0.30043998]
 target diff. one-hot = [0.1  0.15 0.2  0.25 0.3 ]
@@ -368,10 +397,8 @@ target diff. one-hot = [0.1  0.15 0.2  0.25 0.3 ]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>values = [ 0.18784384 -1.2833426   0.6494181   1.2490594   0.24447003 -0.11744965]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ranking = [2 0 4 5 3 1]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>values = [ 0.18784384 -1.2833426   0.6494181   1.2490593   0.24447003 -0.11744965]
+ranking = [2 0 4 5 3 1]
 </pre></div>
 </div>
 </div>
@@ -408,7 +435,7 @@ target diff. one-hot = [0.1  0.15 0.2  0.25 0.3 ]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>values = [ 0.18784384 -1.2833426   0.6494181   1.2490594   0.24447003 -0.11744965]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>values = [ 0.18784384 -1.2833426   0.6494181   1.2490593   0.24447003 -0.11744965]
 diff_ranks = [2.37      0.02      3.85      4.96      2.4099998 1.39     ]
 </pre></div>
 </div>
@@ -449,7 +476,7 @@ diff_ranks = [2.37      0.02      3.85      4.96      2.4099998 1.39     ]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 14.139469   -2.6558192 -19.498535   16.295422   -2.3388722 -21.901728 ]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 14.139462   -2.6558158 -19.498537   16.295418   -2.338868  -21.901724 ]
 </pre></div>
 </div>
 </div>
@@ -488,11 +515,11 @@ diff_ranks = [2.37      0.02      3.85      4.96      2.4099998 1.39     ]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initial values = [ 0.18784384 -1.2833426   0.6494181   1.2490594   0.24447003 -0.11744965]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initial values = [ 0.18784384 -1.2833426   0.6494181   1.2490593   0.24447003 -0.11744965]
 initial ranks = [2 0 4 5 3 1]
 initial diff. ranks = [2.44 0.   3.79 4.98 2.51 1.28]
 
-values after GD = [-2.9923887  -1.9453201  -1.2597429  -0.6980526   0.33311173  1.7650198 ]
+values after GD = [-2.9923885  -1.9453204  -1.259742   -0.69805354  0.33311206  1.7650208 ]
 ranks after GD = [0 1 2 3 4 5]
 diff. ranks after GD = [0.   1.01 2.05 2.95 3.99 5.  ]
 target diff. ranks = [0 1 2 3 4 5]

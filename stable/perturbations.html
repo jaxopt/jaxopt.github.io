@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perturbed optimization &mdash; JAXopt 0.6 documentation</title>
+  <title>Perturbed optimization &mdash; JAXopt 0.7 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -73,6 +73,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#argmax-perturbations">Argmax perturbations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html">jaxopt.perturbations.make_perturbed_argmax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scalar-perturbations">Scalar perturbations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html">jaxopt.perturbations.make_perturbed_fun</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#noise-distributions">Noise distributions</a><ul>
@@ -172,9 +176,33 @@
 </tbody>
 </table>
 </section>
+<section id="scalar-perturbations">
+<h2>Scalar perturbations<a class="headerlink" href="#scalar-perturbations" title="Permalink to this heading"></a></h2>
+<p>Consider any function, <span class="math notranslate nohighlight">\(f\)</span> that is not necessarily differentiable, e.g. piecewise-constant of the form:</p>
+<div class="math notranslate nohighlight">
+\[f(\theta) = g(y^*(\theta))\,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta\rangle\)</span> and <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> is a convex set.</p>
+<p>The function <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun()</span></code></a> transforms the function <span class="math notranslate nohighlight">\(f\)</span> into a the following differentiable function  using random perturbations:</p>
+<div class="math notranslate nohighlight">
+\[f_{\varepsilon}(\theta) = \mathbb{E}\left[ f(\theta + \varepsilon Z)]\,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(Z\)</span> is a random variable. The distribution of this random variable can be specified through the keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code>. The default is a Gumbel distribution, which is a good choice for discrete variables. For continuous variables, a normal distribution is more appropriate. This can be particulary useful in the example given above, when <span class="math notranslate nohighlight">\(f\)</span> is only defined on the discrete set, not its convex hull, i.e.</p>
+<div class="math notranslate nohighlight">
+\[f_{\varepsilon}(\theta) = \mathbb{E}\left[ g(\mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta + \varepsilon Z \rangle \right)]\,,\]</div>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun</span></code></a>(fun)</p></td>
+<td><p>Transforms a function into a differentiable version with perturbations.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="noise-distributions">
 <h2>Noise distributions<a class="headerlink" href="#noise-distributions" title="Permalink to this heading"></a></h2>
-<p>The functions <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max" title="jaxopt.perturbations.make_perturbed_max"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_max()</span></code></a> and <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax" title="jaxopt.perturbations.make_perturbed_argmax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_argmax()</span></code></a> take a keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code> that specifies the distribution of random perturbations. Pre-defined distributions for this argument are the following:</p>
+<p>The functions <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max" title="jaxopt.perturbations.make_perturbed_max"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_max()</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax" title="jaxopt.perturbations.make_perturbed_argmax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_argmax()</span></code></a> and <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun()</span></code></a> take a keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code> that specifies the distribution of random perturbations. Pre-defined distributions for this argument are the following:</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />

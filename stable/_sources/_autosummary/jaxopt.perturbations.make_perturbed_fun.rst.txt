@@ -1,0 +1,6 @@
+﻿jaxopt.perturbations.make\_perturbed\_fun
+=========================================
+
+.. currentmodule:: jaxopt.perturbations
+
+.. autofunction:: make_perturbed_fun

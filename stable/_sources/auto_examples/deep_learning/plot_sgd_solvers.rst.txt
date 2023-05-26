@@ -54,13 +54,17 @@ learning rate.
 
  .. code-block:: none
 
+    /Users/mblondel/envs/work/lib/python3.9/site-packages/flax/struct.py:132: FutureWarning: jax.tree_util.register_keypaths is deprecated, and will be removed in a future release. Please use `register_pytree_with_keys()` instead.
+      jax.tree_util.register_keypaths(data_clz, keypaths)
+    /Users/mblondel/envs/work/lib/python3.9/site-packages/flax/struct.py:132: FutureWarning: jax.tree_util.register_keypaths is deprecated, and will be removed in a future release. Please use `register_pytree_with_keys()` instead.
+      jax.tree_util.register_keypaths(data_clz, keypaths)
     [Polyak SGD] (   0), error=0.272, loss=2.301, stepsize=1.000000
     [Polyak SGD] (  20), error=1.919, loss=1.482, stepsize=0.402169
     [Polyak SGD] (  40), error=4.585, loss=1.666, stepsize=0.079269
     [Polyak SGD] (  60), error=1.422, loss=0.891, stepsize=0.440547
     [Polyak SGD] (  80), error=2.356, loss=1.200, stepsize=0.216168
     [Polyak SGD] ( 100), error=3.512, loss=1.183, stepsize=0.095881
-    101 iterations of Polyak SGD took 22.90s
+    101 iterations of Polyak SGD took 15.15s
 
     [Armijo SGD] (   0), error=0.227, loss=2.313, stepsize=1.000000
     [Armijo SGD] (  20), error=2.221, loss=1.331, stepsize=0.065971
@@ -68,7 +72,7 @@ learning rate.
     [Armijo SGD] (  60), error=3.499, loss=1.059, stepsize=0.027022
     [Armijo SGD] (  80), error=1.456, loss=0.863, stepsize=0.021617
     [Armijo SGD] ( 100), error=1.689, loss=0.819, stepsize=0.021617
-    101 iterations of Armijo SGD took 25.55s
+    101 iterations of Armijo SGD took 15.80s
 
     [RMSProp] (   0), error=0.223, loss=2.299
     [RMSProp] (  20), error=0.869, loss=1.913
@@ -76,7 +80,7 @@ learning rate.
     [RMSProp] (  60), error=1.115, loss=1.211
     [RMSProp] (  80), error=1.627, loss=1.088
     [RMSProp] ( 100), error=1.581, loss=1.002
-    101 iterations of RMSProp took 18.11s
+    101 iterations of RMSProp took 13.23s
 
     [SGD] (   0), error=0.190, loss=2.306
     [SGD] (  20), error=0.384, loss=2.236
@@ -84,7 +88,7 @@ learning rate.
     [SGD] (  60), error=1.222, loss=1.092
     [SGD] (  80), error=1.637, loss=1.146
     [SGD] ( 100), error=4.392, loss=1.671
-    101 iterations of SGD took 16.82s
+    101 iterations of SGD took 12.89s
 
 
 
@@ -282,7 +286,7 @@ learning rate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  27.907 seconds)
+   **Total running time of the script:** ( 1 minutes  1.032 seconds)
 
 
 .. _sphx_glr_download_auto_examples_deep_learning_plot_sgd_solvers.py:

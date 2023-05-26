@@ -37,5 +37,6 @@
       ~ScipyMinimize.method
       ~ScipyMinimize.options
       ~ScipyMinimize.tol
+      ~ScipyMinimize.value_and_grad
    
    

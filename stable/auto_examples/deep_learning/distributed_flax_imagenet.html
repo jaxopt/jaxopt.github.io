@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SPMD ResNet example with Flax and JAXopt. &mdash; JAXopt 0.6 documentation</title>
+  <title>SPMD ResNet example with Flax and JAXopt. &mdash; JAXopt 0.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -185,8 +185,8 @@ yet supported.</p>
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">random</span>
-<span class="kn">from</span> <span class="nn">jax.experimental.maps</span> <span class="kn">import</span> <span class="n">Mesh</span>
-<span class="kn">from</span> <span class="nn">jax.experimental.pjit</span> <span class="kn">import</span> <span class="n">PartitionSpec</span>
+<span class="kn">from</span> <span class="nn">jax.sharding</span> <span class="kn">import</span> <span class="n">Mesh</span>
+<span class="kn">from</span> <span class="nn">jax.sharding</span> <span class="kn">import</span> <span class="n">PartitionSpec</span>
 <span class="kn">from</span> <span class="nn">jax.experimental.pjit</span> <span class="kn">import</span> <span class="n">pjit</span>
 
 <span class="kn">import</span> <span class="nn">jaxopt</span>
@@ -892,18 +892,22 @@ yet supported.</p>
   <span class="n">train_metrics_init</span><span class="p">,</span> <span class="n">eval_metrics_init</span> <span class="o">=</span> <span class="n">initialize_metrics</span><span class="p">(</span>
       <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">first_batch</span><span class="p">,</span> <span class="n">learning_rate_fn</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
   <span class="n">replicate_metrics_init</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span>
-      <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="n">in_axis_resources</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_axis_resources</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+      <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="n">in_shardings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_shardings</span><span class="o">=</span><span class="kc">None</span>
+  <span class="p">)</span>
 
   <span class="c1"># Compiles data parallel train and eval steps using `jax.pjit`.</span>
   <span class="n">p_train_step</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span>
       <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
-          <span class="n">train_step</span><span class="p">,</span> <span class="n">learning_rate_fn</span><span class="o">=</span><span class="n">learning_rate_fn</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">),</span>
-      <span class="n">in_axis_resources</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">),</span>
-      <span class="n">out_axis_resources</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+          <span class="n">train_step</span><span class="p">,</span> <span class="n">learning_rate_fn</span><span class="o">=</span><span class="n">learning_rate_fn</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span>
+      <span class="p">),</span>
+      <span class="n">in_shardings</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">),</span>
+      <span class="n">out_shardings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+  <span class="p">)</span>
   <span class="n">p_eval_step</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span>
       <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">eval_step</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span>
-      <span class="n">in_axis_resources</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">),</span>
-      <span class="n">out_axis_resources</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+      <span class="n">in_shardings</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">),</span>
+      <span class="n">out_shardings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+  <span class="p">)</span>
 
   <span class="c1"># Instantiates metrics writer for logging.</span>
   <span class="n">writer</span> <span class="o">=</span> <span class="n">metric_writers</span><span class="o">.</span><span class="n">create_default_writer</span><span class="p">(</span>

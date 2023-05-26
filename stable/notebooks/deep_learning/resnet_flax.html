@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resnet example with Flax and JAXopt. &mdash; JAXopt 0.6 documentation</title>
+  <title>ResNet on CIFAR10 with Flax and JAXopt. &mdash; JAXopt 0.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -96,7 +96,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Resnet example with Flax and JAXopt.</li>
+      <li>ResNet on CIFAR10 with Flax and JAXopt.</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/notebooks/deep_learning/resnet_flax.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -118,14 +118,14 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<section class="tex2jax_ignore mathjax_ignore" id="resnet-example-with-flax-and-jaxopt">
-<h1>Resnet example with Flax and JAXopt.<a class="headerlink" href="#resnet-example-with-flax-and-jaxopt" title="Permalink to this heading"></a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="resnet-on-cifar10-with-flax-and-jaxopt">
+<h1>ResNet on CIFAR10 with Flax and JAXopt.<a class="headerlink" href="#resnet-on-cifar10-with-flax-and-jaxopt" title="Permalink to this heading"></a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/google/jaxopt/blob/main/docs/notebooks/deep_learning/resnet_flax.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>In this notebook, we’ll go through training a deep residual network with jaxopt.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">jaxopt</span> <span class="n">flax</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">jaxopt</span> <span class="n">flax</span> <span class="n">tqdm</span>
 </pre></div>
 </div>
 </div>
@@ -133,80 +133,154 @@ limitations under the License.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">import</span> <span class="nn">collections</span>
 
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span>
-
-<span class="c1"># activate TPUs if available</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">jax.tools.colab_tpu</span>
-    <span class="n">jax</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">colab_tpu</span><span class="o">.</span><span class="n">setup_tpu</span><span class="p">()</span>
-<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TPU not found, continuing without it.&quot;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
 
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">trange</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">optax</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">loss</span>
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">tree_util</span>
 
-<span class="kn">import</span> <span class="nn">optax</span>
+<span class="c1"># activate TPUs if available</span>
+<span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">jax.tools.colab_tpu</span>
+  <span class="n">jax</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">colab_tpu</span><span class="o">.</span><span class="n">setup_tpu</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TPU not found, continuing without it.&quot;</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">([],</span> <span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-02-16 11:50:30.930308: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda/lib64:/usr/local/nccl2/lib:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:/usr/local/nccl2/lib:/usr/local/cuda/extras/CUPTI/lib64
+2023-02-16 11:50:30.930416: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda/lib64:/usr/local/nccl2/lib:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:/usr/local/nccl2/lib:/usr/local/cuda/extras/CUPTI/lib64
+2023-02-16 11:50:30.930428: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TPU not found, continuing without it.
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Flags</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span>
-    <span class="s2">&quot;Flags&quot;</span><span class="p">,</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;l2reg&quot;</span><span class="p">,</span>  <span class="c1"># amount of L2 regularization in the objective</span>
-        <span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span>  <span class="c1"># learning rate for the Adam optimizer</span>
-        <span class="s2">&quot;epochs&quot;</span><span class="p">,</span>  <span class="c1"># number of passes over the dataset</span>
-        <span class="s2">&quot;dataset&quot;</span><span class="p">,</span>  <span class="c1"># one of &quot;mnist&quot;, &quot;kmnist&quot;, &quot;emnist&quot;, &quot;fashion_mnist&quot;, &quot;cifar10&quot;, &quot;cifar100&quot;</span>
-        <span class="s2">&quot;model&quot;</span><span class="p">,</span>  <span class="c1"># model architecture, one of &quot;resnet1&quot;, &quot;resnet18&quot;, &quot;resnet34&quot;</span>
-        <span class="s2">&quot;train_batch_size&quot;</span><span class="p">,</span>  <span class="c1"># Batch size at train time</span>
-        <span class="s2">&quot;test_batch_size&quot;</span>  <span class="c1"># Batch size at test time</span>
-    <span class="p">])</span>
-
-<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">Flags</span><span class="p">(</span>
-    <span class="n">l2reg</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
-    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-    <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;cifar10&quot;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;resnet18&quot;</span><span class="p">,</span>
-    <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-    <span class="n">test_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@markdown Total number of epochs to train for:</span>
+<span class="n">MAX_EPOCH</span> <span class="o">=</span> <span class="mi">200</span> <span class="c1">#@param{type:&quot;integer&quot;}</span>
+<span class="c1">#@markdown Number of samples in each batch:</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">128</span> <span class="c1">#@param{type:&quot;integer&quot;}</span>
+<span class="c1">#@markdown The initial learning rate for the optimizer:</span>
+<span class="n">INIT_LR</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="c1">#@param{type:&quot;number&quot;}</span>
+<span class="c1">#@markdown The model architecture for the neural network. Could be either `&#39;resnet1&#39;`, `&#39;resnet18&#39;`, `&#39;resnet34&#39;`, `&#39;resnet50&#39;` or `&#39;resnet101&#39;`:</span>
+<span class="n">MODEL</span> <span class="o">=</span> <span class="s2">&quot;resnet34&quot;</span>  <span class="c1">#@param{type:&quot;string&quot;}</span>
+<span class="c1">#@markdown The dataset to use. Could be either `&#39;cifar10&#39;` or `&#39;cifar100&#39;`:</span>
+<span class="n">DATASET</span> <span class="o">=</span> <span class="s2">&quot;cifar10&quot;</span> <span class="c1">#@param{type:&quot;string&quot;}</span>
+<span class="c1">#@markdown The amount of L2 regularization (aka weight decay) to use:</span>
+<span class="n">L2_REG</span> <span class="o">=</span> <span class="mf">5e-4</span> <span class="c1">#@param{type:&quot;number&quot;}</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>CIFAR10 and CIFAR100 are composed of 32x32 images with 3 channels (RGB). We’ll now load the dataset using <code class="docutils literal notranslate"><span class="pre">tensorflow_datasets</span></code> and display a few of the first samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_dataset</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_training</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
-  <span class="n">version</span> <span class="o">=</span> <span class="mi">3</span>
-  <span class="n">ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">dataset</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.*.*&quot;</span><span class="p">,</span>
-      <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># remove useless keys</span>
-      <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">,</span>
-      <span class="n">with_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
-  <span class="k">if</span> <span class="n">is_training</span><span class="p">:</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
-  <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">tfds</span><span class="o">.</span><span class="n">as_numpy</span><span class="p">(</span><span class="n">ds</span><span class="p">)),</span> <span class="n">ds_info</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">raw_train_ds</span><span class="p">,</span> <span class="n">raw_test_ds</span><span class="p">),</span> <span class="n">info</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">DATASET</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span><span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_classes</span>
+<span class="n">iter_per_epoch_train</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">BATCH_SIZE</span>
+<span class="n">iter_per_epoch_test</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">BATCH_SIZE</span>
+
+<span class="n">raw_train_ds_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">raw_train_ds</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">j</span>
+    <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">raw_train_ds_iter</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray_r</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="n">label</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f6a9c5977358c0e6155d60825a5ae18f2b11f24d56f222f69ea1bdeca41797b5.png" src="../../_images/f6a9c5977358c0e6155d60825a5ae18f2b11f24d56f222f69ea1bdeca41797b5.png" />
+</div>
+</div>
+<p>The accuracy of the model can be improved significantly through data augmentation. That is, instead of training on the above images, we’ll generate random modifications of the images and train on those. This is done by using the <code class="docutils literal notranslate"><span class="pre">transform</span></code> argument of <code class="docutils literal notranslate"><span class="pre">tfds.load</span></code> to apply a random crop, random horizontal flip, and random color jittering.</p>
+<p>In the next cell we show an instance of these transformations on the above images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">augment</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize_with_crop_or_pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_crop</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_flip_left_right</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_brightness</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">max_delta</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_contrast</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_saturation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span>
+
+<span class="n">raw_train_ds_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">raw_train_ds</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">j</span>
+    <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">raw_train_ds_iter</span><span class="p">)</span>
+    <span class="n">augmented_image</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">augment</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">augmented_image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray_r</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="n">label</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-02-16 11:50:33.041151: W tensorflow/core/kernels/data/cache_dataset_ops.cc:856] The calling iterator did not fully read the dataset being cached. In order to avoid unexpected truncation of the dataset, the partially cached contents of the dataset  will be discarded. This can happen if you have an input pipeline similar to `dataset.cache().take(k).repeat()`. You should use `dataset.take(k).cache().repeat()` instead.
+</pre></div>
+</div>
+<img alt="../../_images/998c3d77fa9b7ae80238e34db5a9732dfa1297f240eb6388b920d93cc23c0d78.png" src="../../_images/998c3d77fa9b7ae80238e34db5a9732dfa1297f240eb6388b920d93cc23c0d78.png" />
+</div>
+</div>
+<p>Finally, on the test set, we won’t be applying data augmentation to keep a reliable evaluation of the model’s performance. In the test set we’ll only normalize the pixels to be in the range [0, 1].</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="p">(</span><span class="n">image</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span>
+
+<span class="n">train_ds</span> <span class="o">=</span> <span class="n">raw_train_ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">augment</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">normalize</span><span class="p">)</span>
+<span class="n">test_ds</span> <span class="o">=</span> <span class="n">raw_test_ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">normalize</span><span class="p">)</span>
+
+<span class="n">train_ds</span> <span class="o">=</span> <span class="n">train_ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">reshuffle_each_iteration</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+    <span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">drop_remainder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">MAX_EPOCH</span><span class="p">)</span><span class="o">.</span><span class="n">as_numpy_iterator</span><span class="p">()</span>
+<span class="n">test_ds</span> <span class="o">=</span> <span class="n">test_ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+    <span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">drop_remainder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">MAX_EPOCH</span><span class="p">)</span><span class="o">.</span><span class="n">as_numpy_iterator</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">ResNetBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="n">NUM_CLASSES</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_classes</span>
+
+<span class="n">IMG_SIZE</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With the data ready, we can now define the model. Below we define the ResNet architecture that we’ll later instantiate. We define different variants of the architecture with different sizes and depths (<code class="docutils literal notranslate"><span class="pre">'ResNet1'</span></code>, <code class="docutils literal notranslate"><span class="pre">'ResNet18'</span></code>, <code class="docutils literal notranslate"><span class="pre">'ResNet34'</span></code>, <code class="docutils literal notranslate"><span class="pre">'ResNet50'</span></code> and <code class="docutils literal notranslate"><span class="pre">'ResNet101'</span></code>). The architecture is based on the <a class="reference external" href="https://github.com/google/flax/blob/main/examples/imagenet/models.py">Flax imagenet example</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ResNetBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;ResNet block.&quot;&quot;&quot;</span>
   <span class="n">filters</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">conv</span><span class="p">:</span> <span class="n">Any</span>
@@ -230,6 +304,33 @@ limitations under the License.</p>
 
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">residual</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
 
+
+<span class="k">class</span> <span class="nc">BottleneckResNetBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Bottleneck ResNet block.&quot;&quot;&quot;</span>
+  <span class="n">filters</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">conv</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">norm</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">act</span><span class="p">:</span> <span class="n">Callable</span>
+  <span class="n">strides</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+  <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">()(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">strides</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">()(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">scale_init</span><span class="o">=</span><span class="n">nn</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">zeros</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">residual</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+      <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">strides</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv_proj&#39;</span><span class="p">)(</span><span class="n">residual</span><span class="p">)</span>
+      <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;norm_proj&#39;</span><span class="p">)(</span><span class="n">residual</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">residual</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">ResNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;ResNetV1.&quot;&quot;&quot;</span>
@@ -273,6 +374,10 @@ limitations under the License.</p>
 <span class="n">ResNet1</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">ResNetBlock</span><span class="p">)</span>
 <span class="n">ResNet18</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">ResNetBlock</span><span class="p">)</span>
 <span class="n">ResNet34</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">ResNetBlock</span><span class="p">)</span>
+<span class="n">ResNet50</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+                   <span class="n">block_cls</span><span class="o">=</span><span class="n">BottleneckResNetBlock</span><span class="p">)</span>
+<span class="n">ResNet101</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+                    <span class="n">block_cls</span><span class="o">=</span><span class="n">BottleneckResNetBlock</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -280,48 +385,17 @@ limitations under the License.</p>
 <p>We’ll now load our train and test dataset and plot a few of the training images.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hide any GPUs from TensorFlow. Otherwise TF might reserve memory and make</span>
-<span class="c1"># it unavailable to JAX.</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">([],</span> <span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
-
-<span class="n">train_ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                  <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">)</span>
-<span class="n">test_ds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                          <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">)</span>
-<span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
-<span class="n">num_classes</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_classes</span>
-<span class="n">iter_per_epoch_train</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span>
-<span class="n">iter_per_epoch_test</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span>
-
-
-<span class="n">class_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;airplane&#39;</span><span class="p">,</span> <span class="s1">&#39;automobile&#39;</span><span class="p">,</span> <span class="s1">&#39;bird&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;deer&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;frog&#39;</span><span class="p">,</span> <span class="s1">&#39;horse&#39;</span><span class="p">,</span> <span class="s1">&#39;ship&#39;</span><span class="p">,</span> <span class="s1">&#39;truck&#39;</span><span class="p">]</span>
-<span class="n">mb_images</span><span class="p">,</span> <span class="n">mb_labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">)</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-    <span class="n">k</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">j</span>
-    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mb_images</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray_r</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
-    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
-    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">class_names</span><span class="p">[</span><span class="n">mb_labels</span><span class="p">[</span><span class="n">k</span><span class="p">]])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/b20fea7f8fc46a95d56f6f498539919c1edf5690e563540c7c73b366c75012e9.png" src="../../_images/b20fea7f8fc46a95d56f6f498539919c1edf5690e563540c7c73b366c75012e9.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up model.</span>
-<span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;resnet1&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">MODEL</span> <span class="o">==</span> <span class="s2">&quot;resnet1&quot;</span><span class="p">:</span>
   <span class="n">net</span> <span class="o">=</span> <span class="n">ResNet1</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">)</span>
-<span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;resnet18&quot;</span><span class="p">:</span>
+<span class="k">elif</span> <span class="n">MODEL</span> <span class="o">==</span> <span class="s2">&quot;resnet18&quot;</span><span class="p">:</span>
   <span class="n">net</span> <span class="o">=</span> <span class="n">ResNet18</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">)</span>
-<span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;resnet34&quot;</span><span class="p">:</span>
+<span class="k">elif</span> <span class="n">MODEL</span> <span class="o">==</span> <span class="s2">&quot;resnet34&quot;</span><span class="p">:</span>
   <span class="n">net</span> <span class="o">=</span> <span class="n">ResNet34</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">MODEL</span> <span class="o">==</span> <span class="s2">&quot;resnet50&quot;</span><span class="p">:</span>
+  <span class="n">net</span> <span class="o">=</span> <span class="n">ResNet50</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-  <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown model.&quot;</span><span class="p">)</span>
+  <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown model </span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">batch_stats</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -332,32 +406,26 @@ limitations under the License.</p>
     <span class="k">return</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">all_params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;batch_stats&quot;</span><span class="p">])</span>
   <span class="k">else</span><span class="p">:</span>
     <span class="c1"># Returns logits only.</span>
-    <span class="k">return</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">all_params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">all_params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;batch_stats&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
 
 <span class="n">logistic_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">multiclass_logistic_loss</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">loss_from_logits</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">loss_from_logits</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
   <span class="n">mean_loss</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">logistic_loss</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="p">))</span>
   <span class="n">sqnorm</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">mean_loss</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">sqnorm</span>
+  <span class="k">return</span> <span class="n">mean_loss</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">L2_REG</span> <span class="o">*</span> <span class="n">sqnorm</span>
 
 
-<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">accuracy_and_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_loss_accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">batch_stats</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Return loss and accuracy.&quot;&quot;&quot;</span>
   <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
-  <span class="n">logits</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">aux</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="n">logits</span><span class="p">,</span> <span class="n">net_state</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">batch_stats</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
   <span class="n">accuracy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span>
-  <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_from_logits</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">loss</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_from_logits</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="p">(</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">net_state</span><span class="p">[</span><span class="s2">&quot;batch_stats&quot;</span><span class="p">])</span>
 
-
-<span class="k">def</span> <span class="nf">loss_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
-  <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
-  <span class="n">logits</span><span class="p">,</span> <span class="n">net_state</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">aux</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_from_logits</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-  <span class="c1"># batch_stats will be stored in state.aux</span>
-  <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">net_state</span><span class="p">[</span><span class="s2">&quot;batch_stats&quot;</span><span class="p">]</span>
+<span class="n">loss_accuracy</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">_loss_accuracy</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -365,122 +433,60 @@ limitations under the License.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize solver.</span>
-<span class="n">opt</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
+
+<span class="n">shedule_fn</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">cosine_onecycle_schedule</span><span class="p">(</span>
+    <span class="n">transition_steps</span><span class="o">=</span><span class="n">iter_per_epoch_train</span> <span class="o">*</span> <span class="n">MAX_EPOCH</span><span class="p">,</span>
+    <span class="n">peak_value</span><span class="o">=</span><span class="n">INIT_LR</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">opt</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">sgd</span><span class="p">(</span><span class="n">shedule_fn</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">nesterov</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># opt = optax.adam(shedule_fn)</span>
 
 <span class="c1"># We need has_aux=True because loss_fun returns batch_stats.</span>
-<span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span>
-                     <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epochs</span> <span class="o">*</span> <span class="n">iter_per_epoch_train</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">loss_accuracy</span><span class="p">,</span>
+                     <span class="n">maxiter</span><span class="o">=</span><span class="n">MAX_EPOCH</span> <span class="o">*</span> <span class="n">iter_per_epoch_train</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Initialize parameters.</span>
 <span class="n">rng</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">init_vars</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">rng</span><span class="p">},</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">net</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+<span class="n">init_vars</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">rng</span><span class="p">},</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">net</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
 <span class="n">params</span> <span class="o">=</span> <span class="n">init_vars</span><span class="p">[</span><span class="s2">&quot;params&quot;</span><span class="p">]</span>
 <span class="n">batch_stats</span> <span class="o">=</span> <span class="n">init_vars</span><span class="p">[</span><span class="s2">&quot;batch_stats&quot;</span><span class="p">]</span>
 <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Run training loop.</span>
-<span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">),</span> <span class="n">batch_stats</span><span class="p">)</span>
 <span class="n">jitted_update</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>
-
-<span class="n">all_test_error</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we do the actual training. The next cell performs <code class="docutils literal notranslate"><span class="pre">'MAX_EPOCHS'</span></code> epochs of training. Each epoch is split into <code class="docutils literal notranslate"><span class="pre">'STEPS_PER_EPOCH'</span></code> steps. In each step, we sample a batch of <code class="docutils literal notranslate"><span class="pre">'BATCH_SIZE'</span></code> images from the training set and perform a gradient step on the loss function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_test_error</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">all_train_loss</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">maxiter</span><span class="p">):</span>
-  <span class="n">train_minibatch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">)</span>
 
-  <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">%</span> <span class="n">iter_per_epoch_train</span> <span class="o">==</span> <span class="n">iter_per_epoch_train</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="c1"># Once per epoch evaluate the model on the train and test sets.</span>
-    <span class="n">test_acc</span><span class="p">,</span> <span class="n">test_loss</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span>
-    <span class="c1"># make a pass over test set to compute test accuracy</span>
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_test</span><span class="p">):</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">accuracy_and_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_ds</span><span class="p">),</span> <span class="n">batch_stats</span><span class="p">)</span>
-        <span class="n">test_acc</span> <span class="o">+=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">iter_per_epoch_test</span>
-        <span class="n">test_loss</span> <span class="o">+=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">iter_per_epoch_test</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">MAX_EPOCH</span><span class="p">):</span>
+  <span class="n">train_loss</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_train</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">jitted_update</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+                                  <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
+                                  <span class="n">data</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">),</span>
+                                  <span class="n">batch_stats</span><span class="o">=</span><span class="n">batch_stats</span><span class="p">)</span>
+    <span class="n">batch_stats</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">aux</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">train_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+  <span class="n">all_train_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">train_loss</span><span class="p">))</span>
 
-    <span class="n">train_acc</span><span class="p">,</span> <span class="n">train_loss</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span>
-    <span class="c1"># make a pass over train set to compute train accuracy</span>
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_train</span><span class="p">):</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">accuracy_and_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">),</span> <span class="n">batch_stats</span><span class="p">)</span>
-        <span class="n">train_acc</span> <span class="o">+=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">iter_per_epoch_train</span>
-        <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">iter_per_epoch_train</span>
-
-    <span class="n">train_acc</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">device_get</span><span class="p">(</span><span class="n">train_acc</span><span class="p">)</span>
-    <span class="n">train_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">device_get</span><span class="p">(</span><span class="n">train_loss</span><span class="p">)</span>
-    <span class="n">test_acc</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">device_get</span><span class="p">(</span><span class="n">test_acc</span><span class="p">)</span>
-    <span class="n">test_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">device_get</span><span class="p">(</span><span class="n">test_loss</span><span class="p">)</span>
-    <span class="n">all_test_error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">test_acc</span><span class="p">)</span>
-    <span class="n">all_train_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_loss</span><span class="p">)</span>
-    <span class="c1"># time elapsed without microseconds</span>
-    <span class="n">time_elapsed</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Epoch </span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">//</span> <span class="p">(</span><span class="n">iter_per_epoch_train</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epochs</span><span class="si">}</span><span class="s2">] &quot;</span>
-          <span class="sa">f</span><span class="s2">&quot;Train acc: </span><span class="si">{</span><span class="n">train_acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, train loss: </span><span class="si">{</span><span class="n">train_loss</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">. &quot;</span>
-          <span class="sa">f</span><span class="s2">&quot;Test acc: </span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, test loss: </span><span class="si">{</span><span class="n">test_loss</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">. &quot;</span>
-          <span class="sa">f</span><span class="s2">&quot;Time elapsed: </span><span class="si">{</span><span class="n">time_elapsed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-
-  <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">jitted_update</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-                                <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
-                                <span class="n">l2reg</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span>
-                                <span class="n">data</span><span class="o">=</span><span class="n">train_minibatch</span><span class="p">,</span>
-                                <span class="n">aux</span><span class="o">=</span><span class="n">batch_stats</span><span class="p">)</span>
-  <span class="n">batch_stats</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">aux</span>
+  <span class="c1"># make a pass over test set to compute test accuracy</span>
+  <span class="n">test_acc</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_test</span><span class="p">):</span>
+    <span class="n">test_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_ds</span><span class="p">),</span> <span class="n">batch_stats</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">all_test_error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">test_acc</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 1/50] Train acc: 0.546, train loss: 1.496. Test acc: 0.527, test loss: 1.553. Time elapsed: 0:00:28
-[Epoch 2/50] Train acc: 0.591, train loss: 1.377. Test acc: 0.553, test loss: 1.506. Time elapsed: 0:00:32
-[Epoch 3/50] Train acc: 0.559, train loss: 1.515. Test acc: 0.523, test loss: 1.692. Time elapsed: 0:00:36
-[Epoch 4/50] Train acc: 0.609, train loss: 1.472. Test acc: 0.556, test loss: 1.722. Time elapsed: 0:00:40
-[Epoch 5/50] Train acc: 0.694, train loss: 1.153. Test acc: 0.607, test loss: 1.522. Time elapsed: 0:00:43
-[Epoch 6/50] Train acc: 0.801, train loss: 0.795. Test acc: 0.675, test loss: 1.274. Time elapsed: 0:00:47
-[Epoch 7/50] Train acc: 0.807, train loss: 0.802. Test acc: 0.665, test loss: 1.385. Time elapsed: 0:00:51
-[Epoch 8/50] Train acc: 0.736, train loss: 1.044. Test acc: 0.612, test loss: 1.688. Time elapsed: 0:00:54
-[Epoch 9/50] Train acc: 0.830, train loss: 0.767. Test acc: 0.662, test loss: 1.560. Time elapsed: 0:00:58
-[Epoch 10/50] Train acc: 0.686, train loss: 1.375. Test acc: 0.562, test loss: 2.260. Time elapsed: 0:01:02
-[Epoch 11/50] Train acc: 0.863, train loss: 0.679. Test acc: 0.668, test loss: 1.628. Time elapsed: 0:01:05
-[Epoch 12/50] Train acc: 0.837, train loss: 0.806. Test acc: 0.656, test loss: 1.876. Time elapsed: 0:01:09
-[Epoch 13/50] Train acc: 0.809, train loss: 0.926. Test acc: 0.642, test loss: 1.988. Time elapsed: 0:01:13
-[Epoch 14/50] Train acc: 0.778, train loss: 1.094. Test acc: 0.607, test loss: 2.307. Time elapsed: 0:01:16
-[Epoch 15/50] Train acc: 0.882, train loss: 0.643. Test acc: 0.674, test loss: 1.807. Time elapsed: 0:01:20
-[Epoch 16/50] Train acc: 0.818, train loss: 0.908. Test acc: 0.638, test loss: 2.143. Time elapsed: 0:01:24
-[Epoch 17/50] Train acc: 0.848, train loss: 0.796. Test acc: 0.664, test loss: 1.951. Time elapsed: 0:01:27
-[Epoch 18/50] Train acc: 0.914, train loss: 0.540. Test acc: 0.695, test loss: 1.789. Time elapsed: 0:01:31
-[Epoch 19/50] Train acc: 0.893, train loss: 0.628. Test acc: 0.681, test loss: 1.884. Time elapsed: 0:01:35
-[Epoch 20/50] Train acc: 0.889, train loss: 0.635. Test acc: 0.676, test loss: 1.877. Time elapsed: 0:01:38
-[Epoch 21/50] Train acc: 0.648, train loss: 2.020. Test acc: 0.517, test loss: 3.239. Time elapsed: 0:01:42
-[Epoch 22/50] Train acc: 0.930, train loss: 0.484. Test acc: 0.697, test loss: 1.713. Time elapsed: 0:01:46
-[Epoch 23/50] Train acc: 0.911, train loss: 0.547. Test acc: 0.685, test loss: 1.844. Time elapsed: 0:01:50
-[Epoch 24/50] Train acc: 0.922, train loss: 0.512. Test acc: 0.701, test loss: 1.778. Time elapsed: 0:01:53
-[Epoch 25/50] Train acc: 0.892, train loss: 0.631. Test acc: 0.672, test loss: 2.050. Time elapsed: 0:01:57
-[Epoch 26/50] Train acc: 0.910, train loss: 0.551. Test acc: 0.681, test loss: 1.849. Time elapsed: 0:02:01
-[Epoch 27/50] Train acc: 0.874, train loss: 0.706. Test acc: 0.663, test loss: 2.015. Time elapsed: 0:02:04
-[Epoch 28/50] Train acc: 0.936, train loss: 0.471. Test acc: 0.715, test loss: 1.746. Time elapsed: 0:02:08
-[Epoch 29/50] Train acc: 0.910, train loss: 0.545. Test acc: 0.688, test loss: 1.774. Time elapsed: 0:02:12
-[Epoch 30/50] Train acc: 0.922, train loss: 0.510. Test acc: 0.694, test loss: 1.815. Time elapsed: 0:02:15
-[Epoch 31/50] Train acc: 0.923, train loss: 0.497. Test acc: 0.691, test loss: 1.727. Time elapsed: 0:02:19
-[Epoch 32/50] Train acc: 0.905, train loss: 0.562. Test acc: 0.679, test loss: 1.882. Time elapsed: 0:02:23
-[Epoch 33/50] Train acc: 0.918, train loss: 0.521. Test acc: 0.674, test loss: 1.917. Time elapsed: 0:02:26
-[Epoch 34/50] Train acc: 0.951, train loss: 0.406. Test acc: 0.716, test loss: 1.670. Time elapsed: 0:02:30
-[Epoch 35/50] Train acc: 0.878, train loss: 0.687. Test acc: 0.653, test loss: 2.112. Time elapsed: 0:02:34
-[Epoch 36/50] Train acc: 0.951, train loss: 0.406. Test acc: 0.715, test loss: 1.727. Time elapsed: 0:02:37
-[Epoch 37/50] Train acc: 0.935, train loss: 0.455. Test acc: 0.711, test loss: 1.719. Time elapsed: 0:02:41
-[Epoch 38/50] Train acc: 0.940, train loss: 0.439. Test acc: 0.706, test loss: 1.715. Time elapsed: 0:02:45
-[Epoch 39/50] Train acc: 0.868, train loss: 0.731. Test acc: 0.655, test loss: 2.109. Time elapsed: 0:02:48
-[Epoch 40/50] Train acc: 0.952, train loss: 0.400. Test acc: 0.711, test loss: 1.708. Time elapsed: 0:02:52
-[Epoch 41/50] Train acc: 0.949, train loss: 0.406. Test acc: 0.708, test loss: 1.702. Time elapsed: 0:02:56
-[Epoch 42/50] Train acc: 0.960, train loss: 0.371. Test acc: 0.718, test loss: 1.654. Time elapsed: 0:02:59
-[Epoch 43/50] Train acc: 0.873, train loss: 0.691. Test acc: 0.649, test loss: 2.030. Time elapsed: 0:03:03
-[Epoch 44/50] Train acc: 0.942, train loss: 0.423. Test acc: 0.700, test loss: 1.730. Time elapsed: 0:03:07
-[Epoch 45/50] Train acc: 0.918, train loss: 0.518. Test acc: 0.682, test loss: 1.846. Time elapsed: 0:03:10
-[Epoch 46/50] Train acc: 0.948, train loss: 0.407. Test acc: 0.705, test loss: 1.731. Time elapsed: 0:03:14
-[Epoch 47/50] Train acc: 0.947, train loss: 0.404. Test acc: 0.698, test loss: 1.761. Time elapsed: 0:03:18
-[Epoch 48/50] Train acc: 0.908, train loss: 0.543. Test acc: 0.679, test loss: 1.927. Time elapsed: 0:03:21
-[Epoch 49/50] Train acc: 0.942, train loss: 0.418. Test acc: 0.705, test loss: 1.818. Time elapsed: 0:03:25
-[Epoch 50/50] Train acc: 0.945, train loss: 0.407. Test acc: 0.705, test loss: 1.772. Time elapsed: 0:03:29
-</pre></div>
-</div>
-</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "02ecc418607a43ba8830864d2b50edcc", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -495,13 +501,27 @@ limitations under the License.</p>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Loss on train set&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7c57daa1dc02cd57fbf521a520e25d6abf733e1e4b72fcb7f27a05d4fec77bc2.png" src="../../_images/7c57daa1dc02cd57fbf521a520e25d6abf733e1e4b72fcb7f27a05d4fec77bc2.png" />
+<img alt="../../_images/f00c684e1179a321365eb2d2610ebe8c4b7e9c6602c968b6c3238e3420ed6c02.png" src="../../_images/f00c684e1179a321365eb2d2610ebe8c4b7e9c6602c968b6c3238e3420ed6c02.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Finally, let&#39;s print the test </span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Final accuracy on test set: &#39;</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">all_test_error</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Final accuracy on test set:  0.8811097741127014
+</pre></div>
+</div>
 </div>
 </div>
 </section>

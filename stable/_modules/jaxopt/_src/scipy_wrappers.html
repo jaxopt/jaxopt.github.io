@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.6 documentation</title>
+  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.7 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -130,8 +130,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
@@ -142,16 +142,56 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">from</span> <span class="nn">jax.config</span> <span class="kn">import</span> <span class="n">config</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 <span class="kn">import</span> <span class="nn">jax.tree_util</span> <span class="k">as</span> <span class="nn">tree_util</span>
-
+<span class="kn">from</span> <span class="nn">jax.tree_util</span> <span class="kn">import</span> <span class="n">register_pytree_node_class</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">projection</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_sub</span>
-
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
 <span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">osp</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">LbfgsInvHessProduct</span>
+
+
+<span class="nd">@register_pytree_node_class</span>
+<span class="k">class</span> <span class="nc">LbfgsInvHessProductPyTree</span><span class="p">(</span><span class="n">LbfgsInvHessProduct</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Registers the LbfgsInvHessProduct object as a PyTree.</span>
+<span class="sd">  This object is typically returned by the L-BFSG-B optimizer to efficiently </span>
+<span class="sd">  store the inverse of the Hessian matrix evaluated at the best-fit parameters. </span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">yk</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct the operator.</span>
+<span class="sd">    This is the same constructor as the original LbfgsInvHessProduct class,</span>
+<span class="sd">    except that numpy has been replaced by jax.numpy and no call to the </span>
+<span class="sd">    numpy.ndarray constuctor is performed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sk</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">yk</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="n">sk</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;sk and yk must have matching shape, (n_corrs, n)&#39;</span><span class="p">)</span>
+    <span class="n">n_corrs</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">shape</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float64</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">jax_enable_x64</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sk</span> <span class="o">=</span> <span class="n">sk</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yk</span> <span class="o">=</span> <span class="n">yk</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_corrs</span> <span class="o">=</span> <span class="n">n_corrs</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,ij-&gt;i&#39;</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">yk</span><span class="p">)</span>
+
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="s2">&quot;LbfgsInvHessProduct(sk=</span><span class="si">{}</span><span class="s2">, yk=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yk</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">tree_flatten</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="n">children</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yk</span><span class="p">)</span>
+      <span class="n">aux_data</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">aux_data</span><span class="p">)</span>
+
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">tree_unflatten</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">aux_data</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">children</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">ScipyMinimizeInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
@@ -160,6 +200,7 @@
   <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
   <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">hess_inv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">LbfgsInvHessProductPyTree</span><span class="p">]]</span>
 
 
 <span class="k">class</span> <span class="nc">ScipyRootInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
@@ -349,22 +390,10 @@
 
 <span class="sd">  Attributes:</span>
 <span class="sd">    fun: a smooth function of the form `fun(x, *args, **kwargs)`.</span>
-<span class="sd">    method: the `method` argument for `scipy.optimize.minimize`.</span>
-<span class="sd">      Should be one of</span>
-<span class="sd">        * &#39;Nelder-Mead&#39;</span>
-<span class="sd">        * &#39;Powell&#39;</span>
-<span class="sd">        * &#39;CG&#39;</span>
-<span class="sd">        * &#39;BFGS&#39;</span>
-<span class="sd">        * &#39;Newton-CG&#39;</span>
-<span class="sd">        * &#39;L-BFGS-B&#39;</span>
-<span class="sd">        * &#39;TNC&#39;</span>
-<span class="sd">        * &#39;COBYLA&#39;</span>
-<span class="sd">        * &#39;SLSQP&#39;</span>
-<span class="sd">        * &#39;trust-constr&#39;</span>
-<span class="sd">        * &#39;dogleg&#39;</span>
-<span class="sd">        * &#39;trust-ncg&#39;</span>
-<span class="sd">        * &#39;trust-exact&#39;</span>
-<span class="sd">        * &#39;trust-krylov&#39;</span>
+<span class="sd">    method: the `method` argument for `scipy.optimize.minimize`. Should be one</span>
+<span class="sd">      of * &#39;Nelder-Mead&#39; * &#39;Powell&#39; * &#39;CG&#39; * &#39;BFGS&#39; * &#39;Newton-CG&#39; * &#39;L-BFGS-B&#39; *</span>
+<span class="sd">      &#39;TNC&#39; * &#39;COBYLA&#39; * &#39;SLSQP&#39; * &#39;trust-constr&#39; * &#39;dogleg&#39; * &#39;trust-ncg&#39; *</span>
+<span class="sd">      &#39;trust-exact&#39; * &#39;trust-krylov&#39;</span>
 <span class="sd">    tol: the `tol` argument for `scipy.optimize.minimize`.</span>
 <span class="sd">    options: the `options` argument for `scipy.optimize.minimize`.</span>
 <span class="sd">    callback: called after each iteration, as callback(xk), where xk is the</span>
@@ -377,12 +406,14 @@
 <span class="sd">    has_aux: whether function `fun` outputs one (False) or more values (True).</span>
 <span class="sd">      When True it will be assumed by default that `fun(...)[0]` is the</span>
 <span class="sd">      objective.</span>
+<span class="sd">    value_and_grad: See base.make_funs_with_aux for more detail.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
+  <span class="n">value_and_grad</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="ScipyMinimize.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
@@ -420,10 +451,21 @@
                                 <span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
 
     <span class="n">params</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">,</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="s1">&#39;hess_inv&#39;</span><span class="p">):</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="p">,</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">LbfgsInvHessProduct</span><span class="p">):</span>
+        <span class="n">hess_inv</span> <span class="o">=</span> <span class="n">LbfgsInvHessProductPyTree</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="o">.</span><span class="n">sk</span><span class="p">,</span>
+                                             <span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="o">.</span><span class="n">yk</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">hess_inv</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">hess_inv</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="n">info</span> <span class="o">=</span> <span class="n">ScipyMinimizeInfo</span><span class="p">(</span><span class="n">fun_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
                              <span class="n">success</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
                              <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
-                             <span class="n">iter_num</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">)</span>
+                             <span class="n">iter_num</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">,</span>
+                             <span class="n">hess_inv</span><span class="o">=</span><span class="n">hess_inv</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ScipyMinimize.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -443,14 +485,13 @@
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
-
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">_make_funs_without_aux</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="c1"># Pre-compile useful functions.</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">)</span>
 
