@@ -1,0 +1,6 @@
+﻿jaxopt.projection.projection\_l1\_ball
+======================================
+
+.. currentmodule:: jaxopt.projection
+
+.. autofunction:: projection_l1_ball

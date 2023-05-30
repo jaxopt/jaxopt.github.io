@@ -1,0 +1,6 @@
+﻿jaxopt.implicit\_diff.custom\_fixed\_point
+==========================================
+
+.. currentmodule:: jaxopt.implicit_diff
+
+.. autofunction:: custom_fixed_point

@@ -1,0 +1,44 @@
+﻿jaxopt.AndersonWrapper
+======================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: AndersonWrapper
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AndersonWrapper.__init__
+      ~AndersonWrapper.attribute_names
+      ~AndersonWrapper.attribute_values
+      ~AndersonWrapper.init_state
+      ~AndersonWrapper.l2_optimality_error
+      ~AndersonWrapper.optimality_fun
+      ~AndersonWrapper.run
+      ~AndersonWrapper.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AndersonWrapper.beta
+      ~AndersonWrapper.history_size
+      ~AndersonWrapper.implicit_diff
+      ~AndersonWrapper.implicit_diff_solve
+      ~AndersonWrapper.jit
+      ~AndersonWrapper.mixing_frequency
+      ~AndersonWrapper.ridge
+      ~AndersonWrapper.unroll
+      ~AndersonWrapper.verbose
+      ~AndersonWrapper.solver
+   
+   

@@ -1,0 +1,6 @@
+﻿jaxopt.implicit\_diff.root\_vjp
+===============================
+
+.. currentmodule:: jaxopt.implicit_diff
+
+.. autofunction:: root_vjp

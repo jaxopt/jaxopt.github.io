@@ -1,0 +1,43 @@
+﻿jaxopt.FixedPointIteration
+==========================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: FixedPointIteration
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FixedPointIteration.__init__
+      ~FixedPointIteration.attribute_names
+      ~FixedPointIteration.attribute_values
+      ~FixedPointIteration.init_state
+      ~FixedPointIteration.l2_optimality_error
+      ~FixedPointIteration.optimality_fun
+      ~FixedPointIteration.run
+      ~FixedPointIteration.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FixedPointIteration.has_aux
+      ~FixedPointIteration.implicit_diff
+      ~FixedPointIteration.implicit_diff_solve
+      ~FixedPointIteration.jit
+      ~FixedPointIteration.maxiter
+      ~FixedPointIteration.tol
+      ~FixedPointIteration.unroll
+      ~FixedPointIteration.verbose
+      ~FixedPointIteration.fixed_point_fun
+   
+   

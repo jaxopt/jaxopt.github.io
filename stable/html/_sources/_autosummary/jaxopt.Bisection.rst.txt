@@ -1,0 +1,44 @@
+﻿jaxopt.Bisection
+================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: Bisection
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Bisection.__init__
+      ~Bisection.attribute_names
+      ~Bisection.attribute_values
+      ~Bisection.init_state
+      ~Bisection.l2_optimality_error
+      ~Bisection.run
+      ~Bisection.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Bisection.check_bracket
+      ~Bisection.has_aux
+      ~Bisection.implicit_diff_solve
+      ~Bisection.jit
+      ~Bisection.maxiter
+      ~Bisection.tol
+      ~Bisection.unroll
+      ~Bisection.verbose
+      ~Bisection.optimality_fun
+      ~Bisection.lower
+      ~Bisection.upper
+   
+   

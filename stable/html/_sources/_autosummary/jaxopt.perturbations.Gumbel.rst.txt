@@ -1,0 +1,24 @@
+﻿jaxopt.perturbations.Gumbel
+===========================
+
+.. currentmodule:: jaxopt.perturbations
+
+.. autoclass:: Gumbel
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Gumbel.__init__
+      ~Gumbel.log_prob
+      ~Gumbel.sample
+   
+   
+
+   
+   
+   

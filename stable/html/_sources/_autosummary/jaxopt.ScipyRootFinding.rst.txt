@@ -1,0 +1,39 @@
+﻿jaxopt.ScipyRootFinding
+=======================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: ScipyRootFinding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScipyRootFinding.__init__
+      ~ScipyRootFinding.attribute_names
+      ~ScipyRootFinding.attribute_values
+      ~ScipyRootFinding.l2_optimality_error
+      ~ScipyRootFinding.run
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ScipyRootFinding.has_aux
+      ~ScipyRootFinding.implicit_diff_solve
+      ~ScipyRootFinding.jit
+      ~ScipyRootFinding.method
+      ~ScipyRootFinding.optimality_fun
+      ~ScipyRootFinding.options
+      ~ScipyRootFinding.tol
+      ~ScipyRootFinding.use_jacrev
+   
+   

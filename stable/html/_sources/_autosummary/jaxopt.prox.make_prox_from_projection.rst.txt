@@ -1,0 +1,6 @@
+﻿jaxopt.prox.make\_prox\_from\_projection
+========================================
+
+.. currentmodule:: jaxopt.prox
+
+.. autofunction:: make_prox_from_projection

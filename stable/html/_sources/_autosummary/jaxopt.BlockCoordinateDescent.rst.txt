@@ -1,0 +1,43 @@
+﻿jaxopt.BlockCoordinateDescent
+=============================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: BlockCoordinateDescent
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BlockCoordinateDescent.__init__
+      ~BlockCoordinateDescent.attribute_names
+      ~BlockCoordinateDescent.attribute_values
+      ~BlockCoordinateDescent.init_state
+      ~BlockCoordinateDescent.l2_optimality_error
+      ~BlockCoordinateDescent.optimality_fun
+      ~BlockCoordinateDescent.run
+      ~BlockCoordinateDescent.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BlockCoordinateDescent.implicit_diff
+      ~BlockCoordinateDescent.implicit_diff_solve
+      ~BlockCoordinateDescent.jit
+      ~BlockCoordinateDescent.maxiter
+      ~BlockCoordinateDescent.tol
+      ~BlockCoordinateDescent.unroll
+      ~BlockCoordinateDescent.verbose
+      ~BlockCoordinateDescent.fun
+      ~BlockCoordinateDescent.block_prox
+   
+   

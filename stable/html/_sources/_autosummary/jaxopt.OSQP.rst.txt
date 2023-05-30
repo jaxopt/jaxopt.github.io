@@ -1,0 +1,33 @@
+﻿jaxopt.OSQP
+===========
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: OSQP
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OSQP.__init__
+      ~OSQP.attribute_names
+      ~OSQP.attribute_values
+      ~OSQP.init_params
+      ~OSQP.l2_optimality_error
+      ~OSQP.run
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~OSQP.matvec_A_box
+   
+   

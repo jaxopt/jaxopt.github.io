@@ -1,0 +1,46 @@
+﻿jaxopt.BacktrackingLineSearch
+=============================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: BacktrackingLineSearch
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BacktrackingLineSearch.__init__
+      ~BacktrackingLineSearch.attribute_names
+      ~BacktrackingLineSearch.attribute_values
+      ~BacktrackingLineSearch.init_state
+      ~BacktrackingLineSearch.l2_optimality_error
+      ~BacktrackingLineSearch.run
+      ~BacktrackingLineSearch.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BacktrackingLineSearch.c1
+      ~BacktrackingLineSearch.c2
+      ~BacktrackingLineSearch.condition
+      ~BacktrackingLineSearch.decrease_factor
+      ~BacktrackingLineSearch.has_aux
+      ~BacktrackingLineSearch.jit
+      ~BacktrackingLineSearch.max_stepsize
+      ~BacktrackingLineSearch.maxiter
+      ~BacktrackingLineSearch.tol
+      ~BacktrackingLineSearch.unroll
+      ~BacktrackingLineSearch.value_and_grad
+      ~BacktrackingLineSearch.verbose
+      ~BacktrackingLineSearch.fun
+   
+   

@@ -1,0 +1,44 @@
+﻿jaxopt.IterativeRefinement
+==========================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: IterativeRefinement
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~IterativeRefinement.__init__
+      ~IterativeRefinement.attribute_names
+      ~IterativeRefinement.attribute_values
+      ~IterativeRefinement.init_params
+      ~IterativeRefinement.init_state
+      ~IterativeRefinement.l2_optimality_error
+      ~IterativeRefinement.optimality_fun
+      ~IterativeRefinement.run
+      ~IterativeRefinement.solve
+      ~IterativeRefinement.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~IterativeRefinement.implicit_diff_solve
+      ~IterativeRefinement.jit
+      ~IterativeRefinement.matvec_A
+      ~IterativeRefinement.matvec_A_bar
+      ~IterativeRefinement.maxiter
+      ~IterativeRefinement.tol
+      ~IterativeRefinement.unroll
+      ~IterativeRefinement.verbose
+   
+   

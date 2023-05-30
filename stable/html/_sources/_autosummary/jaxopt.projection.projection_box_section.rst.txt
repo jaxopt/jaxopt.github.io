@@ -1,0 +1,6 @@
+﻿jaxopt.projection.projection\_box\_section
+==========================================
+
+.. currentmodule:: jaxopt.projection
+
+.. autofunction:: projection_box_section

@@ -1,0 +1,6 @@
+﻿jaxopt.projection.projection\_affine\_set
+=========================================
+
+.. currentmodule:: jaxopt.projection
+
+.. autofunction:: projection_affine_set

@@ -1,0 +1,42 @@
+﻿jaxopt.ScipyBoundedMinimize
+===========================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: ScipyBoundedMinimize
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScipyBoundedMinimize.__init__
+      ~ScipyBoundedMinimize.attribute_names
+      ~ScipyBoundedMinimize.attribute_values
+      ~ScipyBoundedMinimize.l2_optimality_error
+      ~ScipyBoundedMinimize.optimality_fun
+      ~ScipyBoundedMinimize.run
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ScipyBoundedMinimize.callback
+      ~ScipyBoundedMinimize.fun
+      ~ScipyBoundedMinimize.has_aux
+      ~ScipyBoundedMinimize.implicit_diff_solve
+      ~ScipyBoundedMinimize.jit
+      ~ScipyBoundedMinimize.maxiter
+      ~ScipyBoundedMinimize.method
+      ~ScipyBoundedMinimize.options
+      ~ScipyBoundedMinimize.tol
+      ~ScipyBoundedMinimize.value_and_grad
+   
+   

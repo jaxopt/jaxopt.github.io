@@ -1,0 +1,54 @@
+﻿jaxopt.ArmijoSGD
+================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: ArmijoSGD
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ArmijoSGD.__init__
+      ~ArmijoSGD.attribute_names
+      ~ArmijoSGD.attribute_values
+      ~ArmijoSGD.init_state
+      ~ArmijoSGD.l2_optimality_error
+      ~ArmijoSGD.optimality_fun
+      ~ArmijoSGD.reset_stepsize
+      ~ArmijoSGD.run
+      ~ArmijoSGD.run_iterator
+      ~ArmijoSGD.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ArmijoSGD.aggressiveness
+      ~ArmijoSGD.decrease_factor
+      ~ArmijoSGD.has_aux
+      ~ArmijoSGD.implicit_diff
+      ~ArmijoSGD.implicit_diff_solve
+      ~ArmijoSGD.increase_factor
+      ~ArmijoSGD.jit
+      ~ArmijoSGD.max_stepsize
+      ~ArmijoSGD.maxiter
+      ~ArmijoSGD.maxls
+      ~ArmijoSGD.momentum
+      ~ArmijoSGD.pre_update
+      ~ArmijoSGD.reset_option
+      ~ArmijoSGD.tol
+      ~ArmijoSGD.unroll
+      ~ArmijoSGD.value_and_grad
+      ~ArmijoSGD.verbose
+      ~ArmijoSGD.fun
+   
+   

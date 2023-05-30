@@ -1,0 +1,54 @@
+﻿jaxopt.LevenbergMarquardt
+=========================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: LevenbergMarquardt
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LevenbergMarquardt.__init__
+      ~LevenbergMarquardt.attribute_names
+      ~LevenbergMarquardt.attribute_values
+      ~LevenbergMarquardt.init_state
+      ~LevenbergMarquardt.l2_optimality_error
+      ~LevenbergMarquardt.optimality_fun
+      ~LevenbergMarquardt.run
+      ~LevenbergMarquardt.solver
+      ~LevenbergMarquardt.update
+      ~LevenbergMarquardt.update_state_using_delta_params
+      ~LevenbergMarquardt.update_state_using_gain_ratio
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LevenbergMarquardt.contribution_ratio_threshold
+      ~LevenbergMarquardt.damping_parameter
+      ~LevenbergMarquardt.geodesic
+      ~LevenbergMarquardt.gtol
+      ~LevenbergMarquardt.has_aux
+      ~LevenbergMarquardt.implicit_diff
+      ~LevenbergMarquardt.implicit_diff_solve
+      ~LevenbergMarquardt.jac_fun
+      ~LevenbergMarquardt.jit
+      ~LevenbergMarquardt.materialize_jac
+      ~LevenbergMarquardt.maxiter
+      ~LevenbergMarquardt.stop_criterion
+      ~LevenbergMarquardt.tol
+      ~LevenbergMarquardt.unroll
+      ~LevenbergMarquardt.verbose
+      ~LevenbergMarquardt.xtol
+      ~LevenbergMarquardt.residual_fun
+   
+   
