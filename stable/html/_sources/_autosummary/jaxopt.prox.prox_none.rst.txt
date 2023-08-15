@@ -1,6 +1,0 @@
-﻿jaxopt.prox.prox\_none
-======================
-
-.. currentmodule:: jaxopt.prox
-
-.. autofunction:: prox_none

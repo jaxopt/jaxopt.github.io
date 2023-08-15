@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.anderson &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt._src.anderson &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -207,12 +207,16 @@
 <span class="sd">      fixed_point_fun(params_history) - params_history</span>
 <span class="sd">    residual_gram: Gram matrix: G.T @ G with G the matrix of residuals</span>
 <span class="sd">      each column of G is a flattened pytree of residuals_history</span>
+<span class="sd">    aux: auxiliary data returned by fixed_point_fun</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">params_history</span><span class="p">:</span> <span class="n">Any</span>
   <span class="n">residuals_history</span><span class="p">:</span> <span class="n">Any</span>
-  <span class="n">residual_gram</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span>
+  <span class="n">residual_gram</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span>
+  <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
 
 <div class="viewcode-block" id="AndersonAcceleration"><a class="viewcode-back" href="../../../_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -236,6 +240,8 @@
 <span class="sd">    ridge: ridge regularization in solver.</span>
 <span class="sd">      Consider increasing this value if the solver returns ``NaN``.</span>
 <span class="sd">    has_aux: wether fixed_point_fun returns additional data. (default: False)</span>
+<span class="sd">      This additional data is not taken into account by the fixed point.</span>
+<span class="sd">      The solver returns the `aux` associated to the last iterate (i.e the fixed point).</span>
 <span class="sd">    verbose: whether to print error on every iteration or not.</span>
 <span class="sd">      Warning: verbose=True will automatically disable jit.</span>
 <span class="sd">    implicit_diff: whether to enable implicit diff or autodiff of unrolled</span>
@@ -256,6 +262,7 @@
   <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
   <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span>
   <span class="n">ridge</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span>
+  <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -281,11 +288,15 @@
     <span class="n">residuals_history</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">,</span> <span class="n">params_history</span><span class="p">)</span>
     <span class="n">residual_gram</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">))</span>
 
+    <span class="n">_</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_with_aux</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">AndersonState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
                          <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
                          <span class="n">params_history</span><span class="o">=</span><span class="n">params_history</span><span class="p">,</span>
                          <span class="n">residuals_history</span><span class="o">=</span><span class="n">residuals_history</span><span class="p">,</span>
-                         <span class="n">residual_gram</span><span class="o">=</span><span class="n">residual_gram</span><span class="p">)</span></div>
+                         <span class="n">residual_gram</span><span class="o">=</span><span class="n">residual_gram</span><span class="p">,</span>
+                         <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
+                         <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="AndersonAcceleration.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -329,7 +340,7 @@
     <span class="n">residual_gram</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">residual_gram</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">history_size</span><span class="p">)</span>
 
-    <span class="n">next_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_fun</span><span class="p">(</span><span class="n">extrapolated</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">next_params</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_with_aux</span><span class="p">(</span><span class="n">extrapolated</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">residual</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="n">extrapolated</span><span class="p">)</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="n">update_history</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">params_history</span><span class="p">,</span> <span class="n">residuals_history</span><span class="p">,</span>
@@ -340,18 +351,27 @@
                                <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
                                <span class="n">params_history</span><span class="o">=</span><span class="n">params_history</span><span class="p">,</span>
                                <span class="n">residuals_history</span><span class="o">=</span><span class="n">residuals_history</span><span class="p">,</span>
-                               <span class="n">residual_gram</span><span class="o">=</span><span class="n">residual_gram</span><span class="p">)</span>
+                               <span class="n">residual_gram</span><span class="o">=</span><span class="n">residual_gram</span><span class="p">,</span>
+                               <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
+                               <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_fun_eval</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">next_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">next_state</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AndersonAcceleration.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
-    <span class="n">next_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">next_params</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">history_size</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
       <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;history_size should be greater or equal to 2.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+      <span class="n">fun_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_fun</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">fun_</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_fun</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_value_with_aux</span> <span class="o">=</span> <span class="n">fun_</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">reference_signature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_fun</span></div>
 </pre></div>

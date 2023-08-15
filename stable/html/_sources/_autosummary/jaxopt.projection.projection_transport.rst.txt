@@ -1,6 +1,0 @@
-﻿jaxopt.projection.projection\_transport
-=======================================
-
-.. currentmodule:: jaxopt.projection
-
-.. autofunction:: projection_transport

@@ -38,6 +38,7 @@
       ~BFGS.increase_factor
       ~BFGS.jit
       ~BFGS.linesearch
+      ~BFGS.linesearch_init
       ~BFGS.max_stepsize
       ~BFGS.maxiter
       ~BFGS.maxls

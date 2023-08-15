@@ -31,6 +31,7 @@
    .. autosummary::
    
       ~AndersonAcceleration.beta
+      ~AndersonAcceleration.has_aux
       ~AndersonAcceleration.history_size
       ~AndersonAcceleration.implicit_diff
       ~AndersonAcceleration.implicit_diff_solve

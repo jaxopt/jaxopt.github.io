@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.optax_wrapper &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt._src.optax_wrapper &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -214,13 +214,16 @@
     <span class="n">opt_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
-      <span class="n">_</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">value</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
+      <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
       <span class="n">aux</span> <span class="o">=</span> <span class="kc">None</span>
 
+    <span class="n">params_dtype</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">OptaxState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
-                      <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
-                      <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
+                      <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                      <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">params_dtype</span><span class="p">),</span>
                       <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
                       <span class="n">internal_state</span><span class="o">=</span><span class="n">opt_state</span><span class="p">)</span></div>
 
@@ -252,9 +255,11 @@
     <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_updates</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
 
     <span class="c1"># Computes optimality error before update to re-use grad evaluation.</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
     <span class="n">new_state</span> <span class="o">=</span> <span class="n">OptaxState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-                           <span class="n">error</span><span class="o">=</span><span class="n">tree_util</span><span class="o">.</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">),</span>
-                           <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+                           <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                           <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
                            <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
                            <span class="n">internal_state</span><span class="o">=</span><span class="n">opt_state</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>

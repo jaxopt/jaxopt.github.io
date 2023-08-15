@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.EqualityConstrainedQP &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt.EqualityConstrainedQP &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -67,6 +67,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#box-constrained-qps-with-equality">Box-constrained QPs, with equality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#box-constrained-qps-without-equality">Box-constrained QPs, without equality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#unconstrained-qps">Unconstrained QPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#pytree-of-matrices-api">Pytree of matrices API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#matvec-api">Matvec API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#quadratic-function-api">Quadratic function API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#implicit-differentiation-pitfalls">Implicit differentiation pitfalls</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
@@ -127,9 +131,9 @@
 <h1>jaxopt.EqualityConstrainedQP<a class="headerlink" href="#jaxopt-equalityconstrainedqp" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">EqualityConstrainedQP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_regularization=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/eq_qp.html#EqualityConstrainedQP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.EqualityConstrainedQP" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">EqualityConstrainedQP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_regularization=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/eq_qp.html#EqualityConstrainedQP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.EqualityConstrainedQP" title="Permalink to this definition"></a></dt>
 <dd><p>Quadratic programming with equality constraints only.</p>
-<p>Supports implicit differentiation, matvec and pytrees.
+<p>Supports implicit differentiation, matvec, pytrees, and quadratic functions.
 Can benefit from GPU/TPU acceleration.</p>
 <p>If the algorithm diverges on some instances, it might be useful to tweak the
 <code class="docutils literal notranslate"><span class="pre">refine_regularization</span></code> parameter.</p>
@@ -138,6 +142,7 @@ Can benefit from GPU/TPU acceleration.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>matvec_Q</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>matvec_A</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>solve</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>refine_regularization</strong> (<em>float</em>) – </p></li>
 <li><p><strong>refine_maxiter</strong> (<em>int</em>) – </p></li>
@@ -152,7 +157,9 @@ Can benefit from GPU/TPU acceleration.</p>
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.matvec_Q">
 <span class="sig-name descname"><span class="pre">matvec_Q</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.matvec_Q" title="Permalink to this definition"></a></dt>
 <dd><p>a Callable matvec_Q(params_Q, u).
-By default, matvec_Q(Q, u) = dot(Q, u), where Q = params_Q.</p>
+By default, matvec_Q(Q, u) = dot(Q, u), where Q = params_Q.
+<code class="docutils literal notranslate"><span class="pre">matvec_Q</span></code> incompatible with the specification of <code class="docutils literal notranslate"><span class="pre">fun</span></code>.
+The shape of primal variables may be inferred from params_obj = (matvec_Q, c).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[Callable]</p>
@@ -165,6 +172,29 @@ By default, matvec_Q(Q, u) = dot(Q, u), where Q = params_Q.</p>
 <span class="sig-name descname"><span class="pre">matvec_A</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.matvec_A" title="Permalink to this definition"></a></dt>
 <dd><p>a Callable matvec_A(params_A, u).
 By default, matvec_A(A, u) = dot(A, u), where A = params_A.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[Callable]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.fun">
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.fun" title="Permalink to this definition"></a></dt>
+<dd><p>(optional) a function with signature fun(params, params_obj) that is promised
+to be a quadratic polynomial convex with respect to params, i.e fun can be written</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">cste</span>
+</pre></div>
+</div>
+<p>with params_obj a pytree that contains the parameters of the objective function.
+(Q, c) do not need to be explicited in params_obj by the user: c will be inferred by Jaxopt,</p>
+<blockquote>
+<div><p>and the operator x -&gt; Qx will be computed upon request.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fun</span></code> incompatible with the specification of <code class="docutils literal notranslate"><span class="pre">matvec_Q</span></code>.
+Note that the shape of primal cannot be inferred from params_obj anymore,
+so the user should provide it in init_params.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[Callable]</p>
@@ -274,12 +304,13 @@ iterations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_regularization=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_regularization=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>matvec_Q</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>matvec_A</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>solve</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>refine_regularization</strong> (<em>float</em>) – </p></li>
 <li><p><strong>refine_maxiter</strong> (<em>int</em>) – </p></li>
@@ -302,7 +333,7 @@ iterations.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.__init__" title="jaxopt.EqualityConstrainedQP.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([matvec_Q, matvec_A, solve, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.__init__" title="jaxopt.EqualityConstrainedQP.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([matvec_Q, matvec_A, fun, solve, ...])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_names</span></code>()</p></td>
@@ -329,28 +360,31 @@ iterations.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.implicit_diff_solve" title="jaxopt.EqualityConstrainedQP.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.fun" title="jaxopt.EqualityConstrainedQP.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.jit" title="jaxopt.EqualityConstrainedQP.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.implicit_diff_solve" title="jaxopt.EqualityConstrainedQP.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.matvec_A" title="jaxopt.EqualityConstrainedQP.matvec_A"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matvec_A</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.jit" title="jaxopt.EqualityConstrainedQP.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.matvec_Q" title="jaxopt.EqualityConstrainedQP.matvec_Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matvec_Q</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.matvec_A" title="jaxopt.EqualityConstrainedQP.matvec_A"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matvec_A</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.maxiter" title="jaxopt.EqualityConstrainedQP.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.matvec_Q" title="jaxopt.EqualityConstrainedQP.matvec_Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matvec_Q</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.refine_maxiter" title="jaxopt.EqualityConstrainedQP.refine_maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refine_maxiter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.maxiter" title="jaxopt.EqualityConstrainedQP.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.refine_regularization" title="jaxopt.EqualityConstrainedQP.refine_regularization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refine_regularization</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.refine_maxiter" title="jaxopt.EqualityConstrainedQP.refine_maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refine_maxiter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.tol" title="jaxopt.EqualityConstrainedQP.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.refine_regularization" title="jaxopt.EqualityConstrainedQP.refine_regularization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refine_regularization</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.EqualityConstrainedQP.tol" title="jaxopt.EqualityConstrainedQP.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -378,9 +412,16 @@ iterations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">KKTSolution</span></code>]) – ignored.</p></li>
-<li><p><strong>params_obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – (Q, c) or (params_Q, c) if matvec_Q is provided.</p></li>
-<li><p><strong>params_eq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – (A, b) or (params_A, b) if matvec_A is provided.</p></li>
+<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">KKTSolution</span></code>]) – (optional), used to infer the shape of primal variables.
+Mandatory if <code class="docutils literal notranslate"><span class="pre">fun</span></code> is not None, since the shape of primal variables
+cannot be inferred from <code class="docutils literal notranslate"><span class="pre">params_obj</span></code></p></li>
+<li><p><strong>params_obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – parameters of the quadratic objective, can be:
+a tuple (Q, c) with Q a pytree of matrices,
+or a tuple (params_Q, c) if <code class="docutils literal notranslate"><span class="pre">matvec_Q</span></code> is provided,
+or an arbitrary pytree if <code class="docutils literal notranslate"><span class="pre">fun</span></code> is provided.</p></li>
+<li><p><strong>params_eq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – parameters of the equality constraints, can be:
+a tuple (A, b) with A a pytree of matrices,
+or a tuple (params_A, b) if matvec_A is provided.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

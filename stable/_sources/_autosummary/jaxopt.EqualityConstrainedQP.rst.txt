@@ -28,6 +28,7 @@
 
    .. autosummary::
    
+      ~EqualityConstrainedQP.fun
       ~EqualityConstrainedQP.implicit_diff_solve
       ~EqualityConstrainedQP.jit
       ~EqualityConstrainedQP.matvec_A

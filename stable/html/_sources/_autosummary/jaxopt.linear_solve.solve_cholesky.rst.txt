@@ -1,6 +1,0 @@
-﻿jaxopt.linear\_solve.solve\_cholesky
-====================================
-
-.. currentmodule:: jaxopt.linear_solve
-
-.. autofunction:: solve_cholesky

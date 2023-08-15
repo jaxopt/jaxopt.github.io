@@ -1,6 +1,0 @@
-﻿jaxopt.objective.multiclass\_logreg
-===================================
-
-.. currentmodule:: jaxopt.objective
-
-.. autodata:: multiclass_logreg

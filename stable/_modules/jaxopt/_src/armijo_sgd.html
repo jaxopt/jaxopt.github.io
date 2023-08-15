@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.armijo_sgd &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt._src.armijo_sgd &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -137,6 +137,8 @@
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add_scalar_mul</span><span class="p">,</span> <span class="n">tree_l2_norm</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span><span class="p">,</span> <span class="n">tree_zeros_like</span>
 <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_sub</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_single_dtype</span>
+
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">loop</span>
 
@@ -178,6 +180,9 @@
 <span class="sd">    next_params: params after gradient step</span>
 <span class="sd">    f_next: loss after gradient step</span>
 <span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># FIXME: (zramzi) this should return the number of iterations,</span>
+  <span class="c1"># the number of function and gradient calls to have</span>
+  <span class="c1"># these values available down the line.</span>
   <span class="n">next_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">-</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
   <span class="n">f_next</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fun_with_aux</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
   <span class="n">grad_sqnorm</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -241,7 +246,10 @@
 <span class="k">class</span> <span class="nc">ArmijoSGD</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">StochasticSolver</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;SGD with Armijo line search.</span>
 
-<span class="sd">  This implementation assumes that the interpolation property holds.</span>
+<span class="sd">  This implementation assumes that the &quot;interpolation property&quot; holds, see for example Vaswani et al. 2019 (https://arxiv.org/abs/1905.09997):</span>
+<span class="sd">    the global optimum over D must also be a global optimum for any finite sample of D</span>
+<span class="sd">  This is typically achieved by overparametrized models (e.g neural networks)</span>
+<span class="sd">  in classification tasks with separable classes, or on regression tasks without noise.</span>
 <span class="sd">  In practice this algorithm works well outside this setting.</span>
 
 <span class="sd">  Attributes:</span>
@@ -349,15 +357,22 @@
       <span class="n">velocity</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
-      <span class="n">_</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">value</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
+      <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
       <span class="n">aux</span> <span class="o">=</span> <span class="kc">None</span>
 
+    <span class="n">params_dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">ArmijoState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
-                       <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
-                       <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
+                       <span class="c1"># Error should be dtype-compatible with the parameters,</span>
+                       <span class="c1"># not with the value, since the error is derived from the</span>
+                       <span class="c1"># gradient, which lives in the same space as the params.</span>
+                       <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">params_dtype</span><span class="p">),</span>
+                       <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
                        <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
-                       <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">),</span>
+                       <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
+                                            <span class="n">dtype</span><span class="o">=</span><span class="n">params_dtype</span><span class="p">),</span>
                        <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ArmijoSGD.reset_stepsize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.reset_stepsize">[docs]</a>  <span class="k">def</span> <span class="nf">reset_stepsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">):</span>
@@ -380,6 +395,8 @@
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, state)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_update</span><span class="p">:</span>
       <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -405,10 +422,10 @@
     <span class="n">error</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">next_state</span> <span class="o">=</span> <span class="n">ArmijoState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
-                             <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
-                             <span class="n">value</span><span class="o">=</span><span class="n">f_next</span><span class="p">,</span>
+                             <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                             <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f_next</span><span class="p">),</span>
                              <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
-                             <span class="n">stepsize</span><span class="o">=</span><span class="n">stepsize</span><span class="p">,</span>
+                             <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
                              <span class="n">velocity</span><span class="o">=</span><span class="n">next_velocity</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)</span></div>

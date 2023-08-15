@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -159,15 +159,15 @@
 <span class="k">class</span> <span class="nc">LbfgsInvHessProductPyTree</span><span class="p">(</span><span class="n">LbfgsInvHessProduct</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Registers the LbfgsInvHessProduct object as a PyTree.</span>
-<span class="sd">  This object is typically returned by the L-BFSG-B optimizer to efficiently </span>
-<span class="sd">  store the inverse of the Hessian matrix evaluated at the best-fit parameters. </span>
+<span class="sd">  This object is typically returned by the L-BFSG-B optimizer to efficiently</span>
+<span class="sd">  store the inverse of the Hessian matrix evaluated at the best-fit parameters.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">yk</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct the operator.</span>
 <span class="sd">    This is the same constructor as the original LbfgsInvHessProduct class,</span>
-<span class="sd">    except that numpy has been replaced by jax.numpy and no call to the </span>
+<span class="sd">    except that numpy has been replaced by jax.numpy and no call to the</span>
 <span class="sd">    numpy.ndarray constuctor is performed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">sk</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">yk</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="n">sk</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
@@ -201,6 +201,9 @@
   <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">hess_inv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">LbfgsInvHessProductPyTree</span><span class="p">]]</span>
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">num_jac_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">num_hess_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
 
 <span class="k">class</span> <span class="nc">ScipyRootInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
@@ -208,6 +211,9 @@
   <span class="n">fun_val</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
   <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
 
 <span class="k">class</span> <span class="nc">ScipyLeastSquaresInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
@@ -216,8 +222,8 @@
   <span class="n">fun_val</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span>
   <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
   <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
-  <span class="n">nfev</span><span class="p">:</span> <span class="nb">int</span>
-  <span class="n">njev</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">num_jac_eval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
   <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
 
 
@@ -461,11 +467,19 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="n">hess_inv</span> <span class="o">=</span> <span class="kc">None</span>
 
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">num_hess_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nhev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+      <span class="n">num_hess_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+
     <span class="n">info</span> <span class="o">=</span> <span class="n">ScipyMinimizeInfo</span><span class="p">(</span><span class="n">fun_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
                              <span class="n">success</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
                              <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
                              <span class="n">iter_num</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">,</span>
-                             <span class="n">hess_inv</span><span class="o">=</span><span class="n">hess_inv</span><span class="p">)</span>
+                             <span class="n">hess_inv</span><span class="o">=</span><span class="n">hess_inv</span><span class="p">,</span>
+                             <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                             <span class="n">num_jac_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">njev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                             <span class="n">num_hess_eval</span><span class="o">=</span><span class="n">num_hess_eval</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ScipyMinimize.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -624,16 +638,33 @@
     <span class="c1"># correctly in Scipy for optimizers that don&#39;t use the Jacobian (such as Broyden).</span>
     <span class="c1"># See the related issue: https://github.com/google/jaxopt/issues/290</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">scipy_fun</span><span class="p">,</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
-                            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span>  
+                            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span>
                             <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
                             <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
                             <span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
 
     <span class="n">params</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">,</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="c1"># NOTE: maybe there is a better way to do the following (zramzi)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">RootResults</span><span class="p">):</span>
+      <span class="n">iter_num</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">iterations</span><span class="p">)</span>
+      <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">function_calls</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">iter_num</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">iter_num</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="n">info</span> <span class="o">=</span> <span class="n">ScipyRootInfo</span><span class="p">(</span><span class="n">fun_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
                          <span class="n">success</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
-                         <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+                         <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                         <span class="n">iter_num</span><span class="o">=</span><span class="n">iter_num</span><span class="p">,</span>
+                         <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">num_fun_eval</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span></div>
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -755,8 +786,8 @@
                                  <span class="n">fun_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
                                  <span class="n">success</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
                                  <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
-                                 <span class="n">nfev</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">,</span>
-                                 <span class="n">njev</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">njev</span><span class="p">,</span>
+                                 <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                                 <span class="n">num_jac_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">njev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
                                  <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">optimality</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
 

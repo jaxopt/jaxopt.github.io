@@ -1,6 +1,0 @@
-﻿jaxopt.loss.multiclass\_hinge\_loss
-===================================
-
-.. currentmodule:: jaxopt.loss
-
-.. autofunction:: multiclass_hinge_loss

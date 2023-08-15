@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.tree_util &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt._src.tree_util &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -212,6 +212,23 @@
   <span class="k">return</span> <span class="n">tree_reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">vdots</span><span class="p">)</span></div>
 
 
+<span class="k">def</span> <span class="nf">_vdot_real</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Vector dot-product guaranteed to have a real valued result despite</span>
+<span class="sd">     possibly complex input. Thus neglects the real-imaginary cross-terms.</span>
+<span class="sd">     The result is a real float.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1">#result = _vdot(x.real, y.real)</span>
+  <span class="c1">#if jnp.iscomplexobj(x) and jnp.iscomplexobj(y):</span>
+  <span class="c1">#  result += _vdot(x.imag, y.imag)</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">_vdot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>  <span class="c1"># NOTE: without jit this is faster than variant above, no difference with jit</span>
+  <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">tree_vdot_real</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Compute the real part of the inner product &lt;tree_x, tree_y&gt;.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree_map</span><span class="p">(</span><span class="n">_vdot_real</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)))</span>
+
+
 <span class="k">def</span> <span class="nf">tree_dot</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Compute leaves-wise dot product between pytree of arrays.</span>
 
@@ -228,7 +245,7 @@
 
 <div class="viewcode-block" id="tree_l2_norm"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_l2_norm.html#jaxopt.tree_util.tree_l2_norm">[docs]</a><span class="k">def</span> <span class="nf">tree_l2_norm</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Compute the l2 norm ||tree_x||.&quot;&quot;&quot;</span>
-  <span class="n">squared_tree</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">)</span>
+  <span class="n">squared_tree</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">real</span><span class="p">)</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">imag</span><span class="p">),</span> <span class="n">tree_x</span><span class="p">)</span>
   <span class="n">sqnorm</span> <span class="o">=</span> <span class="n">tree_sum</span><span class="p">(</span><span class="n">squared_tree</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">squared</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">sqnorm</span>
@@ -275,8 +292,8 @@
 
 <span class="k">def</span> <span class="nf">tree_inf_norm</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Computes the infinity norm of a pytree.&quot;&quot;&quot;</span>
-  <span class="n">leaf_inf_norm</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">tree_x</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">tree_reduce</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">,</span> <span class="n">leaf_inf_norm</span><span class="p">)</span>
+  <span class="n">leaves_vec</span> <span class="o">=</span> <span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">ravel</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">leaves_vec</span><span class="p">)))</span>
 
 
 <span class="k">def</span> <span class="nf">tree_where</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
@@ -317,15 +334,65 @@
   <span class="k">return</span> <span class="n">tree_sum</span><span class="p">(</span><span class="n">leaves_avg</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">leaves_avg</span><span class="p">))</span>
 
 
-<span class="k">def</span> <span class="nf">tree_single_dtype</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;The dtype for all values in e tree.&quot;&quot;&quot;</span>
-  <span class="n">dtypes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_util</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-               <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">tree_single_dtype</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">convert_in_jax_dtype</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;The dtype for all values in a tree, provided that all leaves share the same type.</span>
+
+<span class="sd">      If the leaves have different type, raise a ValueError.</span>
+
+<span class="sd">      Args:</span>
+<span class="sd">        tree: tree to get the dtype of</span>
+<span class="sd">        convert_in_jax_type: whether to convert the types in JAX precision.</span>
+<span class="sd">          Namely, a numpy int64 type is converted in a jax.numpy int32 type</span>
+<span class="sd">          by default unless one enables double precision using</span>
+<span class="sd">          jax.config.update(&quot;jax_enable_x64&quot;, True)</span>
+<span class="sd">      Return:</span>
+<span class="sd">        dtype shared by all leaves of the tree</span>
+<span class="sd">      &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">convert_in_jax_dtype</span><span class="p">:</span>
+    <span class="n">dtypes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+      <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">dtype</span>
+      <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">dtypes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+      <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">dtype</span>
+      <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
   <span class="k">if</span> <span class="ow">not</span> <span class="n">dtypes</span><span class="p">:</span>
     <span class="k">return</span> <span class="kc">None</span>
   <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtypes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-  <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Found more than one dtype in the tree.&#39;</span><span class="p">)</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">dtype</span>
+  <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Found more than one dtype in the tree.&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_real_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Dtype corresponding of real part of a complex dtype.&quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">dtype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;complex</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">]]:</span>
+    <span class="k">return</span> <span class="n">dtype</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">dtype</span>
+
+
+<span class="k">def</span> <span class="nf">tree_conj</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Complex conjugate of a tree.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">conj</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_real</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Real part of a tree&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_imag</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Imaginary part of a tree&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
 </pre></div>
 
            </div>

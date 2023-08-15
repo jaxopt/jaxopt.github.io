@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.PolyakSGD &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt.PolyakSGD &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -136,7 +136,12 @@ size at a given iteration is smaller than <code class="docutils literal notransl
 Otherwise, <code class="docutils literal notranslate"><span class="pre">max_stepsize</span></code> is used. This ensures that the solver does not
 take over-confident steps. This is why <code class="docutils literal notranslate"><span class="pre">max_stepsize</span></code> is the most important
 hyper-parameter.</p>
-<p>This implementation assumes that the interpolation property holds.</p>
+<dl class="simple">
+<dt>This implementation assumes that the interpolation property holds:</dt><dd><p>the global optimum over D must also be a global optimum for any finite sample of D</p>
+</dd>
+</dl>
+<p>This is typically achieved by overparametrized models (e.g neural networks)
+in classification tasks with separable classes, or on regression tasks without noise.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

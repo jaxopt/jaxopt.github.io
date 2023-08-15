@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.bisection &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt._src.bisection &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -146,6 +146,8 @@
   <span class="n">sign</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
 
 <div class="viewcode-block" id="Bisection"><a class="viewcode-back" href="../../../_autosummary/jaxopt.Bisection.html#jaxopt.Bisection">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Bisection</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
@@ -219,7 +221,8 @@
                           <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
                           <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
                           <span class="n">low</span><span class="o">=</span><span class="n">lower</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">upper</span><span class="p">,</span>
-                          <span class="n">sign</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sign</span><span class="p">))</span></div>
+                          <span class="n">sign</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sign</span><span class="p">),</span>
+                          <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Bisection.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.Bisection.html#jaxopt.Bisection.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">,</span>
@@ -254,7 +257,8 @@
                            <span class="n">low</span><span class="o">=</span><span class="n">low</span><span class="p">,</span>
                            <span class="n">high</span><span class="o">=</span><span class="n">high</span><span class="p">,</span>
                            <span class="n">sign</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">sign</span><span class="p">,</span>
-                           <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
+                           <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
+                           <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_fun_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
 

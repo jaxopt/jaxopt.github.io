@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.polyak_sgd &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt._src.polyak_sgd &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -151,6 +151,9 @@
   <span class="n">stepsize</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">velocity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
 
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">num_grad_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
 
 <div class="viewcode-block" id="PolyakSGD"><a class="viewcode-back" href="../../../_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">PolyakSGD</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">StochasticSolver</span><span class="p">):</span>
@@ -162,7 +165,10 @@
 <span class="sd">  take over-confident steps. This is why ``max_stepsize`` is the most important</span>
 <span class="sd">  hyper-parameter.</span>
 
-<span class="sd">  This implementation assumes that the interpolation property holds.</span>
+<span class="sd">  This implementation assumes that the interpolation property holds:</span>
+<span class="sd">    the global optimum over D must also be a global optimum for any finite sample of D</span>
+<span class="sd">  This is typically achieved by overparametrized models (e.g neural networks)</span>
+<span class="sd">  in classification tasks with separable classes, or on regression tasks without noise.</span>
 
 <span class="sd">  Attributes:</span>
 <span class="sd">    fun: a function of the form ``fun(params, *args, **kwargs)``, where</span>
@@ -245,8 +251,9 @@
 <span class="sd">      state</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
-      <span class="n">_</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">value</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
+      <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
       <span class="n">aux</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -254,14 +261,16 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="n">velocity</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
 
-    <span class="n">param_dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+    <span class="n">params_dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">PolyakSGDState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
-                          <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
-                          <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
-                          <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">param_dtype</span><span class="p">),</span>
+                          <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">params_dtype</span><span class="p">),</span>
+                          <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                          <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">params_dtype</span><span class="p">),</span>
                           <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
-                          <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span></div>
+                          <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">,</span>
+                          <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                          <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="PolyakSGD.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -278,6 +287,8 @@
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, state)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_update</span><span class="p">:</span>
       <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -298,12 +309,15 @@
                               <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">))</span>
       <span class="n">new_params</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">new_velocity</span><span class="p">)</span>
 
+    <span class="n">error</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">grad_sqnorm</span><span class="p">)</span>
     <span class="n">new_state</span> <span class="o">=</span> <span class="n">PolyakSGDState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-                               <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">grad_sqnorm</span><span class="p">),</span>
+                               <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
                                <span class="n">velocity</span><span class="o">=</span><span class="n">new_velocity</span><span class="p">,</span>
-                               <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                               <span class="n">stepsize</span><span class="o">=</span><span class="n">stepsize</span><span class="p">,</span>
-                               <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
+                               <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+                               <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                               <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
+                               <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_fun_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                               <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_grad_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">new_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PolyakSGD.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

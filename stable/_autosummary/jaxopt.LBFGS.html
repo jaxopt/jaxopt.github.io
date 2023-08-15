@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.LBFGS &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt.LBFGS &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -129,8 +129,9 @@
 <h1>jaxopt.LBFGS<a class="headerlink" href="#jaxopt-lbfgs" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.LBFGS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">LBFGS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_if_linesearch_fails</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strong-wolfe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/lbfgs.html#LBFGS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.LBFGS" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">LBFGS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_if_linesearch_fails</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/lbfgs.html#LBFGS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.LBFGS" title="Permalink to this definition"></a></dt>
 <dd><p>LBFGS solver.</p>
+<p>Supports complex variables, see second reference.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -141,10 +142,11 @@
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>stepsize</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>linesearch</strong> (<em>str</em>) – </p></li>
+<li><p><strong>linesearch_init</strong> (<em>str</em>) – </p></li>
 <li><p><strong>stop_if_linesearch_fails</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>condition</strong> (<em>str</em>) – </p></li>
+<li><p><strong>condition</strong> (<em>Any</em>) – </p></li>
 <li><p><strong>maxls</strong> (<em>int</em>) – </p></li>
-<li><p><strong>decrease_factor</strong> (<em>float</em>) – </p></li>
+<li><p><strong>decrease_factor</strong> (<em>Any</em>) – </p></li>
 <li><p><strong>increase_factor</strong> (<em>float</em>) – </p></li>
 <li><p><strong>max_stepsize</strong> (<em>float</em>) – </p></li>
 <li><p><strong>min_stepsize</strong> (<em>float</em>) – </p></li>
@@ -172,8 +174,8 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.LBFGS.value_and_grad">
 <span class="sig-name descname"><span class="pre">value_and_grad</span></span><a class="headerlink" href="#jaxopt.LBFGS.value_and_grad" title="Permalink to this definition"></a></dt>
-<dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> just returns the value (False) or both
-the value and gradient (True).</p>
+<dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> just returns the value (False) or both the
+value and gradient (True).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -184,23 +186,13 @@ the value and gradient (True).</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.LBFGS.has_aux">
 <span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.LBFGS.has_aux" title="Permalink to this definition"></a></dt>
-<dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> outputs auxiliary data or not.
-If <code class="docutils literal notranslate"><span class="pre">has_aux</span></code> is False, <code class="docutils literal notranslate"><span class="pre">fun</span></code> is expected to be</p>
-<blockquote>
-<div><p>scalar-valued.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>If <code class="docutils literal notranslate"><span class="pre">has_aux</span></code> is True, then we have one of the following</dt><dd><p>two cases.</p>
-</dd>
-</dl>
-<p>If <code class="docutils literal notranslate"><span class="pre">value_and_grad</span></code> is False, the output should be
-<code class="docutils literal notranslate"><span class="pre">value,</span> <span class="pre">aux</span> <span class="pre">=</span> <span class="pre">fun(...)</span></code>.
-If <code class="docutils literal notranslate"><span class="pre">value_and_grad</span> <span class="pre">==</span> <span class="pre">True</span></code>, the output should be
-<code class="docutils literal notranslate"><span class="pre">(value,</span> <span class="pre">aux),</span> <span class="pre">grad</span> <span class="pre">=</span> <span class="pre">fun(...)</span></code>.
-At each iteration of the algorithm, the auxiliary outputs are stored</p>
-<blockquote>
-<div><p>in <code class="docutils literal notranslate"><span class="pre">state.aux</span></code>.</p>
-</div></blockquote>
+<dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> outputs auxiliary data or not. If <code class="docutils literal notranslate"><span class="pre">has_aux</span></code> is
+False, <code class="docutils literal notranslate"><span class="pre">fun</span></code> is expected to be scalar-valued. If <code class="docutils literal notranslate"><span class="pre">has_aux</span></code> is True,
+then we have one of the following two cases. If <code class="docutils literal notranslate"><span class="pre">value_and_grad</span></code> is
+False, the output should be <code class="docutils literal notranslate"><span class="pre">value,</span> <span class="pre">aux</span> <span class="pre">=</span> <span class="pre">fun(...)</span></code>. If <code class="docutils literal notranslate"><span class="pre">value_and_grad</span>
+<span class="pre">==</span> <span class="pre">True</span></code>, the output should be <code class="docutils literal notranslate"><span class="pre">(value,</span> <span class="pre">aux),</span> <span class="pre">grad</span> <span class="pre">=</span> <span class="pre">fun(...)</span></code>. At each
+iteration of the algorithm, the auxiliary outputs are stored in
+<code class="docutils literal notranslate"><span class="pre">state.aux</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -233,8 +225,8 @@ At each iteration of the algorithm, the auxiliary outputs are stored</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.LBFGS.stepsize">
 <span class="sig-name descname"><span class="pre">stepsize</span></span><a class="headerlink" href="#jaxopt.LBFGS.stepsize" title="Permalink to this definition"></a></dt>
-<dd><p>a stepsize to use (if &lt;= 0, use backtracking line search),
-or a callable specifying the <strong>positive</strong> stepsize to use at each iteration.</p>
+<dd><p>a stepsize to use (if &lt;= 0, use backtracking line search), or a
+callable specifying the <strong>positive</strong> stepsize to use at each iteration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Union[float, Callable]</p>
@@ -256,13 +248,42 @@ line search.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LBFGS.linesearch_init">
+<span class="sig-name descname"><span class="pre">linesearch_init</span></span><a class="headerlink" href="#jaxopt.LBFGS.linesearch_init" title="Permalink to this definition"></a></dt>
+<dd><p>strategy for line-search initialization. By default, it
+will use “increase”, which will increase the step-size by a factor of
+<cite>increase_factor</cite> at each iteration if the step-size is larger than
+<cite>min_stepsize</cite>, and set it to <cite>max_stepsize</cite> otherwise. Other choices are
+“max”, that initializes the step-size to <cite>max_stepsize</cite> at every
+iteration, and “current”, that uses the step-size from the previous
+iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.LBFGS.stop_if_linesearch_fails">
 <span class="sig-name descname"><span class="pre">stop_if_linesearch_fails</span></span><a class="headerlink" href="#jaxopt.LBFGS.stop_if_linesearch_fails" title="Permalink to this definition"></a></dt>
-<dd><p>whether to stop iterations if the line search fails.
-When True, this matches the behavior of core JAX.</p>
+<dd><p>whether to stop iterations if the line search
+fails. When True, this matches the behavior of core JAX.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LBFGS.condition">
+<span class="sig-name descname"><span class="pre">condition</span></span><a class="headerlink" href="#jaxopt.LBFGS.condition" title="Permalink to this definition"></a></dt>
+<dd><p>Deprecated. Condition used to select the stepsize when using
+backtracking linesearch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Any</p>
 </dd>
 </dl>
 </dd></dl>
@@ -281,11 +302,11 @@ When True, this matches the behavior of core JAX.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.LBFGS.decrease_factor">
 <span class="sig-name descname"><span class="pre">decrease_factor</span></span><a class="headerlink" href="#jaxopt.LBFGS.decrease_factor" title="Permalink to this definition"></a></dt>
-<dd><p>factor by which to decrease the stepsize during line search
-(default: 0.8).</p>
+<dd><p>Deprecated. Factor by which to decrease the stepsize during
+line search when using backtracking linesearch (default: 0.8).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p>Any</p>
 </dd>
 </dl>
 </dd></dl>
@@ -406,15 +427,16 @@ Warning: verbose=True will automatically disable jit.</p>
 </dl>
 </dd></dl>
 
-<dl class="simple">
-<dt>Reference:</dt><dd><p>Jorge Nocedal and Stephen Wright.
+<p class="rubric">References</p>
+<p>Jorge Nocedal and Stephen Wright.
 Numerical Optimization, second edition.
 Algorithm 7.5 (page 179).</p>
-</dd>
-</dl>
+<p>Laurent Sorber, Marc van Barel, and Lieven de Lathauwer.
+Unconstrained Optimization of Real Functions in Complex Variables.
+SIAM J. Optim., Vol. 22, No. 3, pp. 879-898</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.LBFGS.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_if_linesearch_fails</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strong-wolfe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.LBFGS.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_if_linesearch_fails</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.LBFGS.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -425,10 +447,11 @@ Algorithm 7.5 (page 179).</p>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>stepsize</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>linesearch</strong> (<em>str</em>) – </p></li>
+<li><p><strong>linesearch_init</strong> (<em>str</em>) – </p></li>
 <li><p><strong>stop_if_linesearch_fails</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>condition</strong> (<em>str</em>) – </p></li>
+<li><p><strong>condition</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
 <li><p><strong>maxls</strong> (<em>int</em>) – </p></li>
-<li><p><strong>decrease_factor</strong> (<em>float</em>) – </p></li>
+<li><p><strong>decrease_factor</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
 <li><p><strong>increase_factor</strong> (<em>float</em>) – </p></li>
 <li><p><strong>max_stepsize</strong> (<em>float</em>) – </p></li>
 <li><p><strong>min_stepsize</strong> (<em>float</em>) – </p></li>
@@ -487,7 +510,7 @@ Algorithm 7.5 (page 179).</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">condition</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.condition" title="jaxopt.LBFGS.condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">condition</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.decrease_factor" title="jaxopt.LBFGS.decrease_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decrease_factor</span></code></a></p></td>
@@ -514,40 +537,43 @@ Algorithm 7.5 (page 179).</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.linesearch" title="jaxopt.LBFGS.linesearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linesearch</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.max_stepsize" title="jaxopt.LBFGS.max_stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_stepsize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.linesearch_init" title="jaxopt.LBFGS.linesearch_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linesearch_init</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.maxiter" title="jaxopt.LBFGS.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.max_stepsize" title="jaxopt.LBFGS.max_stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_stepsize</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.maxls" title="jaxopt.LBFGS.maxls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxls</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.maxiter" title="jaxopt.LBFGS.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.min_stepsize" title="jaxopt.LBFGS.min_stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_stepsize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.maxls" title="jaxopt.LBFGS.maxls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxls</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.stepsize" title="jaxopt.LBFGS.stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stepsize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.min_stepsize" title="jaxopt.LBFGS.min_stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_stepsize</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.stop_if_linesearch_fails" title="jaxopt.LBFGS.stop_if_linesearch_fails"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_if_linesearch_fails</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.stepsize" title="jaxopt.LBFGS.stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stepsize</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.tol" title="jaxopt.LBFGS.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.stop_if_linesearch_fails" title="jaxopt.LBFGS.stop_if_linesearch_fails"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_if_linesearch_fails</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.unroll" title="jaxopt.LBFGS.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.tol" title="jaxopt.LBFGS.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.use_gamma" title="jaxopt.LBFGS.use_gamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_gamma</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.unroll" title="jaxopt.LBFGS.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.value_and_grad" title="jaxopt.LBFGS.value_and_grad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value_and_grad</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.use_gamma" title="jaxopt.LBFGS.use_gamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_gamma</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.verbose" title="jaxopt.LBFGS.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.value_and_grad" title="jaxopt.LBFGS.value_and_grad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value_and_grad</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.fun" title="jaxopt.LBFGS.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LBFGS.verbose" title="jaxopt.LBFGS.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LBFGS.fun" title="jaxopt.LBFGS.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>

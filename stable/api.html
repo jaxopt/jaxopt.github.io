@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API at a glance &mdash; JAXopt 0.7 documentation</title>
+  <title>API at a glance &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -137,6 +137,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#root-finding">Root finding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.Bisection.html">jaxopt.Bisection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.Broyden.html">jaxopt.Broyden</a></li>
 <li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html">jaxopt.ScipyRootFinding</a></li>
 </ul>
 </li>
@@ -445,7 +446,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection" title="jaxopt.Bisection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.Bisection</span></code></a>(optimality_fun, lower, upper)</p></td>
 <td><p>One-dimensional root finding using bisection.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding" title="jaxopt.ScipyRootFinding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyRootFinding</span></code></a>([method, dtype, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.Broyden.html#jaxopt.Broyden" title="jaxopt.Broyden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.Broyden</span></code></a>(fun[, has_aux, maxiter, tol, ...])</p></td>
+<td><p>Limited-memory Broyden solver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding" title="jaxopt.ScipyRootFinding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyRootFinding</span></code></a>([method, dtype, ...])</p></td>
 <td><p><cite>scipy.optimize.root</cite> wrapper.</p></td>
 </tr>
 </tbody>

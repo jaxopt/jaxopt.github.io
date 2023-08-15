@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perturbed optimization &mdash; JAXopt 0.7 documentation</title>
+  <title>Perturbed optimization &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -184,10 +184,10 @@
 <p>where <span class="math notranslate nohighlight">\(\mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta\rangle\)</span> and <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> is a convex set.</p>
 <p>The function <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun()</span></code></a> transforms the function <span class="math notranslate nohighlight">\(f\)</span> into a the following differentiable function  using random perturbations:</p>
 <div class="math notranslate nohighlight">
-\[f_{\varepsilon}(\theta) = \mathbb{E}\left[ f(\theta + \varepsilon Z)]\,,\]</div>
+\[f_{\varepsilon}(\theta) = \mathbb{E}\left[ f(\theta + \varepsilon Z) \right]\,,\]</div>
 <p>where <span class="math notranslate nohighlight">\(Z\)</span> is a random variable. The distribution of this random variable can be specified through the keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code>. The default is a Gumbel distribution, which is a good choice for discrete variables. For continuous variables, a normal distribution is more appropriate. This can be particulary useful in the example given above, when <span class="math notranslate nohighlight">\(f\)</span> is only defined on the discrete set, not its convex hull, i.e.</p>
 <div class="math notranslate nohighlight">
-\[f_{\varepsilon}(\theta) = \mathbb{E}\left[ g(\mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta + \varepsilon Z \rangle \right)]\,,\]</div>
+\[f_{\varepsilon}(\theta) = \mathbb{E}\left[ g(\mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta + \varepsilon Z \rangle) \right]\,,\]</div>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />

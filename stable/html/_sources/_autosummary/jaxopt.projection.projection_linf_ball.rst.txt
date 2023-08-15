@@ -1,6 +1,0 @@
-﻿jaxopt.projection.projection\_linf\_ball
-========================================
-
-.. currentmodule:: jaxopt.projection
-
-.. autofunction:: projection_linf_ball

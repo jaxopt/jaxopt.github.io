@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt.CvxpyQP &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt.CvxpyQP &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -67,6 +67,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#box-constrained-qps-with-equality">Box-constrained QPs, with equality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#box-constrained-qps-without-equality">Box-constrained QPs, without equality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#unconstrained-qps">Unconstrained QPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#pytree-of-matrices-api">Pytree of matrices API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#matvec-api">Matvec API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#quadratic-function-api">Quadratic function API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quadratic_programming.html#implicit-differentiation-pitfalls">Implicit differentiation pitfalls</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
@@ -219,7 +223,7 @@ Meant to be run on CPU. Provide high precision solutions.</p>
 </dd>
 <dt class="field-even">Parameters</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>params</strong> (<em>array</em>) – </p></li>
+<li><p><strong>params</strong> (<em>Array</em>) – </p></li>
 <li><p><strong>params_obj</strong> (<em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>]</em>) – </p></li>
 <li><p><strong>params_eq</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>]</em><em>]</em>) – </p></li>
 <li><p><strong>params_ineq</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>]</em><em>]</em>) – </p></li>

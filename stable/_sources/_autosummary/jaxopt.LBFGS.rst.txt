@@ -39,6 +39,7 @@
       ~LBFGS.increase_factor
       ~LBFGS.jit
       ~LBFGS.linesearch
+      ~LBFGS.linesearch_init
       ~LBFGS.max_stepsize
       ~LBFGS.maxiter
       ~LBFGS.maxls

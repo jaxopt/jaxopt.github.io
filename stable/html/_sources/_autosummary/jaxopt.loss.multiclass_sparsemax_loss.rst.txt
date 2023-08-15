@@ -1,6 +1,0 @@
-﻿jaxopt.loss.multiclass\_sparsemax\_loss
-=======================================
-
-.. currentmodule:: jaxopt.loss
-
-.. autofunction:: multiclass_sparsemax_loss

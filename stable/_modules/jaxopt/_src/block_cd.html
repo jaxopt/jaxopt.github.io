@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaxopt._src.block_cd &mdash; JAXopt 0.7 documentation</title>
+  <title>jaxopt._src.block_cd &mdash; JAXopt 0.8 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
@@ -149,6 +149,10 @@
   <span class="n">predictions</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span>
   <span class="n">subfun_g</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span>
 
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">num_prox_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">num_grad_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
 
 <div class="viewcode-block" id="BlockCoordinateDescent"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">BlockCoordinateDescent</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
@@ -207,7 +211,11 @@
     <span class="k">return</span> <span class="n">BlockCDState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
                         <span class="n">predictions</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span>
                         <span class="n">subfun_g</span><span class="o">=</span><span class="n">subfun_g</span><span class="p">,</span>
-                        <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span></div>
+                        <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
+                        <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                        <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span> 
+                        <span class="n">num_prox_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+                        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="BlockCoordinateDescent.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -250,12 +258,21 @@
       <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">subfun_g</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">sqerror_sum</span>
 
     <span class="n">init</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">subfun_g</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">predictions</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">n_for</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># FIXME: use a function similar to cond in order to have</span>
+    <span class="c1"># a for loop that can be potentially non-jitted.</span>
+    <span class="c1"># this will allow to unit test the number of function eval.</span>
+    <span class="c1"># (zramzi)</span>
     <span class="n">params</span><span class="p">,</span> <span class="n">subfun_g</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">sqerror_sum</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">fori_loop</span><span class="p">(</span>
-        <span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">body_fun</span><span class="o">=</span><span class="n">body_fun</span><span class="p">,</span> <span class="n">init_val</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
+        <span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">n_for</span><span class="p">,</span> <span class="n">body_fun</span><span class="o">=</span><span class="n">body_fun</span><span class="p">,</span> <span class="n">init_val</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">BlockCDState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
                          <span class="n">predictions</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span>
                          <span class="n">subfun_g</span><span class="o">=</span><span class="n">subfun_g</span><span class="p">,</span>
-                         <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sqerror_sum</span><span class="p">))</span>
+                         <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sqerror_sum</span><span class="p">),</span>
+                         <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_fun_eval</span> <span class="o">+</span> <span class="n">n_for</span><span class="p">,</span>
+                         <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_grad_eval</span> <span class="o">+</span> <span class="n">n_for</span><span class="p">,</span>
+                         <span class="n">num_prox_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_prox_eval</span> <span class="o">+</span> <span class="n">n_for</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
 
   <span class="k">def</span> <span class="nf">_fixed_point_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
