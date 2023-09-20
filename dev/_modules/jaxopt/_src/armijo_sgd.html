@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.armijo_sgd &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.armijo_sgd</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.armijo_sgd</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;SGD solver with Armijo line search.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.lax</span> <span class="k">as</span> <span class="nn">lax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add_scalar_mul</span><span class="p">,</span> <span class="n">tree_l2_norm</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span><span class="p">,</span> <span class="n">tree_zeros_like</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_sub</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_single_dtype</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">loop</span>
+
+
+<span class="k">def</span> <span class="nf">wolfe_cond_violated</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">f_cur</span><span class="p">,</span> <span class="n">f_next</span><span class="p">,</span> <span class="n">grad_sqnorm</span><span class="p">):</span>
+  <span class="n">eps</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">f_next</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span>
+  <span class="k">return</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">coef</span> <span class="o">*</span> <span class="n">grad_sqnorm</span> <span class="o">&gt;</span> <span class="n">f_cur</span> <span class="o">-</span> <span class="n">f_next</span> <span class="o">+</span> <span class="n">eps</span>
+
+
+<span class="k">def</span> <span class="nf">curvature_cond_violated</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">f_cur</span><span class="p">,</span> <span class="n">f_next</span><span class="p">,</span> <span class="n">grad_sqnorm</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">f_next</span> <span class="o">&lt;</span> <span class="n">f_cur</span> <span class="o">-</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">coef</span><span class="p">)</span> <span class="o">*</span> <span class="n">grad_sqnorm</span>
+
+
+<span class="k">def</span> <span class="nf">armijo_line_search</span><span class="p">(</span><span class="n">fun_with_aux</span><span class="p">,</span> <span class="n">unroll</span><span class="p">,</span> <span class="n">jit</span><span class="p">,</span>
+                       <span class="n">goldstein</span><span class="p">,</span> <span class="n">maxls</span><span class="p">,</span>
+                       <span class="n">params</span><span class="p">,</span> <span class="n">f_cur</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span>
+                       <span class="n">coef</span><span class="p">,</span> <span class="n">decrease_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">max_stepsize</span><span class="p">,</span>
+                       <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Perform Armijo Line search from starting parameters, stepsize and gradient.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    fun_with_aux: function to minimize.</span>
+<span class="sd">    jit: whether to JIT-compile the line search loop.</span>
+<span class="sd">    unroll: whether to unroll the line search loop (default: &quot;auto&quot;).</span>
+<span class="sd">    goldstein: boolean, whether to use Goldstein or not.</span>
+<span class="sd">    maxls: maximum number of steps.</span>
+<span class="sd">    params: current params to optimize.</span>
+<span class="sd">    f_cur: value of the loss at ``params``.</span>
+<span class="sd">    stepsize: initial guess for stepsize.</span>
+<span class="sd">    grad: gradient at ``params``.</span>
+<span class="sd">    coef: ``1-agressiveness``.</span>
+<span class="sd">    decrease_factor: factor to increase stepsize.</span>
+<span class="sd">    increase_factor: factor to decrease stepsize.</span>
+<span class="sd">    max_stepsize: upper bound on stepsize.</span>
+<span class="sd">    args,kwargs: additionals parameters passed to ``fun_with_aux``.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    stepsize: stepsize Armijo line search conditions</span>
+<span class="sd">    next_params: params after gradient step</span>
+<span class="sd">    f_next: loss after gradient step</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># FIXME: (zramzi) this should return the number of iterations,</span>
+  <span class="c1"># the number of function and gradient calls to have</span>
+  <span class="c1"># these values available down the line.</span>
+  <span class="n">next_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">-</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
+  <span class="n">f_next</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fun_with_aux</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">grad_sqnorm</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">update_stepsize</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Multiply stepsize per factor, return new params and new value.&quot;&quot;&quot;</span>
+    <span class="n">stepsize</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span> <span class="n">t</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">factor</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">max_stepsize</span><span class="p">)</span>
+    <span class="n">next_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">-</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
+    <span class="n">f_next</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fun_with_aux</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span>
+
+  <span class="k">def</span> <span class="nf">body_fun</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">t</span>
+
+    <span class="n">violated</span> <span class="o">=</span> <span class="n">wolfe_cond_violated</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">f_cur</span><span class="p">,</span> <span class="n">f_next</span><span class="p">,</span> <span class="n">grad_sqnorm</span><span class="p">)</span>
+    <span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+      <span class="n">violated</span><span class="p">,</span> <span class="n">update_stepsize</span><span class="p">,</span>
+      <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span><span class="p">),</span>
+      <span class="n">operand</span><span class="o">=</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">decrease_factor</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">goldstein</span><span class="p">:</span>
+      <span class="n">goldstein_violated</span> <span class="o">=</span> <span class="n">curvature_cond_violated</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">f_cur</span><span class="p">,</span>
+                                                   <span class="n">f_next</span><span class="p">,</span> <span class="n">grad_sqnorm</span><span class="p">)</span>
+      <span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+        <span class="n">goldstein_violated</span><span class="p">,</span> <span class="n">update_stepsize</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span><span class="p">),</span>
+        <span class="n">operand</span><span class="o">=</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">))</span>
+      <span class="n">violated</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">violated</span><span class="p">,</span> <span class="n">goldstein_violated</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span><span class="p">,</span> <span class="n">violated</span>
+
+  <span class="n">init_val</span> <span class="o">=</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">ret</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">while_loop</span><span class="p">(</span><span class="n">cond_fun</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>  <span class="c1"># check boolean violated</span>
+                        <span class="n">body_fun</span><span class="o">=</span><span class="n">body_fun</span><span class="p">,</span>
+                        <span class="n">init_val</span><span class="o">=</span><span class="n">init_val</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxls</span><span class="p">,</span>
+                        <span class="n">unroll</span><span class="o">=</span><span class="n">unroll</span><span class="p">,</span> <span class="n">jit</span><span class="o">=</span><span class="n">jit</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">ret</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># remove boolean</span>
+
+
+<span class="k">class</span> <span class="nc">ArmijoState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple containing state information.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    iter_num: iteration number</span>
+<span class="sd">    error: residuals of current estimate</span>
+<span class="sd">    value: current value of the loss</span>
+<span class="sd">    stepsize: current stepsize</span>
+<span class="sd">    velocity: momentum term</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">value</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+  <span class="n">stepsize</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">velocity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="ArmijoSGD"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ArmijoSGD</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">StochasticSolver</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;SGD with Armijo line search.</span>
+
+<span class="sd">  This implementation assumes that the &quot;interpolation property&quot; holds, see for example Vaswani et al. 2019 (https://arxiv.org/abs/1905.09997):</span>
+<span class="sd">    the global optimum over D must also be a global optimum for any finite sample of D</span>
+<span class="sd">  This is typically achieved by overparametrized models (e.g neural networks)</span>
+<span class="sd">  in classification tasks with separable classes, or on regression tasks without noise.</span>
+<span class="sd">  In practice this algorithm works well outside this setting.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    fun: a function of the form ``fun(params, *args, **kwargs)``, where</span>
+<span class="sd">      ``params`` are parameters of the model,</span>
+<span class="sd">      ``*args`` and ``**kwargs`` are additional arguments.</span>
+<span class="sd">    value_and_grad: whether ``fun`` just returns the value (False) or both</span>
+<span class="sd">      the value and gradient (True).</span>
+<span class="sd">    has_aux: whether ``fun`` outputs auxiliary data or not.</span>
+<span class="sd">      If ``has_aux`` is False, ``fun`` is expected to be</span>
+<span class="sd">        scalar-valued.</span>
+<span class="sd">      If ``has_aux`` is True, then we have one of the following</span>
+<span class="sd">        two cases.</span>
+<span class="sd">      If ``value_and_grad`` is False, the output should be</span>
+<span class="sd">      ``value, aux = fun(...)``.</span>
+<span class="sd">      If ``value_and_grad == True``, the output should be</span>
+<span class="sd">      ``(value, aux), grad = fun(...)``.</span>
+<span class="sd">      At each iteration of the algorithm, the auxiliary outputs are stored</span>
+<span class="sd">        in ``state.aux``.</span>
+
+<span class="sd">    aggressiveness: controls &quot;agressiveness&quot; of optimizer. (default: 0.9)</span>
+<span class="sd">      Bigger values encourage bigger stepsize. Must belong to open interval</span>
+<span class="sd">      (0,1).  If ``aggressiveness&gt;0.5`` the learning_rate is guaranteed to be at</span>
+<span class="sd">      least as big as ``min(1/L, max_stepsize)`` where ``L`` is the Lipschitz</span>
+<span class="sd">      constant of the loss on the current batch.</span>
+<span class="sd">    decrease_factor: factor by which to decrease the stepsize during line search</span>
+<span class="sd">      (default: 0.8).</span>
+<span class="sd">    increase_factor: factor by which to increase the stepsize during line search</span>
+<span class="sd">      (default: 1.5).</span>
+<span class="sd">    reset_option: strategy to use for resetting the stepsize at each iteration</span>
+<span class="sd">      (default: &quot;increase&quot;).</span>
+
+<span class="sd">      - &quot;conservative&quot;: re-use previous stepsize, producing a non increasing</span>
+<span class="sd">        sequence of stepsizes. Slow convergence.</span>
+<span class="sd">      - &quot;increase&quot;: attempt to re-use previous stepsize multiplied by</span>
+<span class="sd">        increase_factor. Cheap and efficient heuristic.</span>
+<span class="sd">      - &quot;goldstein&quot;: re-use previous stepsize and increase until curvature</span>
+<span class="sd">        condition is fulfilled.  Higher runtime cost than &quot;increase&quot; but better</span>
+<span class="sd">        theoretical guarantees.</span>
+
+<span class="sd">    momentum: momentum parameter, 0 corresponding to no momentum.</span>
+<span class="sd">    max_stepsize: a maximum step size to use. (default: 1.)</span>
+<span class="sd">    pre_update: a function to execute before the solver&#39;s update.</span>
+<span class="sd">      The function signature must be</span>
+<span class="sd">      ``params, state = pre_update(params, state, *args, **kwargs)``.</span>
+
+<span class="sd">    maxiter: maximum number of solver iterations.</span>
+<span class="sd">    maxls: maximum number of steps in line search.</span>
+<span class="sd">    tol: tolerance to use.</span>
+<span class="sd">    verbose: whether to print error on every iteration or not.</span>
+
+<span class="sd">    implicit_diff: whether to enable implicit diff or autodiff of unrolled</span>
+<span class="sd">      iterations.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+
+<span class="sd">    jit: whether to JIT-compile the optimization loop (default: True).</span>
+<span class="sd">    unroll: whether to unroll the optimization loop (default: &quot;auto&quot;).</span>
+
+<span class="sd">  References:</span>
+<span class="sd">    Vaswani, S., Mishkin, A., Laradji, I., Schmidt, M., Gidel, G. and</span>
+<span class="sd">    Lacoste-Julien, S., 2019.</span>
+<span class="sd">    Painless stochastic gradient: Interpolation, line-search, and convergence</span>
+<span class="sd">    rates.</span>
+<span class="sd">    Advances in Neural Information Processing Systems 32.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span>
+  <span class="n">value_and_grad</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="n">aggressiveness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span>  <span class="c1"># default value recommended by Vaswani et al.</span>
+  <span class="n">decrease_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>  <span class="c1"># default value recommended by Vaswani et al.</span>
+  <span class="n">increase_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c1"># default value recommended by Vaswani et al.</span>
+  <span class="n">reset_option</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;increase&quot;</span>
+
+  <span class="n">momentum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">max_stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+  <span class="n">pre_update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
+  <span class="n">maxls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
+  <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
+  <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+
+<div class="viewcode-block" id="ArmijoSGD.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArmijoState</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: pytree containing the initial parameters.</span>
+<span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">velocity</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">velocity</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+
+    <span class="n">value</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">params_dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ArmijoState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                       <span class="c1"># Error should be dtype-compatible with the parameters,</span>
+                       <span class="c1"># not with the value, since the error is derived from the</span>
+                       <span class="c1"># gradient, which lives in the same space as the params.</span>
+                       <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">params_dtype</span><span class="p">),</span>
+                       <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                       <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
+                       <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
+                                            <span class="n">dtype</span><span class="o">=</span><span class="n">params_dtype</span><span class="p">),</span>
+                       <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArmijoSGD.reset_stepsize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.reset_stepsize">[docs]</a>  <span class="k">def</span> <span class="nf">reset_stepsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return new step size for current step, according to reset_option.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_option</span> <span class="o">==</span> <span class="s1">&#39;goldstein&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">stepsize</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_option</span> <span class="o">==</span> <span class="s1">&#39;conservative&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">stepsize</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">increase_factor</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArmijoSGD.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs one iteration of the solver.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      params: pytree containing the parameters.</span>
+<span class="sd">      state: named tuple containing the solver state.</span>
+<span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, state)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_update</span><span class="p">:</span>
+      <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_stepsize</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">stepsize</span><span class="p">)</span>
+
+    <span class="p">(</span><span class="n">f_cur</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">goldstein</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_option</span> <span class="o">==</span> <span class="s1">&#39;goldstein&#39;</span>
+    <span class="n">stepsize</span><span class="p">,</span> <span class="n">next_params</span><span class="p">,</span> <span class="n">f_next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_armijo_line_search</span><span class="p">(</span>
+      <span class="n">goldstein</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxls</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">f_cur</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coef</span><span class="p">,</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">increase_factor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span>
+      <span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">next_velocity</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># next_params = params - stepsize*grad + momentum*(params - previous_params)</span>
+      <span class="n">velocity</span> <span class="o">=</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
+      <span class="n">next_params</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="n">velocity</span><span class="p">)</span>
+      <span class="n">next_velocity</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="c1"># error of last step, avoid recomputing a gradient</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">next_state</span> <span class="o">=</span> <span class="n">ArmijoState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+                             <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                             <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f_next</span><span class="p">),</span>
+                             <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">,</span>
+                             <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                             <span class="n">velocity</span><span class="o">=</span><span class="n">next_velocity</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArmijoSGD.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">_value_and_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span><span class="p">,</span> <span class="n">grad</span>
+
+  <span class="k">def</span> <span class="nf">_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+
+    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;increase&#39;</span><span class="p">,</span> <span class="s1">&#39;goldstein&#39;</span><span class="p">,</span> <span class="s1">&#39;conservative&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;reset_option&#39; should be one of </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggressiveness</span> <span class="o">&lt;=</span> <span class="mf">0.</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggressiveness</span> <span class="o">&gt;=</span> <span class="mf">1.</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;aggressiveness&#39; must belong to open interval (0,1)&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_coef</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggressiveness</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span> <span class="o">=</span> \
+      <span class="n">base</span><span class="o">.</span><span class="n">_make_funs_with_aux</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span>
+                               <span class="n">value_and_grad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">,</span>
+                               <span class="n">has_aux</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">reference_signature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span>
+
+    <span class="n">unroll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_unroll_option</span><span class="p">()</span>
+
+    <span class="n">armijo_with_fun</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">armijo_line_search</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span><span class="p">,</span> <span class="n">unroll</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
+      <span class="n">jitted_armijo</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">armijo_with_fun</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_armijo_line_search</span> <span class="o">=</span> <span class="n">jitted_armijo</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_armijo_line_search</span> <span class="o">=</span> <span class="n">armijo_with_fun</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

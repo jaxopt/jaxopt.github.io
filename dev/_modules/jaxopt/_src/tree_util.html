@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.tree_util &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.tree_util</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.tree_util</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Tree utilities.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">tree_util</span> <span class="k">as</span> <span class="n">tu</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+
+
+<span class="n">tree_flatten</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_flatten</span>
+<span class="n">tree_leaves</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_leaves</span>
+<span class="n">tree_map</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_map</span>
+<span class="n">tree_reduce</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_reduce</span>
+<span class="n">tree_unflatten</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_unflatten</span>
+
+
+<span class="k">def</span> <span class="nf">broadcast_pytrees</span><span class="p">(</span><span class="o">*</span><span class="n">trees</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Broadcasts leaf pytrees to match treedef shared by the other arguments.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    *trees: A `Sequence` of pytrees such that all elements that are *not* leaf</span>
+<span class="sd">      pytrees (i.e. single arrays) have the same treedef.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    The input `Sequence` of pytrees `*trees` with leaf pytrees (i.e. single</span>
+<span class="sd">    arrays) replaced by pytrees matching the treedef of non-shallow elements via</span>
+<span class="sd">    broadcasting.</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">    ValueError: If two or more pytrees in `*trees` that are not leaf pytrees</span>
+<span class="sd">      differ in their structure (treedef).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">leaves</span><span class="p">,</span> <span class="n">treedef</span><span class="p">,</span> <span class="n">is_leaf</span> <span class="o">=</span> <span class="p">[],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">trees</span><span class="p">:</span>
+    <span class="n">leaves_i</span><span class="p">,</span> <span class="n">treedef_i</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_flatten</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="n">is_leaf_i</span> <span class="o">=</span> <span class="n">tu</span><span class="o">.</span><span class="n">treedef_is_leaf</span><span class="p">(</span><span class="n">treedef_i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_leaf_i</span><span class="p">:</span>
+      <span class="n">treedef</span> <span class="o">=</span> <span class="n">treedef</span> <span class="ow">or</span> <span class="n">treedef_i</span>
+      <span class="k">if</span> <span class="n">treedef_i</span> <span class="o">!=</span> <span class="n">treedef</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Pytrees are not broadcastable.: &#39;</span>
+                         <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">treedef</span><span class="si">}</span><span class="s1"> != </span><span class="si">{</span><span class="n">treedef_i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">leaves</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leaves_i</span><span class="p">)</span>
+    <span class="n">is_leaf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">is_leaf_i</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">treedef</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">max_num_leaves</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">leaves_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">leaves_i</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">)</span>
+    <span class="n">broadcast_leaf</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">leaf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">max_num_leaves</span><span class="p">)</span>
+    <span class="n">leaves</span> <span class="o">=</span> <span class="p">[</span><span class="n">broadcast_leaf</span><span class="p">(</span><span class="n">leaves_i</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_leaf_i</span> <span class="k">else</span> <span class="n">leaves_i</span>
+              <span class="k">for</span> <span class="p">(</span><span class="n">leaves_i</span><span class="p">,</span> <span class="n">is_leaf_i</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="n">is_leaf</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">treedef</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="n">leaves_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">leaves_i</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">)</span>
+  <span class="c1"># All Pytrees are leaves.</span>
+  <span class="k">return</span> <span class="n">trees</span>
+
+
+<span class="n">tree_add</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_map</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">)</span>
+<span class="n">tree_add</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree addition.&quot;</span>
+
+<span class="n">tree_sub</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_map</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">)</span>
+<span class="n">tree_sub</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree subtraction.&quot;</span>
+
+<span class="n">tree_mul</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_map</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">)</span>
+<span class="n">tree_mul</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree multiplication.&quot;</span>
+
+<span class="n">tree_div</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tree_map</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="p">)</span>
+<span class="n">tree_div</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree division.&quot;</span>
+
+
+<div class="viewcode-block" id="tree_scalar_mul"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_scalar_mul.html#jaxopt.tree_util.tree_scalar_mul">[docs]</a><span class="k">def</span> <span class="nf">tree_scalar_mul</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute scalar * tree_x.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scalar</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="tree_add_scalar_mul"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_add_scalar_mul.html#jaxopt.tree_util.tree_add_scalar_mul">[docs]</a><span class="k">def</span> <span class="nf">tree_add_scalar_mul</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute tree_x + scalar * tree_y.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">scalar</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span></div>
+
+
+<span class="n">_vdot</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">Precision</span><span class="o">.</span><span class="n">HIGHEST</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_vdot_safe</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">_vdot</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="tree_vdot"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_vdot.html#jaxopt.tree_util.tree_vdot">[docs]</a><span class="k">def</span> <span class="nf">tree_vdot</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the inner product &lt;tree_x, tree_y&gt;.&quot;&quot;&quot;</span>
+  <span class="n">vdots</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">_vdot_safe</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tree_reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">vdots</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_vdot_real</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Vector dot-product guaranteed to have a real valued result despite</span>
+<span class="sd">     possibly complex input. Thus neglects the real-imaginary cross-terms.</span>
+<span class="sd">     The result is a real float.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1">#result = _vdot(x.real, y.real)</span>
+  <span class="c1">#if jnp.iscomplexobj(x) and jnp.iscomplexobj(y):</span>
+  <span class="c1">#  result += _vdot(x.imag, y.imag)</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">_vdot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>  <span class="c1"># NOTE: without jit this is faster than variant above, no difference with jit</span>
+  <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">tree_vdot_real</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real part of the inner product &lt;tree_x, tree_y&gt;.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree_map</span><span class="p">(</span><span class="n">_vdot_real</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">tree_dot</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute leaves-wise dot product between pytree of arrays.</span>
+
+<span class="sd">  Useful to store block diagonal linear operators: each leaf of the tree</span>
+<span class="sd">  corresponds to a block.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="tree_sum"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_sum.html#jaxopt.tree_util.tree_sum">[docs]</a><span class="k">def</span> <span class="nf">tree_sum</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute sum(tree_x).&quot;&quot;&quot;</span>
+  <span class="n">sums</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tree_reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">sums</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="tree_l2_norm"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_l2_norm.html#jaxopt.tree_util.tree_l2_norm">[docs]</a><span class="k">def</span> <span class="nf">tree_l2_norm</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the l2 norm ||tree_x||.&quot;&quot;&quot;</span>
+  <span class="n">squared_tree</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">real</span><span class="p">)</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">imag</span><span class="p">),</span> <span class="n">tree_x</span><span class="p">)</span>
+  <span class="n">sqnorm</span> <span class="o">=</span> <span class="n">tree_sum</span><span class="p">(</span><span class="n">squared_tree</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">squared</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">sqnorm</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sqnorm</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="tree_zeros_like"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_zeros_like.html#jaxopt.tree_util.tree_zeros_like">[docs]</a><span class="k">def</span> <span class="nf">tree_zeros_like</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates an all-zero tree with the same structure as tree_x.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">tree_ones_like</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates an all-ones tree with the same structure as tree_x.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones_like</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_average</span><span class="p">(</span><span class="n">trees</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Return the linear combination of a list of trees.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    trees: tree of arrays with shape (m,...)</span>
+<span class="sd">    weights: array of shape (m,)</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    a single tree that is the linear combination of all trees</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">trees</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_gram</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute Gramn matrix from the pytree of batchs of vectors.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    a: pytree of arrays of shape (m,...)</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    arrays of shape (m,m) of all dot products</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">vmap_left</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">tree_vdot</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="kc">None</span><span class="p">))</span>
+  <span class="n">vmap_right</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">vmap_left</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">vmap_right</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_inf_norm</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Computes the infinity norm of a pytree.&quot;&quot;&quot;</span>
+  <span class="n">leaves_vec</span> <span class="o">=</span> <span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">ravel</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">leaves_vec</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">tree_where</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;jnp.where for trees.</span>
+
+<span class="sd">  Mimic broadcasting semantic of jnp.where.</span>
+<span class="sd">  cond, a and b can be arrays (including scalars) broadcastable to the leaves of</span>
+<span class="sd">  the other input arguments.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    cond: pytree of booleans arrays, or single array broadcastable to the shapes</span>
+<span class="sd">      of leaves of `a` and `b`.</span>
+<span class="sd">    a: pytree of arrays, or single array broadcastable to the shapes of leaves</span>
+<span class="sd">      of `cond` and `b`.</span>
+<span class="sd">    b: pytree of arrays, or single array broadcastable to the shapes of leaves</span>
+<span class="sd">      of `cond` and `a`.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    pytree of arrays, or single array</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">broadcast_pytrees</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_negative</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Computes elementwise negation -x.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_reciproqual</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Computes elementwise inverse 1/x.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reciprocal</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">tree</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_mean</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Mean reduction for trees.&quot;&quot;&quot;</span>
+  <span class="n">leaves_avg</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tree_sum</span><span class="p">(</span><span class="n">leaves_avg</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">leaves_avg</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">tree_single_dtype</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">convert_in_jax_dtype</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;The dtype for all values in a tree, provided that all leaves share the same type.</span>
+
+<span class="sd">      If the leaves have different type, raise a ValueError.</span>
+
+<span class="sd">      Args:</span>
+<span class="sd">        tree: tree to get the dtype of</span>
+<span class="sd">        convert_in_jax_type: whether to convert the types in JAX precision.</span>
+<span class="sd">          Namely, a numpy int64 type is converted in a jax.numpy int32 type</span>
+<span class="sd">          by default unless one enables double precision using</span>
+<span class="sd">          jax.config.update(&quot;jax_enable_x64&quot;, True)</span>
+<span class="sd">      Return:</span>
+<span class="sd">        dtype shared by all leaves of the tree</span>
+<span class="sd">      &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">convert_in_jax_dtype</span><span class="p">:</span>
+    <span class="n">dtypes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+      <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">dtype</span>
+      <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">dtypes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+      <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">dtype</span>
+      <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tu</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">dtypes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtypes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">dtype</span>
+  <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Found more than one dtype in the tree.&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_real_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Dtype corresponding of real part of a complex dtype.&quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">dtype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;complex</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">]]:</span>
+    <span class="k">return</span> <span class="n">dtype</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">dtype</span>
+
+
+<span class="k">def</span> <span class="nf">tree_conj</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Complex conjugate of a tree.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">conj</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_real</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Real part of a tree&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tree_imag</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Imaginary part of a tree&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

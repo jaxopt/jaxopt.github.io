@@ -1,0 +1,6 @@
+﻿jaxopt.prox.prox\_elastic\_net
+==============================
+
+.. currentmodule:: jaxopt.prox
+
+.. autofunction:: prox_elastic_net

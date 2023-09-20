@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.levenberg_marquardt &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.levenberg_marquardt</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.levenberg_marquardt</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2022 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Levenberg-Marquardt algorithm in JAX.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">jax.scipy</span> <span class="k">as</span> <span class="nn">jsp</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.linear_solve</span> <span class="kn">import</span> <span class="n">solve_cg</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.linear_solve</span> <span class="kn">import</span> <span class="n">solve_cholesky</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.linear_solve</span> <span class="kn">import</span> <span class="n">solve_inv</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.linear_solve</span> <span class="kn">import</span> <span class="n">solve_lu</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.linear_solve</span> <span class="kn">import</span> <span class="n">solve_qr</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_l2_norm</span><span class="p">,</span> <span class="n">tree_inf_norm</span><span class="p">,</span> <span class="n">tree_sub</span><span class="p">,</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_mul</span>
+
+
+<span class="k">class</span> <span class="nc">LevenbergMarquardtState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple containing state information.&quot;&quot;&quot;</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">damping_factor</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">increase_factor</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">residual</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">value</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">delta</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">gradient</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">jac</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">jt</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">jtj</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">hess_res</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="LevenbergMarquardt"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">LevenbergMarquardt</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Levenberg-Marquardt (LM) nonlinear least-squares solver.</span>
+
+<span class="sd">    Given the residual function `func` (x): R^n -&gt; R^m, `least_squares` finds a</span>
+<span class="sd">    local minimum of the cost function F(x):</span>
+
+<span class="sd">    ```</span>
+<span class="sd">    argmin_x F(x) = 0.5 * sum(f_i(x)**2), i = 0, ..., m - 1</span>
+<span class="sd">    f(x) = func(x, *args)</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    This results in solving the following normal equation:</span>
+<span class="sd">    ```</span>
+<span class="sd">    (J^T @ J + µ I) @ ∆params = -J^T @ f(x)</span>
+<span class="sd">    ```</span>
+<span class="sd">    we use this method as recommended by K. Madsen &amp; H. B. Nielsen in the book</span>
+<span class="sd">    &quot;Introduction to Optimization and Data Fitting&quot; page 122.</span>
+
+
+<span class="sd">    If stop_criterion is &#39;madsen-nielsen&#39;, the convergence is achieved once the</span>
+<span class="sd">    coeff update satisfies ``||dcoeffs||_2 &lt;= xtol * (||coeffs||_2 + xtol) `` or</span>
+<span class="sd">    the gradient satisfies ``||grad(f)||_inf &lt;= gtol``.</span>
+
+<span class="sd">    It is possible to find the LM step by solving the following equation:</span>
+<span class="sd">    ```</span>
+<span class="sd">    [     J    ]              [ -f(x) ]</span>
+<span class="sd">    |          | @ ∆params =  |       |</span>
+<span class="sd">    [ Sqrt(µ)I ]              [   0   ]</span>
+<span class="sd">    ```</span>
+<span class="sd">    If LHS matrix is multiplied by its transpose, one can show that solving this</span>
+<span class="sd">    equation is the same as the normal equation. This is the approach we take if</span>
+<span class="sd">    QR factorization method is chosen. Note that since we are not multipyling the</span>
+<span class="sd">    LHS matrix by its transpose, the condition number of the LHS matrix is more</span>
+<span class="sd">    accurate and therefore this method can be used for ill-conditioned Jacobians.</span>
+<span class="sd">  Attributes:</span>
+<span class="sd">    residual_fun: a smooth function of the form ``residual_fun(x, *args,</span>
+<span class="sd">      **kwargs)``.</span>
+<span class="sd">    maxiter: maximum increase_factormber of iterations.</span>
+<span class="sd">    damping_parameter: The parameter which adds a correction to the equation</span>
+<span class="sd">      derived for updating the coefficients using Gauss-Newton method. Please</span>
+<span class="sd">      see section 3.2. of K. Madsen et al. in the book &quot;Methods for nonlinear</span>
+<span class="sd">      least squares problems&quot; for more information.</span>
+<span class="sd">    stop_criterion: The criterion to use for the convergence of the while loop.</span>
+<span class="sd">      e.g., for &#39;madsen-nielsen&#39; the criteria is to satisfy the two equations</span>
+<span class="sd">      for delta_params and gradient that is mentioned above. If &#39;grad-l2&#39; is</span>
+<span class="sd">      selected, the convergence is achieved if l2 of gradient is smaller or</span>
+<span class="sd">      equal to tol.</span>
+<span class="sd">    tol: tolerance.</span>
+<span class="sd">    xtol: float, optional The convergence tolerance for the second norm of the</span>
+<span class="sd">      coefficient update.</span>
+<span class="sd">    gtol: float, optional The convergence tolerance for the inf norm of the</span>
+<span class="sd">      residual gradient.</span>
+<span class="sd">    solver: str, optional The solver to use when finding delta_params, the</span>
+<span class="sd">      update to the params in each iteration. This is done through solving a</span>
+<span class="sd">      system of linear equation Ax=b. &#39;cholesky&#39;, &#39;lu&#39;, or &#39;qr&#39; factorizations,</span>
+<span class="sd">      &#39;inv&#39; (explicit multiplication with matrix inverse). Note that the inverse</span>
+<span class="sd">      approach is the most expensive and least accurate and is just given as an</span>
+<span class="sd">      option for legacy reasons. The user can provide custom solvers, for example</span>
+<span class="sd">      using jaxopt.linear_solve.solve_cg which are more scalable for runtime but</span>
+<span class="sd">      take longer compilations. Cholesky is faster than inverse since it uses</span>
+<span class="sd">      the symmetry feature of A. QR factorization is preferred for ill-posed</span>
+<span class="sd">      stiff problems due to not solving the normal equation.</span>
+<span class="sd">    geodesic: bool, if we would like to include the geodesic acceleration when</span>
+<span class="sd">      solving for the delta_params in every iteration.</span>
+<span class="sd">    contribution_ratio_threshold: float, the threshold for acceleration/velocity</span>
+<span class="sd">      ratio. We update the parameters in the algorithm only if the ratio is</span>
+<span class="sd">      smaller than this threshold value.</span>
+<span class="sd">    verbose: bool, whether to print error on every iteration or not.</span>
+<span class="sd">    jac_fun: Callable, a function to calculate the Jacobian. If not None, this</span>
+<span class="sd">      function is used instead of directly calculating it using ``jax.jacfwd``.</span>
+<span class="sd">    materialize_jac: bool, whether to materialize Jacobian. If this option is</span>
+<span class="sd">      True, Jacobian is either calculated using ``jax.jacfwd`` or obtained from</span>
+<span class="sd">      ``jac_fun`` and all variables depending on it, such as J^T or J^T.J are</span>
+<span class="sd">      obtained directly. If False, all of the Jacobian dependent variables are</span>
+<span class="sd">      indirectly obtained using operators on the basis of ``jax.jvp`` and</span>
+<span class="sd">      ``jax.vjp``.</span>
+<span class="sd">    implicit_diff: bool, whether to enable implicit diff or autodiff of unrolled</span>
+<span class="sd">      iterations.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">    has_aux: whether ``residual_fun`` outputs auxiliary data or not.</span>
+<span class="sd">    jit: whether to JIT-compile the bisection loop (default: True).</span>
+<span class="sd">    unroll: whether to unroll the bisection loop (default: &quot;auto&quot;).</span>
+
+<span class="sd">  Reference: This algorithm is for finding the best fit parameters based on the</span>
+<span class="sd">    algorithm 6.18 provided by K. Madsen &amp; H. B. Nielsen in the book</span>
+<span class="sd">    &quot;Introduction to Optimization and Data Fitting&quot;.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">residual_fun</span><span class="p">:</span> <span class="n">Callable</span>
+
+  <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
+
+  <span class="n">damping_parameter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span>
+  <span class="n">stop_criterion</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;grad-l2-norm&#39;</span><span class="p">,</span> <span class="s1">&#39;madsen-nielsen&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;grad-l2-norm&#39;</span>
+  <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
+  <span class="n">xtol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
+  <span class="n">gtol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
+
+  <span class="n">solver</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;cholesky&#39;</span><span class="p">,</span> <span class="s1">&#39;lu&#39;</span><span class="p">,</span> <span class="s1">&#39;qr&#39;</span><span class="p">,</span> <span class="s1">&#39;inv&#39;</span><span class="p">],</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="n">solve_cg</span>
+  <span class="n">geodesic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">contribution_ratio_threshold</span> <span class="o">=</span> <span class="mf">0.75</span>
+
+  <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">jac_fun</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">materialize_jac</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+
+  <span class="c1"># We are overriding the _cond_fun of the base solver to enable stopping based</span>
+  <span class="c1"># on gradient or delta_params</span>
+  <span class="k">def</span> <span class="nf">_cond_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+      <span class="n">print_iteration</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_criterion</span> <span class="o">==</span> <span class="s1">&#39;madsen-nielsen&#39;</span><span class="p">:</span>
+      <span class="n">tree_mul_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xtol</span> <span class="o">*</span> <span class="p">(</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">xtol</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">gradient</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">gtol</span><span class="p">,</span>
+        <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tree_mul_term</span>
+      <span class="p">]))</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_criterion</span> <span class="o">==</span> <span class="s1">&#39;grad-l2-norm&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">error</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="LevenbergMarquardt.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LevenbergMarquardtState</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the solver state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: pytree containing the initial parameters.</span>
+<span class="sd">      *args: additional positional arguments to be passed to ``residual_fun``.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to ``residual_fun``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Compute actual values of state variables at init_param</span>
+    <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">materialize_jac</span><span class="p">:</span>
+      <span class="n">jac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">jt</span> <span class="o">=</span> <span class="n">jac</span><span class="o">.</span><span class="n">T</span>
+      <span class="n">jtj</span> <span class="o">=</span> <span class="n">jt</span> <span class="o">@</span> <span class="n">jac</span>
+      <span class="n">gradient</span> <span class="o">=</span> <span class="n">jt</span> <span class="o">@</span> <span class="n">residual</span>
+      <span class="n">damping_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping_parameter</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jtj</span><span class="p">))</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">geodesic</span><span class="p">:</span>
+        <span class="n">hess_res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hess_res_fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">hess_res</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">jac</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="n">jt</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="n">jtj</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="n">hess_res</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="n">gradient</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jt_op</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">jtj_diag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jtj_diag_op</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">damping_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping_parameter</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">jtj_diag</span><span class="p">)</span>
+
+    <span class="n">delta_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">LevenbergMarquardtState</span><span class="p">(</span>
+        <span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">damping_factor</span><span class="o">=</span><span class="n">damping_factor</span><span class="p">,</span>
+        <span class="n">increase_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">error</span><span class="o">=</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">gradient</span><span class="p">),</span>
+        <span class="n">residual</span><span class="o">=</span><span class="n">residual</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">residual</span><span class="p">)),</span>
+        <span class="n">delta</span><span class="o">=</span><span class="n">delta_params</span><span class="p">,</span>
+        <span class="n">gradient</span><span class="o">=</span><span class="n">gradient</span><span class="p">,</span>
+        <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span>
+        <span class="n">jt</span><span class="o">=</span><span class="n">jt</span><span class="p">,</span>
+        <span class="n">jtj</span><span class="o">=</span><span class="n">jtj</span><span class="p">,</span>
+        <span class="n">hess_res</span><span class="o">=</span><span class="n">hess_res</span><span class="p">,</span>
+        <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LevenbergMarquardt.update_state_using_gain_ratio"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_gain_ratio">[docs]</a>  <span class="k">def</span> <span class="nf">update_state_using_gain_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gain_ratio</span><span class="p">,</span> <span class="n">contribution_ratio_diff</span><span class="p">,</span>
+                                    <span class="n">gain_ratio_test_init_state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The function to return state variables based on gain ratio.</span>
+<span class="sd">      Please see by page 120-121 of the book &quot;Introduction to Optimization and</span>
+<span class="sd">      Data Fitting&quot; by K. Madsen &amp; H. B. Nielsen for details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">gain_ratio_test_true_func</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span>
+                                  <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span>
+                                  <span class="n">hess_res</span><span class="p">,</span> <span class="n">updated_params</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
+
+      <span class="n">params</span> <span class="o">=</span> <span class="n">updated_params</span>
+
+      <span class="n">residual</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+      <span class="c1"># Calculate gradient based on Eq. 6.6 of &quot;Introduction to optimization</span>
+      <span class="c1"># and data fitting&quot; g=JT * r, where J is jacobian and r is residual.</span>
+      <span class="c1"># TODO: QR factorization solver doesn&#39;t require jt and jtj. Can be</span>
+      <span class="c1"># skipped for increasing efficiency, if they are not required by user.</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">materialize_jac</span><span class="p">:</span>
+        <span class="c1"># Calculate Jacobian and it&#39;s transpose based on the updated coeffs.</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">jt</span> <span class="o">=</span> <span class="n">jac</span><span class="o">.</span><span class="n">T</span>
+        <span class="c1">#  J^T.J is the gauss newton approximate hessian.</span>
+        <span class="n">jtj</span> <span class="o">=</span> <span class="n">jt</span> <span class="o">@</span> <span class="n">jac</span>
+        <span class="n">gradient</span> <span class="o">=</span> <span class="n">jt</span> <span class="o">@</span> <span class="n">residual</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">geodesic</span><span class="p">:</span>
+          <span class="n">hess_res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hess_res_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">hess_res</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">jt</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">jtj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">hess_res</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">gradient</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jt_op</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+      <span class="n">damping_factor</span> <span class="o">=</span> <span class="n">damping_factor</span> <span class="o">*</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span>
+                                                    <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gain_ratio</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+      <span class="n">increase_factor</span> <span class="o">=</span> <span class="mi">2</span>
+
+      <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span>
+
+    <span class="k">def</span> <span class="nf">gain_ratio_test_false_func</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span>
+                                   <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span>
+                                   <span class="n">hess_res</span><span class="p">,</span> <span class="n">updated_params</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
+      <span class="n">damping_factor</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">damping_factor</span> <span class="o">*</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping_factor_max</span><span class="p">)</span>
+      <span class="n">increase_factor</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">increase_factor_max</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span>
+
+    <span class="c1"># Calling the jax condition function:</span>
+    <span class="c1"># Note that only the parameters that are used in the rest of the program</span>
+    <span class="c1"># are returned by this function.</span>
+
+    <span class="n">gain_ratio_test_is_met</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">gain_ratio</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span>
+                                             <span class="n">contribution_ratio_diff</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="n">gain_ratio_test_is_met_ret</span> <span class="o">=</span> <span class="n">gain_ratio_test_true_func</span><span class="p">(</span>
+        <span class="o">*</span><span class="n">gain_ratio_test_init_state</span><span class="p">)</span>
+    <span class="n">gain_ratio_test_not_met_ret</span> <span class="o">=</span> <span class="n">gain_ratio_test_false_func</span><span class="p">(</span>
+        <span class="o">*</span><span class="n">gain_ratio_test_init_state</span><span class="p">)</span>
+
+    <span class="n">gain_ratio_test_is_met_ret</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">gain_ratio_test_is_met</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">gain_ratio_test_is_met_ret</span><span class="p">)</span>
+
+    <span class="n">gain_ratio_test_not_met_ret</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">gain_ratio_test_is_met</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span>
+        <span class="n">gain_ratio_test_not_met_ret</span><span class="p">)</span>
+
+    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">gain_ratio_test_is_met_ret</span><span class="p">,</span>
+        <span class="n">gain_ratio_test_not_met_ret</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span></div>
+
+<div class="viewcode-block" id="LevenbergMarquardt.update_state_using_delta_params"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_delta_params">[docs]</a>  <span class="k">def</span> <span class="nf">update_state_using_delta_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_curr</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">delta_params</span><span class="p">,</span>
+                                      <span class="n">contribution_ratio_diff</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span>
+                                      <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span>
+                                      <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The function to return state variables based on delta_params.</span>
+
+<span class="sd">    Define the functions required for the major conditional of the algorithm,</span>
+<span class="sd">    which checks the magnitude of dparams and checks if it is small enough.</span>
+<span class="sd">    for the value of dparams.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">updated_params</span> <span class="o">=</span> <span class="n">params</span> <span class="o">+</span> <span class="n">delta_params</span>
+
+    <span class="n">residual_next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">updated_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c1"># Calculate denominator of the gain ratio based on Eq. 6.16, &quot;Introduction</span>
+    <span class="c1"># to optimization and data fitting&quot;, L(0)-L(hlm)=0.5*hlm^T*(mu*hlm-g).</span>
+    <span class="n">gain_ratio_denom</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">delta_params</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span>
+        <span class="n">damping_factor</span> <span class="o">*</span> <span class="n">delta_params</span> <span class="o">-</span> <span class="n">gradient</span><span class="p">)</span>
+
+    <span class="c1"># Current value of loss function F=0.5*||f||^2.</span>
+    <span class="n">loss_next</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">residual_next</span><span class="p">))</span>
+
+    <span class="n">gain_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss_curr</span> <span class="o">-</span> <span class="n">loss_next</span><span class="p">)</span> <span class="o">/</span> <span class="n">gain_ratio_denom</span>
+
+    <span class="n">gain_ratio_test_init_state</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span>
+                                  <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span>
+                                  <span class="n">updated_params</span><span class="p">,</span> <span class="n">aux</span><span class="p">)</span>
+
+    <span class="c1"># Calling the jax condition function:</span>
+    <span class="c1"># Note that only the parameters that are used in the rest of the program</span>
+    <span class="c1"># are returned by this function.</span>
+
+    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_state_using_gain_ratio</span><span class="p">(</span><span class="n">gain_ratio</span><span class="p">,</span> <span class="n">contribution_ratio_diff</span><span class="p">,</span>
+                                           <span class="n">gain_ratio_test_init_state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                           <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span></div>
+
+<div class="viewcode-block" id="LevenbergMarquardt.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs one iteration of the least-squares solver.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      params: pytree containing the parameters.</span>
+<span class="sd">      state: named tuple containing the solver state.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, state)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Current value of the loss function F=0.5*||f||^2.</span>
+    <span class="n">loss_curr</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="c1"># TODO: clean up the linear_solver to take matrix directly and then clean up</span>
+    <span class="c1"># linear equation solves below for materialize_jac=True to call them.</span>
+
+    <span class="c1"># For geodesic acceleration, we calculate  jtrpp=JT * r&quot;,</span>
+    <span class="c1"># where J is jacobian and r&quot; is second order directional derivative.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">materialize_jac</span><span class="p">:</span>
+      <span class="c1"># Note that instead of taking the inverse of jtj_corr and multiply that</span>
+      <span class="c1"># by state.gradient, we prefer to use `jsp.solve`, which uses Cholesky of</span>
+      <span class="c1"># jtj_corr and uses that to obtain velocity. This has the advantage of</span>
+      <span class="c1"># lower number of floating point operations and therefore less numerical</span>
+      <span class="c1"># error which can be helpful for the case of single precision arithmatics.</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;qr&#39;</span><span class="p">:</span>
+        <span class="n">damping_term</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">damping_factor</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">aug_jac</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">state</span><span class="o">.</span><span class="n">jac</span><span class="p">,</span> <span class="n">damping_term</span><span class="p">])</span>
+        <span class="n">aug_res</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">state</span><span class="o">.</span><span class="n">residual</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">size</span><span class="p">)])</span>
+        <span class="n">q</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">jsp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">aug_jac</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;economic&#39;</span><span class="p">)</span>
+        <span class="n">velocity</span> <span class="o">=</span> <span class="n">jsp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve_triangular</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">aug_res</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">damping_term</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">damping_factor</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">jtj_corr</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">jtj</span> <span class="o">+</span> <span class="n">damping_term</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;lu&#39;</span><span class="p">:</span>
+          <span class="n">velocity</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">jtj_corr</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">gradient</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;inv&#39;</span><span class="p">:</span>
+          <span class="n">jtj_corr_inv</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">jtj_corr</span><span class="p">)</span>
+          <span class="n">velocity</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">jtj_corr_inv</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">gradient</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">velocity</span> <span class="o">=</span> <span class="n">jsp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">jtj_corr</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">gradient</span><span class="p">,</span> <span class="n">assume_a</span><span class="o">=</span><span class="s1">&#39;pos&#39;</span><span class="p">)</span>
+      <span class="n">delta_params</span> <span class="o">=</span> <span class="n">velocity</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">geodesic</span><span class="p">:</span>
+        <span class="n">rpp</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">hess_res</span> <span class="o">@</span> <span class="n">velocity</span><span class="p">)</span> <span class="o">@</span> <span class="n">velocity</span>
+        <span class="c1"># Note the same as above here that we could use inverse of jtj_corr but</span>
+        <span class="c1"># chose to use solve for higher performance and lower numerical error.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;qr&#39;</span><span class="p">:</span>
+          <span class="n">aug_rpp</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">rpp</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">size</span><span class="p">)])</span>
+          <span class="n">acceleration</span> <span class="o">=</span> <span class="n">jsp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve_triangular</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">aug_rpp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;lu&#39;</span><span class="p">:</span>
+          <span class="n">acceleration</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">jtj_corr</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">jt</span><span class="p">)</span> <span class="o">@</span> <span class="n">rpp</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;inv&#39;</span><span class="p">:</span>
+          <span class="n">acceleration</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">jtj_corr_inv</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">jt</span><span class="p">)</span> <span class="o">@</span> <span class="n">rpp</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">acceleration</span> <span class="o">=</span> <span class="n">jsp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">jtj_corr</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">jt</span><span class="p">,</span> <span class="n">assume_a</span><span class="o">=</span><span class="s1">&#39;pos&#39;</span><span class="p">)</span> <span class="o">@</span> <span class="n">rpp</span>
+
+        <span class="n">delta_params</span> <span class="o">+=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">acceleration</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">matvec</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jtj_op</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+      <span class="n">velocity</span><span class="p">,</span> <span class="n">acceleration</span><span class="p">,</span> <span class="n">delta_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_solve_linear_eqs</span><span class="p">(</span>
+        <span class="n">matvec</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+      <span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">geodesic</span><span class="p">:</span>
+      <span class="n">contribution_ratio_diff</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">acceleration</span><span class="p">)</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+          <span class="n">velocity</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">contribution_ratio_threshold</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">contribution_ratio_diff</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="c1"># Negative coefficient is due to the sign of the RHS vector in the update equation</span>
+    <span class="c1"># (J^T @ J + µ I) @ ∆params = -J^T @ f(x).</span>
+    <span class="n">delta_params</span> <span class="o">=</span> <span class="o">-</span><span class="n">delta_params</span>
+
+    <span class="c1"># Checking if the dparams satisfy the &quot;sufficiently small&quot; criteria.</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_state_using_delta_params</span><span class="p">(</span><span class="n">loss_curr</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">delta_params</span><span class="p">,</span>
+                                             <span class="n">contribution_ratio_diff</span><span class="p">,</span>
+                                             <span class="n">state</span><span class="o">.</span><span class="n">damping_factor</span><span class="p">,</span>
+                                             <span class="n">state</span><span class="o">.</span><span class="n">increase_factor</span><span class="p">,</span>
+                                             <span class="n">state</span><span class="o">.</span><span class="n">residual</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">gradient</span><span class="p">,</span>
+                                             <span class="n">state</span><span class="o">.</span><span class="n">jac</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">jt</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">jtj</span><span class="p">,</span>
+                                             <span class="n">state</span><span class="o">.</span><span class="n">hess_res</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">aux</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="n">state</span> <span class="o">=</span> <span class="n">LevenbergMarquardtState</span><span class="p">(</span>
+        <span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">damping_factor</span><span class="o">=</span><span class="n">damping_factor</span><span class="p">,</span>
+        <span class="n">increase_factor</span><span class="o">=</span><span class="n">increase_factor</span><span class="p">,</span>
+        <span class="n">error</span><span class="o">=</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">gradient</span><span class="p">),</span>
+        <span class="n">residual</span><span class="o">=</span><span class="n">residual</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">residual</span><span class="p">)),</span>
+        <span class="n">delta</span><span class="o">=</span><span class="n">delta_params</span><span class="p">,</span>
+        <span class="n">gradient</span><span class="o">=</span><span class="n">gradient</span><span class="p">,</span>
+        <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span>
+        <span class="n">jt</span><span class="o">=</span><span class="n">jt</span><span class="p">,</span>
+        <span class="n">jtj</span><span class="o">=</span><span class="n">jtj</span><span class="p">,</span>
+        <span class="n">hess_res</span><span class="o">=</span><span class="n">hess_res</span><span class="p">,</span>
+        <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;cholesky&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver_fn</span> <span class="o">=</span> <span class="n">solve_cholesky</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;lu&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver_fn</span> <span class="o">=</span> <span class="n">solve_lu</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;qr&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver_fn</span> <span class="o">=</span> <span class="n">solve_qr</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;inv&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">solver_fn</span> <span class="o">=</span> <span class="n">solve_inv</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_fun</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_fun</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_fun_with_aux</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">residual_fun</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># Define maximum value for the damping factor and increase factor. This is</span>
+    <span class="c1"># particularly helpful for X32 usage.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">damping_factor_max</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">increase_factor_max</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># For geodesic acceleration, we define Hessian of the residual function.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">materialize_jac</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jac_fun</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">geodesic</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_hess_res_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span>
+              <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span> <span class="n">argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jac_fun</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jac_fun</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">geodesic</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_hess_res_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jac_fun</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;qr&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;QR factorization solver materializes Jacobian to solve the augmented &quot;</span>
+                         <span class="s2">&quot;Jacobian equation instead of the normal equation. Hence, this solver &quot;</span>
+                         <span class="s2">&quot;choice is inconsistent with materialize_jac=False.&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;lu&#39;</span><span class="p">,</span> <span class="s1">&#39;cholesky&#39;</span><span class="p">,</span> <span class="s1">&#39;inv&#39;</span><span class="p">]:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The linear solver </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="si">}</span><span class="s2"> that requires materialization of &quot;</span>
+                      <span class="s2">&quot;J^T.J matrix is used with materialize_jac=False, which may cause a &quot;</span>
+                      <span class="s2">&quot;computational overhead. Consider using either a matrix-free iterative &quot;</span>
+                      <span class="s2">&quot;solver such as cg or bicg or using materialize_jac=True.&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LevenbergMarquardt.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jt_op</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">_jt_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Product of J^T and residual -- J: jacobian of fun at params.&quot;&quot;&quot;</span>
+    <span class="n">fun_with_args</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">vjpfun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vjp</span><span class="p">(</span><span class="n">fun_with_args</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">jt_op_val</span><span class="p">,</span> <span class="o">=</span> <span class="n">vjpfun</span><span class="p">(</span><span class="n">residual</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jt_op_val</span>
+
+  <span class="k">def</span> <span class="nf">_jtj_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">vec</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Product of J^T.J with vec using vjp &amp; jvp, where J is jacobian of fun at params.&quot;&quot;&quot;</span>
+    <span class="n">fun_with_args</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">vjpfun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vjp</span><span class="p">(</span><span class="n">fun_with_args</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">jvp_val</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jvp</span><span class="p">(</span><span class="n">fun_with_args</span><span class="p">,</span> <span class="p">(</span><span class="n">params</span><span class="p">,),</span> <span class="p">(</span><span class="n">vec</span><span class="p">,))</span>
+    <span class="n">jtj_op_val</span><span class="p">,</span> <span class="o">=</span> <span class="n">vjpfun</span><span class="p">(</span><span class="n">jvp_val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jtj_op_val</span>
+
+  <span class="k">def</span> <span class="nf">_jtj_diag_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Diagonal elements of J^T.J, where J is jacobian of fun at params.&quot;&quot;&quot;</span>
+    <span class="n">diag_op</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jtj_op</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">diag_op</span><span class="p">)(</span><span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
+
+  <span class="k">def</span> <span class="nf">_d2fvv_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primals</span><span class="p">,</span> <span class="n">tangents1</span><span class="p">,</span> <span class="n">tangents2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Product with d2f.v1v2.&quot;&quot;&quot;</span>
+    <span class="n">fun_with_args</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">pr</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">jvp</span><span class="p">(</span><span class="n">fun_with_args</span><span class="p">,</span> <span class="p">(</span><span class="n">pr</span><span class="p">,),</span> <span class="p">(</span><span class="n">tangents1</span><span class="p">,))[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">jvp</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">(</span><span class="n">primals</span><span class="p">,),</span> <span class="p">(</span><span class="n">tangents2</span><span class="p">,))[</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">_solve_linear_eqs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matvec</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solves the linear equations to obtain velocity and acceleration.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
+      <span class="n">solver_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ridge&#39;</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">damping_factor</span><span class="p">,</span> <span class="s1">&#39;init&#39;</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">delta</span><span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">solver_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ridge&#39;</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">damping_factor</span><span class="p">}</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver_fn</span><span class="p">(</span><span class="n">matvec</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">gradient</span><span class="p">,</span> <span class="o">**</span><span class="n">solver_options</span><span class="p">)</span>
+    <span class="n">delta_params</span> <span class="o">=</span> <span class="n">velocity</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">geodesic</span><span class="p">:</span>
+      <span class="n">rpp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d2fvv_op</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">jtrpp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jt_op</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">rpp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">acceleration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver_fn</span><span class="p">(</span><span class="n">matvec</span><span class="p">,</span> <span class="n">jtrpp</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">damping_factor</span><span class="p">)</span>
+      <span class="n">delta_params</span> <span class="o">+=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">acceleration</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">acceleration</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="n">acceleration</span><span class="p">,</span> <span class="n">delta_params</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">print_iteration</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">LevenbergMarquardtState</span><span class="p">):</span>
+  <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Iteration: </span><span class="si">{iter}</span><span class="s2">, Value: </span><span class="si">{value}</span><span class="s2">, ||Gradient||: </span><span class="si">{error}</span><span class="s2">, Damping Factor: </span><span class="si">{damp}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="nb">iter</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">damp</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">damping_factor</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

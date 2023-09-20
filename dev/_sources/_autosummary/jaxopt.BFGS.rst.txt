@@ -1,0 +1,53 @@
+﻿jaxopt.BFGS
+===========
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: BFGS
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BFGS.__init__
+      ~BFGS.attribute_names
+      ~BFGS.attribute_values
+      ~BFGS.init_state
+      ~BFGS.l2_optimality_error
+      ~BFGS.optimality_fun
+      ~BFGS.run
+      ~BFGS.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BFGS.condition
+      ~BFGS.decrease_factor
+      ~BFGS.has_aux
+      ~BFGS.implicit_diff
+      ~BFGS.implicit_diff_solve
+      ~BFGS.increase_factor
+      ~BFGS.jit
+      ~BFGS.linesearch
+      ~BFGS.linesearch_init
+      ~BFGS.max_stepsize
+      ~BFGS.maxiter
+      ~BFGS.maxls
+      ~BFGS.min_stepsize
+      ~BFGS.stepsize
+      ~BFGS.tol
+      ~BFGS.unroll
+      ~BFGS.value_and_grad
+      ~BFGS.verbose
+      ~BFGS.fun
+   
+   

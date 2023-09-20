@@ -1,0 +1,6 @@
+﻿jaxopt.loss.binary\_perceptron\_loss
+====================================
+
+.. currentmodule:: jaxopt.loss
+
+.. autofunction:: binary_perceptron_loss

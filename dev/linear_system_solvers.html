@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linear system solving &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jaxopt.linear_solve.solve_cg" href="_autosummary/jaxopt.linear_solve.solve_cg.html" />
+    <link rel="prev" title="jaxopt.LevenbergMarquardt" href="_autosummary/jaxopt.LevenbergMarquardt.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linear system solving</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#indirect-solvers">Indirect solvers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cg.html">jaxopt.linear_solve.solve_cg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_normal_cg.html">jaxopt.linear_solve.solve_normal_cg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_gmres.html">jaxopt.linear_solve.solve_gmres</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_bicgstab.html">jaxopt.linear_solve.solve_bicgstab</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#direct-solvers">Direct solvers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_lu.html">jaxopt.linear_solve.solve_lu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cholesky.html">jaxopt.linear_solve.solve_cholesky</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#iterative-refinement">Iterative refinement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.IterativeRefinement.html">jaxopt.IterativeRefinement</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Linear system solving</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/linear_system_solvers.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="linear-system-solving">
+<h1>Linear system solving<a class="headerlink" href="#linear-system-solving" title="Permalink to this heading"></a></h1>
+<p>This section is concerned with solving problems of the form</p>
+<div class="math notranslate nohighlight">
+\[Ax = b\]</div>
+<p>with unknown <span class="math notranslate nohighlight">\(x\)</span> for a linear operator <span class="math notranslate nohighlight">\(A\)</span> and vector <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<section id="indirect-solvers">
+<h2>Indirect solvers<a class="headerlink" href="#indirect-solvers" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cg.html#jaxopt.linear_solve.solve_cg" title="jaxopt.linear_solve.solve_cg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_cg</span></code></a>(matvec, b[, ...])</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using conjugate gradient.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_normal_cg.html#jaxopt.linear_solve.solve_normal_cg" title="jaxopt.linear_solve.solve_normal_cg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_normal_cg</span></code></a>(matvec, b)</p></td>
+<td><p>Solves the normal equation <code class="docutils literal notranslate"><span class="pre">A^T</span> <span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A^T</span> <span class="pre">b</span></code> using conjugate gradient.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_gmres.html#jaxopt.linear_solve.solve_gmres" title="jaxopt.linear_solve.solve_gmres"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_gmres</span></code></a>(matvec, b[, ...])</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using gmres.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_bicgstab.html#jaxopt.linear_solve.solve_bicgstab" title="jaxopt.linear_solve.solve_bicgstab"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_bicgstab</span></code></a>(matvec, b)</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using bicgstab.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Indirect solvers iteratively solve the linear system up to some precision.
+Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">linear_solve</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+
+<span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">matvec_A</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span>  <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">(</span><span class="n">matvec_A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_gmres</span><span class="p">(</span><span class="n">matvec_A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_bicgstab</span><span class="p">(</span><span class="n">matvec_A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above solvers support ridge regularization with the <code class="docutils literal notranslate"><span class="pre">ridge</span></code> option.
+They can be <em>warm-started</em> using the <code class="docutils literal notranslate"><span class="pre">init</span></code> option.
+Other options, such as <code class="docutils literal notranslate"><span class="pre">tol</span></code> or <code class="docutils literal notranslate"><span class="pre">maxiter</span></code>, are also supported.</p>
+</section>
+<section id="direct-solvers">
+<h2>Direct solvers<a class="headerlink" href="#direct-solvers" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_lu.html#jaxopt.linear_solve.solve_lu" title="jaxopt.linear_solve.solve_lu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_lu</span></code></a>(matvec, b[, ridge])</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using <code class="docutils literal notranslate"><span class="pre">jax.lax.solve</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cholesky.html#jaxopt.linear_solve.solve_cholesky" title="jaxopt.linear_solve.solve_cholesky"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_cholesky</span></code></a>(matvec, b)</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code>, using Cholesky decomposition.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Direct solvers are based on matrix decompositions.
+They need to materialize the matrix in memory.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">linear_solve</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+
+<span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">matvec_A</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_lu</span><span class="p">(</span><span class="n">matvec_A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="iterative-refinement">
+<h2>Iterative refinement<a class="headerlink" href="#iterative-refinement" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement" title="jaxopt.IterativeRefinement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.IterativeRefinement</span></code></a>([matvec_A, ...])</p></td>
+<td><p><a class="reference external" href="https://en.wikipedia.org/wiki/Iterative_refinement">Iterativement refinement</a> algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Iterative_refinement">Iterative refinement</a>
+is a meta-algorithm for solving the linear system <code class="docutils literal notranslate"><span class="pre">Ax</span> <span class="pre">=</span> <span class="pre">b</span></code> based on
+a provided linear system solver. Our implementation is a slight generalization
+of the standard algorithm. It starts with <span class="math notranslate nohighlight">\((r_0, x_0) = (b, 0)\)</span> and
+iterates</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+x &amp;= \text{solution of } \bar{A} x = r_{t-1}\\
+x_t &amp;= x_{t-1} + x\\
+r_t &amp;= b - A x_t
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{A}\)</span> is some approximation of A, with preferably
+better preconditonning than A. By default, we use
+<span class="math notranslate nohighlight">\(\bar{A} = A\)</span>, which is the standard iterative refinement algorithm.
+This method has the advantage of converging even if the solve step is
+inaccurate.  This is particularly useful for ill-posed problems.
+Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">IterativeRefinement</span>
+<span class="kn">from</span> <span class="nn">jaxopt.linear_solve</span> <span class="kn">import</span> <span class="n">solve_gmres</span>
+
+<span class="c1"># ill-conditioned linear system</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">3.9</span><span class="p">,</span> <span class="mf">1.65</span><span class="p">],</span> <span class="p">[</span><span class="mf">6.845</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">9.7</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Condition number: </span><span class="si">{</span><span class="n">onp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Condition number: 4647</span>
+
+<span class="n">ridge</span> <span class="o">=</span> <span class="mf">1e-2</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-7</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">solve_gmres</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GMRES only error: </span><span class="si">{</span><span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="si">:</span><span class="s2">.7f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># GMRES only error: nan</span>
+
+<span class="n">solve_gmres_ridge</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">solve_gmres</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="n">ridge</span><span class="p">)</span>
+
+<span class="n">x_ridge</span> <span class="o">=</span> <span class="n">solve_gmres_ridge</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="n">ridge</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GMRES+ridge error: </span><span class="si">{</span><span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">x_ridge</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="si">:</span><span class="s2">.7f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># GMRES+ridge error: 0.0333328</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">IterativeRefinement</span><span class="p">(</span><span class="n">solve</span><span class="o">=</span><span class="n">solve_gmres_ridge</span><span class="p">,</span>
+                            <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">x_refined</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params_A</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iterativement Refinement error: </span><span class="si">{</span><span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">x_refined</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="si">:</span><span class="s2">.7f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Iterativement Refinement error: 0.0000000</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_autosummary/jaxopt.LevenbergMarquardt.html" class="btn btn-neutral float-left" title="jaxopt.LevenbergMarquardt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.linear_solve.solve_cg.html" class="btn btn-neutral float-right" title="jaxopt.linear_solve.solve_cg" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

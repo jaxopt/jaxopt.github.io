@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Development &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#update-notebooks">Update notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#editing-ipynb">Editing ipynb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#editing-md">Editing md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#syncing-notebooks">Syncing notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-new-notebooks">Creating new notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notebooks-within-the-sphinx-build">Notebooks within the sphinx build</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Development</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/developer.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="development">
+<h1>Development<a class="headerlink" href="#development" title="Permalink to this heading"></a></h1>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+<p>To rebuild the documentation, install several packages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">docs</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>And then run from the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p>This can take a long time because it executes many of the examples;
+if you’d prefer to build the docs without executing the notebooks, you can run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span><span class="o">-</span><span class="n">noplot</span>
+</pre></div>
+</div>
+<p>You can then see the generated documentation in <code class="docutils literal notranslate"><span class="pre">docs/_build/html/index.html</span></code>.</p>
+<section id="update-notebooks">
+<h3>Update notebooks<a class="headerlink" href="#update-notebooks" title="Permalink to this heading"></a></h3>
+<p>We use <a class="reference external" href="https://jupytext.readthedocs.io">jupytext</a> to maintain two synced copies of the notebooks
+in <code class="docutils literal notranslate"><span class="pre">docs/notebooks</span></code>: one in <code class="docutils literal notranslate"><span class="pre">ipynb</span></code> format, and one in <code class="docutils literal notranslate"><span class="pre">md</span></code> format. The advantage of the former
+is that it can be opened and executed directly in Colab; the advantage of the latter is that
+it makes it much easier to track diffs within version control.</p>
+</section>
+<section id="editing-ipynb">
+<h3>Editing ipynb<a class="headerlink" href="#editing-ipynb" title="Permalink to this heading"></a></h3>
+<p>For making large changes that substantially modify code and outputs, it is easiest to
+edit the notebooks in Jupyter or in Colab. To edit notebooks in the Colab interface,
+open <a class="reference external" href="http://colab.research.google.com">http://colab.research.google.com</a> and <code class="docutils literal notranslate"><span class="pre">Upload</span></code> from your local repo.
+Update it as needed, <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">all</span> <span class="pre">cells</span></code> then <code class="docutils literal notranslate"><span class="pre">Download</span> <span class="pre">ipynb</span></code>.
+You may want to test that it executes properly, using <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> as explained above.</p>
+</section>
+<section id="editing-md">
+<h3>Editing md<a class="headerlink" href="#editing-md" title="Permalink to this heading"></a></h3>
+<p>For making smaller changes to the text content of the notebooks, it is easiest to edit the
+<code class="docutils literal notranslate"><span class="pre">.md</span></code> versions using a text editor.</p>
+</section>
+<section id="syncing-notebooks">
+<h3>Syncing notebooks<a class="headerlink" href="#syncing-notebooks" title="Permalink to this heading"></a></h3>
+<p>After editing either the ipynb or md versions of the notebooks, you can sync the two versions
+using <a class="reference external" href="https://jupytext.readthedocs.io">jupytext</a>. For example, to sync the files inside the <code class="docutils literal notranslate"><span class="pre">docs/notebooks/deep_learning/</span></code>, run the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupytext</span> <span class="o">--</span><span class="n">sync</span> <span class="n">docs</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">deep_learning</span><span class="o">/*.*</span>
+</pre></div>
+</div>
+<p>Be sure to use the version of jupytext specified in
+<a class="reference external" href="https://github.com/google/jaxopt/blob/main/.pre-commit-config.yaml">.pre-commit-config.yaml</a>.</p>
+<p>Alternatively, you can use the <a class="reference external" href="https://pre-commit.com">pre-commit</a> framework to run this
+on all staged files in your git repository, automatically using the correct jupytext version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pre</span><span class="o">-</span><span class="n">commit</span> <span class="n">run</span> <span class="n">jupytext</span>
+</pre></div>
+</div>
+<p>See the pre-commit framework documentation for information on how to set your local git
+environment to execute this automatically.</p>
+</section>
+<section id="creating-new-notebooks">
+<h3>Creating new notebooks<a class="headerlink" href="#creating-new-notebooks" title="Permalink to this heading"></a></h3>
+<p>If you are adding a new notebook to the documentation and would like to use the <code class="docutils literal notranslate"><span class="pre">jupytext</span> <span class="pre">--sync</span></code>
+command discussed here, you can set up your notebook for jupytext by using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupytext</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">formats</span> <span class="n">ipynb</span><span class="p">,</span><span class="n">md</span><span class="p">:</span><span class="n">myst</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">the</span><span class="o">/</span><span class="n">notebook</span><span class="o">.</span><span class="n">ipynb</span>
+</pre></div>
+</div>
+<p>This works by adding a <code class="docutils literal notranslate"><span class="pre">&quot;jupytext&quot;</span></code> metadata field to the notebook file which specifies the
+desired formats, and which the <code class="docutils literal notranslate"><span class="pre">jupytext</span> <span class="pre">--sync</span></code> command recognizes when invoked.</p>
+</section>
+<section id="notebooks-within-the-sphinx-build">
+<h3>Notebooks within the sphinx build<a class="headerlink" href="#notebooks-within-the-sphinx-build" title="Permalink to this heading"></a></h3>
+<p>We exclude some notebooks from the build, e.g., because they contain long computations.
+See <code class="docutils literal notranslate"><span class="pre">exclude_patterns</span></code> in <a class="reference external" href="https://github.com/google/jaxopt/blob/main/docs/conf.py">conf.py</a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

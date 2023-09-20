@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multiclass linear SVM (without intercept). &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Binary kernel SVM with intercept." href="binary_kernel_svm_with_intercept.html" />
+    <link rel="prev" title="Non-negative matrix factorizaton (NMF) using alternating minimization." href="nmf.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Constrained optimization</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="nmf.html">Non-negative matrix factorizaton (NMF) using alternating minimization.</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Multiclass linear SVM (without intercept).</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_kernel_svm_with_intercept.html">Binary kernel SVM with intercept.</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../deep_learning/index.html">Deep learning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fixed_point/index.html">Fixed point resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../implicit_diff/index.html">Implicit differentiation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Example gallery</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Constrained optimization</a></li>
+      <li class="breadcrumb-item active">Multiclass linear SVM (without intercept).</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/constrained/multiclass_linear_svm.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-constrained-multiclass-linear-svm-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="multiclass-linear-svm-without-intercept">
+<span id="sphx-glr-auto-examples-constrained-multiclass-linear-svm-py"></span><h1>Multiclass linear SVM (without intercept).<a class="headerlink" href="#multiclass-linear-svm-without-intercept" title="Permalink to this heading"></a></h1>
+<p>This quadratic program can be solved either with OSQP or with block coordinate descent.</p>
+<p>Reference:</p>
+<blockquote>
+<div><p>Crammer, K. and Singer, Y., 2001. On the algorithmic implementation of multiclass kernel-based vector machines.
+Journal of machine learning research, 2(Dec), pp.265-292.</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BlockCoordinateDescent</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OSQP</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">objective</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">projection</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">prox</span>
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
+
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;tol&quot;</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span> <span class="s2">&quot;Tolerance of solvers.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;l2reg&quot;</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">,</span> <span class="s2">&quot;Regularization parameter. Must be positive.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;num_samples&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;Size of train set.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;num_features&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Features dimension.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;num_classes&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Number of classes.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_bool</span><span class="p">(</span><span class="s2">&quot;verbose&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Verbosity.&quot;</span><span class="p">)</span>
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
+
+
+<span class="k">def</span> <span class="nf">multiclass_linear_svm_skl</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solve multiclass SVM with sklearn.svm.LinearSVC:&quot;</span><span class="p">)</span>
+  <span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">LinearSVC</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s2">&quot;hinge&quot;</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multi_class</span><span class="o">=</span><span class="s2">&quot;crammer_singer&quot;</span><span class="p">,</span>
+                      <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">fit_intercept</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                      <span class="n">tol</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="o">*</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">svc</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">T</span>
+
+
+<span class="k">def</span> <span class="nf">multiclass_linear_svm_bcd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Block coordinate descent solution:&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Set up parameters.</span>
+  <span class="n">block_prox</span> <span class="o">=</span> <span class="n">prox</span><span class="o">.</span><span class="n">make_prox_from_projection</span><span class="p">(</span><span class="n">projection</span><span class="o">.</span><span class="n">projection_simplex</span><span class="p">)</span>
+  <span class="n">fun</span> <span class="o">=</span> <span class="n">objective</span><span class="o">.</span><span class="n">multiclass_linear_svm_dual</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+  <span class="n">beta_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="o">/</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="c1"># Run solver.</span>
+  <span class="n">bcd</span> <span class="o">=</span> <span class="n">BlockCoordinateDescent</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">block_prox</span><span class="o">=</span><span class="n">block_prox</span><span class="p">,</span>
+                               <span class="n">maxiter</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">tol</span><span class="p">)</span>
+  <span class="n">sol</span> <span class="o">=</span> <span class="n">bcd</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">beta_init</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">params</span>
+
+
+<span class="k">def</span> <span class="nf">multiclass_linear_svm_osqp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">):</span>
+  <span class="c1"># We solve the problem</span>
+  <span class="c1">#</span>
+  <span class="c1">#   minimize 0.5/l2reg beta X X.T beta - (1. - Y)^T beta - 1./l2reg (Y^T X) X^T beta</span>
+  <span class="c1">#   under        beta &gt;= 0</span>
+  <span class="c1">#         sum_i beta_i = 1</span>
+  <span class="c1">#</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OSQP solution solution:&quot;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1.</span><span class="o">/</span><span class="n">l2reg</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">beta</span><span class="p">))</span>
+
+  <span class="n">linear_part</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.</span><span class="o">/</span><span class="n">l2reg</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span>
+
+  <span class="k">def</span> <span class="nf">matvec_A</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">matvec_G</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">beta</span>
+
+  <span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+
+  <span class="n">osqp</span> <span class="o">=</span> <span class="n">OSQP</span><span class="p">(</span><span class="n">matvec_Q</span><span class="o">=</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="n">matvec_A</span><span class="o">=</span><span class="n">matvec_A</span><span class="p">,</span> <span class="n">matvec_G</span><span class="o">=</span><span class="n">matvec_G</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
+  <span class="n">hyper_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">linear_part</span><span class="p">),</span>
+                      <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span>
+                      <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+
+  <span class="n">sol</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">osqp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">primal</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">argv</span>
+
+  <span class="c1"># Generate data.</span>
+  <span class="n">num_samples</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_samples</span>
+  <span class="n">num_features</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_features</span>
+  <span class="n">num_classes</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_classes</span>
+
+  <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+                                      <span class="n">n_informative</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">X</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">Normalizer</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+  <span class="n">Y</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelBinarizer</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+  <span class="n">Y</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+
+  <span class="n">l2reg</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span>
+
+  <span class="c1"># Compare against sklearn.</span>
+  <span class="n">W_osqp</span> <span class="o">=</span> <span class="n">multiclass_linear_svm_osqp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">)</span>
+  <span class="n">W_fit_osqp</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">W_osqp</span><span class="p">))</span> <span class="o">/</span> <span class="n">l2reg</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">W_fit_osqp</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+
+  <span class="n">W_bcd</span> <span class="o">=</span> <span class="n">multiclass_linear_svm_bcd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">)</span>
+  <span class="n">W_fit_bcd</span>  <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">W_bcd</span><span class="p">))</span> <span class="o">/</span> <span class="n">l2reg</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">W_fit_bcd</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+
+  <span class="n">W_skl</span> <span class="o">=</span> <span class="n">multiclass_linear_svm_skl</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">W_skl</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_platform_name&quot;</span><span class="p">,</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.000 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-constrained-multiclass-linear-svm-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/15eeb79478680dfa38086131783cffa5/multiclass_linear_svm.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">multiclass_linear_svm.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/c5b7f8ea8005d767843a933ca31aa8b9/multiclass_linear_svm.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">multiclass_linear_svm.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="nmf.html" class="btn btn-neutral float-left" title="Non-negative matrix factorizaton (NMF) using alternating minimization." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="binary_kernel_svm_with_intercept.html" class="btn btn-neutral float-right" title="Binary kernel SVM with intercept." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

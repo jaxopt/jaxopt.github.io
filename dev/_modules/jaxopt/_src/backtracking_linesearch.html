@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.backtracking_linesearch &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.backtracking_linesearch</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.backtracking_linesearch</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Bactracking line search algorithm.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add_scalar_mul</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_vdot_real</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_conj</span>
+
+<span class="k">class</span> <span class="nc">BacktrackingLineSearchState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple containing state information.&quot;&quot;&quot;</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">value</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">done</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="n">params</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">grad</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">num_grad_eval</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">failed</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="BacktrackingLineSearch"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BacktrackingLineSearch</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeLineSearch</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Backtracking line search.</span>
+
+<span class="sd">  Supports complex variables.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    fun: a function of the form ``fun(params, *args, **kwargs)``, where</span>
+<span class="sd">      ``params`` are parameters of the model,</span>
+<span class="sd">      ``*args`` and ``**kwargs`` are additional arguments.</span>
+<span class="sd">    value_and_grad: if ``False``, ``fun`` should return the function value only.</span>
+<span class="sd">      If ``True``, ``fun`` should return both the function value and the</span>
+<span class="sd">      gradient.</span>
+<span class="sd">    has_aux: if ``False``, ``fun`` should return the function value only.</span>
+<span class="sd">      If ``True``, ``fun`` should return a pair ``(value, aux)`` where ``aux``</span>
+<span class="sd">      is a pytree of auxiliary values.</span>
+
+<span class="sd">    condition: either &quot;armijo&quot;, &quot;goldstein&quot;, &quot;strong-wolfe&quot; or &quot;wolfe&quot;.</span>
+<span class="sd">    c1: constant used by the (strong) Wolfe condition.</span>
+<span class="sd">    c2: constant strictly less than 1 used by the (strong) Wolfe condition.</span>
+<span class="sd">    decrease_factor: factor by which to decrease the stepsize during line search</span>
+<span class="sd">      (default: 0.8).</span>
+<span class="sd">    max_stepsize: upper bound on stepsize.</span>
+
+<span class="sd">    maxiter: maximum number of line search iterations.</span>
+<span class="sd">    tol: tolerance of the stopping criterion.</span>
+
+<span class="sd">    verbose: whether to print error on every iteration or not.</span>
+
+<span class="sd">    jit: whether to JIT-compile the optimization loop (default: &quot;auto&quot;).</span>
+<span class="sd">    unroll: whether to unroll the optimization loop (default: &quot;auto&quot;).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span>
+  <span class="n">value_and_grad</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
+  <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="n">condition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;strong-wolfe&quot;</span>
+  <span class="n">c1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span>
+  <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span>
+  <span class="n">decrease_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>
+  <span class="n">max_stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+  <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">jit</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+  <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+
+<div class="viewcode-block" id="BacktrackingLineSearch.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span>
+      <span class="bp">self</span><span class="p">,</span>
+      <span class="n">init_stepsize</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+      <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+      <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+      <span class="n">grad</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+      <span class="n">descent_direction</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+      <span class="n">fun_args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+      <span class="n">fun_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BacktrackingLineSearchState</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the line search state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_stepsize: initial step size value.</span>
+<span class="sd">      params: current parameters.</span>
+<span class="sd">      value: current function value (recomputed if None).</span>
+<span class="sd">      grad: current gradient (recomputed if None).</span>
+<span class="sd">      descent_direction: ignored.</span>
+<span class="sd">      fun_args: additional positional arguments to be passed to ``fun``.</span>
+<span class="sd">      fun_kwargs: additional keyword arguments to be passed to ``fun``.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">del</span> <span class="n">descent_direction</span>  <span class="c1"># Not used.</span>
+
+    <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">num_grad_eval</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">grad</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span>
+            <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">fun_args</span><span class="p">,</span> <span class="o">**</span><span class="n">fun_kwargs</span>
+        <span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">fun_args</span><span class="p">,</span> <span class="o">**</span><span class="n">fun_kwargs</span><span class="p">)</span>
+      <span class="n">num_fun_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">num_grad_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">BacktrackingLineSearchState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                                       <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+                                       <span class="n">aux</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># we do not need to have aux</span>
+                                       <span class="c1"># in the initial state</span>
+                                       <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
+                                       <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+                                       <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">num_fun_eval</span><span class="p">,</span>
+                                       <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">num_grad_eval</span><span class="p">,</span>
+                                       <span class="n">done</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="kc">False</span><span class="p">),</span>
+                                       <span class="n">grad</span><span class="o">=</span><span class="n">grad</span><span class="p">,</span>
+                                       <span class="n">failed</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="kc">False</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BacktrackingLineSearch.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+      <span class="bp">self</span><span class="p">,</span>
+      <span class="n">stepsize</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+      <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span>
+      <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+      <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+      <span class="n">grad</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+      <span class="n">descent_direction</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+      <span class="n">fun_args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+      <span class="n">fun_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">LineSearchStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs one iteration of backtracking line search.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      stepsize: current estimate of the step size.</span>
+<span class="sd">      state: named tuple containing the line search state.</span>
+<span class="sd">      params: current parameters.</span>
+<span class="sd">      value: current function value (recomputed if None).</span>
+<span class="sd">      grad: current gradient (recomputed if None).</span>
+<span class="sd">      descent_direction: descent direction (negative gradient if None).</span>
+<span class="sd">      fun_args: additional positional arguments to be passed to ``fun``.</span>
+<span class="sd">      fun_kwargs: additional keyword arguments to be passed to ``fun``.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, state)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ensure that stepsize does not exceed upper bound.</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">)</span>
+    <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">num_fun_eval</span>
+    <span class="n">num_grad_eval</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">num_grad_eval</span>
+
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">grad</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">fun_args</span><span class="p">,</span> <span class="o">**</span><span class="n">fun_kwargs</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">fun_args</span><span class="p">,</span> <span class="o">**</span><span class="n">fun_kwargs</span><span class="p">)</span>
+      <span class="n">num_fun_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">num_grad_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">descent_direction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">descent_direction</span> <span class="o">=</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">tree_conj</span><span class="p">(</span><span class="n">grad</span><span class="p">))</span>
+
+    <span class="n">gd_vdot</span> <span class="o">=</span> <span class="n">tree_vdot_real</span><span class="p">(</span><span class="n">tree_conj</span><span class="p">(</span><span class="n">grad</span><span class="p">),</span> <span class="n">descent_direction</span><span class="p">)</span>
+    <span class="c1"># For backtracking linesearches, we want to compute the next point</span>
+    <span class="c1"># from the basepoint. i.e. x_i  = x_0 + s_i * p</span>
+    <span class="n">new_params</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">descent_direction</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+      <span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">new_aux</span><span class="p">),</span> <span class="n">new_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span>
+          <span class="n">new_params</span><span class="p">,</span> <span class="o">*</span><span class="n">fun_args</span><span class="p">,</span> <span class="o">**</span><span class="n">fun_kwargs</span>
+      <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">new_value</span><span class="p">,</span> <span class="n">new_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span>
+          <span class="n">new_params</span><span class="p">,</span> <span class="o">*</span><span class="n">fun_args</span><span class="p">,</span> <span class="o">**</span><span class="n">fun_kwargs</span>
+      <span class="p">)</span>
+      <span class="n">new_aux</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_gd_vdot</span> <span class="o">=</span> <span class="n">tree_vdot_real</span><span class="p">(</span><span class="n">tree_conj</span><span class="p">(</span><span class="n">new_grad</span><span class="p">),</span> <span class="n">descent_direction</span><span class="p">)</span>
+
+    <span class="c1"># Every condition requires the new function value, but not every one</span>
+    <span class="c1"># requires the new gradient value (we&#39;ll assume that this code is called</span>
+    <span class="c1"># under `jit`).</span>
+    <span class="n">num_fun_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Armijo condition (upper bound on admissible step size).</span>
+    <span class="c1"># cond1 = new_value &lt;= value + self.c1 * stepsize * gd_vdot</span>
+    <span class="c1"># See equation (3.6a), Numerical Optimization, Second edition.</span>
+    <span class="n">diff_cond1</span> <span class="o">=</span> <span class="n">new_value</span> <span class="o">-</span> <span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c1</span> <span class="o">*</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">gd_vdot</span><span class="p">)</span>
+    <span class="n">error_cond1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">diff_cond1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="n">error</span> <span class="o">=</span> <span class="n">error_cond1</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;armijo&quot;</span><span class="p">:</span>
+      <span class="c1"># We don&#39;t need to do any extra work, since this is covered by the</span>
+      <span class="c1"># sufficient decrease condition above.</span>
+      <span class="k">pass</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;strong-wolfe&quot;</span><span class="p">:</span>
+      <span class="c1"># cond2 = abs(new_gd_vdot) &lt;= c2 * abs(gd_vdot)</span>
+      <span class="c1"># See equation (3.7b), Numerical Optimization, Second edition.</span>
+      <span class="n">diff_cond2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_gd_vdot</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">gd_vdot</span><span class="p">)</span>
+      <span class="n">error_cond2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">diff_cond2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+      <span class="n">error</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">error_cond1</span><span class="p">,</span> <span class="n">error_cond2</span><span class="p">)</span>
+      <span class="n">num_grad_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;wolfe&quot;</span><span class="p">:</span>
+      <span class="c1"># cond2 = new_gd_vdot &gt;= c2 * gd_vdot</span>
+      <span class="c1"># See equation (3.6b), Numerical Optimization, Second edition.</span>
+      <span class="n">diff_cond2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c2</span> <span class="o">*</span> <span class="n">gd_vdot</span> <span class="o">-</span> <span class="n">new_gd_vdot</span>
+      <span class="n">error_cond2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">diff_cond2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+      <span class="n">error</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">error_cond1</span><span class="p">,</span> <span class="n">error_cond2</span><span class="p">)</span>
+      <span class="n">num_grad_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;goldstein&quot;</span><span class="p">:</span>
+      <span class="c1"># cond2 = new_value &gt;= value + (1 - self.c1) * stepsize * gd_vdot</span>
+      <span class="n">diff_cond2</span> <span class="o">=</span> <span class="n">value</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">gd_vdot</span> <span class="o">-</span> <span class="n">new_value</span>
+      <span class="n">error_cond2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">diff_cond2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+      <span class="n">error</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">error_cond1</span><span class="p">,</span> <span class="n">error_cond2</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;condition should be one of &quot;</span>
+                       <span class="s2">&quot;&#39;armijo&#39;, &#39;goldstein&#39;, &#39;strong-wolfe&#39; or &#39;wolfe&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">new_stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">error</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
+                             <span class="n">stepsize</span><span class="p">,</span>
+                             <span class="n">stepsize</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">)</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">done</span> <span class="o">|</span> <span class="p">(</span><span class="n">error</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">)</span>
+    <span class="n">failed</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">failed</span> <span class="o">|</span> <span class="p">((</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">done</span><span class="p">)</span>
+
+    <span class="n">new_state</span> <span class="o">=</span> <span class="n">BacktrackingLineSearchState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                            <span class="n">value</span><span class="o">=</span><span class="n">new_value</span><span class="p">,</span>
+                                            <span class="n">aux</span><span class="o">=</span><span class="n">new_aux</span><span class="p">,</span>
+                                            <span class="n">grad</span><span class="o">=</span><span class="n">new_grad</span><span class="p">,</span>
+                                            <span class="n">params</span><span class="o">=</span><span class="n">new_params</span><span class="p">,</span>
+                                            <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">num_fun_eval</span><span class="p">,</span>
+                                            <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">num_grad_eval</span><span class="p">,</span>
+                                            <span class="n">done</span><span class="o">=</span><span class="n">done</span><span class="p">,</span>
+                                            <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
+                                            <span class="n">failed</span><span class="o">=</span><span class="n">failed</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">LineSearchStep</span><span class="p">(</span><span class="n">stepsize</span><span class="o">=</span><span class="n">new_stepsize</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span>
+      <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

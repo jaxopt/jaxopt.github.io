@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt.ProjectedGradient &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="jaxopt.projection.projection_non_negative" href="jaxopt.projection.projection_non_negative.html" />
+    <link rel="prev" title="Constrained optimization" href="../constrained.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../constrained.html">Constrained optimization</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../constrained.html#projected-gradient">Projected gradient</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.ProjectedGradient</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jaxopt.ProjectedGradient"><code class="docutils literal notranslate"><span class="pre">ProjectedGradient</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../constrained.html#instantiating-and-running-the-solver">Instantiating and running the solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../constrained.html#specifying-projection-parameters">Specifying projection parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../constrained.html#differentiation">Differentiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../constrained.html#projections">Projections</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../constrained.html#mirror-descent">Mirror descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constrained.html#box-constraints">Box constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../constrained.html">Constrained optimization</a></li>
+      <li class="breadcrumb-item active">jaxopt.ProjectedGradient</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/_autosummary/jaxopt.ProjectedGradient.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="jaxopt-projectedgradient">
+<h1>jaxopt.ProjectedGradient<a class="headerlink" href="#jaxopt-projectedgradient" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ProjectedGradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acceleration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projected_gradient.html#ProjectedGradient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProjectedGradient" title="Permalink to this definition"></a></dt>
+<dd><p>Projected gradient solver.</p>
+<p>This solver is a convenience wrapper around <a class="reference internal" href="jaxopt.ProximalGradient.html#jaxopt.ProximalGradient" title="jaxopt.ProximalGradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ProximalGradient</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>projection</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>value_and_grad</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>stepsize</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
+<li><p><strong>maxls</strong> (<em>int</em>) – </p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>acceleration</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>decrease_factor</strong> (<em>float</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
+<li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.fun">
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.fun" title="Permalink to this definition"></a></dt>
+<dd><p>a smooth function of the form <code class="docutils literal notranslate"><span class="pre">fun(parameters,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">parameters</span></code> are the model parameters w.r.t. which we minimize
+the function and the rest are fixed auxiliary parameters.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.projection">
+<span class="sig-name descname"><span class="pre">projection</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.projection" title="Permalink to this definition"></a></dt>
+<dd><p>projection operator associated with the constraints.
+It should be of the form <code class="docutils literal notranslate"><span class="pre">projection(params,</span> <span class="pre">hyperparams_proj)</span></code>.
+See <code class="docutils literal notranslate"><span class="pre">jaxopt.projection</span></code> for examples.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.value_and_grad">
+<span class="sig-name descname"><span class="pre">value_and_grad</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.value_and_grad" title="Permalink to this definition"></a></dt>
+<dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> just returns the value (False) or both
+the value and gradient (True).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.has_aux">
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.has_aux" title="Permalink to this definition"></a></dt>
+<dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> outputs auxiliary data or not.
+If <code class="docutils literal notranslate"><span class="pre">has_aux</span></code> is False, <code class="docutils literal notranslate"><span class="pre">fun</span></code> is expected to be</p>
+<blockquote>
+<div><p>scalar-valued.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>If <code class="docutils literal notranslate"><span class="pre">has_aux</span></code> is True, then we have one of the following</dt><dd><p>two cases.</p>
+</dd>
+</dl>
+<p>If <code class="docutils literal notranslate"><span class="pre">value_and_grad</span></code> is False, the output should be
+<code class="docutils literal notranslate"><span class="pre">value,</span> <span class="pre">aux</span> <span class="pre">=</span> <span class="pre">fun(...)</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">value_and_grad</span> <span class="pre">==</span> <span class="pre">True</span></code>, the output should be
+<code class="docutils literal notranslate"><span class="pre">(value,</span> <span class="pre">aux),</span> <span class="pre">grad</span> <span class="pre">=</span> <span class="pre">fun(...)</span></code>.
+At each iteration of the algorithm, the auxiliary outputs are stored</p>
+<blockquote>
+<div><p>in <code class="docutils literal notranslate"><span class="pre">state.aux</span></code>.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.stepsize">
+<span class="sig-name descname"><span class="pre">stepsize</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.stepsize" title="Permalink to this definition"></a></dt>
+<dd><p>a stepsize to use (if &lt;= 0, use backtracking line search),
+or a callable specifying the <strong>positive</strong> stepsize to use at each iteration.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.maxiter">
+<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.maxiter" title="Permalink to this definition"></a></dt>
+<dd><p>maximum number of projected gradient descent iterations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.maxls">
+<span class="sig-name descname"><span class="pre">maxls</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.maxls" title="Permalink to this definition"></a></dt>
+<dd><p>maximum number of iterations to use in the line search.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.tol">
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.tol" title="Permalink to this definition"></a></dt>
+<dd><p>tolerance to use.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.acceleration">
+<span class="sig-name descname"><span class="pre">acceleration</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.acceleration" title="Permalink to this definition"></a></dt>
+<dd><p>whether to use acceleration (also known as FISTA) or not.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.verbose" title="Permalink to this definition"></a></dt>
+<dd><p>whether to print error on every iteration or not.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.implicit_diff">
+<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.implicit_diff" title="Permalink to this definition"></a></dt>
+<dd><p>whether to enable implicit diff or autodiff of unrolled
+iterations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.implicit_diff_solve">
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.implicit_diff_solve" title="Permalink to this definition"></a></dt>
+<dd><p>the linear system solver to use.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>whether function fun outputs one (False) or more values (True).
+When True it will be assumed by default that fun(…)[0] is the objective.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.jit">
+<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.jit" title="Permalink to this definition"></a></dt>
+<dd><p>whether to JIT-compile the optimization loop (default: True).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.unroll">
+<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.ProjectedGradient.unroll" title="Permalink to this definition"></a></dt>
+<dd><p>whether to unroll the optimization loop (default: “auto”).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acceleration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ProjectedGradient.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>projection</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>value_and_grad</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>stepsize</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
+<li><p><strong>maxls</strong> (<em>int</em>) – </p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>acceleration</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>decrease_factor</strong> (<em>float</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
+<li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.__init__" title="jaxopt.ProjectedGradient.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fun, projection[, value_and_grad, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_names</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_values</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.init_state" title="jaxopt.ProjectedGradient.init_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_state</span></code></a>(init_params[, hyperparams_proj])</p></td>
+<td><p>Initialize the parameters and state.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.l2_optimality_error" title="jaxopt.ProjectedGradient.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
+<td><p>Computes the L2 optimality error.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.optimality_fun" title="jaxopt.ProjectedGradient.optimality_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code></a>(sol, hyperparams_proj, *args, ...)</p></td>
+<td><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.run" title="jaxopt.ProjectedGradient.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params[, hyperparams_proj])</p></td>
+<td><p>Runs the optimization loop.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.update" title="jaxopt.ProjectedGradient.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state[, hyperparams_proj])</p></td>
+<td><p>Performs one iteration of projected gradient.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.acceleration" title="jaxopt.ProjectedGradient.acceleration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">acceleration</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decrease_factor</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="jaxopt.ProjectedGradient.has_aux"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_aux</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.implicit_diff" title="jaxopt.ProjectedGradient.implicit_diff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.implicit_diff_solve" title="jaxopt.ProjectedGradient.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.jit" title="jaxopt.ProjectedGradient.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.maxiter" title="jaxopt.ProjectedGradient.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.maxls" title="jaxopt.ProjectedGradient.maxls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxls</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.stepsize" title="jaxopt.ProjectedGradient.stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stepsize</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.tol" title="jaxopt.ProjectedGradient.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.unroll" title="jaxopt.ProjectedGradient.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.value_and_grad" title="jaxopt.ProjectedGradient.value_and_grad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value_and_grad</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.verbose" title="jaxopt.ProjectedGradient.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.fun" title="jaxopt.ProjectedGradient.fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.ProjectedGradient.projection" title="jaxopt.ProjectedGradient.projection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projection</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.init_state">
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projected_gradient.html#ProjectedGradient.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProjectedGradient.init_state" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the parameters and state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>hyperparams_proj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – pytree containing hyperparameters of projection.</p></li>
+<li><p><strong>*args</strong> – additional positional arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ProxGradState</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.l2_optimality_error">
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ProjectedGradient.l2_optimality_error" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the L2 optimality error.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.optimality_fun">
+<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projected_gradient.html#ProjectedGradient.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProjectedGradient.optimality_fun" title="Permalink to this definition"></a></dt>
+<dd><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projected_gradient.html#ProjectedGradient.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProjectedGradient.run" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the optimization loop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>*args</strong> – additional positional arguments to be passed to the update method.</p></li>
+<li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to the update method.</p></li>
+<li><p><strong>hyperparams_proj</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(params, state)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.ProjectedGradient.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparams_proj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projected_gradient.html#ProjectedGradient.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ProjectedGradient.update" title="Permalink to this definition"></a></dt>
+<dd><p>Performs one iteration of projected gradient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the parameters.</p></li>
+<li><p><strong>state</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code>) – named tuple containing the solver state.</p></li>
+<li><p><strong>hyperparams_proj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – pytree containing hyperparameters of projection.</p></li>
+<li><p><strong>*args</strong> – additional positional arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(params, state)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../constrained.html" class="btn btn-neutral float-left" title="Constrained optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jaxopt.projection.projection_non_negative.html" class="btn btn-neutral float-right" title="jaxopt.projection.projection_non_negative" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

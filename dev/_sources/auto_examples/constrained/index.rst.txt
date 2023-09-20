@@ -1,0 +1,80 @@
+
+
+.. _sphx_glr_auto_examples_constrained:
+
+.. _constrained_examples:
+
+Constrained optimization
+------------------------
+
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Non-negative matrix factorizaton (NMF) using alternating minimization.">
+
+.. only:: html
+
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_nmf_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_constrained_nmf.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Non-negative matrix factorizaton (NMF) using alternating minimization.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This quadratic program can be solved either with OSQP or with block coordinate descent.    Refe...">
+
+.. only:: html
+
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_multiclass_linear_svm_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_constrained_multiclass_linear_svm.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Multiclass linear SVM (without intercept).</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The dual objective of binary kernel SVMs with an intercept contains both box constraints and an...">
+
+.. only:: html
+
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_binary_kernel_svm_with_intercept_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_constrained_binary_kernel_svm_with_intercept.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Binary kernel SVM with intercept.</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/constrained/nmf
+   /auto_examples/constrained/multiclass_linear_svm
+   /auto_examples/constrained/binary_kernel_svm_with_intercept
+

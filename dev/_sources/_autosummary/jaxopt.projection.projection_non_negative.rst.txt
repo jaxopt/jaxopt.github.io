@@ -1,0 +1,6 @@
+﻿jaxopt.projection.projection\_non\_negative
+===========================================
+
+.. currentmodule:: jaxopt.projection
+
+.. autofunction:: projection_non_negative

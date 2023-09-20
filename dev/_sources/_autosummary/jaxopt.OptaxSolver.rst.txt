@@ -1,0 +1,47 @@
+﻿jaxopt.OptaxSolver
+==================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: OptaxSolver
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OptaxSolver.__init__
+      ~OptaxSolver.attribute_names
+      ~OptaxSolver.attribute_values
+      ~OptaxSolver.init_state
+      ~OptaxSolver.l2_optimality_error
+      ~OptaxSolver.optimality_fun
+      ~OptaxSolver.run
+      ~OptaxSolver.run_iterator
+      ~OptaxSolver.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~OptaxSolver.has_aux
+      ~OptaxSolver.implicit_diff
+      ~OptaxSolver.implicit_diff_solve
+      ~OptaxSolver.jit
+      ~OptaxSolver.maxiter
+      ~OptaxSolver.pre_update
+      ~OptaxSolver.tol
+      ~OptaxSolver.unroll
+      ~OptaxSolver.value_and_grad
+      ~OptaxSolver.verbose
+      ~OptaxSolver.fun
+      ~OptaxSolver.opt
+   
+   

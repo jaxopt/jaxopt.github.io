@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stochastic optimization &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jaxopt.ArmijoSGD" href="_autosummary/jaxopt.ArmijoSGD.html" />
+    <link rel="prev" title="jaxopt.prox.prox_non_negative_ridge" href="_autosummary/jaxopt.prox.prox_non_negative_ridge.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Stochastic optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#defining-an-objective-function">Defining an objective function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-iterator">Data iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solvers">Solvers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html">jaxopt.ArmijoSGD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html">jaxopt.OptaxSolver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html">jaxopt.PolyakSGD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optax-solvers">Optax solvers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adaptive-solvers">Adaptive solvers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#run-iterator-vs-manual-loop">Run iterator vs. manual loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Stochastic optimization</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/stochastic.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stochastic-optimization">
+<h1>Stochastic optimization<a class="headerlink" href="#stochastic-optimization" title="Permalink to this heading"></a></h1>
+<p>This section is concerned with problems of the form</p>
+<div class="math notranslate nohighlight">
+\[\min_{x} \mathbb{E}_{D}[f(x, \theta, D)],\]</div>
+<p>where <span class="math notranslate nohighlight">\(f(x, \theta, D)\)</span> is differentiable (almost everywhere), <span class="math notranslate nohighlight">\(x\)</span>
+are the parameters with respect to which the function is minimized,
+<span class="math notranslate nohighlight">\(\theta\)</span> are optional fixed extra arguments and <span class="math notranslate nohighlight">\(D\)</span> is a random
+variable (typically a mini-batch).</p>
+<aside class="topic">
+<p class="topic-title">Examples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="notebooks/deep_learning/resnet_haiku.html"><span class="doc">ResNet on CIFAR10 with Haiku and JAXopt.</span></a></p></li>
+<li><p><a class="reference internal" href="notebooks/deep_learning/resnet_flax.html"><span class="doc">ResNet on CIFAR with Flax and JAXopt.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/deep_learning/haiku_vae.html#sphx-glr-auto-examples-deep-learning-haiku-vae-py"><span class="std std-ref">VAE example with Haiku and JAXopt.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/deep_learning/plot_sgd_solvers.html#sphx-glr-auto-examples-deep-learning-plot-sgd-solvers-py"><span class="std std-ref">Comparison of different SGD algorithms.</span></a></p></li>
+</ul>
+</aside>
+<section id="defining-an-objective-function">
+<h2>Defining an objective function<a class="headerlink" href="#defining-an-objective-function" title="Permalink to this heading"></a></h2>
+<p>Objective functions must contain a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument corresponding to <span class="math notranslate nohighlight">\(D\)</span> above.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ridge_reg_objective</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span>
+  <span class="n">residuals</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="data-iterator">
+<h2>Data iterator<a class="headerlink" href="#data-iterator" title="Permalink to this heading"></a></h2>
+<p>Sampling realizations of the random variable <span class="math notranslate nohighlight">\(D\)</span> can be done using an iterator.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">data_iterator</span><span class="p">():</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">):</span>
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)[:</span><span class="n">batch_size</span><span class="p">]</span>
+    <span class="k">yield</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">perm</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">perm</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="solvers">
+<h2>Solvers<a class="headerlink" href="#solvers" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
+<td><p>SGD with Armijo line search.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, ...])</p></td>
+<td><p>Optax solver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
+<td><p>SGD with Polyak step size.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="optax-solvers">
+<h3>Optax solvers<a class="headerlink" href="#optax-solvers" title="Permalink to this heading"></a></h3>
+<p><a class="reference external" href="https://optax.readthedocs.io">Optax</a> solvers can be used in JAXopt using
+<a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptaxSolver</span></code></a>. Here’s an example with Adam:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
+
+<span class="n">opt</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">ridge_reg_objective</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://optax.readthedocs.io/en/latest/api.html#common-optimizers">common optimizers</a> in the
+optax documentation for a list of available stochastic solvers.</p>
+</section>
+<section id="adaptive-solvers">
+<h3>Adaptive solvers<a class="headerlink" href="#adaptive-solvers" title="Permalink to this heading"></a></h3>
+<p>Adaptive solvers update the step size at each iteration dynamically.
+An example is <a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolyakSGD</span></code></a>, a solver
+which computes step sizes adaptively using function values.</p>
+<p>Another example is <a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArmijoSGD</span></code></a>, a solver
+that uses an Armijo line search.</p>
+<p>For convergence guarantees to hold, these two algorithms
+require the interpolation hypothesis to hold:
+the global optimum over <span class="math notranslate nohighlight">\(D\)</span> must also be a global optimum
+for any finite sample of <span class="math notranslate nohighlight">\(D\)</span>.
+This is typically achieved by overparametrized models (e.g neural networks)
+in classification tasks with separable classes, or on regression tasks without noise.</p>
+</section>
+</section>
+<section id="run-iterator-vs-manual-loop">
+<h2>Run iterator vs. manual loop<a class="headerlink" href="#run-iterator-vs-manual-loop" title="Permalink to this heading"></a></h2>
+<p>The following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iterator</span> <span class="o">=</span> <span class="n">data_iterator</span><span class="p">()</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">run_iterator</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iterator</span> <span class="o">=</span> <span class="n">data_iterator</span><span class="p">()</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">init_params</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxiter</span><span class="p">):</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+  <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_autosummary/jaxopt.prox.prox_non_negative_ridge.html" class="btn btn-neutral float-left" title="jaxopt.prox.prox_non_negative_ridge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.ArmijoSGD.html" class="btn btn-neutral float-right" title="jaxopt.ArmijoSGD" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

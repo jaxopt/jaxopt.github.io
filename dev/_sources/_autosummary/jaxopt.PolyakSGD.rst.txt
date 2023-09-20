@@ -1,0 +1,49 @@
+﻿jaxopt.PolyakSGD
+================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: PolyakSGD
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PolyakSGD.__init__
+      ~PolyakSGD.attribute_names
+      ~PolyakSGD.attribute_values
+      ~PolyakSGD.init_state
+      ~PolyakSGD.l2_optimality_error
+      ~PolyakSGD.optimality_fun
+      ~PolyakSGD.run
+      ~PolyakSGD.run_iterator
+      ~PolyakSGD.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PolyakSGD.delta
+      ~PolyakSGD.has_aux
+      ~PolyakSGD.implicit_diff
+      ~PolyakSGD.implicit_diff_solve
+      ~PolyakSGD.jit
+      ~PolyakSGD.max_stepsize
+      ~PolyakSGD.maxiter
+      ~PolyakSGD.momentum
+      ~PolyakSGD.pre_update
+      ~PolyakSGD.tol
+      ~PolyakSGD.unroll
+      ~PolyakSGD.value_and_grad
+      ~PolyakSGD.verbose
+      ~PolyakSGD.fun
+   
+   

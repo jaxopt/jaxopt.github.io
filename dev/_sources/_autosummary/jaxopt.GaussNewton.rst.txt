@@ -1,0 +1,42 @@
+﻿jaxopt.GaussNewton
+==================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: GaussNewton
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GaussNewton.__init__
+      ~GaussNewton.attribute_names
+      ~GaussNewton.attribute_values
+      ~GaussNewton.init_state
+      ~GaussNewton.l2_optimality_error
+      ~GaussNewton.run
+      ~GaussNewton.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~GaussNewton.has_aux
+      ~GaussNewton.implicit_diff
+      ~GaussNewton.implicit_diff_solve
+      ~GaussNewton.jit
+      ~GaussNewton.maxiter
+      ~GaussNewton.tol
+      ~GaussNewton.unroll
+      ~GaussNewton.verbose
+      ~GaussNewton.residual_fun
+   
+   

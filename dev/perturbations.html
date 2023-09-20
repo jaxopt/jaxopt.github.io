@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perturbed optimization &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jaxopt.perturbations.make_perturbed_max" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html" />
+    <link rel="prev" title="jaxopt.HagerZhangLineSearch" href="_autosummary/jaxopt.HagerZhangLineSearch.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Perturbed optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#max-perturbations">Max perturbations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html">jaxopt.perturbations.make_perturbed_max</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#argmax-perturbations">Argmax perturbations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html">jaxopt.perturbations.make_perturbed_argmax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scalar-perturbations">Scalar perturbations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html">jaxopt.perturbations.make_perturbed_fun</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#noise-distributions">Noise distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.Normal.html">jaxopt.perturbations.Normal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.Gumbel.html">jaxopt.perturbations.Gumbel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Perturbed optimization</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/perturbations.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="perturbed-optimization">
+<h1>Perturbed optimization<a class="headerlink" href="#perturbed-optimization" title="Permalink to this heading"></a></h1>
+<p>The perturbed optimization module allows to transform a non-smooth function such as a max or arg-max into a differentiable function using random perturbations. This is useful for optimization algorithms that require differentiability, such as gradient descent (e.g. see <a class="reference internal" href="notebooks/perturbed_optimizers/perturbed_optimizers.html"><span class="doc">Notebook</span></a> on perturbed optimizers).</p>
+<section id="max-perturbations">
+<h2>Max perturbations<a class="headerlink" href="#max-perturbations" title="Permalink to this heading"></a></h2>
+<p>Consider a maximum function of the form:</p>
+<div class="math notranslate nohighlight">
+\[F(\theta) = \max_{y \in \mathcal{C}} \langle y, \theta\rangle\,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> is a convex set.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max" title="jaxopt.perturbations.make_perturbed_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_max</span></code></a>(...)</p></td>
+<td><p>Turns an argmax in a differentiable version of the max with perturbations.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The function <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max" title="jaxopt.perturbations.make_perturbed_max"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_max()</span></code></a> transforms the function <span class="math notranslate nohighlight">\(F\)</span> into a the following differentiable function using random perturbations:</p>
+<div class="math notranslate nohighlight">
+\[F_{\varepsilon}(\theta) = \mathbb{E}\left[ F(\theta + \varepsilon Z) \right]\,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(Z\)</span> is a random variable. The distribution of this random variable can be specified through the keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code>. The default is a Gumbel distribution, which is a good choice for discrete variables. For continuous variables, a normal distribution is more appropriate.</p>
+</section>
+<section id="argmax-perturbations">
+<h2>Argmax perturbations<a class="headerlink" href="#argmax-perturbations" title="Permalink to this heading"></a></h2>
+<p>Consider an arg-max function of the form:</p>
+<div class="math notranslate nohighlight">
+\[y^*(\theta) = \mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta\rangle\,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> is a convex set.</p>
+<p>The function <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax" title="jaxopt.perturbations.make_perturbed_argmax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_argmax()</span></code></a> transforms the function <span class="math notranslate nohighlight">\(y^\star\)</span> into a the following differentiable function  using random perturbations:</p>
+<div class="math notranslate nohighlight">
+\[y_{\varepsilon}^*(\theta) = \mathbb{E}\left[ \mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta + \varepsilon Z \rangle \right]\,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(Z\)</span> is a random variable. The distribution of this random variable can be specified through the keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code>. The default is a Gumbel distribution, which is a good choice for discrete variables. For continuous variables, a normal distribution is more appropriate.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax" title="jaxopt.perturbations.make_perturbed_argmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_argmax</span></code></a>(...)</p></td>
+<td><p>Transforms a function into a differentiable version with perturbations.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scalar-perturbations">
+<h2>Scalar perturbations<a class="headerlink" href="#scalar-perturbations" title="Permalink to this heading"></a></h2>
+<p>Consider any function, <span class="math notranslate nohighlight">\(f\)</span> that is not necessarily differentiable, e.g. piecewise-constant of the form:</p>
+<div class="math notranslate nohighlight">
+\[f(\theta) = g(y^*(\theta))\,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta\rangle`\)</span> and <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> is a convex set.</p>
+<p>The function <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun()</span></code></a> transforms the function <span class="math notranslate nohighlight">\(f\)</span> into a the following differentiable function  using random perturbations:</p>
+<div class="math notranslate nohighlight">
+\[f_{\varepsilon}(\theta) = \mathbb{E}\left[ f(\theta + \varepsilon Z) \right]\,,\]</div>
+<p>where <span class="math notranslate nohighlight">\(Z\)</span> is a random variable. The distribution of this random variable can be specified through the keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code>. The default is a Gumbel distribution, which is a good choice for discrete variables. For continuous variables, a normal distribution is more appropriate. This can be particulary useful in the example given above, when <span class="math notranslate nohighlight">\(f\)</span> is only defined on the discrete set, not its convex hull, i.e.</p>
+<div class="math notranslate nohighlight">
+\[f_{\varepsilon}(\theta) = \mathbb{E}\left[ g(\mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta + \varepsilon Z \rangle) \right]\,,\]</div>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun</span></code></a>(fun)</p></td>
+<td><p>Transforms a function into a differentiable version with perturbations.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="noise-distributions">
+<h2>Noise distributions<a class="headerlink" href="#noise-distributions" title="Permalink to this heading"></a></h2>
+<p>The functions <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max" title="jaxopt.perturbations.make_perturbed_max"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_max()</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax" title="jaxopt.perturbations.make_perturbed_argmax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_argmax()</span></code></a> and <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun()</span></code></a> take a keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code> that specifies the distribution of random perturbations. Pre-defined distributions for this argument are the following:</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.Normal.html#jaxopt.perturbations.Normal" title="jaxopt.perturbations.Normal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.Normal</span></code></a>()</p></td>
+<td><p>Normal distribution.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.Gumbel.html#jaxopt.perturbations.Gumbel" title="jaxopt.perturbations.Gumbel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.Gumbel</span></code></a>()</p></td>
+<td><p>Gumbel distribution.</p></td>
+</tr>
+</tbody>
+</table>
+<aside class="topic">
+<p class="topic-title">References</p>
+<p>Berthet, Q., Blondel, M., Teboul, O., Cuturi, M., Vert, J. P., &amp; Bach, F. (2020). <a class="reference external" href="https://arxiv.org/pdf/2002.08676.pdf">Learning with differentiable pertubed optimizers</a>. Advances in neural information processing systems, 33.</p>
+</aside>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_autosummary/jaxopt.HagerZhangLineSearch.html" class="btn btn-neutral float-left" title="jaxopt.HagerZhangLineSearch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.perturbations.make_perturbed_max.html" class="btn btn-neutral float-right" title="jaxopt.perturbations.make_perturbed_max" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

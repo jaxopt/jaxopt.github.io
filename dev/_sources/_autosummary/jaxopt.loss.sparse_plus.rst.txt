@@ -1,0 +1,6 @@
+﻿jaxopt.loss.sparse\_plus
+========================
+
+.. currentmodule:: jaxopt.loss
+
+.. autofunction:: sparse_plus

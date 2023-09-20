@@ -1,0 +1,6 @@
+﻿jaxopt.tree\_util.tree\_div
+===========================
+
+.. currentmodule:: jaxopt.tree_util
+
+.. autofunction:: tree_div

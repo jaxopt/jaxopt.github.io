@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.osqp &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.osqp</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.osqp</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;GPU-friendly implementation of OSQP.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">from</span> <span class="nn">jax.tree_util</span> <span class="kn">import</span> <span class="n">tree_reduce</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.cond</span> <span class="kn">import</span> <span class="n">cond</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_sub</span><span class="p">,</span> <span class="n">tree_mul</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span><span class="p">,</span> <span class="n">tree_add_scalar_mul</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_map</span><span class="p">,</span> <span class="n">tree_vdot</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_ones_like</span><span class="p">,</span> <span class="n">tree_zeros_like</span><span class="p">,</span> <span class="n">tree_where</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_negative</span><span class="p">,</span> <span class="n">tree_l2_norm</span><span class="p">,</span> <span class="n">tree_inf_norm</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.linear_operator</span> <span class="kn">import</span> <span class="n">DenseLinearOperator</span><span class="p">,</span> <span class="n">_make_linear_operator</span>
+<span class="kn">import</span> <span class="nn">jaxopt.linear_solve</span> <span class="k">as</span> <span class="nn">linear_solve</span>
+
+
+<span class="c1"># Since jaxopt.projection itself depends on OSQP, we duplicate projection_box to avoid a circular dependency.</span>
+<span class="k">def</span> <span class="nf">_clip_safe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">projection_box</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+  <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="n">hyperparams</span>
+  <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">_clip_safe</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">extract_Qc_from_obj</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                        <span class="n">params_obj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">],</span>
+                        <span class="n">fun</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns (params_Q, c) parameters from params_obj.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    x: pytree with same shape and same type as the input of fun; leaves can have any value.</span>
+<span class="sd">    params_obj: parameters of objective function.</span>
+<span class="sd">      Either a pair (params_Q, c) or an arbitrary pytree if fun is not None.</span>
+<span class="sd">    fun: objective function.</span>
+
+<span class="sd">  When `fun` is `None` it retrieves the relevant informations from the tuple `params_obj`,</span>
+<span class="sd">  whereas when `fun` is not `None` it extracts it using AutoDiff.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">fun</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">params_Q</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">params_obj</span>
+    <span class="k">return</span> <span class="n">params_Q</span><span class="p">,</span> <span class="n">c</span>
+  <span class="n">zeros</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="c1"># f(x) := 0.5 * x^T Q x + c^T x + cste</span>
+  <span class="n">value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="c1"># nabla_x f(x) = Q x + c</span>
+  <span class="c1"># f(0)         = cste</span>
+  <span class="c1"># Q is never extracted explicitly, only its action on vectors is needed</span>
+  <span class="n">cste</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">value_and_grad_fun</span><span class="p">(</span><span class="n">zeros</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">params_obj</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">cste</span><span class="p">),</span> <span class="n">c</span>
+
+
+<span class="k">def</span> <span class="nf">_make_osqp_optimality_fun</span><span class="p">(</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="n">matvec_A</span><span class="p">,</span> <span class="n">fun</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Makes the optimality function for BoxOSQP.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    matvec_Q: function that computes Qx.</span>
+<span class="sd">    matvec_A: function that computes Ax.</span>
+<span class="sd">    fun: function that computes the quadratic objective.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    optimality_fun(params, params_obj, params_eq, params_ineq) where</span>
+<span class="sd">      params = (primal_var, eq_dual_var, ineq_dual_var)</span>
+<span class="sd">      params_obj = (params_Q, c) or an arbitrary pytree if fun is not None</span>
+<span class="sd">      params_eq = A</span>
+<span class="sd">      params_ineq = (l, u)</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">if</span> <span class="n">fun</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">obj_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">):</span>
+      <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">primal_var</span>
+      <span class="n">params_Q</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">extract_Qc_from_obj</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="n">fun</span><span class="p">)</span>
+      <span class="n">Q</span> <span class="o">=</span> <span class="n">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">)</span>
+      <span class="c1"># minimize 0.5 x^T Q x + c^T x</span>
+      <span class="n">qp_obj</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">tree_vdot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">tree_vdot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+      <span class="k">return</span> <span class="n">qp_obj</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">obj_fun</span> <span class="o">=</span> <span class="n">fun</span>
+
+  <span class="k">def</span> <span class="nf">eq_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">):</span>
+    <span class="c1"># constraint Ax=z associated to y^T(Ax-z)=0</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">primal_var</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">matvec_A</span><span class="p">(</span><span class="n">params_eq</span><span class="p">)</span>
+    <span class="n">z_bar</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">z_bar</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">ineq_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">):</span>
+    <span class="c1"># constraints l&lt;=z&lt;=u associated to mu^T(z-u) + phi^T(l-z)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">primal_var</span>
+    <span class="n">l</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">params_ineq</span>
+    <span class="c1"># if l=-inf (resp. u=+inf) then phi (resp. mu)</span>
+    <span class="c1"># will be zero (never active at infinity)</span>
+    <span class="c1"># so we may set the residual l-z (resp. z-u) to zero too.</span>
+    <span class="c1"># since 0 * inf = 0 here.</span>
+    <span class="c1"># but not in IEEE 754 standard where 0 * inf = nan.</span>
+    <span class="c1"># Note: the derivative in +inf or -inf does not make sense anyway,</span>
+    <span class="c1"># but those terms need to be computed since they are part of Lagrangian.</span>
+    <span class="n">u_inf</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ui</span><span class="p">:</span> <span class="n">ui</span> <span class="o">!=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">l_inf</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">li</span><span class="p">:</span> <span class="n">li</span> <span class="o">!=</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+    <span class="n">upper</span> <span class="o">=</span> <span class="n">tree_where</span><span class="p">(</span><span class="n">u_inf</span><span class="p">,</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">u</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># mu in dual</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="n">tree_where</span><span class="p">(</span><span class="n">l_inf</span><span class="p">,</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># phi in dual</span>
+    <span class="k">return</span> <span class="n">upper</span><span class="p">,</span> <span class="n">lower</span>
+
+  <span class="k">return</span> <span class="n">idf</span><span class="o">.</span><span class="n">make_kkt_optimality_fun</span><span class="p">(</span><span class="n">obj_fun</span><span class="p">,</span> <span class="n">eq_fun</span><span class="p">,</span> <span class="n">ineq_fun</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BoxOSQPState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple containing state information.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    iter_num: iteration number.</span>
+<span class="sd">    error: error used as stop criterion, deduced from residuals.</span>
+<span class="sd">    status: integer, one of ``[BoxOSQP.UNSOLVED, BoxOSQP.SOLVED, BoxOSQP.PRIMAL_INFEASIBLE, BoxOSQP.DUAL_INFEASIBLE]``.</span>
+<span class="sd">    primal_residuals: residuals of constraints of primal problem.</span>
+<span class="sd">    dual_residuals: residuals of constraints of dual problem.</span>
+<span class="sd">    rho_bar: current stepsize.</span>
+<span class="sd">    solver_state: state of linear solver in the equality constrained QP</span>
+<span class="sd">      that arises in ADMM iterations.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">primal_residuals</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">dual_residuals</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">rho_bar</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">solver_state</span><span class="p">:</span> <span class="n">Any</span>
+
+
+<span class="k">class</span> <span class="nc">OSQPLinearSolver</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Solve the linear system in OSQP.</span>
+
+<span class="sd">    (Q + sigma I + rho_bar A^T A) x = b</span>
+
+<span class="sd">  The system is solved repeatedly for different values of</span>
+<span class="sd">  b or rho_bar during the execution of the algorithm.</span>
+
+<span class="sd">  We leverage this property by carrying a state_linear_solver</span>
+<span class="sd">  in BoxOSQPState that can be easily updated when rho_bar changes.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">update_stepsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solver_state</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">osqp_state</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">OSQPIndirectSolver</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Indirect solver for Equality Constrained linear system in OSQP.</span>
+
+<span class="sd">  Uses an indirect solver with warm start, with optional support for Jacobi preconditioning.</span>
+<span class="sd">  Defaults to conjugate gradient descent.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    solve: linear system solver to use (default: jax.scipy.sparse.linalg.cg).</span>
+<span class="sd">    tol: tolerance of solver (default: 1e-7).</span>
+<span class="sd">    maxiter: maximum number of iterations (default: None).</span>
+<span class="sd">    jacobi_preconditioner: whether to use Jacobi preconditioning (default: False).</span>
+<span class="sd">      Only available for pytree of matrices. Can significantly speed up the solver.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">matvec_Q</span><span class="p">:</span> <span class="n">Callable</span>
+  <span class="n">matvec_A</span><span class="p">:</span> <span class="n">Callable</span>
+  <span class="n">solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_cg</span>
+  <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-7</span>
+  <span class="n">maxiter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">jacobi_preconditioner</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="k">def</span> <span class="nf">_init_state_precond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobi_preconditioner</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">(</span><span class="n">params_A</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">DenseLinearOperator</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">DenseLinearOperator</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Jacobi Preconditioning is only available for pytree of matrices.&#39;</span><span class="p">)</span>
+
+    <span class="n">precond_Q</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">diag</span><span class="p">()</span>
+    <span class="n">precond_A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">columns_l2_norms</span><span class="p">(</span><span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">precond_Q</span><span class="p">,</span> <span class="n">precond_A</span>
+
+  <span class="k">def</span> <span class="nf">_matvec_precond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solver_state</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobi_preconditioner</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">x</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">),</span> <span class="p">(</span><span class="n">precond_Q</span><span class="p">,</span> <span class="n">precond_A</span><span class="p">)</span> <span class="o">=</span> <span class="n">solver_state</span>
+
+    <span class="n">diag_precond</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">precond_Q</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">,</span> <span class="n">precond_A</span><span class="p">)</span>
+    <span class="n">diag_precond</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">diag_precond</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+    <span class="n">inv_diag</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m_diag</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="n">m_diag</span><span class="p">,</span> <span class="n">diag_precond</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_mul</span><span class="p">(</span><span class="n">inv_diag</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="n">state_precond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_state_precond</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">init_params</span><span class="p">,</span> <span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">),</span> <span class="n">state_precond</span>
+
+  <span class="k">def</span> <span class="nf">update_stepsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solver_state</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="n">prev_sol</span><span class="p">,</span> <span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">state_precond</span> <span class="o">=</span> <span class="n">solver_state</span>
+    <span class="k">return</span> <span class="n">prev_sol</span><span class="p">,</span> <span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">),</span> <span class="n">state_precond</span>
+
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">osqp_state</span><span class="p">):</span>
+    <span class="n">solver_state</span> <span class="o">=</span> <span class="n">osqp_state</span><span class="o">.</span><span class="n">solver_state</span>
+    <span class="n">prev_sol</span><span class="p">,</span> <span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">),</span> <span class="n">state_precond</span> <span class="o">=</span> <span class="n">solver_state</span>
+
+    <span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">(</span><span class="n">params_A</span><span class="p">)</span>
+
+    <span class="n">primal_res_inf</span> <span class="o">=</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">osqp_state</span><span class="o">.</span><span class="n">primal_residuals</span><span class="p">)</span>
+    <span class="n">dual_res_inf</span> <span class="o">=</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">osqp_state</span><span class="o">.</span><span class="n">dual_residuals</span><span class="p">)</span>
+    <span class="n">lam</span> <span class="o">=</span> <span class="mf">0.15</span>
+    <span class="n">atol</span> <span class="o">=</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">primal_res_inf</span> <span class="o">*</span> <span class="n">dual_res_inf</span><span class="p">)</span>
+    <span class="c1"># lam &lt; 1 implies that atol is slower than geometric mean of primal_res_inf and dual_res_inf.</span>
+
+    <span class="k">def</span> <span class="nf">matvec_A</span><span class="p">(</span><span class="n">x_bar</span><span class="p">):</span>
+      <span class="n">Qx_sigmax</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">x_bar</span><span class="p">),</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">x_bar</span><span class="p">)</span>
+      <span class="n">ATAx</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">normal_matvec</span><span class="p">(</span><span class="n">x_bar</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">Qx_sigmax</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">,</span> <span class="n">ATAx</span><span class="p">)</span>
+
+    <span class="n">sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">matvec</span><span class="o">=</span><span class="n">matvec_A</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span>
+                     <span class="n">init</span><span class="o">=</span><span class="n">prev_sol</span><span class="p">,</span>
+                     <span class="n">M</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matvec_precond</span><span class="p">(</span><span class="n">solver_state</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+                     <span class="n">maxiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span>
+                     <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span>
+                     <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">)</span>
+    <span class="n">solver_state</span> <span class="o">=</span> <span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">),</span> <span class="n">state_precond</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sol</span><span class="p">,</span> <span class="n">solver_state</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">OSQPLUSolver</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Solver based on LU factorization in OSQP.</span>
+
+<span class="sd">  Updates LU factors when stepsize rho_bar changes.&quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">_lu_factor_dense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="n">dense</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span> <span class="o">+</span> <span class="n">rho_bar</span> <span class="o">*</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lu_factor</span><span class="p">(</span><span class="n">dense</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_lu_factor_pytree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="n">lu_factor_dense</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lu_factor_dense</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="o">=</span><span class="n">rho_bar</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">lu_factor_dense</span><span class="p">,</span> <span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="n">lu_factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lu_factor_pytree</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">lu_factors</span>
+
+  <span class="k">def</span> <span class="nf">update_stepsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solver_state</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">_</span> <span class="o">=</span> <span class="n">solver_state</span>
+    <span class="n">lu_factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lu_factor_pytree</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">params_A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">lu_factors</span>
+
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">osqp_state</span><span class="p">):</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">lu_factors</span> <span class="o">=</span> <span class="n">osqp_state</span><span class="o">.</span><span class="n">solver_state</span>
+
+    <span class="c1"># Switch order of b and lu_factors in call to lu_solve</span>
+    <span class="c1"># to account for the fact that b is a prefix tree of lu_factors.</span>
+    <span class="k">def</span> <span class="nf">lu_solve</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">lu_factors</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lu_solve</span><span class="p">(</span><span class="n">lu_factors</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">check_finite</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">lu_solve</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">lu_factors</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sol</span><span class="p">,</span> <span class="n">osqp_state</span><span class="o">.</span><span class="n">solver_state</span>
+
+
+<div class="viewcode-block" id="BoxOSQP"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BoxOSQP</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Operator Splitting Solver for Quadratic Programs.</span>
+
+<span class="sd">  Jax implementation of the celebrated GPU-OSQP [1,3] based on ADMM.</span>
+<span class="sd">  Suppports jit, vmap, matvecs, pytrees and fun.</span>
+
+<span class="sd">  Refer to the doc of `init_state` method for the meaning of the parameters</span>
+<span class="sd">  in `run` and `update` methods.</span>
+
+<span class="sd">  It solves convex problems of the form</span>
+
+<span class="sd">  .. math::</span>
+
+<span class="sd">    \\begin{aligned}</span>
+<span class="sd">      \\min_{x,z} \\quad &amp; \\frac{1}{2}xQx + c^Tx\\\\</span>
+<span class="sd">      \\textrm{s.t.} \\quad &amp; Ax=z\\\\</span>
+<span class="sd">        &amp; l\\leq z\\leq u    \\\\</span>
+<span class="sd">    \\end{aligned}</span>
+
+<span class="sd">  Equality constraints are obtained by setting l = u.</span>
+<span class="sd">  If the inequality is one-sided then ``jnp.inf can be used for u,</span>
+<span class="sd">  and ``-jnp.inf`` for l.</span>
+
+<span class="sd">  P must be a positive semidefinite (PSD) matrix.</span>
+
+<span class="sd">  The Lagrangian is given by</span>
+
+<span class="sd">  .. math::</span>
+
+<span class="sd">    \\mathcal{L} = \\frac{1}{2}x^TQx + c^Tx + y^T(Ax-z) + \\mu^T (z-u) + \\phi^T (l-z)</span>
+
+<span class="sd">  Primal    variables: :math:`x, z`</span>
+
+<span class="sd">  Dual Eq   variables: :math:`y`</span>
+
+<span class="sd">  Dual Ineq variables: :math:`\mu, \phi`</span>
+
+
+<span class="sd">  ADMM computes :math:`y` at each iteration. :math:`\mu` and :math:`\phi` can be deduced from :math:`y`.</span>
+
+<span class="sd">  Defaults values for hyper-parameters come from: https://github.com/osqp/osqp/blob/master/include/constants.h</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    matvec_Q: (optional) a Callable matvec_Q(params_Q, x).</span>
+<span class="sd">      By default, matvec_Q(P, x) = tree_dot(P, x), where the pytree Q = params_Q matches x structure.</span>
+<span class="sd">      The shape of primal variables may be inferred from params_obj = (matvec_Q, c).</span>
+<span class="sd">    matvec_A: (optional) a Callable matvec_A(params_A, x).</span>
+<span class="sd">      By default, matvec_A(A, x) = tree_dot(A, x), where tree pytree A = params_A matches x structure.</span>
+<span class="sd">    fun: (optional) a function with signature fun(params, params_obj) that is promised</span>
+<span class="sd">      to be a quadratic polynomial convex with respect to params, i.e fun can be written ::</span>
+<span class="sd">        fun(x, params_obj) = 0.5*jnp.dot(x, jnp.dot(Q, x)) + jnp.dot(c, x) + cste</span>
+<span class="sd">      with params_obj a pytree that contains the parameters of the objective function.</span>
+<span class="sd">      (Q, c) do not need to be explicited in params_obj by the user: c will be inferred by Jaxopt,</span>
+<span class="sd">        and the operator x -&gt; Qx will be computed upon request.</span>
+<span class="sd">      ``fun`` incompatible with the specification of ``matvec_Q``.</span>
+<span class="sd">      Note that the shape of primal cannot be inferred from params_obj anymore,</span>
+<span class="sd">      so the user should provide it in init_params.</span>
+<span class="sd">      This API is provided for convenience, but note that since `fun` uses Jax&#39;s autodiff under the hood,</span>
+<span class="sd">      it can be slower than `matvec_Q`, especially when used in conjunction with implicit differentiation.</span>
+<span class="sd">    check_primal_dual_infeasability: if True populates the ``status`` field of ``state``</span>
+<span class="sd">      with one of ``BoxOSQP.PRIMAL_INFEASIBLE``, ``BoxOSQP.DUAL_INFEASIBLE``.</span>
+<span class="sd">      If False it improves speed but does not check feasability.</span>
+<span class="sd">      If the problem is primal or dual infeasible, and jit=False, then a ValueError exception is raised.</span>
+<span class="sd">      If &quot;auto&quot;, it will be True if jit=False and False otherwise. (default: &quot;auto&quot;)</span>
+<span class="sd">    sigma: ridge regularization parameter in linear system.</span>
+<span class="sd">    momentum: relaxation parameter (default: 1.6), must belong to the open interval (0,2).</span>
+<span class="sd">      ``momentum=1`` =&gt; no relaxation.</span>
+<span class="sd">      ``momentum&lt;1`` =&gt; under-relaxation.</span>
+<span class="sd">      ``momentum&gt;1`` =&gt; over-relaxation.</span>
+<span class="sd">      Boyd [2, p21] suggests chosing momentum in [1.5, 1.8].</span>
+<span class="sd">    eq_qp_solve: &#39;cg&#39;, &#39;cg+jacobi&#39; or &#39;lu&#39; (default: &#39;cg&#39;).</span>
+<span class="sd">      &#39;cg&#39; is conjugate gradient: an indirect solver that works with matvecs or pytree of matrices.</span>
+<span class="sd">      &#39;cg+jacobi&#39; is conjugate gradient with Jacobi preconditioning: only works on pytree of matrices</span>
+<span class="sd">        but can provide speedup.</span>
+<span class="sd">      &#39;lu&#39; is LU factorization: a direct solver that only work on pytree of matrices.</span>
+<span class="sd">    rho_start: initial learning rate  (default: 1e-1).</span>
+<span class="sd">    rho_min: minimum learning rate  (default: 1e-6).</span>
+<span class="sd">    rho_max: maximum learning rate  (default: 1e6).</span>
+<span class="sd">    stepsize_updates_frequency: frequency of stepsize updates (default: 10).</span>
+<span class="sd">      One every `stepsize_updates_frequency` updates computes a new stepsize.</span>
+<span class="sd">    primal_infeasible_tol: relative tolerance for primal infeasability detection (default: 1e-3).</span>
+<span class="sd">    dual_infeasible_tol: relative tolerance for dual infeasability detection (default: 1e-3).</span>
+<span class="sd">    maxiter: maximum number of iterations (default: 4000).</span>
+<span class="sd">    tol: absolute tolerance for stoping criterion (default: 1e-3).</span>
+<span class="sd">    termination_check_frequency: frequency of termination check. (default: 5).</span>
+<span class="sd">      One every `termination_check_frequency` the error is computed.</span>
+<span class="sd">    verbose: If verbose=1, print error at each iteration. If verbose=2, also print stepsizes and primal/dual variables.</span>
+<span class="sd">    implicit_diff: whether to enable implicit diff or autodiff of unrolled iterations.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">    jit: whether to JIT-compile the optimization loop (default: True).</span>
+<span class="sd">    unroll: whether to unroll the optimization loop (default: &quot;auto&quot;).</span>
+
+<span class="sd">  References:</span>
+
+<span class="sd">    [1] Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S., 2020.</span>
+<span class="sd">    OSQP: An operator splitting solver for quadratic programs.</span>
+<span class="sd">    Mathematical Programming Computation, 12(4), pp.637-672.</span>
+
+<span class="sd">    [2] Boyd, S., Parikh, N., Chu, E., Peleato, B. and Eckstein, J., 2010.</span>
+<span class="sd">    Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers.</span>
+<span class="sd">    Machine Learning, 3(1), pp.1-122.</span>
+
+<span class="sd">    [3] Schubiger, M., Banjac, G. and Lygeros, J., 2020.</span>
+<span class="sd">    GPU acceleration of ADMM for large-scale quadratic programming.</span>
+<span class="sd">    Journal of Parallel and Distributed Computing, 144, pp.55-67.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">matvec_Q</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">matvec_A</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">fun</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">check_primal_dual_infeasability</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+  <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span>
+  <span class="n">momentum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.6</span>
+  <span class="n">eq_qp_solve</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;cg&#39;</span>
+  <span class="n">rho_start</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+  <span class="n">rho_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span>
+  <span class="n">rho_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e6</span>
+  <span class="n">stepsize_updates_frequency</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+  <span class="n">primal_infeasible_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
+  <span class="n">dual_infeasible_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
+  <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4000</span>
+  <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
+  <span class="n">termination_check_frequency</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+
+
+  <span class="c1"># class attributes (ignored by @dataclass)</span>
+  <span class="n">UNSOLVED</span>          <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># stopping criterion not reached yet.</span>
+  <span class="n">SOLVED</span>            <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># feasible solution found with satisfying precision.</span>
+  <span class="n">DUAL_INFEASIBLE</span>   <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># infeasible dual (infeasible primal or unbounded primal).</span>
+  <span class="n">PRIMAL_INFEASIBLE</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># infeasible primal.</span>
+
+<div class="viewcode-block" id="BoxOSQP.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">init_params</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">,</span>
+                 <span class="n">params_obj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">],</span>
+                 <span class="n">params_eq</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="n">params_ineq</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initializes the solver state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: initial primal and dual variables (KKTSolution).</span>
+<span class="sd">      params_obj: parameters of the quadratic objective, can be:</span>
+<span class="sd">        a tuple (Q, c) with Q a pytree of matrices,</span>
+<span class="sd">        or a tuple (params_Q, c) if ``matvec_Q`` is provided,</span>
+<span class="sd">        or an arbitrary pytree if ``fun`` is provided.</span>
+<span class="sd">      params_eq: parameters of the equality constraints (see doc of run method).</span>
+<span class="sd">      params_ineq: parameters of the inequality constraints (see doc of run method).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      A BoxOSQPState object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">init_params</span><span class="o">.</span><span class="n">primal</span>
+    <span class="n">y</span>    <span class="o">=</span> <span class="n">init_params</span><span class="o">.</span><span class="n">dual_eq</span>
+    <span class="n">Q_params</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">extract_Qc_from_obj</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+    <span class="n">Q</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span><span class="p">(</span><span class="n">Q_params</span><span class="p">)</span>
+    <span class="n">A</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">(</span><span class="n">params_eq</span><span class="p">)</span>
+
+    <span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_residuals</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">solver_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eq_qp_solve_impl</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Q_params</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_start</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">BoxOSQPState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="n">BoxOSQP</span><span class="o">.</span><span class="n">UNSOLVED</span><span class="p">,</span>
+                        <span class="n">primal_residuals</span><span class="o">=</span><span class="n">primal_residuals</span><span class="p">,</span>
+                        <span class="n">dual_residuals</span><span class="o">=</span><span class="n">dual_residuals</span><span class="p">,</span>
+                        <span class="n">rho_bar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rho_start</span><span class="p">,</span>
+                        <span class="n">solver_state</span><span class="o">=</span><span class="n">solver_state</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BoxOSQP.init_params"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.init_params">[docs]</a>  <span class="k">def</span> <span class="nf">init_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                  <span class="n">init_x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                  <span class="n">params_obj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">],</span>
+                  <span class="n">params_eq</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                  <span class="n">params_ineq</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return default KKTSolution for initialization of the solver state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_x: initial primal variable.</span>
+<span class="sd">      params_obj: parameters of the objective function (see doc of init_state method).</span>
+<span class="sd">      params_eq: parameters of the equality constraints (see doc of init_state method).</span>
+<span class="sd">      params_ineq: parameters of the inequality constraints (see doc of init_state method).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      init_params: default parameters for initialization.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">init_x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="c1"># assume params_obj = (params_Q, c)</span>
+      <span class="c1"># generally incompatible with the use of ``fun``.</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;init_x must be provided when fun is not None.&quot;</span><span class="p">)</span>
+      <span class="n">init_x</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">params_obj</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">init_z</span> <span class="o">=</span> <span class="n">projection_box</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">(</span><span class="n">params_eq</span><span class="p">)(</span><span class="n">init_x</span><span class="p">),</span> <span class="n">params_ineq</span><span class="p">)</span>
+    <span class="n">init_y</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">init_z</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">((</span><span class="n">init_x</span><span class="p">,</span> <span class="n">init_z</span><span class="p">),</span> <span class="n">init_y</span><span class="p">,</span> <span class="p">(</span><span class="n">init_y</span><span class="p">,</span> <span class="n">init_y</span><span class="p">))</span></div>
+
+  <span class="k">def</span> <span class="nf">_get_full_KKT_solution</span><span class="p">(</span><span class="n">primal</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns all dual variables of the problem.&quot;&quot;&quot;</span>
+    <span class="c1"># Unfortunately BoxOSQP algorithm only returns y as dual variable,</span>
+    <span class="c1"># mu and phi are missing, but can be recovered:</span>
+    <span class="c1">#</span>
+    <span class="c1"># We distinguish between l=u and l&lt;u.</span>
+    <span class="c1"># If l&lt;u there are three cases:</span>
+    <span class="c1">#   1. l &lt; z &lt; u: phi=0  mu=0 (and y=0)</span>
+    <span class="c1">#   2. l = z &lt; u: phi=-y mu=0 (and y&lt;0)</span>
+    <span class="c1">#   3. l &lt; z = u: phi=0  mu=y (and y&gt;0)</span>
+    <span class="c1">#  this can be simplified with mu=relu(y) and phi=relu(-y)</span>
+    <span class="c1"># If l=u then y=mu-phi, so we have one degree of liberty to chose mu and phi.</span>
+    <span class="c1"># By symmetry with previous case we may chose mu=relu(y) and phi=relu(-y).</span>
+    <span class="n">is_pos</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">yi</span><span class="p">:</span> <span class="n">yi</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">mu</span>  <span class="o">=</span> <span class="n">tree_where</span><span class="p">(</span><span class="n">is_pos</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># derivative = 1 in y = 0</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">yi</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="o">-</span><span class="n">yi</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># derivative = 0 in y = 0</span>
+    <span class="c1"># y = mu - phi</span>
+    <span class="c1"># d_y = d_mu - d_phi = 1 (everywhere; including in zero)</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">(</span><span class="n">primal</span><span class="o">=</span><span class="n">primal</span><span class="p">,</span> <span class="n">dual_eq</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">dual_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
+
+  <span class="k">def</span> <span class="nf">_update_stepsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">,</span> <span class="n">solver_state</span><span class="p">,</span> <span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update stepsize based on the ratio between primal and dual residuals.&quot;&quot;&quot;</span>
+    <span class="n">Ax</span><span class="p">,</span> <span class="n">ATy</span>     <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">matvec_and_rmatvec</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">primal_coef</span> <span class="o">=</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">primal_residuals</span><span class="p">)</span> <span class="o">/</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">Ax</span><span class="p">)</span>
+    <span class="n">max_inf</span>     <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">ATy</span><span class="p">),</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">c</span><span class="p">)))</span>
+    <span class="n">dual_coef</span>   <span class="o">=</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">dual_residuals</span><span class="p">)</span> <span class="o">/</span> <span class="n">max_inf</span>
+    <span class="n">eps_div</span>     <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">dual_coef</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span>
+    <span class="n">coef</span>        <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">primal_coef</span> <span class="o">/</span> <span class="p">(</span><span class="n">dual_coef</span> <span class="o">+</span> <span class="n">eps_div</span><span class="p">))</span>
+    <span class="n">rho_bar</span>     <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">rho_bar</span> <span class="o">*</span> <span class="n">coef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_max</span><span class="p">)</span>
+    <span class="n">solver_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eq_qp_solve_impl</span><span class="o">.</span><span class="n">update_stepsize</span><span class="p">(</span><span class="n">solver_state</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rho_bar</span><span class="p">,</span> <span class="n">solver_state</span>
+
+  <span class="k">def</span> <span class="nf">_compute_residuals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute residuals of constraints for primal and dual, as defined in paper.&quot;&quot;&quot;</span>
+    <span class="n">Ax</span><span class="p">,</span> <span class="n">ATy</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">matvec_and_rmatvec</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">primal_residuals</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">Ax</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">dual_residuals</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">tree_add</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">c</span><span class="p">),</span> <span class="n">ATy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span>
+
+  <span class="k">def</span> <span class="nf">_compute_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return error based on primal/dual residuals.&quot;&quot;&quot;</span>
+    <span class="n">primal_res_inf</span> <span class="o">=</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">primal_residuals</span><span class="p">)</span>
+    <span class="n">dual_res_inf</span> <span class="o">=</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">dual_residuals</span><span class="p">)</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">primal_res_inf</span><span class="p">,</span> <span class="n">dual_res_inf</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">criterion</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">SOLVED</span><span class="p">,</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">UNSOLVED</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">status</span>
+
+  <span class="k">def</span> <span class="nf">_check_dual_infeasability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">delta_x</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">Adx</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+    <span class="n">criterion</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dual_infeasible_tol</span> <span class="o">*</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">delta_x</span><span class="p">)</span>
+
+    <span class="n">certif_Q</span>   <span class="o">=</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">delta_x</span><span class="p">))</span>
+    <span class="n">certif_c</span>   <span class="o">=</span> <span class="n">tree_vdot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">delta_x</span><span class="p">)</span>
+
+    <span class="n">unbounded_l</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">li</span><span class="p">:</span> <span class="n">li</span> <span class="o">==</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+    <span class="n">unbounded_u</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ui</span><span class="p">:</span> <span class="n">ui</span> <span class="o">==</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">certif_l</span>   <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">adxi</span><span class="p">,</span><span class="n">li</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">li</span> <span class="o">&lt;=</span> <span class="n">adxi</span><span class="p">),</span> <span class="n">Adx</span><span class="p">,</span> <span class="n">tree_where</span><span class="p">(</span><span class="n">unbounded_l</span><span class="p">,</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">criterion</span><span class="p">))</span>
+    <span class="n">certif_u</span>   <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">adxi</span><span class="p">,</span><span class="n">ui</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">adxi</span> <span class="o">&lt;=</span> <span class="n">ui</span><span class="p">),</span> <span class="n">Adx</span><span class="p">,</span> <span class="n">tree_where</span><span class="p">(</span><span class="n">unbounded_u</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">criterion</span><span class="p">))</span>
+    <span class="n">certif_A</span>   <span class="o">=</span> <span class="n">tree_reduce</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">logical_and</span><span class="p">,</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">logical_and</span><span class="p">,</span> <span class="n">certif_l</span><span class="p">,</span> <span class="n">certif_u</span><span class="p">))</span>
+
+    <span class="n">certif_dual_infeasible</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">certif_Q</span> <span class="o">&lt;=</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">certif_c</span> <span class="o">&lt;=</span> <span class="n">criterion</span><span class="p">),</span> <span class="n">certif_A</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;certif_Q: </span><span class="si">{certif_Q}</span><span class="s2"> certif_c: </span><span class="si">{certif_c}</span><span class="s2"> certif_A: </span><span class="si">{certif_A}</span><span class="s2"> &quot;</span>
+                      <span class="s2">&quot;criterion: </span><span class="si">{criterion}</span><span class="s2">, Adx: </span><span class="si">{Adx}</span><span class="s2">, certif_l: </span><span class="si">{certif_l}</span><span class="s2">, certif_u: </span><span class="si">{certif_u}</span><span class="s2">&quot;</span><span class="p">,</span>
+                      <span class="n">certif_Q</span><span class="o">=</span><span class="n">certif_Q</span><span class="p">,</span> <span class="n">certif_c</span><span class="o">=</span><span class="n">certif_c</span><span class="p">,</span> <span class="n">certif_A</span><span class="o">=</span><span class="n">certif_A</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span>
+                      <span class="n">Adx</span><span class="o">=</span><span class="n">Adx</span><span class="p">,</span> <span class="n">certif_l</span><span class="o">=</span><span class="n">certif_l</span><span class="p">,</span> <span class="n">certif_u</span><span class="o">=</span><span class="n">certif_u</span><span class="p">)</span>
+
+    <span class="c1"># infeasible dual implies either infeasible primal, either unbounded primal.</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">certif_dual_infeasible</span><span class="p">,</span>
+      <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">DUAL_INFEASIBLE</span><span class="p">),</span>  <span class="c1"># dual unfeasible; exit the main loop with error = 0.</span>
+      <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
+      <span class="n">operand</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_check_primal_infeasability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">delta_y</span><span class="p">,</span> <span class="n">ATdy</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primal_infeasible_tol</span> <span class="o">*</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">delta_y</span><span class="p">)</span>
+    <span class="n">certif_A</span>  <span class="o">=</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">ATdy</span><span class="p">)</span>
+    <span class="n">bounded_l</span> <span class="o">=</span> <span class="n">tree_where</span><span class="p">(</span><span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">li</span><span class="p">:</span> <span class="n">li</span> <span class="o">==</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">l</span><span class="p">),</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>  <span class="c1"># replace inf bounds by zero</span>
+    <span class="n">bounded_u</span> <span class="o">=</span> <span class="n">tree_where</span><span class="p">(</span><span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ui</span><span class="p">:</span> <span class="n">ui</span> <span class="o">==</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">u</span><span class="p">),</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">dy_plus</span>   <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">,</span> <span class="n">delta_y</span><span class="p">)</span>
+    <span class="n">dy_minus</span>  <span class="o">=</span> <span class="n">tree_negative</span><span class="p">(</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">,</span> <span class="n">tree_negative</span><span class="p">(</span><span class="n">delta_y</span><span class="p">)))</span>
+    <span class="n">certif_lu</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">tree_vdot</span><span class="p">(</span><span class="n">bounded_l</span><span class="p">,</span> <span class="n">dy_minus</span><span class="p">),</span> <span class="n">tree_vdot</span><span class="p">(</span><span class="n">bounded_u</span><span class="p">,</span> <span class="n">dy_plus</span><span class="p">))</span>
+    <span class="n">certif_primal_infeasible</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">certif_A</span>  <span class="o">&lt;=</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">certif_lu</span>  <span class="o">&lt;=</span> <span class="n">criterion</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;certif_A: </span><span class="si">{certif_A}</span><span class="s2">, certif_lu: </span><span class="si">{certif_lu}</span><span class="s2">, criterion: </span><span class="si">{criterion}</span><span class="s2">&quot;</span><span class="p">,</span>
+                      <span class="n">certif_A</span><span class="o">=</span><span class="n">certif_A</span><span class="p">,</span> <span class="n">certif_lu</span><span class="o">=</span><span class="n">certif_lu</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">certif_primal_infeasible</span><span class="p">,</span>
+      <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span>  <span class="c1"># primal unfeasible; exit the main loop with error = 0.</span>
+                <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">PRIMAL_INFEASIBLE</span><span class="p">),</span>
+      <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>  <span class="c1"># primal feasible or unbounded (depends of dual feasability).</span>
+      <span class="n">operand</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_check_infeasability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prev_sol</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+    <span class="n">delta_x</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">prev_sol</span><span class="o">.</span><span class="n">primal</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">delta_y</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_eq</span><span class="p">,</span> <span class="n">prev_sol</span><span class="o">.</span><span class="n">dual_eq</span><span class="p">)</span>
+    <span class="n">Adx</span><span class="p">,</span> <span class="n">ATdy</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">matvec_and_rmatvec</span><span class="p">(</span><span class="n">delta_x</span><span class="p">,</span> <span class="n">delta_y</span><span class="p">)</span>
+
+    <span class="n">error</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_dual_infeasability</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">delta_x</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">Adx</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">error</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_primal_infeasability</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">delta_y</span><span class="p">,</span> <span class="n">ATdy</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">error</span><span class="p">,</span> <span class="n">status</span>
+
+  <span class="k">def</span> <span class="nf">_check_termination_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span><span class="p">,</span>
+                                    <span class="n">old_params</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+    <span class="n">error</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_error</span><span class="p">(</span><span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_primal_dual_infeasability</span><span class="p">:</span>
+      <span class="n">error</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_infeasability</span><span class="p">(</span><span class="n">old_params</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">error</span><span class="p">,</span> <span class="n">status</span>
+
+  <span class="k">def</span> <span class="nf">_solve_linear_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Solve equality constrained QP in ADMM split.&quot;&quot;&quot;</span>
+    <span class="c1"># solve the &quot;augmented&quot; equality constrained QP:</span>
+    <span class="c1">#</span>
+    <span class="c1">#     minimize 0.5x_bar Q x_bar + c x_bar</span>
+    <span class="c1">#     (1)        + (sigma/2) \|x_bar - x\|^2_2</span>
+    <span class="c1">#     (2)        + (rho/2)   \|z_bar - z + rho^{-1} y\|^2_2</span>
+    <span class="c1">#     under    A x_bar = z_bar; x_bar = x</span>
+    <span class="c1">#</span>
+    <span class="c1">#        (1) and (2) come from the augmented Lagrangian</span>
+    <span class="c1">#</span>
+    <span class="c1"># This problem is easy to solve by writing the KKT optimality conditions.</span>
+    <span class="c1"># By construction the solution is unique without imposing strict convexity of objective nor</span>
+    <span class="c1"># independance of the constraints.</span>
+    <span class="c1"># The primal feasability conditions are used to eliminate z_bar from the system (which simplifies it).</span>
+    <span class="c1"># Note that here we use rho_bar: we do not make use of per-constraint learning rate.</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">primal</span>
+    <span class="n">y</span>    <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">dual_eq</span>  <span class="c1"># dual variables for constraints z_bar = z;</span>
+
+    <span class="n">bxq</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">tree_scalar_mul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">c</span><span class="p">)</span>
+    <span class="n">byz</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="n">rho_bar</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">bxq</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">rmatvec</span><span class="p">(</span><span class="n">bxq</span><span class="p">,</span> <span class="n">byz</span><span class="p">))</span>
+
+    <span class="n">x_bar</span><span class="p">,</span> <span class="n">solver_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eq_qp_solve_impl</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">x_bar</span><span class="p">,</span> <span class="n">solver_state</span>
+
+  <span class="k">def</span> <span class="nf">_admm_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs one atomic step of the ADMM algorithm.&quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">primal</span>
+    <span class="n">y</span>    <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">dual_eq</span>  <span class="c1"># dual variables for constraints z_bar = z;</span>
+    <span class="c1"># mu, phi = params.dual_ineq are unused</span>
+
+    <span class="c1"># lines are numbered according to the pseudo-code in the paper OSQP: https://arxiv.org/pdf/1711.08013.pdf</span>
+
+    <span class="c1"># line 3: optimization step for (x_bar, z_bar)</span>
+    <span class="c1"># this equality constrained QP is solved by writing KKT conditions</span>
+    <span class="c1"># which reduce to a well-posed linear system.</span>
+    <span class="n">x_bar</span><span class="p">,</span> <span class="n">solver_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_solve_linear_system</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">rho_bar</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="n">z_bar</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">x_bar</span><span class="p">)</span>  <span class="c1"># line 4</span>
+
+    <span class="c1"># line 5: optimization step for x with relaxation parameter momentum (smooth updates)</span>
+    <span class="n">x_next</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">x_bar</span><span class="p">,</span> <span class="n">x</span><span class="p">)))</span>
+
+    <span class="c1"># line 6: optimization step for z with relaxation parameter momentum (smooth updates)</span>
+    <span class="c1"># by definition A x_bar = z_bar and l &lt;= z &lt;= u thanks to projection</span>
+    <span class="c1"># the dual variable y corresponds to constraint z_bar = z</span>
+    <span class="n">z_momentum</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">z_bar</span><span class="p">,</span> <span class="n">z</span><span class="p">)))</span>
+    <span class="n">z_step</span> <span class="o">=</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">rho_bar</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">z_free</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">z_momentum</span><span class="p">,</span> <span class="n">z_step</span><span class="p">)</span>
+    <span class="n">z_next</span> <span class="o">=</span> <span class="n">projection_box</span><span class="p">(</span><span class="n">z_free</span><span class="p">,</span> <span class="n">box</span><span class="p">)</span>
+
+    <span class="c1"># line 7: gradient descent on dual variables, with relaxation</span>
+    <span class="n">y_step</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">z_momentum</span><span class="p">,</span> <span class="n">z_next</span><span class="p">)</span>
+    <span class="n">y_next</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="n">rho_bar</span><span class="p">,</span> <span class="n">y_step</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">x_next</span><span class="p">,</span> <span class="n">z_next</span><span class="p">),</span> <span class="n">y_next</span><span class="p">,</span> <span class="n">solver_state</span>
+
+<div class="viewcode-block" id="BoxOSQP.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">params</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">,</span>
+             <span class="n">state</span><span class="p">:</span> <span class="n">BoxOSQPState</span><span class="p">,</span>
+             <span class="n">params_obj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">],</span>
+             <span class="n">params_eq</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+             <span class="n">params_ineq</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform BoxOSQP step.&quot;&quot;&quot;</span>
+    <span class="c1"># The original problem on variables (x,z) is split into TWO problems</span>
+    <span class="c1"># with variables (x, z) and (x_bar, z_bar)</span>
+    <span class="c1">#</span>
+    <span class="c1"># (x_bar, z_bar) is NOT part of the state because it is recomputed at each step:</span>
+    <span class="c1">#    (x_bar, z_bar) = argmin_{x_bar, z_bar} L(x_bar, z_bar, x, z, y)</span>
+    <span class="c1"># with L the augmented Lagrangian</span>
+    <span class="c1"># z_bar is always such that A x_bar = z_bar</span>
+    <span class="c1">#</span>
+    <span class="c1"># x = argmin_x L(x_bar, z_bar, x, z, y)</span>
+    <span class="c1"># for equality constraint x = x_bar the dual variable is constant (=0) and can be eliminated</span>
+    <span class="c1">#</span>
+    <span class="c1"># z = argmin_z L(x_bar, z_bar, x, z, y)</span>
+    <span class="c1"># for equality constraint z = z_bar the associated dual variable is y</span>
+    <span class="n">params_Q</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">extract_Qc_from_obj</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">primal</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+    <span class="n">Q</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">)</span>
+    <span class="n">A</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">(</span><span class="n">params_eq</span><span class="p">)</span>
+    <span class="n">l</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">params_ineq</span>
+
+    <span class="c1"># for active constraints (in particular equality constraints) high stepsize is better</span>
+    <span class="n">rho_bar</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">rho_bar</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;rho_bar: </span><span class="si">{rho_bar}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rho_bar</span><span class="o">=</span><span class="n">rho_bar</span><span class="p">)</span>
+
+    <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">solver_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_admm_step</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">),</span> <span class="n">rho_bar</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;x: </span><span class="si">{x}</span><span class="s2"> z: </span><span class="si">{z}</span><span class="s2"> y: </span><span class="si">{y}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_residuals</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;primal_residuals: </span><span class="si">{primal_residuals}</span><span class="s2">, dual_residuals: </span><span class="si">{dual_residuals}</span><span class="s2">&quot;</span><span class="p">,</span>
+                      <span class="n">primal_residuals</span><span class="o">=</span><span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span><span class="o">=</span><span class="n">dual_residuals</span><span class="p">)</span>
+
+    <span class="c1"># We need our own ifelse cond because automatic jitting of jax.lax.cond branches</span>
+    <span class="c1"># could pose problems with non jittable matvecs, or prevent printing when verbose &gt; 0.</span>
+    <span class="n">rho_bar</span><span class="p">,</span> <span class="n">solver_state</span> <span class="o">=</span> <span class="n">cond</span><span class="p">(</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize_updates_frequency</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_stepsize</span><span class="p">(</span><span class="n">rho_bar</span><span class="p">,</span> <span class="n">solver_state</span><span class="p">,</span> <span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+        <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="n">rho_bar</span><span class="p">,</span> <span class="n">solver_state</span><span class="p">),</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="n">jit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">jit</span>
+    <span class="p">)</span>
+
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">_get_full_KKT_solution</span><span class="p">(</span><span class="n">primal</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Same remark as above for ifelse cond.</span>
+    <span class="n">error</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="n">cond</span><span class="p">(</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_check_frequency</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_termination_conditions</span><span class="p">(</span><span class="n">primal_residuals</span><span class="p">,</span> <span class="n">dual_residuals</span><span class="p">,</span>
+                                                      <span class="n">params</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">),</span>
+        <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+        <span class="n">jit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">jit</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">PRIMAL_INFEASIBLE</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Primal infeasible.&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">DUAL_INFEASIBLE</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dual infeasible.&quot;</span><span class="p">)</span>
+
+    <span class="n">state</span> <span class="o">=</span> <span class="n">BoxOSQPState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+                         <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
+                         <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
+                         <span class="n">primal_residuals</span><span class="o">=</span><span class="n">primal_residuals</span><span class="p">,</span>
+                         <span class="n">dual_residuals</span><span class="o">=</span><span class="n">dual_residuals</span><span class="p">,</span>
+                         <span class="n">rho_bar</span><span class="o">=</span><span class="n">rho_bar</span><span class="p">,</span>
+                         <span class="n">solver_state</span><span class="o">=</span><span class="n">solver_state</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">sol</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BoxOSQP.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">params_obj</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Q can be params_Q or None</span>
+          <span class="n">params_eq</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># A can be params_A or None</span>
+          <span class="n">params_ineq</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return primal/dual variables.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: (optional) initial KKTSolution.</span>
+<span class="sd">        Must be provided if ``fun`` is not None.</span>
+<span class="sd">      params_obj: parameters of objective, can be:</span>
+<span class="sd">        a tuple (Q, c) with Q a pytree of matrices,</span>
+<span class="sd">        or a tuple (params_Q, c) if ``matvec_Q`` is provided,</span>
+<span class="sd">        or an arbitrary pytree if ``fun`` is provided.</span>
+<span class="sd">      params_eq: (optional) params_A.</span>
+<span class="sd">      params_ineq: pair (l, u).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Default to None for consistency of signatures</span>
+    <span class="c1"># Should be set by the user anyway.</span>
+    <span class="k">assert</span> <span class="n">params_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">params_ineq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">init_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">init_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_params</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BoxOSQP.l2_optimality_error"><a class="viewcode-back" href="../../../_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP.l2_optimality_error">[docs]</a>  <span class="k">def</span> <span class="nf">l2_optimality_error</span><span class="p">(</span>
+      <span class="bp">self</span><span class="p">,</span>
+      <span class="n">params</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">,</span>
+      <span class="n">params_obj</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+      <span class="n">params_eq</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+      <span class="n">params_ineq</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes the L2 norm of the KKT residuals.&quot;&quot;&quot;</span>
+    <span class="n">pytree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">pytree</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Specification of parameter &#39;fun&#39; is incompatible with &#39;matvec_Q&#39; in method __init__ of </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_obj</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">params_Q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">params_obj</span>
+        <span class="c1"># f(x) = 0.5 * x^T Q x + c^T x + cste</span>
+        <span class="c1"># nabla_x f(x) = Q x + c</span>
+        <span class="c1"># Qx = nabla_x f(x) - c</span>
+        <span class="k">def</span> <span class="nf">fun_minus_cx</span><span class="p">(</span><span class="n">xx</span><span class="p">):</span>
+          <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">params_Q</span><span class="p">)</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">c</span><span class="o">*</span><span class="n">xx</span><span class="p">)</span>
+        <span class="n">Qx</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">fun_minus_cx</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Qx</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span> <span class="o">=</span> <span class="n">matvec_Q</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span> <span class="o">=</span> <span class="n">_make_linear_operator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span> <span class="o">=</span> <span class="n">_make_linear_operator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_qp_solve</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;cg&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_eq_qp_solve_impl</span> <span class="o">=</span> <span class="n">OSQPIndirectSolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">,</span>
+                                                  <span class="n">tol</span><span class="o">=</span><span class="mf">1e-7</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_qp_solve</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;cg+jacobi&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_eq_qp_solve_impl</span> <span class="o">=</span> <span class="n">OSQPIndirectSolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">,</span>
+                                                  <span class="n">tol</span><span class="o">=</span><span class="mf">1e-7</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
+                                                  <span class="n">jacobi_preconditioner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_qp_solve</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;lu&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_eq_qp_solve_impl</span> <span class="o">=</span> <span class="n">OSQPLUSolver</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown solver &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eq_qp_solve</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_primal_dual_infeasability</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">check_primal_dual_infeasability</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span> <span class="o">=</span> <span class="n">_make_osqp_optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">OSQP_to_BoxOSQP</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Converts a QP in OSQP / CvxpyQP form to a QP in BoxOSQP form.&quot;&quot;&quot;</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">transform_matvec</span><span class="p">(</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="n">matvec_A</span><span class="p">,</span> <span class="n">matvec_G</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return matvec_Q, matvec_A of BoxOSQP from the matvec_Q, matvec_A, matvec_G of OSQP.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">matvec_A</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">matvec_G</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">matvec_A_box</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">matvec_A_box</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">params_A</span><span class="p">,</span> <span class="n">params_G</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">matvec_A</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># matvec_A.</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matvec_A</span><span class="p">(</span><span class="n">params_A</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">params_A</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># no matvec and pytree of matrices available.</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DenseLinearOperator</span><span class="p">(</span><span class="n">params_A</span><span class="p">)(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">matvec_G</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># matvec_G.</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matvec_G</span><span class="p">(</span><span class="n">params_G</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">params_G</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># no matvec and pytree of matrices available.</span>
+          <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DenseLinearOperator</span><span class="p">(</span><span class="n">params_G</span><span class="p">)(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>  <span class="c1"># list of length 1 or 2.</span>
+
+    <span class="k">return</span> <span class="n">matvec_Q</span><span class="p">,</span> <span class="n">matvec_A_box</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_pytree_concat</span><span class="p">(</span><span class="n">pytrees</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Concatenate leaves of a list of pytrees.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="o">*</span><span class="n">leaves</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">concat</span><span class="p">,</span> <span class="o">*</span><span class="n">pytrees</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">matvec_A_box</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">],</span>
+                <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+                <span class="n">params_obj</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">],</span>
+                <span class="n">params_eq</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">]],</span>
+                <span class="n">params_ineq</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">]]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform parameters of run()&quot;&quot;&quot;</span>
+    <span class="c1"># The huge volume of code is explained by the diversity of situations encountered:</span>
+    <span class="c1">#</span>
+    <span class="c1"># params can be None.</span>
+    <span class="c1"># One of params_eq or params_ineq can be None.</span>
+    <span class="c1"># One of A, G can be represented as a matvec, which forces matvec_A_box to be not None.</span>
+    <span class="c1"># Note that params_A (resp. params_G) can be None if matvec_A (resp. matvec_G) is not None.</span>
+    <span class="c1"># when matvec_A is None and matvec_G is None we MUST concatenate rows of constraints to ensure</span>
+    <span class="c1"># that pre-conditioning is still possible.</span>
+
+    <span class="k">if</span> <span class="n">params_eq</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">params_ineq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one of params_eq or params_ineq must be not None.&quot;</span> \
+                       <span class="s2">&quot;When there are no constraints we suggest direct solving of the QP with a conjugate gradient solver.&quot;</span><span class="p">)</span>
+
+    <span class="n">eq_size</span><span class="p">,</span> <span class="n">ineq_neg_size</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">G</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">params_eq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">A</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">params_eq</span>
+      <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+      <span class="n">u</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+      <span class="n">eq_size</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">bi</span><span class="p">:</span> <span class="n">bi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">dual_eq</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">params_ineq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">G</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">params_ineq</span>
+      <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree_scalar_mul</span><span class="p">(</span><span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">tree_ones_like</span><span class="p">(</span><span class="n">h</span><span class="p">)))</span>
+      <span class="n">u</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+      <span class="n">ineq_neg_size</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">hi</span><span class="p">:</span> <span class="o">-</span><span class="n">hi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">h</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">dual_ineq</span><span class="p">)</span>
+
+    <span class="n">A_box</span> <span class="o">=</span> <span class="p">[</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">,</span> <span class="n">A</span><span class="p">),</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">,</span> <span class="n">G</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">matvec_A_box</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="c1"># no matvec: construct a pytree of matrices containing all constraints: A_box = [A; G].</span>
+      <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="n">A_box</span><span class="p">:</span>
+        <span class="n">A_box</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+      <span class="n">A_box</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">_pytree_concat</span><span class="p">(</span><span class="n">A_box</span><span class="p">)</span>
+      <span class="n">l</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">_pytree_concat</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+      <span class="n">u</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">_pytree_concat</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">primal</span>
+      <span class="n">z</span> <span class="o">=</span> <span class="n">_make_linear_operator</span><span class="p">(</span><span class="n">matvec_A_box</span><span class="p">)(</span><span class="n">A_box</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">matvec_A_box</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">_pytree_concat</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+      <span class="n">params</span> <span class="o">=</span> <span class="n">BoxOSQP</span><span class="o">.</span><span class="n">_get_full_KKT_solution</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">hyper_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="o">=</span><span class="n">A_box</span><span class="p">,</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">hyper_params</span><span class="p">,</span> <span class="p">(</span><span class="n">eq_size</span><span class="p">,</span> <span class="n">ineq_neg_size</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">_pytree_split</span><span class="p">(</span><span class="n">pytree</span><span class="p">,</span> <span class="n">slice_sizes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract slices of size slice_sizes in each leaf of pytree.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">slice_sizes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">_signed_slice</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">leaf</span><span class="p">,</span><span class="nb">slice</span><span class="p">:</span> <span class="p">(</span><span class="n">leaf</span><span class="p">[:</span><span class="nb">slice</span><span class="p">]</span> <span class="k">if</span> <span class="nb">slice</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">leaf</span><span class="p">[</span><span class="nb">slice</span><span class="p">:])</span>
+    <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">_signed_slice</span><span class="p">,</span> <span class="n">pytree</span><span class="p">,</span> <span class="n">slice_sizes</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="n">matvec_A_box</span><span class="p">,</span> <span class="n">eq_ineq_size</span><span class="p">,</span> <span class="n">kkt_solution</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inverse transform the KKT solution returned by run()&quot;&quot;&quot;</span>
+    <span class="n">box_primal</span><span class="p">,</span> <span class="n">box_dual_eq</span><span class="p">,</span> <span class="p">(</span><span class="n">box_mu</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">kkt_solution</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">box_primal</span>
+
+    <span class="n">eq_size</span><span class="p">,</span> <span class="n">ineq_neg_size</span> <span class="o">=</span> <span class="n">eq_ineq_size</span>
+    <span class="k">if</span> <span class="n">matvec_A_box</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">box_dual_eq</span> <span class="o">=</span> <span class="n">box_dual_eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># if Ax=b is defined, it is here.</span>
+      <span class="n">box_mu</span> <span class="o">=</span> <span class="n">box_mu</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># if Gx &lt;= h is defined, it is here.</span>
+    <span class="c1"># else: dual_variable is a pytree of (concatenated) tensors</span>
+
+    <span class="c1"># The sign of ineq_neg_size removes the need of detecting if it is a concatenation or singleton.</span>
+    <span class="n">dual_eq</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">_pytree_split</span><span class="p">(</span><span class="n">box_dual_eq</span><span class="p">,</span> <span class="n">eq_size</span><span class="p">)</span>
+    <span class="n">dual_ineq</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">_pytree_split</span><span class="p">(</span><span class="n">box_mu</span><span class="p">,</span> <span class="n">ineq_neg_size</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dual_eq</span><span class="p">,</span> <span class="n">dual_ineq</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">OSQPState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<div class="viewcode-block" id="OSQP"><a class="viewcode-back" href="../../../_autosummary/jaxopt.OSQP.html#jaxopt.OSQP">[docs]</a><span class="k">class</span> <span class="nc">OSQP</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Solver</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;OSQP solver for general quadratic programming.</span>
+
+<span class="sd">  Meant as drop-in replacement for CvxpyQP.</span>
+<span class="sd">  Depending on the format of your problem, BoxOSQP API may be more appropriate.</span>
+<span class="sd">  Support for matvec and pytrees. Supports jit and vmap.</span>
+
+<span class="sd">  CvxpyQP is more precise and should be preferred on CPU.</span>
+<span class="sd">  OSQP can be quicker than CvxpyQP when GPU/TPU are available.</span>
+
+<span class="sd">  The objective function is::</span>
+
+<span class="sd">    0.5 * x^T Q x + c^T x subject to Gx &lt;= h, Ax = b.</span>
+
+<span class="sd">  The attributes must be given as keyword arguments.</span>
+<span class="sd">  Hyper-parameters defaults to the same values as in BoxQP.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    matvec_Q: (optional) a Callable matvec_Q(params_Q, x).</span>
+<span class="sd">      By default, matvec_Q(P, x) = tree_dot(P, x), where the pytree Q = params_Q matches x structure.</span>
+<span class="sd">      ``matvec_Q`` incompatible with the specification of ``fun``.</span>
+<span class="sd">      The shape of primal variables may be inferred from params_obj = (matvec_Q, c).</span>
+<span class="sd">    matvec_A: (optional) a Callable matvec_A(params_A, x).</span>
+<span class="sd">      By default, matvec_A(A, x) = tree_dot(A, x), where tree pytree A = params_A matches x structure.</span>
+<span class="sd">    matvec_G: (optional) a Callable matvec_G(params_G, x).</span>
+<span class="sd">      By default, matvec_G(G, x) = tree_dot(G, x), where tree pytree G = params_G matches x structure.</span>
+<span class="sd">    fun: (optional) a function with signature fun(params, params_obj) that is promised</span>
+<span class="sd">      to be quadratic polynomial convex with respect to params, i.e fun can be written ::</span>
+<span class="sd">        fun(x, params_obj) = 0.5*jnp.dot(x, jnp.dot(Q, x)) + jnp.dot(c, x) + cste</span>
+<span class="sd">      with params_obj a pytree that contains the parameters of the objective function.</span>
+<span class="sd">      (Q, c) do not need to be explicited in params_obj by the user: c will be inferred by Jaxopt,</span>
+<span class="sd">        and the operator x -&gt; Qx will be computed upon request.</span>
+<span class="sd">      ``fun`` incompatible with the specification of ``matvec_Q``.</span>
+<span class="sd">      Note that the shape of primal cannot be inferred from params_obj anymore,</span>
+<span class="sd">      so the user should provide it in init_params.</span>
+<span class="sd">    check_primal_dual_infeasability: if True populates the ``status`` field of ``state``</span>
+<span class="sd">      with one of ``BoxOSQP.PRIMAL_INFEASIBLE``, ``BoxOSQP.DUAL_INFEASIBLE``. (default: True).</span>
+<span class="sd">      If False it improves speed but does not check feasability.</span>
+<span class="sd">      If jit=False, and if the problem is primal or dual infeasible, then a ValueError exception is raised.</span>
+<span class="sd">    sigma: ridge regularization parameter in linear system.</span>
+<span class="sd">    momentum: relaxation parameter (default: 1.6), must belong to the open interval (0,2).</span>
+<span class="sd">      momentum=1 =&gt; no relaxation.</span>
+<span class="sd">      momentum&lt;1 =&gt; under-relaxation.</span>
+<span class="sd">      momentum&gt;1 =&gt; over-relaxation.</span>
+<span class="sd">      Boyd [2, p21] suggests chosing momentum in [1.5, 1.8].</span>
+<span class="sd">    eq_qp_solve: &#39;cg&#39;, &#39;cg+jacobi&#39; or &#39;lu&#39; (default: &#39;cg&#39;).</span>
+<span class="sd">      &#39;cg&#39; is conjugate gradient: an indirect solver that works with matvecs or pytree of matrices.</span>
+<span class="sd">      &#39;cg+jacobi&#39; is conjugate gradient with Jacobi preconditioning: only works on pytree of matrices</span>
+<span class="sd">        but can provide speedup.</span>
+<span class="sd">      &#39;lu&#39; is LU factorization: a direct solver that only work on pytree of matrices.</span>
+<span class="sd">    rho_start: initial learning rate. (default: 1e-1)</span>
+<span class="sd">    rho_min: minimum learning rate. (default: 1e-6)</span>
+<span class="sd">    rho_max: maximum learning rate. (default: 1e6)</span>
+<span class="sd">    stepsize_updates_frequency: frequency of stepsize updates. (default: 10).</span>
+<span class="sd">      One every `stepsize_updates_frequency` updates computes a new stepsize.</span>
+<span class="sd">    primal_infeasible_tol: relative tolerance for primal infeasability detection. (default: 1e-4)</span>
+<span class="sd">    dual_infeasible_tol: relative tolerance for dual infeasability detection. (default: 1e-4)</span>
+<span class="sd">    maxiter: maximum number of iterations.  (default: 4000)</span>
+<span class="sd">    tol: absolute tolerance for stoping criterion (default: 1e-3).</span>
+<span class="sd">    termination_check_frequency: frequency of termination check. (default: 5).</span>
+<span class="sd">      One every `termination_check_frequency` the error is computed.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">matvec_A_box</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="OSQP.__init__"><a class="viewcode-back" href="../../../_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.__init__">[docs]</a>  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+    <span class="n">matvec_Q</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">matvec_A</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">matvec_G</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fun</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">fun</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">matvec_Q</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Specification of parameter &#39;fun&#39; is incompatible with &#39;matvec_Q&#39; in method __init__ of </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">matvec_Q</span><span class="p">,</span> <span class="n">matvec_A_box</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">transform_matvec</span><span class="p">(</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="n">matvec_A</span><span class="p">,</span> <span class="n">matvec_G</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A_box</span> <span class="o">=</span> <span class="n">matvec_A_box</span>
+
+    <span class="c1"># meant as drop-in replacement for CvxpyQP for which no unrolling is available.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_box_osqp</span> <span class="o">=</span> <span class="n">BoxOSQP</span><span class="p">(</span><span class="n">matvec_Q</span><span class="o">=</span><span class="n">matvec_Q</span><span class="p">,</span>
+                             <span class="n">matvec_A</span><span class="o">=</span><span class="n">matvec_A_box</span><span class="p">,</span>
+                             <span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span>
+                             <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OSQP.init_params"><a class="viewcode-back" href="../../../_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.init_params">[docs]</a>  <span class="k">def</span> <span class="nf">init_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_x</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return default params for initialization.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_x: initial primal solution.</span>
+<span class="sd">      params_obj: see the doc of `run` method.</span>
+<span class="sd">      params_eq: see the doc of `run` method.</span>
+<span class="sd">      params_ineq: see the doc of `run` method.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      init_params: a pytree KKTSolution of parameters for BoxOSQP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">hyper_params</span><span class="p">,</span> <span class="n">eq_ineq_size</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_A_box</span><span class="p">,</span>
+                                                              <span class="kc">None</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span>
+                                                              <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span>
+    <span class="n">init_params_box_osqp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_box_osqp</span><span class="o">.</span><span class="n">init_params</span><span class="p">(</span><span class="n">init_x</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_A_box</span><span class="p">,</span> <span class="n">eq_ineq_size</span><span class="p">,</span> <span class="n">init_params_box_osqp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OSQP.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">params_obj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">params_eq</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">params_ineq</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the quadratic programming solver in BoxOSQP.</span>
+
+<span class="sd">    The returned params contains both the primal and dual solutions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: init_params: (optional) initial KKTSolution for warm-start.</span>
+<span class="sd">        Must be provided if ``fun`` is not None.</span>
+<span class="sd">      params_obj: parameters of the quadratic objective, can be:</span>
+<span class="sd">        a tuple (Q, c) with Q a pytree of matrices,</span>
+<span class="sd">        or a tuple (params_Q, c) if ``matvec_Q`` is provided,</span>
+<span class="sd">        or an arbitrary pytree if ``fun`` is provided.</span>
+<span class="sd">      params_eq: (A, b) or None if no equality constraints.</span>
+<span class="sd">      params_ineq: (G, h) or None if no inequality constraints.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, state), ``params = (primal_var, dual_var_eq, dual_var_ineq)``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">params_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">init_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">init_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_params</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span>
+    <span class="n">init_params</span><span class="p">,</span> <span class="n">hyper_params</span><span class="p">,</span> <span class="n">eq_ineq_size</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_A_box</span><span class="p">,</span>
+                                                                        <span class="n">init_params</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span>
+                                                                        <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span>
+    <span class="n">sol</span><span class="p">,</span> <span class="n">box_osqp_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_box_osqp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_A_box</span><span class="p">,</span> <span class="n">eq_ineq_size</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">OSQPState</span><span class="p">(</span>
+      <span class="n">iter_num</span><span class="o">=</span><span class="n">box_osqp_state</span><span class="o">.</span><span class="n">iter_num</span><span class="p">,</span>
+      <span class="n">error</span><span class="o">=</span><span class="n">box_osqp_state</span><span class="o">.</span><span class="n">error</span><span class="p">,</span>
+      <span class="n">status</span><span class="o">=</span><span class="n">box_osqp_state</span><span class="o">.</span><span class="n">status</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">sol</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OSQP.l2_optimality_error"><a class="viewcode-back" href="../../../_autosummary/jaxopt.OSQP.html#jaxopt.OSQP.l2_optimality_error">[docs]</a>  <span class="k">def</span> <span class="nf">l2_optimality_error</span><span class="p">(</span>
+      <span class="bp">self</span><span class="p">,</span>
+      <span class="n">params</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+      <span class="n">params_obj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">base</span><span class="o">.</span><span class="n">ArrayPair</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+      <span class="n">params_eq</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">base</span><span class="o">.</span><span class="n">ArrayPair</span><span class="p">],</span>
+      <span class="n">params_ineq</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">base</span><span class="o">.</span><span class="n">ArrayPair</span><span class="p">],</span>
+  <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes the L2 norm of the KKT residuals.</span>
+
+<span class="sd">    Note that this function is exposed for consistency of the API, but the differentiation is actually</span>
+<span class="sd">    performed in the BoxOSQP class.&quot;&quot;&quot;</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">hyper_params</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">OSQP_to_BoxOSQP</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matvec_A_box</span><span class="p">,</span>
+                                                        <span class="n">params</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span>
+                                                        <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span>
+    <span class="n">pytree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_box_osqp</span><span class="o">.</span><span class="n">l2_optimality_error</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">pytree</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

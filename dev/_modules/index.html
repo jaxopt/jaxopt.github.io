@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview: module code &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Overview: module code</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>All modules for which code is available</h1>
+<ul><li><a href="jaxopt/_src/anderson.html">jaxopt._src.anderson</a></li>
+<li><a href="jaxopt/_src/anderson_wrapper.html">jaxopt._src.anderson_wrapper</a></li>
+<li><a href="jaxopt/_src/armijo_sgd.html">jaxopt._src.armijo_sgd</a></li>
+<li><a href="jaxopt/_src/backtracking_linesearch.html">jaxopt._src.backtracking_linesearch</a></li>
+<li><a href="jaxopt/_src/bfgs.html">jaxopt._src.bfgs</a></li>
+<li><a href="jaxopt/_src/bisection.html">jaxopt._src.bisection</a></li>
+<li><a href="jaxopt/_src/block_cd.html">jaxopt._src.block_cd</a></li>
+<li><a href="jaxopt/_src/broyden.html">jaxopt._src.broyden</a></li>
+<li><a href="jaxopt/_src/cd_qp.html">jaxopt._src.cd_qp</a></li>
+<li><a href="jaxopt/_src/cvxpy_wrapper.html">jaxopt._src.cvxpy_wrapper</a></li>
+<li><a href="jaxopt/_src/eq_qp.html">jaxopt._src.eq_qp</a></li>
+<li><a href="jaxopt/_src/fixed_point_iteration.html">jaxopt._src.fixed_point_iteration</a></li>
+<li><a href="jaxopt/_src/gauss_newton.html">jaxopt._src.gauss_newton</a></li>
+<li><a href="jaxopt/_src/gradient_descent.html">jaxopt._src.gradient_descent</a></li>
+<li><a href="jaxopt/_src/hager_zhang_linesearch.html">jaxopt._src.hager_zhang_linesearch</a></li>
+<li><a href="jaxopt/_src/implicit_diff.html">jaxopt._src.implicit_diff</a></li>
+<li><a href="jaxopt/_src/isotonic.html">jaxopt._src.isotonic</a></li>
+<li><a href="jaxopt/_src/iterative_refinement.html">jaxopt._src.iterative_refinement</a></li>
+<li><a href="jaxopt/_src/lbfgs.html">jaxopt._src.lbfgs</a></li>
+<li><a href="jaxopt/_src/lbfgsb.html">jaxopt._src.lbfgsb</a></li>
+<li><a href="jaxopt/_src/levenberg_marquardt.html">jaxopt._src.levenberg_marquardt</a></li>
+<li><a href="jaxopt/_src/linear_solve.html">jaxopt._src.linear_solve</a></li>
+<li><a href="jaxopt/_src/loss.html">jaxopt._src.loss</a></li>
+<li><a href="jaxopt/_src/mirror_descent.html">jaxopt._src.mirror_descent</a></li>
+<li><a href="jaxopt/_src/nonlinear_cg.html">jaxopt._src.nonlinear_cg</a></li>
+<li><a href="jaxopt/_src/objective.html">jaxopt._src.objective</a></li>
+<li><a href="jaxopt/_src/optax_wrapper.html">jaxopt._src.optax_wrapper</a></li>
+<li><a href="jaxopt/_src/osqp.html">jaxopt._src.osqp</a></li>
+<li><a href="jaxopt/_src/perturbations.html">jaxopt._src.perturbations</a></li>
+<li><a href="jaxopt/_src/polyak_sgd.html">jaxopt._src.polyak_sgd</a></li>
+<li><a href="jaxopt/_src/projected_gradient.html">jaxopt._src.projected_gradient</a></li>
+<li><a href="jaxopt/_src/projection.html">jaxopt._src.projection</a></li>
+<li><a href="jaxopt/_src/prox.html">jaxopt._src.prox</a></li>
+<li><a href="jaxopt/_src/proximal_gradient.html">jaxopt._src.proximal_gradient</a></li>
+<li><a href="jaxopt/_src/scipy_wrappers.html">jaxopt._src.scipy_wrappers</a></li>
+<li><a href="jaxopt/_src/tree_util.html">jaxopt._src.tree_util</a></li>
+</ul>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt.LevenbergMarquardt &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Linear system solving" href="../linear_system_solvers.html" />
+    <link rel="prev" title="jaxopt.GaussNewton" href="jaxopt.GaussNewton.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../nonlinear_least_squares.html">Nonlinear least squares</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../nonlinear_least_squares.html#gauss-newton">Gauss-Newton</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../nonlinear_least_squares.html#levenberg-marquardt">Levenberg Marquardt</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">jaxopt.LevenbergMarquardt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jaxopt.LevenbergMarquardt"><code class="docutils literal notranslate"><span class="pre">LevenbergMarquardt</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../nonlinear_least_squares.html#id2">Update equation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+      <li class="breadcrumb-item active">jaxopt.LevenbergMarquardt</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/_autosummary/jaxopt.LevenbergMarquardt.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="jaxopt-levenbergmarquardt">
+<h1>jaxopt.LevenbergMarquardt<a class="headerlink" href="#jaxopt-levenbergmarquardt" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">LevenbergMarquardt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">residual_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping_parameter=1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_criterion='grad-l2-norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtol=0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gtol=0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver=&lt;function</span> <span class="pre">solve_cg&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geodesic=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac_fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materialize_jac=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll='auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/levenberg_marquardt.html#LevenbergMarquardt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.LevenbergMarquardt" title="Permalink to this definition"></a></dt>
+<dd><p>Levenberg-Marquardt (LM) nonlinear least-squares solver.</p>
+<blockquote>
+<div><p>Given the residual function <cite>func</cite> (x): R^n -&gt; R^m, <cite>least_squares</cite> finds a
+local minimum of the cost function F(x):</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">argmin_x</span> <span class="pre">F(x)</span> <span class="pre">=</span> <span class="pre">0.5</span> <span class="pre">*</span> <span class="pre">sum(f_i(x)**2),</span> <span class="pre">i</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">...,</span> <span class="pre">m</span> <span class="pre">-</span> <span class="pre">1</span>
+<span class="pre">f(x)</span> <span class="pre">=</span> <span class="pre">func(x,</span> <span class="pre">*args)</span>
+<span class="pre">`</span></code></p>
+<p>This results in solving the following normal equation:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">(J^T</span> <span class="pre">&#64;</span> <span class="pre">J</span> <span class="pre">+</span> <span class="pre">µ</span> <span class="pre">I)</span> <span class="pre">&#64;</span> <span class="pre">∆params</span> <span class="pre">=</span> <span class="pre">-J^T</span> <span class="pre">&#64;</span> <span class="pre">f(x)</span>
+<span class="pre">`</span></code>
+we use this method as recommended by K. Madsen &amp; H. B. Nielsen in the book
+“Introduction to Optimization and Data Fitting” page 122.</p>
+<p>If stop_criterion is ‘madsen-nielsen’, the convergence is achieved once the
+coeff update satisfies <code class="docutils literal notranslate"><span class="pre">||dcoeffs||_2</span> <span class="pre">&lt;=</span> <span class="pre">xtol</span> <span class="pre">*</span> <span class="pre">(||coeffs||_2</span> <span class="pre">+</span> <span class="pre">xtol)</span> <span class="pre">``</span> <span class="pre">or</span>
+<span class="pre">the</span> <span class="pre">gradient</span> <span class="pre">satisfies</span> <span class="pre">``||grad(f)||_inf</span> <span class="pre">&lt;=</span> <span class="pre">gtol</span></code>.</p>
+<p>It is possible to find the LM step by solving the following equation:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">[</span>&#160;&#160;&#160;&#160; <span class="pre">J</span>&#160;&#160;&#160; <span class="pre">]</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[</span> <span class="pre">-f(x)</span> <span class="pre">]</span>
+<span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span> <span class="pre">&#64;</span> <span class="pre">∆params</span> <span class="pre">=</span>&#160; <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">[</span> <span class="pre">Sqrt(µ)I</span> <span class="pre">]</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[</span>&#160;&#160; <span class="pre">0</span>&#160;&#160; <span class="pre">]</span>
+<span class="pre">`</span></code>
+If LHS matrix is multiplied by its transpose, one can show that solving this
+equation is the same as the normal equation. This is the approach we take if
+QR factorization method is chosen. Note that since we are not multipyling the
+LHS matrix by its transpose, the condition number of the LHS matrix is more
+accurate and therefore this method can be used for ill-conditioned Jacobians.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>residual_fun</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
+<li><p><strong>damping_parameter</strong> (<em>float</em>) – </p></li>
+<li><p><strong>stop_criterion</strong> (<em>Literal</em><em>[</em><em>'grad-l2-norm'</em><em>, </em><em>'madsen-nielsen'</em><em>]</em>) – </p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>xtol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>gtol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>solver</strong> (<em>Union</em><em>[</em><em>Literal</em><em>[</em><em>'cholesky'</em><em>, </em><em>'lu'</em><em>, </em><em>'qr'</em><em>, </em><em>'inv'</em><em>]</em><em>, </em><em>~typing.Callable</em><em>]</em>) – </p></li>
+<li><p><strong>geodesic</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>jac_fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>Array</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>materialize_jac</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.residual_fun">
+<span class="sig-name descname"><span class="pre">residual_fun</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.residual_fun" title="Permalink to this definition"></a></dt>
+<dd><p>a smooth function of the form <code class="docutils literal notranslate"><span class="pre">residual_fun(x,</span> <span class="pre">*args,</span>
+<span class="pre">**kwargs)</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.maxiter">
+<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.maxiter" title="Permalink to this definition"></a></dt>
+<dd><p>maximum increase_factormber of iterations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.damping_parameter">
+<span class="sig-name descname"><span class="pre">damping_parameter</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.damping_parameter" title="Permalink to this definition"></a></dt>
+<dd><p>The parameter which adds a correction to the equation
+derived for updating the coefficients using Gauss-Newton method. Please
+see section 3.2. of K. Madsen et al. in the book “Methods for nonlinear
+least squares problems” for more information.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.stop_criterion">
+<span class="sig-name descname"><span class="pre">stop_criterion</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.stop_criterion" title="Permalink to this definition"></a></dt>
+<dd><p>The criterion to use for the convergence of the while loop.
+e.g., for ‘madsen-nielsen’ the criteria is to satisfy the two equations
+for delta_params and gradient that is mentioned above. If ‘grad-l2’ is
+selected, the convergence is achieved if l2 of gradient is smaller or
+equal to tol.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.tol">
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.tol" title="Permalink to this definition"></a></dt>
+<dd><p>tolerance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.xtol">
+<span class="sig-name descname"><span class="pre">xtol</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.xtol" title="Permalink to this definition"></a></dt>
+<dd><p>float, optional The convergence tolerance for the second norm of the
+coefficient update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.gtol">
+<span class="sig-name descname"><span class="pre">gtol</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.gtol" title="Permalink to this definition"></a></dt>
+<dd><p>float, optional The convergence tolerance for the inf norm of the
+residual gradient.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.solver">
+<span class="sig-name descname"><span class="pre">solver</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.solver" title="Permalink to this definition"></a></dt>
+<dd><p>str, optional The solver to use when finding delta_params, the
+update to the params in each iteration. This is done through solving a
+system of linear equation Ax=b. ‘cholesky’, ‘lu’, or ‘qr’ factorizations,
+‘inv’ (explicit multiplication with matrix inverse). Note that the inverse
+approach is the most expensive and least accurate and is just given as an
+option for legacy reasons. The user can provide custom solvers, for example
+using jaxopt.linear_solve.solve_cg which are more scalable for runtime but
+take longer compilations. Cholesky is faster than inverse since it uses
+the symmetry feature of A. QR factorization is preferred for ill-posed
+stiff problems due to not solving the normal equation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matvec</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>b</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>ridge</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
+<li><p><strong>init</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Any</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.geodesic">
+<span class="sig-name descname"><span class="pre">geodesic</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.geodesic" title="Permalink to this definition"></a></dt>
+<dd><p>bool, if we would like to include the geodesic acceleration when
+solving for the delta_params in every iteration.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.contribution_ratio_threshold">
+<span class="sig-name descname"><span class="pre">contribution_ratio_threshold</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.contribution_ratio_threshold" title="Permalink to this definition"></a></dt>
+<dd><p>float, the threshold for acceleration/velocity
+ratio. We update the parameters in the algorithm only if the ratio is
+smaller than this threshold value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.verbose" title="Permalink to this definition"></a></dt>
+<dd><p>bool, whether to print error on every iteration or not.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.jac_fun">
+<span class="sig-name descname"><span class="pre">jac_fun</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.jac_fun" title="Permalink to this definition"></a></dt>
+<dd><p>Callable, a function to calculate the Jacobian. If not None, this
+function is used instead of directly calculating it using <code class="docutils literal notranslate"><span class="pre">jax.jacfwd</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.materialize_jac">
+<span class="sig-name descname"><span class="pre">materialize_jac</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.materialize_jac" title="Permalink to this definition"></a></dt>
+<dd><p>bool, whether to materialize Jacobian. If this option is
+True, Jacobian is either calculated using <code class="docutils literal notranslate"><span class="pre">jax.jacfwd</span></code> or obtained from
+<code class="docutils literal notranslate"><span class="pre">jac_fun</span></code> and all variables depending on it, such as J^T or J^T.J are
+obtained directly. If False, all of the Jacobian dependent variables are
+indirectly obtained using operators on the basis of <code class="docutils literal notranslate"><span class="pre">jax.jvp</span></code> and
+<code class="docutils literal notranslate"><span class="pre">jax.vjp</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.implicit_diff">
+<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.implicit_diff" title="Permalink to this definition"></a></dt>
+<dd><p>bool, whether to enable implicit diff or autodiff of unrolled
+iterations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.implicit_diff_solve">
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.implicit_diff_solve" title="Permalink to this definition"></a></dt>
+<dd><p>the linear system solver to use.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.has_aux">
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.has_aux" title="Permalink to this definition"></a></dt>
+<dd><p>whether <code class="docutils literal notranslate"><span class="pre">residual_fun</span></code> outputs auxiliary data or not.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.jit">
+<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.jit" title="Permalink to this definition"></a></dt>
+<dd><p>whether to JIT-compile the bisection loop (default: True).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.unroll">
+<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.unroll" title="Permalink to this definition"></a></dt>
+<dd><p>whether to unroll the bisection loop (default: “auto”).</p>
+</dd></dl>
+
+<dl class="simple">
+<dt>Reference: This algorithm is for finding the best fit parameters based on the</dt><dd><p>algorithm 6.18 provided by K. Madsen &amp; H. B. Nielsen in the book
+“Introduction to Optimization and Data Fitting”.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">residual_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping_parameter=1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_criterion='grad-l2-norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtol=0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gtol=0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver=&lt;function</span> <span class="pre">solve_cg&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geodesic=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac_fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materialize_jac=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll='auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>residual_fun</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
+<li><p><strong>damping_parameter</strong> (<em>float</em>) – </p></li>
+<li><p><strong>stop_criterion</strong> (<em>Literal</em><em>[</em><em>'grad-l2-norm'</em><em>, </em><em>'madsen-nielsen'</em><em>]</em>) – </p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>xtol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>gtol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>solver</strong> (<em>Union</em><em>[</em><em>Literal</em><em>[</em><em>'cholesky'</em><em>, </em><em>'lu'</em><em>, </em><em>'qr'</em><em>, </em><em>'inv'</em><em>]</em><em>, </em><em>~typing.Callable</em><em>]</em>) – </p></li>
+<li><p><strong>geodesic</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>jac_fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>Array</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>materialize_jac</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.__init__" title="jaxopt.LevenbergMarquardt.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(residual_fun[, maxiter, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_names</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attribute_values</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.init_state" title="jaxopt.LevenbergMarquardt.init_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_state</span></code></a>(init_params, *args, **kwargs)</p></td>
+<td><p>Initialize the solver state.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.l2_optimality_error" title="jaxopt.LevenbergMarquardt.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
+<td><p>Computes the L2 optimality error.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.optimality_fun" title="jaxopt.LevenbergMarquardt.optimality_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code></a>(params, *args, **kwargs)</p></td>
+<td><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.run" title="jaxopt.LevenbergMarquardt.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
+<td><p>Runs the optimization loop.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id0" title="jaxopt.LevenbergMarquardt.solver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solver</span></code></a>(b[, ridge, init])</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using conjugate gradient.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.update" title="jaxopt.LevenbergMarquardt.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, *args, **kwargs)</p></td>
+<td><p>Performs one iteration of the least-squares solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.update_state_using_delta_params" title="jaxopt.LevenbergMarquardt.update_state_using_delta_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_state_using_delta_params</span></code></a>(loss_curr, ...)</p></td>
+<td><p>The function to return state variables based on delta_params.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.update_state_using_gain_ratio" title="jaxopt.LevenbergMarquardt.update_state_using_gain_ratio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_state_using_gain_ratio</span></code></a>(gain_ratio, ...)</p></td>
+<td><p>The function to return state variables based on gain ratio.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.contribution_ratio_threshold" title="jaxopt.LevenbergMarquardt.contribution_ratio_threshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contribution_ratio_threshold</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.damping_parameter" title="jaxopt.LevenbergMarquardt.damping_parameter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">damping_parameter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.geodesic" title="jaxopt.LevenbergMarquardt.geodesic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geodesic</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.gtol" title="jaxopt.LevenbergMarquardt.gtol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gtol</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.has_aux" title="jaxopt.LevenbergMarquardt.has_aux"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_aux</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.implicit_diff" title="jaxopt.LevenbergMarquardt.implicit_diff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.implicit_diff_solve" title="jaxopt.LevenbergMarquardt.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.jac_fun" title="jaxopt.LevenbergMarquardt.jac_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jac_fun</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.jit" title="jaxopt.LevenbergMarquardt.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.materialize_jac" title="jaxopt.LevenbergMarquardt.materialize_jac"><code class="xref py py-obj docutils literal notranslate"><span class="pre">materialize_jac</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.maxiter" title="jaxopt.LevenbergMarquardt.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.stop_criterion" title="jaxopt.LevenbergMarquardt.stop_criterion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_criterion</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.tol" title="jaxopt.LevenbergMarquardt.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.unroll" title="jaxopt.LevenbergMarquardt.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.verbose" title="jaxopt.LevenbergMarquardt.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.xtol" title="jaxopt.LevenbergMarquardt.xtol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xtol</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.LevenbergMarquardt.residual_fun" title="jaxopt.LevenbergMarquardt.residual_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">residual_fun</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.init_state">
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/levenberg_marquardt.html#LevenbergMarquardt.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.LevenbergMarquardt.init_state" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the solver state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>*args</strong> – additional positional arguments to be passed to <code class="docutils literal notranslate"><span class="pre">residual_fun</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to <code class="docutils literal notranslate"><span class="pre">residual_fun</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LevenbergMarquardtState</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.l2_optimality_error">
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.l2_optimality_error" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the L2 optimality error.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.optimality_fun">
+<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/levenberg_marquardt.html#LevenbergMarquardt.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.LevenbergMarquardt.optimality_fun" title="Permalink to this definition"></a></dt>
+<dd><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.LevenbergMarquardt.run" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the optimization loop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>*args</strong> – additional positional arguments to be passed to the update method.</p></li>
+<li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to the update method.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(params, state)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using conjugate gradient.</p>
+<p>It assumes that <code class="docutils literal notranslate"><span class="pre">A</span></code> is  a Hermitian, positive definite matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matvec</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – product between <code class="docutils literal notranslate"><span class="pre">A</span></code> and a vector.</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree.</p></li>
+<li><p><strong>ridge</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – optional ridge regularization.</p></li>
+<li><p><strong>init</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – optional initialization to be used by conjugate gradient.</p></li>
+<li><p><strong>**kwargs</strong> – additional keyword arguments for solver.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pytree with same structure as <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/levenberg_marquardt.html#LevenbergMarquardt.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.LevenbergMarquardt.update" title="Permalink to this definition"></a></dt>
+<dd><p>Performs one iteration of the least-squares solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – pytree containing the parameters.</p></li>
+<li><p><strong>state</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code>) – named tuple containing the solver state.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(params, state)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.update_state_using_delta_params">
+<span class="sig-name descname"><span class="pre">update_state_using_delta_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loss_curr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contribution_ratio_diff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">residual</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jtj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hess_res</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aux</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/levenberg_marquardt.html#LevenbergMarquardt.update_state_using_delta_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.LevenbergMarquardt.update_state_using_delta_params" title="Permalink to this definition"></a></dt>
+<dd><p>The function to return state variables based on delta_params.</p>
+<p>Define the functions required for the major conditional of the algorithm,
+which checks the magnitude of dparams and checks if it is small enough.
+for the value of dparams.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.LevenbergMarquardt.update_state_using_gain_ratio">
+<span class="sig-name descname"><span class="pre">update_state_using_gain_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gain_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contribution_ratio_diff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_ratio_test_init_state</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/levenberg_marquardt.html#LevenbergMarquardt.update_state_using_gain_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.LevenbergMarquardt.update_state_using_gain_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>The function to return state variables based on gain ratio.
+Please see by page 120-121 of the book “Introduction to Optimization and
+Data Fitting” by K. Madsen &amp; H. B. Nielsen for details.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jaxopt.GaussNewton.html" class="btn btn-neutral float-left" title="jaxopt.GaussNewton" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../linear_system_solvers.html" class="btn btn-neutral float-right" title="Linear system solving" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿jaxopt.NonlinearCG
+==================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: NonlinearCG
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NonlinearCG.__init__
+      ~NonlinearCG.attribute_names
+      ~NonlinearCG.attribute_values
+      ~NonlinearCG.init_state
+      ~NonlinearCG.l2_optimality_error
+      ~NonlinearCG.optimality_fun
+      ~NonlinearCG.run
+      ~NonlinearCG.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~NonlinearCG.condition
+      ~NonlinearCG.decrease_factor
+      ~NonlinearCG.has_aux
+      ~NonlinearCG.implicit_diff
+      ~NonlinearCG.implicit_diff_solve
+      ~NonlinearCG.increase_factor
+      ~NonlinearCG.jit
+      ~NonlinearCG.linesearch
+      ~NonlinearCG.linesearch_init
+      ~NonlinearCG.max_stepsize
+      ~NonlinearCG.maxiter
+      ~NonlinearCG.maxls
+      ~NonlinearCG.method
+      ~NonlinearCG.min_stepsize
+      ~NonlinearCG.tol
+      ~NonlinearCG.unroll
+      ~NonlinearCG.value_and_grad
+      ~NonlinearCG.verbose
+      ~NonlinearCG.fun
+   
+   

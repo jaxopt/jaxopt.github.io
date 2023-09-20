@@ -1,0 +1,47 @@
+﻿jaxopt.HagerZhangLineSearch
+===========================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: HagerZhangLineSearch
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HagerZhangLineSearch.__init__
+      ~HagerZhangLineSearch.attribute_names
+      ~HagerZhangLineSearch.attribute_values
+      ~HagerZhangLineSearch.init_state
+      ~HagerZhangLineSearch.l2_optimality_error
+      ~HagerZhangLineSearch.run
+      ~HagerZhangLineSearch.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~HagerZhangLineSearch.approximate_wolfe_threshold
+      ~HagerZhangLineSearch.c1
+      ~HagerZhangLineSearch.c2
+      ~HagerZhangLineSearch.expansion_factor
+      ~HagerZhangLineSearch.has_aux
+      ~HagerZhangLineSearch.jit
+      ~HagerZhangLineSearch.max_stepsize
+      ~HagerZhangLineSearch.maxiter
+      ~HagerZhangLineSearch.shrinkage_factor
+      ~HagerZhangLineSearch.tol
+      ~HagerZhangLineSearch.unroll
+      ~HagerZhangLineSearch.value_and_grad
+      ~HagerZhangLineSearch.verbose
+      ~HagerZhangLineSearch.fun
+   
+   

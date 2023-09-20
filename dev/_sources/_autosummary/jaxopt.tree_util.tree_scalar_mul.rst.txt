@@ -1,0 +1,6 @@
+﻿jaxopt.tree\_util.tree\_scalar\_mul
+===================================
+
+.. currentmodule:: jaxopt.tree_util
+
+.. autofunction:: tree_scalar_mul

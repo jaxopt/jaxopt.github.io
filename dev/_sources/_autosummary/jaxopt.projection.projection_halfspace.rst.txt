@@ -1,0 +1,6 @@
+﻿jaxopt.projection.projection\_halfspace
+=======================================
+
+.. currentmodule:: jaxopt.projection
+
+.. autofunction:: projection_halfspace

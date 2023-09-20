@@ -1,0 +1,6 @@
+﻿jaxopt.projection.projection\_birkhoff
+======================================
+
+.. currentmodule:: jaxopt.projection
+
+.. autofunction:: projection_birkhoff

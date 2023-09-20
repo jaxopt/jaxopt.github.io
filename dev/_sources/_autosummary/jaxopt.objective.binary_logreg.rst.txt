@@ -1,0 +1,6 @@
+﻿jaxopt.objective.binary\_logreg
+===============================
+
+.. currentmodule:: jaxopt.objective
+
+.. autodata:: binary_logreg

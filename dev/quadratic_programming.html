@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quadratic programming &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jaxopt.EqualityConstrainedQP" href="_autosummary/jaxopt.EqualityConstrainedQP.html" />
+    <link rel="prev" title="jaxopt.LBFGSB" href="_autosummary/jaxopt.LBFGSB.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quadratic programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#equality-constrained-qps">Equality-constrained QPs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html">jaxopt.EqualityConstrainedQP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ill-posed-problems">Ill-posed problems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#general-qps">General QPs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cvxpyqp">CvxpyQP</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html">jaxopt.CvxpyQP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#osqp">OSQP</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.OSQP.html">jaxopt.OSQP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#box-constrained-qps-with-equality">Box-constrained QPs, with equality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html">jaxopt.BoxOSQP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#box-constrained-qps-without-equality">Box-constrained QPs, without equality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html">jaxopt.BoxCDQP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#unconstrained-qps">Unconstrained QPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pytree-of-matrices-api">Pytree of matrices API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matvec-api">Matvec API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quadratic-function-api">Quadratic function API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implicit-differentiation-pitfalls">Implicit differentiation pitfalls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quadratic programming</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/quadratic_programming.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quadratic-programming">
+<h1>Quadratic programming<a class="headerlink" href="#quadratic-programming" title="Permalink to this heading"></a></h1>
+<p>This section is concerned with minimizing quadratic functions subject
+to equality and/or inequality constraints, also known as
+<a class="reference external" href="https://en.wikipedia.org/wiki/Quadratic_programming">quadratic programming</a>.</p>
+<p>JAXopt supports several solvers for quadratic programming.
+The solver specificities are summarized in the table below.
+The best choice will depend on the usage.</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Quadratic programming solvers</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 8%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>jit</p></th>
+<th class="head"><p>pytree</p></th>
+<th class="head"><p>matvec</p></th>
+<th class="head"><p>quad. fun</p></th>
+<th class="head"><p>precision</p></th>
+<th class="head"><p>stability</p></th>
+<th class="head"><p>speed</p></th>
+<th class="head"><p>derivative</p></th>
+<th class="head"><p>input format</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP" title="jaxopt.EqualityConstrainedQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.EqualityConstrainedQP</span></code></a></p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>++</p></td>
+<td><p>+</p></td>
+<td><p>+++</p></td>
+<td><p>implicit</p></td>
+<td><p>(Q, c), (A, b)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP" title="jaxopt.CvxpyQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.CvxpyQP</span></code></a></p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>+++</p></td>
+<td><p>+++</p></td>
+<td><p>+</p></td>
+<td><p>implicit</p></td>
+<td><p>(Q, c), (A, b), (G, h)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a></p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>+</p></td>
+<td><p>++</p></td>
+<td><p>++</p></td>
+<td><p>implicit</p></td>
+<td><p>(Q, c), (A, b), (G, h)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a></p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>+</p></td>
+<td><p>++</p></td>
+<td><p>++</p></td>
+<td><p>both</p></td>
+<td><p>(Q, c), A, (l, u)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a></p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>++</p></td>
+<td><p>+++</p></td>
+<td><p>++</p></td>
+<td><p>both</p></td>
+<td><p>(Q, c), (l, u)</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p><em>jit</em>: the algorithm can be used with jit or vmap, on GPU/TPU.</p></li>
+<li><p><em>pytree</em>: the algorithm can be used with pytrees of matrices (see below).</p></li>
+<li><p><em>matvec</em>: the QP parameters can be given as matvec instead of dense matrices (see below).</p></li>
+<li><p><em>quad. fun</em>: the algorithm can be used with a quadratic function argument (see below).</p></li>
+<li><p><em>precision</em>: accuracy expected when the solver succeeds to converge.</p></li>
+<li><p><em>stability</em>: capacity to handle badly scaled problems and matrices with poor conditioning.</p></li>
+<li><p><em>speed</em>: typical speed on big instances to reach its maximum accuracy.</p></li>
+<li><p><em>derivative</em>: whether differentiation is supported only via implicit differentiation, or by both implicit differentiation and unrolling.</p></li>
+<li><p><em>input format</em>: see subsections below.</p></li>
+</ul>
+<p>This table is given as rule of thumb only; on some particular instances
+some solvers may behave unexpectedly better (or worse!) than others.
+In case of difficulties, we suggest to test different combinations of
+algorithms, <code class="docutils literal notranslate"><span class="pre">maxiter</span></code> and <code class="docutils literal notranslate"><span class="pre">tol</span></code> values.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These algorithms are guaranteed to converge on <strong>convex problems</strong> only.
+Hence, the matrix <span class="math notranslate nohighlight">\(Q\)</span> <em>must</em> be positive semi-definite (PSD).</p>
+</div>
+<section id="equality-constrained-qps">
+<h2>Equality-constrained QPs<a class="headerlink" href="#equality-constrained-qps" title="Permalink to this heading"></a></h2>
+<p>The problem takes the form:</p>
+<div class="math notranslate nohighlight">
+\[\min_{x} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } A x = b\]</div>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP" title="jaxopt.EqualityConstrainedQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.EqualityConstrainedQP</span></code></a>([matvec_Q, ...])</p></td>
+<td><p>Quadratic programming with equality constraints only.</p></td>
+</tr>
+</tbody>
+</table>
+<p>This class is optimized for QPs with equality constraints only: it supports jit, pytrees and matvec.
+It is based on the KKT conditions of the problem.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">qp</span> <span class="o">=</span> <span class="n">EqualityConstrainedQP</span><span class="p">()</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_eq</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="ill-posed-problems">
+<h3>Ill-posed problems<a class="headerlink" href="#ill-posed-problems" title="Permalink to this heading"></a></h3>
+<p>This solver is the fastest for well-posed problems, but can behave poorly on badly scaled matrices,
+or with redundant constraints.</p>
+<p>If the solver struggles to converge,
+it is possible to enable
+<a class="reference external" href="https://en.wikipedia.org/wiki/Iterative_refinement">iterative refinement</a>.
+This can be done by setting <code class="docutils literal notranslate"><span class="pre">refine_regularization</span></code> and <code class="docutils literal notranslate"><span class="pre">refine_maxiter</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt.eq_qp</span> <span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">3000.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">qp</span> <span class="o">=</span> <span class="n">EqualityConstrainedQP</span><span class="p">(</span><span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">refine_regularization</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">refine_maxiter</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_eq</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">l2_optimality_error</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="general-qps">
+<h2>General QPs<a class="headerlink" href="#general-qps" title="Permalink to this heading"></a></h2>
+<p>The problem takes the form:</p>
+<div class="math notranslate nohighlight">
+\[\min_{x} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } A x = b, G x \le h\]</div>
+<section id="cvxpyqp">
+<h3>CvxpyQP<a class="headerlink" href="#cvxpyqp" title="Permalink to this heading"></a></h3>
+<p>The wrapper over
+<a class="reference external" href="https://www.cvxpy.org">CVXPY</a>
+is a solver that runs in <code class="docutils literal notranslate"><span class="pre">float64</span></code> precision.
+However, it is not jittable, and does not support matvec and pytrees.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP" title="jaxopt.CvxpyQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.CvxpyQP</span></code></a>([solver, implicit_diff_solve])</p></td>
+<td><p>Wraps CVXPY's quadratic solver with implicit diff support.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">CvxpyQP</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="n">qp</span> <span class="o">=</span> <span class="n">CvxpyWrapper</span><span class="p">()</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_eq</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_ineq</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is also possible to specify only equality constraints or only inequality
+constraints by setting <code class="docutils literal notranslate"><span class="pre">params_eq</span></code> or <code class="docutils literal notranslate"><span class="pre">params_ineq</span></code> to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</section>
+<section id="osqp">
+<h3>OSQP<a class="headerlink" href="#osqp" title="Permalink to this heading"></a></h3>
+<p>This solver is a pure JAX re-implementation of the OSQP algorithm.
+It is jittable, supports pytrees and matvecs, but the precision is usually
+lower than <code class="xref py py-class docutils literal notranslate"><span class="pre">CvxpyQP</span></code> when run in float32 precision.
+It is meant as a drop-in replacement for <code class="xref py py-class docutils literal notranslate"><span class="pre">CvxpyQP</span></code>, but it
+is a wrapper over <code class="xref py py-class docutils literal notranslate"><span class="pre">BoxOSQP</span></code>.
+Hence we recommend to use <code class="xref py py-class docutils literal notranslate"><span class="pre">BoxOSQP</span></code> to avoid a costly problem transformation.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a>(*[, matvec_Q, matvec_A, ...])</p></td>
+<td><p>OSQP solver for general quadratic programming.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OSQP</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="n">qp</span> <span class="o">=</span> <span class="n">OSQP</span><span class="p">()</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_eq</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_ineq</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a> for a full description of the parameters.</p>
+<aside class="topic">
+<p class="topic-title">Example</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="auto_examples/constrained/multiclass_linear_svm.html#sphx-glr-auto-examples-constrained-multiclass-linear-svm-py"><span class="std std-ref">Multiclass linear SVM (without intercept).</span></a></p></li>
+</ul>
+</aside>
+</section>
+</section>
+<section id="box-constrained-qps-with-equality">
+<h2>Box-constrained QPs, with equality<a class="headerlink" href="#box-constrained-qps-with-equality" title="Permalink to this heading"></a></h2>
+<p>The problem takes the form:</p>
+<div class="math notranslate nohighlight">
+\[\min_{x,z} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } A x = z, l \le z \le u\]</div>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a>([matvec_Q, matvec_A, fun, ...])</p></td>
+<td><p>Operator Splitting Solver for Quadratic Programs.</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a> uses the same underlying solver as <a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a>
+but accepts problems in the above box-constrained format instead.  The bounds
+<code class="docutils literal notranslate"><span class="pre">u</span></code> (resp. <code class="docutils literal notranslate"><span class="pre">l</span></code>) can be set to <code class="docutils literal notranslate"><span class="pre">inf</span></code> (resp. <code class="docutils literal notranslate"><span class="pre">-inf</span></code>) if required.
+Equality can be enforced with <code class="docutils literal notranslate"><span class="pre">l</span> <span class="pre">=</span> <span class="pre">u</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BoxOSQP</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="n">qp</span> <span class="o">=</span> <span class="n">BoxOSQP</span><span class="p">()</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_eq</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">dual_ineq</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If required the algorithm can be sped up by setting
+<code class="docutils literal notranslate"><span class="pre">check_primal_dual_infeasability</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>, and by setting
+<code class="docutils literal notranslate"><span class="pre">eq_qp_preconditioner</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;jacobi&quot;</span></code> (when possible).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">tol</span></code> parameter controls the tolerance of the stopping criterion, which
+is based on the primal and dual residuals.  For over-constrained problems, or
+badly-scaled matrices, the residuals can be high, and it may be difficult to
+set <code class="docutils literal notranslate"><span class="pre">tol</span></code> appropriately.  In this case, it is better to tune <code class="docutils literal notranslate"><span class="pre">maxiter</span></code>
+instead.</p>
+</div>
+<aside class="topic">
+<p class="topic-title">Example</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="auto_examples/constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></p></li>
+</ul>
+</aside>
+</section>
+<section id="box-constrained-qps-without-equality">
+<h2>Box-constrained QPs, without equality<a class="headerlink" href="#box-constrained-qps-without-equality" title="Permalink to this heading"></a></h2>
+<p>The problem takes the form:</p>
+<div class="math notranslate nohighlight">
+\[\min_{x} \frac{1}{2} x^\top Q x + c^\top x \textrm{ subject to } l \le x \le u\]</div>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a>([maxiter, tol, verbose, ...])</p></td>
+<td><p>Coordinate descent solver for box-constrained QPs.</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a> uses a coordinate descent solver. The solver returns only
+the primal solution.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BoxCDQP</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">qp</span> <span class="o">=</span> <span class="n">BoxCDQP</span><span class="p">()</span>
+<span class="n">init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="unconstrained-qps">
+<h2>Unconstrained QPs<a class="headerlink" href="#unconstrained-qps" title="Permalink to this heading"></a></h2>
+<p>For completeness, we also briefly describe how to solve unconstrained
+quadratics of the form:</p>
+<div class="math notranslate nohighlight">
+\[\min_{x} \frac{1}{2} x^\top Q x + c^\top x\]</div>
+<p>The optimality condition rewrites <span class="math notranslate nohighlight">\(\nabla \frac{1}{2} x^\top Q x + c^\top
+x=Qx+c=0\)</span>.  Therefore, this is equivalent to solving the linear system
+<span class="math notranslate nohighlight">\(Qx=-c\)</span>.  Since the matrix <span class="math notranslate nohighlight">\(Q\)</span> is assumed PSD, one of the best
+algorithms is <em>conjugate gradient</em>.  In JAXopt, this can be done as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt.linear_solve</span> <span class="kn">import</span> <span class="n">solve_cg</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">matvec</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_cg</span><span class="p">(</span><span class="n">matvec</span><span class="p">,</span> <span class="n">b</span><span class="o">=-</span><span class="n">c</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="pytree-of-matrices-api">
+<h2>Pytree of matrices API<a class="headerlink" href="#pytree-of-matrices-api" title="Permalink to this heading"></a></h2>
+<p>Solvers <code class="xref py py-class docutils literal notranslate"><span class="pre">EqualityConstrainedQP</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">OSQP</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">BoxOSQP</span></code> support
+the pytree of matrices API. It means that the matrices <cite>Q</cite>, <cite>A</cite>, <cite>G</cite> can be provided
+as block diagonal operator whose blocks are leaves of pytrees.
+This corresponds to separable problems that can be solved in parallel (one for each leaf).</p>
+<dl class="simple">
+<dt>It offers several advantages:</dt><dd><ul class="simple">
+<li><p>This model of parallelism succeeds even if all the problems have different shapes,
+contrary to the <cite>jax.vmap</cite> API.</p></li>
+<li><p>This formulation is more efficient than a single big matrix, especially when
+there are a lot of blocks, and when the blocks themselves are small.</p></li>
+<li><p>The tolerance is globally defined and shared by all the problems,
+and the number of iterations is the same for all the problems.</p></li>
+</ul>
+</dd>
+</dl>
+<p>We illustrate below the parallel solving of two problems with different shapes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Q1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">Q2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">]])</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;problem1&#39;</span><span class="p">:</span> <span class="n">Q1</span><span class="p">,</span> <span class="s1">&#39;problem2&#39;</span><span class="p">:</span> <span class="n">Q2</span><span class="p">}</span>
+
+<span class="n">c1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;problem1&#39;</span><span class="p">:</span> <span class="n">c1</span><span class="p">,</span> <span class="s1">&#39;problem2&#39;</span><span class="p">:</span> <span class="n">c2</span><span class="p">}</span>
+
+<span class="n">a1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.0</span><span class="p">]])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;problem1&#39;</span><span class="p">:</span> <span class="n">a1</span><span class="p">,</span> <span class="s1">&#39;problem2&#39;</span><span class="p">:</span> <span class="n">a2</span><span class="p">}</span>
+
+<span class="n">b1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.3</span><span class="p">])</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.0</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;problem1&#39;</span><span class="p">:</span> <span class="n">b1</span><span class="p">,</span> <span class="s1">&#39;problem2&#39;</span><span class="p">:</span> <span class="n">b2</span><span class="p">}</span>
+
+<span class="n">qp</span> <span class="o">=</span> <span class="n">EqualityConstrainedQP</span><span class="p">(</span><span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="n">hyperparams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+<span class="c1"># Solve the two problems in parallel with a single call.</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">hyperparams</span><span class="p">)</span><span class="o">.</span><span class="n">params</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">[</span><span class="s1">&#39;problem1&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">[</span><span class="s1">&#39;problem2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="matvec-api">
+<h2>Matvec API<a class="headerlink" href="#matvec-api" title="Permalink to this heading"></a></h2>
+<p>Solvers <code class="xref py py-class docutils literal notranslate"><span class="pre">EqualityConstrainedQP</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">OSQP</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">BoxOSQP</span></code> support the matvec API.
+It means that the user can provide a function <code class="docutils literal notranslate"><span class="pre">matvec</span></code> that computes the matrix-vector product,
+either in the objective <cite>x -&gt; Qx</cite> or in the constraints <cite>x -&gt; Ax</cite>, <cite>x -&gt; Gx</cite>.</p>
+<dl class="simple">
+<dt>It offers several advantages:</dt><dd><ul class="simple">
+<li><p>the code is easier to read and closer to the mathematical formulation of the problem.</p></li>
+<li><p>sparse matrix-vector products are available, which can be much faster than a dense one.</p></li>
+<li><p>the derivatives w.r.t (params_obj, params_eq, params_ineq) may be easier to compute
+than materializing the full matrix.</p></li>
+<li><p>it is faster than the quadratic function API.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This is the recommended API to use when the matrices are not block diagonal operators,
+especially when there are other sparsity patterns involved, or in conjunction with
+implicit differentiation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Objective:</span>
+<span class="c1">#     min ||data @ x - targets||_2^2 + 2 * n * lam ||x||_1</span>
+<span class="c1">#</span>
+<span class="c1"># With BoxOSQP formulation:</span>
+<span class="c1">#</span>
+<span class="c1">#     min_{x, y, t} y^Ty + 2*n*lam 1^T t</span>
+<span class="c1">#     under       targets = data @ x - y</span>
+<span class="c1">#           0         &lt;= x + t &lt;= infinity</span>
+<span class="c1">#           -infinity &lt;= x - t &lt;= 0</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">make_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">lam</span> <span class="o">=</span> <span class="mf">10.0</span>
+
+<span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">xyt</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">params_Q</span>  <span class="c1"># unused</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">xyt</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="n">lam</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">matvec_A</span><span class="p">(</span><span class="n">params_A</span><span class="p">,</span> <span class="n">xyt</span><span class="p">):</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">xyt</span>
+  <span class="n">residuals</span> <span class="o">=</span> <span class="n">params_A</span> <span class="o">@</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+  <span class="k">return</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">t</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="n">targets</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">targets</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">hyper_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
+<span class="n">osqp</span> <span class="o">=</span> <span class="n">BoxOSQP</span><span class="p">(</span><span class="n">matvec_Q</span><span class="o">=</span><span class="n">matvec_Q</span><span class="p">,</span> <span class="n">matvec_A</span><span class="o">=</span><span class="n">matvec_A</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
+<span class="n">sol</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">osqp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="quadratic-function-api">
+<h2>Quadratic function API<a class="headerlink" href="#quadratic-function-api" title="Permalink to this heading"></a></h2>
+<p>Solvers <code class="xref py py-class docutils literal notranslate"><span class="pre">EqualityConstrainedQP</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">OSQP</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">BoxOSQP</span></code> support the quadratic function API.
+It means that the whole objective function <cite>x -&gt; 1/2 x^T Q x + c^T x + K</cite> can be provided as a function
+<code class="docutils literal notranslate"><span class="pre">fun</span></code> that computes the quadratic function. The function must be differentiable w.r.t <cite>x</cite>.</p>
+<dl class="simple">
+<dt>It offers several advantages:</dt><dd><ul class="simple">
+<li><p>the code is easier to read and closer to the mathematical formulation of the problem.</p></li>
+<li><p>there is no need to provide the matrix <cite>Q</cite> and the vector <cite>c</cite> separately, nor to remove the constant term <cite>K</cite>.</p></li>
+<li><p>the derivatives w.r.t (params_obj, params_eq, params_ineq) may be even easier to compute
+than materializing the full matrix.</p></li>
+</ul>
+</dd>
+<dt>Take care that this API also have drawbacks:</dt><dd><ul class="simple">
+<li><p>the function <code class="docutils literal notranslate"><span class="pre">fun</span></code> must be differentiable w.r.t <cite>x</cite> (with Jax’s AD), even if you are not interested in the derivatives of your QP.</p></li>
+<li><p>to extract <cite>x -&gt; Qx</cite> and <cite>c</cite> from the function, we need to compute the Hessian-vector product and the gradient of <code class="docutils literal notranslate"><span class="pre">fun</span></code>, which may be expensive.</p></li>
+<li><p>for this API <cite>init_params</cite> must be provided to <cite>run</cite>, contrary to the other APIs.</p></li>
+</ul>
+</dd>
+</dl>
+<p>We illustrate this API with Non Negative Least Squares (NNLS):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#  min_W \|Y-UW\|_F^2</span>
+<span class="c1">#  s.t. W&gt;=0</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span>
+<span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">654</span><span class="p">)</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">rank</span><span class="p">))</span>
+<span class="n">W_0</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">W_0</span>
+
+<span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">):</span>
+  <span class="n">Y</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">params_obj</span>
+  <span class="c1"># Write the objective as an implicit quadratic polynomial</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">U</span> <span class="o">@</span> <span class="n">W</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">matvec_G</span><span class="p">(</span><span class="n">params_G</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">params_G</span>  <span class="c1"># unused</span>
+  <span class="k">return</span> <span class="o">-</span><span class="n">W</span>
+
+<span class="n">zeros</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">W_0</span><span class="p">)</span>
+<span class="n">hyper_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">U</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params_ineq</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">zeros</span><span class="p">))</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">OSQP</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">matvec_G</span><span class="o">=</span><span class="n">matvec_G</span><span class="p">)</span>
+
+<span class="n">init_W</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">W_0</span><span class="p">)</span>  <span class="c1"># mandatory with `fun` API.</span>
+<span class="n">init_params</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_params</span><span class="p">(</span><span class="n">init_W</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span>
+<span class="n">W_sol</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="o">=</span><span class="n">init_params</span><span class="p">,</span> <span class="o">**</span><span class="n">hyper_params</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">primal</span>
+</pre></div>
+</div>
+<p>This API is not recommended for large-scale problems or nested differentiations, use matvec API instead.</p>
+</section>
+<section id="implicit-differentiation-pitfalls">
+<h2>Implicit differentiation pitfalls<a class="headerlink" href="#implicit-differentiation-pitfalls" title="Permalink to this heading"></a></h2>
+<p>When using implicit differentiation, the parameters w.r.t which we differentiate
+must be passed to <cite>params_obj</cite>, <cite>params_eq</cite> or <cite>params_ineq</cite>. They should not be captured
+from the global scope by <cite>fun</cite> or <cite>matvec</cite>. We illustrate below this common mistake:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wrong_solver</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>  <span class="c1"># don&#39;t do this!</span>
+
+  <span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">del</span> <span class="n">params_Q</span>  <span class="c1"># unused</span>
+    <span class="c1"># error! Q is captured from the global scope.</span>
+    <span class="c1"># it does not fail now, but it will fail later.</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+  <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+  <span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]])</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
+
+  <span class="n">eq_qp</span> <span class="o">=</span> <span class="n">EqualityConstrainedQP</span><span class="p">(</span><span class="n">matvec_Q</span><span class="o">=</span><span class="n">matvec_Q</span><span class="p">)</span>
+  <span class="n">sol</span> <span class="o">=</span> <span class="n">eq_qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">loss</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">wrong_solver</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>  <span class="c1"># no error... but it will fail later.</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">wrong_solver</span><span class="p">)(</span><span class="n">Q</span><span class="p">)</span>  <span class="c1"># raise CustomVJPException</span>
+</pre></div>
+</div>
+<p>Also, notice that since the problems are convex, the optimum is independent of the
+starting point <cite>init_params</cite>. Hence, derivatives w.r.t <cite>init_params</cite> are always
+zero (mathematically).</p>
+<p>The correct implementation is given below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">correct_solver</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+  <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+  <span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]])</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
+
+  <span class="n">eq_qp</span> <span class="o">=</span> <span class="n">EqualityConstrainedQP</span><span class="p">(</span><span class="n">matvec_Q</span><span class="o">=</span><span class="n">matvec_Q</span><span class="p">)</span>
+  <span class="c1"># Q is passed as a parameter, not captured from the global scope.</span>
+  <span class="n">sol</span> <span class="o">=</span> <span class="n">eq_qp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">params_obj</span><span class="o">=</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">params_eq</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">primal</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">loss</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">correct_solver</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>  <span class="c1"># no error</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">correct_solver</span><span class="p">)(</span><span class="n">Q</span><span class="p">)</span>  <span class="c1"># no error</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_autosummary/jaxopt.LBFGSB.html" class="btn btn-neutral float-left" title="jaxopt.LBFGSB" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.EqualityConstrainedQP.html" class="btn btn-neutral float-right" title="jaxopt.EqualityConstrainedQP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

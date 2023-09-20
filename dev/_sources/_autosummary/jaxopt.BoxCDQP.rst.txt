@@ -1,0 +1,41 @@
+﻿jaxopt.BoxCDQP
+==============
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: BoxCDQP
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BoxCDQP.__init__
+      ~BoxCDQP.attribute_names
+      ~BoxCDQP.attribute_values
+      ~BoxCDQP.init_state
+      ~BoxCDQP.l2_optimality_error
+      ~BoxCDQP.optimality_fun
+      ~BoxCDQP.run
+      ~BoxCDQP.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BoxCDQP.implicit_diff
+      ~BoxCDQP.implicit_diff_solve
+      ~BoxCDQP.jit
+      ~BoxCDQP.maxiter
+      ~BoxCDQP.tol
+      ~BoxCDQP.unroll
+      ~BoxCDQP.verbose
+   
+   

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.scipy_wrappers &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.scipy_wrappers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.scipy_wrappers</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Wraps SciPy&#39;s optimization routines with PyTree and implicit diff support.</span>
+
+<span class="sd"># TODO(fllinares): add support for `LinearConstraint`s.</span>
+<span class="sd"># TODO(fllinares): add support for methods requiring Hessian / Hessian prods.</span>
+<span class="sd"># TODO(fllinares): possibly hardcode `dtype` attribute, as likely useless.</span>
+<span class="sd"># TODO(pedregosa): add a &#39;maxiter&#39; and &#39;callback&#39; keyword option for all wrappers,</span>
+<span class="sd">#   currently only ScipyMinimize exposes this option.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">from</span> <span class="nn">jax.config</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">jax.tree_util</span> <span class="k">as</span> <span class="nn">tree_util</span>
+<span class="kn">from</span> <span class="nn">jax.tree_util</span> <span class="kn">import</span> <span class="n">register_pytree_node_class</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">projection</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_sub</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">osp</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">LbfgsInvHessProduct</span>
+
+
+<span class="nd">@register_pytree_node_class</span>
+<span class="k">class</span> <span class="nc">LbfgsInvHessProductPyTree</span><span class="p">(</span><span class="n">LbfgsInvHessProduct</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Registers the LbfgsInvHessProduct object as a PyTree.</span>
+<span class="sd">  This object is typically returned by the L-BFSG-B optimizer to efficiently</span>
+<span class="sd">  store the inverse of the Hessian matrix evaluated at the best-fit parameters.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">yk</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct the operator.</span>
+<span class="sd">    This is the same constructor as the original LbfgsInvHessProduct class,</span>
+<span class="sd">    except that numpy has been replaced by jax.numpy and no call to the</span>
+<span class="sd">    numpy.ndarray constuctor is performed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sk</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">yk</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="n">sk</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;sk and yk must have matching shape, (n_corrs, n)&#39;</span><span class="p">)</span>
+    <span class="n">n_corrs</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">shape</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float64</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">jax_enable_x64</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sk</span> <span class="o">=</span> <span class="n">sk</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">yk</span> <span class="o">=</span> <span class="n">yk</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_corrs</span> <span class="o">=</span> <span class="n">n_corrs</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,ij-&gt;i&#39;</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">yk</span><span class="p">)</span>
+
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="s2">&quot;LbfgsInvHessProduct(sk=</span><span class="si">{}</span><span class="s2">, yk=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yk</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">tree_flatten</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="n">children</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yk</span><span class="p">)</span>
+      <span class="n">aux_data</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">aux_data</span><span class="p">)</span>
+
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">tree_unflatten</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">aux_data</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">children</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ScipyMinimizeInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple with results for `scipy.optimize.minimize` wrappers.&quot;&quot;&quot;</span>
+  <span class="n">fun_val</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span>
+  <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">hess_inv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">LbfgsInvHessProductPyTree</span><span class="p">]]</span>
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">num_jac_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">num_hess_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<span class="k">class</span> <span class="nc">ScipyRootInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple with results for `scipy.optimize.root` wrappers.&quot;&quot;&quot;</span>
+  <span class="n">fun_val</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<span class="k">class</span> <span class="nc">ScipyLeastSquaresInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple with results for `scipy.optimize.least_squares` wrappers.&quot;&quot;&quot;</span>
+  <span class="n">cost_val</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">fun_val</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span>
+  <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">num_jac_eval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+  <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+
+
+<span class="k">class</span> <span class="nc">PyTreeTopology</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Stores info to reconstruct PyTree from flattened PyTree leaves.</span>
+
+<span class="sd">  # TODO(fllinares): more specific type annotations for attributes?</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    treedef: the PyTreeDef object encoding the structure of the target PyTree.</span>
+<span class="sd">    shapes: an iterable with the shapes of each leaf in the target PyTree.</span>
+<span class="sd">    dtypes: an iterable with the dtypes of each leaf in the target PyTree.</span>
+<span class="sd">    sizes: an iterable with the sizes of each leaf in the target PyTree.</span>
+<span class="sd">    n_leaves: the number of leaves in the target PyTree.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">treedef</span><span class="p">:</span> <span class="n">Any</span>
+  <span class="n">shapes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+  <span class="n">dtypes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span> <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span><span class="p">]</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">n_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shapes</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">jnp_to_onp</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+               <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Converts JAX PyTree into repr suitable for scipy.optimize.minimize.</span>
+
+<span class="sd">  Several of SciPy&#39;s optimization routines require inputs and/or outputs to be</span>
+<span class="sd">  onp.ndarray&lt;float&gt;[n]. Given an input PyTree `x_jnp`, this function will</span>
+<span class="sd">  flatten all its leaves and, if there is more than one leaf, the corresponding</span>
+<span class="sd">  flattened arrays will be concatenated and, optionally, casted to `dtype`.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    x_jnp: a PyTree of jnp.ndarray with structure identical to init.</span>
+<span class="sd">    dtype: if not None, ensure output is a NumPy array of this dtype.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    A single onp.ndarray&lt;dtype&gt;[n] array, consisting of all leaves of x_jnp</span>
+<span class="sd">    flattened and concatenated. If dtype is None, the output dtype will be</span>
+<span class="sd">    determined by NumPy&#39;s casting rules for the concatenate method.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">x_onp</span> <span class="o">=</span> <span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+           <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">)]</span>
+  <span class="c1"># NOTE(fllinares): return value must *not* be read-only, I believe.</span>
+  <span class="k">return</span> <span class="n">onp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">x_onp</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_jac_jnp_to_onp</span><span class="p">(</span><span class="n">input_pytree_topology</span><span class="p">:</span> <span class="n">PyTreeTopology</span><span class="p">,</span>
+                        <span class="n">output_pytree_topology</span><span class="p">:</span> <span class="n">PyTreeTopology</span><span class="p">,</span>
+                        <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns function &quot;flattening&quot; Jacobian for given in/out PyTree topologies.</span>
+
+<span class="sd">  For a smooth function `fun(x_jnp, *args, **kwargs)` taking an arbitrary</span>
+<span class="sd">  PyTree `x_jnp` as input and returning another arbitrary PyTree `y_jnp` as</span>
+<span class="sd">  output, JAX&#39;s transforms such as `jax.jacrev` or `jax.jacfwd` will return a</span>
+<span class="sd">  Jacobian with a PyTree structure reflecting the input and output PyTrees.</span>
+<span class="sd">  However, several of SciPy&#39;s optimization routines expect inputs and outputs to</span>
+<span class="sd">  be 1D NumPy arrays and, thus, Jacobians to be 2D NumPy arrays.</span>
+
+<span class="sd">  Given the Jacobian of `fun(x_jnp, *args, **kwargs)` as provided by JAX,</span>
+<span class="sd">  `jac_jnp_to_onp` will format it to match the Jacobian of</span>
+<span class="sd">  `jnp_to_onp(fun(x_jnp, *args, **kwargs))` w.r.t. `jnp_to_onp(x_jnp)`,</span>
+<span class="sd">  where `jnp_to_onp` is a vectorization operator for arbitrary PyTrees.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    input_pytree_topology: a PyTreeTopology encoding the topology of the input</span>
+<span class="sd">      PyTree.</span>
+<span class="sd">    output_pytree_topology: a PyTreeTopology encoding the topology of the output</span>
+<span class="sd">      PyTree.</span>
+<span class="sd">    dtype: if not None, ensure output is a NumPy array of this dtype.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    A function &quot;flattening&quot; Jacobian for given input and output PyTree</span>
+<span class="sd">    topologies.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">ravel_index</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="n">j</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">input_pytree_topology</span><span class="o">.</span><span class="n">n_leaves</span>
+
+  <span class="k">def</span> <span class="nf">jac_jnp_to_onp</span><span class="p">(</span><span class="n">jac_pytree</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="c1"># Builds flattened Jacobian blocks such that `jacs_onp[i][j]` equals the</span>
+    <span class="c1"># Jacobian of vec(i-th leaf of output_pytree) w.r.t.</span>
+    <span class="c1"># vec(j-th leaf of input_pytree), where vec() is the vectorization op.,</span>
+    <span class="c1"># i.e. reshape(input, [-1]).</span>
+    <span class="n">jacs_leaves</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">jac_pytree</span><span class="p">)</span>
+    <span class="n">jacs_onp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">output_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">output_pytree_topology</span><span class="o">.</span><span class="n">sizes</span><span class="p">):</span>
+      <span class="n">jacs_onp_i</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">input_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">input_pytree_topology</span><span class="o">.</span><span class="n">sizes</span><span class="p">):</span>
+        <span class="n">jac_leaf</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jacs_leaves</span><span class="p">[</span><span class="n">ravel_index</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)],</span> <span class="n">dtype</span><span class="p">)</span>
+        <span class="n">jac_leaf</span> <span class="o">=</span> <span class="n">jac_leaf</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">output_size</span><span class="p">,</span> <span class="n">input_size</span><span class="p">])</span>
+        <span class="n">jacs_onp_i</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jac_leaf</span><span class="p">)</span>
+      <span class="n">jacs_onp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jacs_onp_i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">onp</span><span class="o">.</span><span class="n">block</span><span class="p">(</span><span class="n">jacs_onp</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">jac_jnp_to_onp</span>
+
+
+<span class="k">def</span> <span class="nf">make_onp_to_jnp</span><span class="p">(</span><span class="n">pytree_topology</span><span class="p">:</span> <span class="n">PyTreeTopology</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns inverse of `jnp_to_onp` for a specific PyTree topology.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    pytree_topology: a PyTreeTopology encoding the topology of the original</span>
+<span class="sd">      PyTree to be reconstructed.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    The inverse of `jnp_to_onp` for a specific PyTree topology.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">treedef</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">dtypes</span> <span class="o">=</span> <span class="n">pytree_topology</span>
+  <span class="n">split_indices</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">pytree_topology</span><span class="o">.</span><span class="n">sizes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+  <span class="k">def</span> <span class="nf">onp_to_jnp</span><span class="p">(</span><span class="n">x_onp</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inverts `jnp_to_onp` for a specific PyTree topology.&quot;&quot;&quot;</span>
+    <span class="n">flattened_leaves</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">x_onp</span><span class="p">,</span> <span class="n">split_indices</span><span class="p">)</span>
+    <span class="n">x_jnp</span> <span class="o">=</span> <span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">dtype</span><span class="p">)</span>
+             <span class="k">for</span> <span class="n">leaf</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">flattened_leaves</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">dtypes</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_unflatten</span><span class="p">(</span><span class="n">treedef</span><span class="p">,</span> <span class="n">x_jnp</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">onp_to_jnp</span>
+
+
+<span class="k">def</span> <span class="nf">pytree_topology_from_example</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTreeTopology</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a PyTreeTopology encoding the PyTree structure of `x_jnp`.&quot;&quot;&quot;</span>
+  <span class="n">leaves</span><span class="p">,</span> <span class="n">treedef</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_flatten</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">)</span>
+  <span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
+  <span class="n">dtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">PyTreeTopology</span><span class="p">(</span><span class="n">treedef</span><span class="o">=</span><span class="n">treedef</span><span class="p">,</span> <span class="n">shapes</span><span class="o">=</span><span class="n">shapes</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">=</span><span class="n">dtypes</span><span class="p">)</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ScipyWrapper</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Solver</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Wraps over `scipy.optimize` methods with PyTree and implicit diff support.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    method: the `method` argument for `scipy.optimize`.</span>
+<span class="sd">    maxiter: Maximum number of iterations to perform. Depending on the method,</span>
+<span class="sd">      each iteration may use several function evaluations.</span>
+<span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>
+<span class="sd">      methods relying on FORTRAN code, such as the `L-BFGS-B` solver for</span>
+<span class="sd">      `scipy.optimize.minimize`, require casting to float64.</span>
+<span class="sd">    jit: whether to JIT-compile JAX-based values and grad evals.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">    has_aux: whether function `fun` outputs one (False) or more values (True).</span>
+<span class="sd">      When True it will be assumed by default that `fun(...)[0]` is the</span>
+<span class="sd">      objective.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">float64</span>
+  <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+        <span class="s1">&#39;ScipyWrapper subclasses must implement `optimality_fun` as needed.&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Set up implicit diff.</span>
+    <span class="n">decorator</span> <span class="o">=</span> <span class="n">idf</span><span class="o">.</span><span class="n">custom_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">,</span>
+                                <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">solve</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_diff_solve</span><span class="p">)</span>
+    <span class="c1"># pylint: disable=g-missing-from-attributes</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">decorator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ScipyMinimize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ScipyMinimize</span><span class="p">(</span><span class="n">ScipyWrapper</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;`scipy.optimize.minimize` wrapper</span>
+
+<span class="sd">  This wrapper is for unconstrained minimization only.</span>
+<span class="sd">  It supports pytrees and implicit diff.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    fun: a smooth function of the form `fun(x, *args, **kwargs)`.</span>
+<span class="sd">    method: the `method` argument for `scipy.optimize.minimize`. Should be one</span>
+<span class="sd">      of * &#39;Nelder-Mead&#39; * &#39;Powell&#39; * &#39;CG&#39; * &#39;BFGS&#39; * &#39;Newton-CG&#39; * &#39;L-BFGS-B&#39; *</span>
+<span class="sd">      &#39;TNC&#39; * &#39;COBYLA&#39; * &#39;SLSQP&#39; * &#39;trust-constr&#39; * &#39;dogleg&#39; * &#39;trust-ncg&#39; *</span>
+<span class="sd">      &#39;trust-exact&#39; * &#39;trust-krylov&#39;</span>
+<span class="sd">    tol: the `tol` argument for `scipy.optimize.minimize`.</span>
+<span class="sd">    options: the `options` argument for `scipy.optimize.minimize`.</span>
+<span class="sd">    callback: called after each iteration, as callback(xk), where xk is the</span>
+<span class="sd">      current parameter vector.</span>
+<span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>
+<span class="sd">      methods relying on FORTRAN code, such as the `L-BFGS-B` solver for</span>
+<span class="sd">      `scipy.optimize.minimize`, require casting to float64.</span>
+<span class="sd">    jit: whether to JIT-compile JAX-based values and grad evals.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">    has_aux: whether function `fun` outputs one (False) or more values (True).</span>
+<span class="sd">      When True it will be assumed by default that `fun(...)[0]` is the</span>
+<span class="sd">      objective.</span>
+<span class="sd">    value_and_grad: See base.make_funs_with_aux for more detail.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
+  <span class="n">value_and_grad</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="ScipyMinimize.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wraps `scipy.optimize.minimize`.&quot;&quot;&quot;</span>
+    <span class="c1"># Sets up the &quot;JAX-SciPy&quot; bridge.</span>
+    <span class="n">pytree_topology</span> <span class="o">=</span> <span class="n">pytree_topology_from_example</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+    <span class="n">onp_to_jnp</span> <span class="o">=</span> <span class="n">make_onp_to_jnp</span><span class="p">(</span><span class="n">pytree_topology</span><span class="p">)</span>
+
+    <span class="c1"># wrap the callback so its arguments are of the same kind as fun</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">scipy_callback</span><span class="p">(</span><span class="n">x_onp</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">x_jnp</span> <span class="o">=</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">x_onp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">scipy_callback</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">scipy_fun</span><span class="p">(</span><span class="n">x_onp</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+      <span class="n">x_jnp</span> <span class="o">=</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">x_onp</span><span class="p">)</span>
+      <span class="n">value</span><span class="p">,</span> <span class="n">grads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">bounds</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">Bounds</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                                   <span class="n">ub</span><span class="o">=</span><span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">scipy_fun</span><span class="p">,</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                                <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
+                                <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+                                <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+                                <span class="n">callback</span><span class="o">=</span><span class="n">scipy_callback</span><span class="p">,</span>
+                                <span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">,</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="s1">&#39;hess_inv&#39;</span><span class="p">):</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="p">,</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">LbfgsInvHessProduct</span><span class="p">):</span>
+        <span class="n">hess_inv</span> <span class="o">=</span> <span class="n">LbfgsInvHessProductPyTree</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="o">.</span><span class="n">sk</span><span class="p">,</span>
+                                             <span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="o">.</span><span class="n">yk</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">hess_inv</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">hess_inv</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">hess_inv</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">num_hess_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nhev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+      <span class="n">num_hess_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="n">ScipyMinimizeInfo</span><span class="p">(</span><span class="n">fun_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
+                             <span class="n">success</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
+                             <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                             <span class="n">iter_num</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">,</span>
+                             <span class="n">hess_inv</span><span class="o">=</span><span class="n">hess_inv</span><span class="p">,</span>
+                             <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                             <span class="n">num_jac_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">njev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                             <span class="n">num_hess_eval</span><span class="o">=</span><span class="n">num_hess_eval</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ScipyMinimize.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+          <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the solver.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: pytree containing the initial parameters.</span>
+<span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, info).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">_make_funs_without_aux</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Pre-compile useful functions.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="s1">&#39;maxiter&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot pass maxiter through options dictionary, use maxiter keyword argument instead.&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;maxiter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span></div>
+
+
+<div class="viewcode-block" id="ScipyBoundedMinimize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ScipyBoundedMinimize</span><span class="p">(</span><span class="n">ScipyMinimize</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;`scipy.optimize.minimize` wrapper.</span>
+
+<span class="sd">  This wrapper is for minimization subject to box constraints only.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    fun: a smooth function of the form `fun(x, *args, **kwargs)`.</span>
+<span class="sd">    method: the `method` argument for `scipy.optimize.minimize`.</span>
+<span class="sd">    tol: the `tol` argument for `scipy.optimize.minimize`.</span>
+<span class="sd">    options: the `options` argument for `scipy.optimize.minimize`.</span>
+<span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>
+<span class="sd">      methods relying on FORTRAN code, such as the `L-BFGS-B` solver for</span>
+<span class="sd">      `scipy.optimize.minimize`, require casting to float64.</span>
+<span class="sd">    jit: whether to JIT-compile JAX-based values and grad evals.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">    has_aux: whether function `fun` outputs one (False) or more values (True).</span>
+<span class="sd">      When True it will be assumed by default that `fun(...)[0]` is the</span>
+<span class="sd">      objective.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">_fixed_point_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">projection</span><span class="o">.</span><span class="n">projection_box</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ScipyBoundedMinimize.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_point_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ScipyBoundedMinimize.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+          <span class="n">bounds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+          <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the solver.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: pytree containing the initial parameters.</span>
+<span class="sd">      bounds: an optional tuple `(lb, ub)` of pytrees with structure identical</span>
+<span class="sd">        to `init_params`, representing box constraints.</span>
+<span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, info).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ScipyRootFinding"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ScipyRootFinding</span><span class="p">(</span><span class="n">ScipyWrapper</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;`scipy.optimize.root` wrapper.</span>
+
+<span class="sd">  It supports pytrees and implicit diff.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    optimality_fun: a smooth vector function of the form</span>
+<span class="sd">      `optimality_fun(x, *args, **kwargs)` whose root is to be found. It must</span>
+<span class="sd">      return as output a PyTree with structure identical to x.</span>
+<span class="sd">    method: the `method` argument for `scipy.optimize.root`.</span>
+<span class="sd">      Should be one of</span>
+<span class="sd">        * &#39;hybr&#39;</span>
+<span class="sd">        * &#39;lm&#39;</span>
+<span class="sd">        * &#39;broyden1&#39;</span>
+<span class="sd">        * &#39;broyden2&#39;</span>
+<span class="sd">        * &#39;anderson&#39;</span>
+<span class="sd">        * &#39;linearmixing&#39;</span>
+<span class="sd">        * &#39;diagbroyden&#39;</span>
+<span class="sd">        * &#39;excitingmixing&#39;</span>
+<span class="sd">        * &#39;krylov&#39;</span>
+<span class="sd">        * &#39;df-sane&#39;</span>
+<span class="sd">    tol: the `tol` argument for `scipy.optimize.root`.</span>
+<span class="sd">    options: the `options` argument for `scipy.optimize.root`.</span>
+<span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>
+<span class="sd">      methods relying on FORTRAN code, such as the `L-BFGS-B` solver for</span>
+<span class="sd">      `scipy.optimize.minimize`, require casting to float64.</span>
+<span class="sd">    jit: whether to JIT-compile JAX-based values and grad evals.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">    has_aux: whether function `fun` outputs one (False) or more values (True).</span>
+<span class="sd">      When True it will be assumed by default that `optimality_fun(...)[0]` is</span>
+<span class="sd">      the optimality function.</span>
+<span class="sd">    use_jacrev: whether to compute the Jacobian of `optimality_fun` using</span>
+<span class="sd">      `jax.jacrev` (True) or `jax.jacfwd` (False).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">optimality_fun</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">use_jacrev</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="ScipyRootFinding.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+          <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the solver.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: pytree containing the initial parameters.</span>
+<span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, info).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Sets up the &quot;JAX-SciPy&quot; bridge.</span>
+    <span class="n">pytree_topology</span> <span class="o">=</span> <span class="n">pytree_topology_from_example</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+    <span class="n">onp_to_jnp</span> <span class="o">=</span> <span class="n">make_onp_to_jnp</span><span class="p">(</span><span class="n">pytree_topology</span><span class="p">)</span>
+    <span class="n">jac_jnp_to_onp</span> <span class="o">=</span> <span class="n">make_jac_jnp_to_onp</span><span class="p">(</span><span class="n">pytree_topology</span><span class="p">,</span>
+                                         <span class="n">pytree_topology</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">scipy_fun</span><span class="p">(</span><span class="n">x_onp</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">scipy_args</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+      <span class="c1"># scipy_args is unused but must appear in the signature since</span>
+      <span class="c1"># the `args` argument passed to osp.optimize.root is not None.</span>
+      <span class="k">del</span> <span class="n">scipy_args</span>  <span class="c1"># unused</span>
+      <span class="n">x_jnp</span> <span class="o">=</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">x_onp</span><span class="p">)</span>
+      <span class="n">value_jnp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">jacs_jnp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">value_jnp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">jac_jnp_to_onp</span><span class="p">(</span><span class="n">jacs_jnp</span><span class="p">)</span>
+
+    <span class="c1"># Argument `args` is unused but must be not None to ensure that some sanity checks are performed</span>
+    <span class="c1"># correctly in Scipy for optimizers that don&#39;t use the Jacobian (such as Broyden).</span>
+    <span class="c1"># See the related issue: https://github.com/google/jaxopt/issues/290</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">scipy_fun</span><span class="p">,</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span>
+                            <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
+                            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">,</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="c1"># NOTE: maybe there is a better way to do the following (zramzi)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">RootResults</span><span class="p">):</span>
+      <span class="n">iter_num</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">iterations</span><span class="p">)</span>
+      <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">function_calls</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">iter_num</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">iter_num</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">num_fun_eval</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="n">ScipyRootInfo</span><span class="p">(</span><span class="n">fun_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
+                         <span class="n">success</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
+                         <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                         <span class="n">iter_num</span><span class="o">=</span><span class="n">iter_num</span><span class="p">,</span>
+                         <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">num_fun_eval</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span> <span class="o">=</span> <span class="n">optimality_fun</span>
+
+    <span class="c1"># Pre-compile useful functions.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span> <span class="o">=</span> <span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jacrev</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_jacrev</span>
+                     <span class="k">else</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">))</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span><span class="p">)</span></div>
+
+
+<span class="c1"># NOTE: relative to `scipy.optimize.least_squares`, the functions below absorb</span>
+<span class="c1"># the squaring of residuals to avoid numerical issues for the gradient of the</span>
+<span class="c1"># Huber loss at 0.</span>
+<span class="n">LS_RHO_FUNS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;linear&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;soft_l1&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;huber&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">z</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">z</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;cauchy&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s1">&#39;arctan&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">LS_DEFAULT_OPTIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ftol&#39;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span>  <span class="c1"># float</span>
+    <span class="s1">&#39;xtol&#39;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span>  <span class="c1"># float</span>
+    <span class="s1">&#39;gtol&#39;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span>  <span class="c1"># float</span>
+    <span class="s1">&#39;x_scale&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>  <span class="c1"># Any</span>
+    <span class="s1">&#39;f_scale&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>  <span class="c1"># float</span>
+    <span class="s1">&#39;tr_solver&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Optional[str]</span>
+    <span class="s1">&#39;tr_options&#39;</span><span class="p">:</span> <span class="p">{},</span>  <span class="c1"># Optional[Dict[str, Any]]</span>
+    <span class="s1">&#39;max_nfev&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Optional[int],</span>
+<span class="p">}</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ScipyLeastSquares</span><span class="p">(</span><span class="n">ScipyWrapper</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Wraps over `scipy.optimize.least_squares` with PyTree &amp; imp. diff support.</span>
+
+<span class="sd">  This solver minimizes::</span>
+<span class="sd">    0.5 * sum(loss(fun(x, *args, **kwargs) ** 2)).</span>
+<span class="sd">  This wrapper is for unconstrained minimization only.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    fun: a smooth function of the form ``fun(x, *args, **kwargs)`` computing the</span>
+<span class="sd">      residuals from the model parameters `x`.</span>
+<span class="sd">    loss: the `loss` argument for `scipy.optimize.least_squares`. However,</span>
+<span class="sd">      arbitrary losses specified with a Callable are not yet supported.</span>
+<span class="sd">    options: additional kwargs for `scipy.optimize.least_squares`.</span>
+<span class="sd">    method: the `method` argument for `scipy.optimize.least_squares`.</span>
+<span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>
+<span class="sd">      methods relying on FORTRAN code, such as the `L-BFGS-B` solver for</span>
+<span class="sd">      `scipy.optimize.minimize`, require casting to float64.</span>
+<span class="sd">    jit: whether to JIT-compile JAX-based values and grad evals.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">    has_aux: whether function `fun` outputs one (False) or more values (True).</span>
+<span class="sd">      When True it will be assumed by default that `fun(...)[0]` are the</span>
+<span class="sd">      residuals.</span>
+<span class="sd">    use_jacrev: whether to compute the Jacobian of `fun` using `jax.jacrev`</span>
+<span class="sd">      (True) or `jax.jacfwd` (False).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">loss</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span>
+  <span class="n">options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">use_jacrev</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">def</span> <span class="nf">_cost_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="c1"># NOTE: `self._rho` includes the squaring of residuals in its definition.</span>
+    <span class="n">losses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span><span class="p">(</span><span class="n">residuals</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;f_scale&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;f_scale&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">losses</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_cost_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wraps `scipy.optimize.least_squares`.&quot;&quot;&quot;</span>
+    <span class="c1"># Sets up the &quot;JAX-SciPy&quot; bridge.</span>
+    <span class="n">init_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">input_pytree_topology</span> <span class="o">=</span> <span class="n">pytree_topology_from_example</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+    <span class="n">output_pytree_topology</span> <span class="o">=</span> <span class="n">pytree_topology_from_example</span><span class="p">(</span><span class="n">init_output</span><span class="p">)</span>
+    <span class="n">onp_to_jnp</span> <span class="o">=</span> <span class="n">make_onp_to_jnp</span><span class="p">(</span><span class="n">input_pytree_topology</span><span class="p">)</span>
+    <span class="n">jac_jnp_to_onp</span> <span class="o">=</span> <span class="n">make_jac_jnp_to_onp</span><span class="p">(</span><span class="n">input_pytree_topology</span><span class="p">,</span>
+                                         <span class="n">output_pytree_topology</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">scipy_fun</span><span class="p">(</span><span class="n">x_onp</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+      <span class="n">x_jnp</span> <span class="o">=</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">x_onp</span><span class="p">)</span>
+      <span class="n">value_jnp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">value_jnp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">scipy_jac</span><span class="p">(</span><span class="n">x_onp</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+      <span class="n">x_jnp</span> <span class="o">=</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">x_onp</span><span class="p">)</span>
+      <span class="n">jacs_jnp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span><span class="p">(</span><span class="n">x_jnp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">jac_jnp_to_onp</span><span class="p">(</span><span class="n">jacs_jnp</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">onp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">least_squares</span><span class="p">(</span><span class="n">scipy_fun</span><span class="p">,</span>
+                                     <span class="n">jnp_to_onp</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                                     <span class="n">jac</span><span class="o">=</span><span class="n">scipy_jac</span><span class="p">,</span>
+                                     <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+                                     <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+                                     <span class="n">loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span>
+                                     <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">,</span> <span class="n">onp_to_jnp</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">ScipyLeastSquaresInfo</span><span class="p">(</span><span class="n">cost_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">cost</span><span class="p">),</span>
+                                 <span class="n">fun_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
+                                 <span class="n">success</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
+                                 <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                                 <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                                 <span class="n">num_jac_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">njev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
+                                 <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">optimality</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+          <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the solver.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: pytree containing the initial parameters.</span>
+<span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, info).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">LS_DEFAULT_OPTIONS</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">LS_DEFAULT_OPTIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Handles PyTree inputs for `x_scale` arg.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;x_scale&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;jac&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;x_scale&#39;</span><span class="p">],</span> <span class="nb">float</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;x_scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">jnp_to_onp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;x_scale&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="c1"># Pre-compile useful functions.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">LS_RHO_FUNS</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;`loss` must be one of </span><span class="si">{</span><span class="n">LS_RHO_FUNS</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span> <span class="o">=</span> <span class="n">LS_RHO_FUNS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span> <span class="o">=</span> <span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jacrev</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_jacrev</span>
+                     <span class="k">else</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_grad_cost_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cost_fun</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rho</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_grad_cost_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_grad_cost_fun</span><span class="p">)</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ScipyBoundedLeastSquares</span><span class="p">(</span><span class="n">ScipyLeastSquares</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Wraps over `scipy.optimize.least_squares` with PyTree &amp; imp. diff support.</span>
+
+<span class="sd">  This solver minimizes::</span>
+<span class="sd">    0.5 * sum(loss(fun(x, *args, **kwargs) ** 2))</span>
+<span class="sd">      subject to bounds[0] &lt;= x &lt;= bounds[1].</span>
+<span class="sd">  This wrapper is for minimization subject to box constraints only.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    fun: a smooth function of the form ``fun(x, *args, **kwargs)`` computing the</span>
+<span class="sd">      residuals from the model parameters `x`.</span>
+<span class="sd">    loss: the `loss` argument for `scipy.optimize.least_squares`. However,</span>
+<span class="sd">      arbitrary losses specified with a Callable are not yet supported.</span>
+<span class="sd">    options: additional kwargs for `scipy.optimize.least_squares`.</span>
+<span class="sd">    method: the `method` argument for `scipy.optimize.least_squares`.</span>
+<span class="sd">    dtype: if not None, cast all NumPy arrays to this dtype. Note that some</span>
+<span class="sd">      methods relying on FORTRAN code, such as the `L-BFGS-B` solver for</span>
+<span class="sd">      `scipy.optimize.minimize`, require casting to float64.</span>
+<span class="sd">    jit: whether to JIT-compile JAX-based values and grad evals.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+<span class="sd">    has_aux: whether function `fun` outputs one (False) or more values (True).</span>
+<span class="sd">      When True it will be assumed by default that `fun(...)[0]` are the</span>
+<span class="sd">      residuals.</span>
+<span class="sd">    use_jacrev: whether to compute the Jacobian of `fun` using `jax.jacrev`</span>
+<span class="sd">      (True) or `jax.jacfwd` (False).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">_fixed_point_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_cost_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">projection</span><span class="o">.</span><span class="n">projection_box</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_point_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+          <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+          <span class="n">bounds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+          <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the solver.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: pytree containing the initial parameters.</span>
+<span class="sd">      bounds: an optional tuple `(lb, ub)` of pytrees with structure identical</span>
+<span class="sd">        to `init_params`, representing box constraints.</span>
+<span class="sd">      *args: additional positional arguments to be passed to `fun`.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to `fun`.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, info).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.proximal_gradient &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.proximal_gradient</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.proximal_gradient</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Implementation of proximal gradient descent in JAX.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">loop</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.prox</span> <span class="kn">import</span> <span class="n">prox_none</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_add_scalar_mul</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_l2_norm</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_sub</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_vdot</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_single_dtype</span>
+
+
+<span class="k">def</span> <span class="nf">fista_line_search</span><span class="p">(</span>
+  <span class="n">fun</span><span class="p">,</span>
+  <span class="n">prox_grad</span><span class="p">,</span>
+  <span class="n">jit</span><span class="p">,</span>
+  <span class="n">unroll</span><span class="p">,</span>
+  <span class="n">maxls</span><span class="p">,</span>
+  <span class="n">x</span><span class="p">,</span>
+  <span class="n">x_fun_val</span><span class="p">,</span>
+  <span class="n">x_fun_grad</span><span class="p">,</span>
+  <span class="n">stepsize</span><span class="p">,</span>
+  <span class="n">decrease_factor</span><span class="p">,</span>
+  <span class="n">hyperparams_prox</span><span class="p">,</span>
+  <span class="n">args</span><span class="p">,</span>
+  <span class="n">kwargs</span><span class="p">):</span>
+  <span class="c1"># epsilon of current dtype for robust checking of</span>
+  <span class="c1"># sufficient decrease condition</span>
+  <span class="n">eps</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">x_fun_val</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span>
+
+  <span class="k">def</span> <span class="nf">cond_fun</span><span class="p">(</span><span class="n">pair</span><span class="p">):</span>
+    <span class="n">next_x</span><span class="p">,</span> <span class="n">stepsize</span> <span class="o">=</span> <span class="n">pair</span>
+    <span class="n">diff_x</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">next_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">sqdist</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">diff_x</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># The expression below checks the sufficient decrease condition</span>
+    <span class="c1"># f(next_x) &lt; f(x) + dot(grad_f(x), diff_x) + (0.5/stepsize) ||diff_x||^2</span>
+    <span class="c1"># where the terms have been reordered for numerical stability.</span>
+    <span class="n">fun_decrease</span> <span class="o">=</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="n">next_x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-</span> <span class="n">x_fun_val</span><span class="p">)</span>
+    <span class="n">condition</span> <span class="o">=</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">tree_vdot</span><span class="p">(</span><span class="n">diff_x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sqdist</span>
+    <span class="k">return</span> <span class="n">fun_decrease</span> <span class="o">&gt;</span> <span class="n">condition</span> <span class="o">+</span> <span class="n">eps</span>
+
+  <span class="k">def</span> <span class="nf">body_fun</span><span class="p">(</span><span class="n">pair</span><span class="p">):</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">next_stepsize</span> <span class="o">=</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="n">decrease_factor</span>
+    <span class="n">next_x</span> <span class="o">=</span> <span class="n">prox_grad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">next_stepsize</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">next_x</span><span class="p">,</span> <span class="n">next_stepsize</span>
+
+  <span class="n">init_x</span> <span class="o">=</span> <span class="n">prox_grad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">)</span>
+  <span class="n">init_val</span> <span class="o">=</span> <span class="p">(</span><span class="n">init_x</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">loop</span><span class="o">.</span><span class="n">while_loop</span><span class="p">(</span><span class="n">cond_fun</span><span class="o">=</span><span class="n">cond_fun</span><span class="p">,</span> <span class="n">body_fun</span><span class="o">=</span><span class="n">body_fun</span><span class="p">,</span>
+                         <span class="n">init_val</span><span class="o">=</span><span class="n">init_val</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxls</span><span class="p">,</span>
+                         <span class="n">unroll</span><span class="o">=</span><span class="n">unroll</span><span class="p">,</span> <span class="n">jit</span><span class="o">=</span><span class="n">jit</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ProxGradState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple containing state information.&quot;&quot;&quot;</span>
+  <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">stepsize</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">error</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">velocity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+
+<div class="viewcode-block" id="ProximalGradient"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ProximalGradient</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Proximal gradient solver.</span>
+
+<span class="sd">  This solver minimizes::</span>
+
+<span class="sd">    objective(params, hyperparams_prox, *args, **kwargs) =</span>
+<span class="sd">      fun(params, *args, **kwargs) + non_smooth(params, hyperparams_prox)</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    fun: a smooth function of the form ``fun(x, *args, **kwargs)``.</span>
+<span class="sd">    prox: proximity operator associated with the function ``non_smooth``.</span>
+<span class="sd">      It should be of the form ``prox(params, hyperparams_prox, scale=1.0)``.</span>
+<span class="sd">      See ``jaxopt.prox`` for examples.</span>
+<span class="sd">    value_and_grad: whether ``fun`` just returns the value (False) or both</span>
+<span class="sd">      the value and gradient (True).</span>
+<span class="sd">    has_aux: whether ``fun`` outputs auxiliary data or not.</span>
+<span class="sd">      If ``has_aux`` is False, ``fun`` is expected to be</span>
+<span class="sd">        scalar-valued.</span>
+<span class="sd">      If ``has_aux`` is True, then we have one of the following</span>
+<span class="sd">        two cases.</span>
+<span class="sd">      If ``value_and_grad`` is False, the output should be</span>
+<span class="sd">      ``value, aux = fun(...)``.</span>
+<span class="sd">      If ``value_and_grad == True``, the output should be</span>
+<span class="sd">      ``(value, aux), grad = fun(...)``.</span>
+<span class="sd">      At each iteration of the algorithm, the auxiliary outputs are stored</span>
+<span class="sd">        in ``state.aux``.</span>
+
+<span class="sd">    stepsize: a stepsize to use (if &lt;= 0, use backtracking line search),</span>
+<span class="sd">      or a callable specifying the **positive** stepsize to use at each iteration.</span>
+<span class="sd">    maxiter: maximum number of proximal gradient descent iterations.</span>
+<span class="sd">    maxls: maximum number of iterations to use in the line search.</span>
+<span class="sd">    tol: tolerance to use.</span>
+<span class="sd">    acceleration: whether to use acceleration (also known as FISTA) or not.</span>
+<span class="sd">    decrease_factor: factor by which to reduce the stepsize during line search.</span>
+<span class="sd">    verbose: whether to print error on every iteration or not.</span>
+
+<span class="sd">    implicit_diff: whether to enable implicit diff or autodiff of unrolled</span>
+<span class="sd">      iterations.</span>
+<span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
+
+<span class="sd">    jit: whether to JIT-compile the optimization loop (default: True).</span>
+<span class="sd">    unroll: whether to unroll the optimization loop (default: &quot;auto&quot;).</span>
+
+<span class="sd">  References:</span>
+<span class="sd">    Beck, Amir, and Marc Teboulle. &quot;A fast iterative shrinkage-thresholding</span>
+<span class="sd">    algorithm for linear inverse problems.&quot; SIAM imaging sciences (2009)</span>
+
+<span class="sd">    Nesterov, Yu. &quot;Gradient methods for minimizing composite functions.&quot;</span>
+<span class="sd">    Mathematical Programming (2013).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span>
+  <span class="n">prox</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">prox_none</span>
+  <span class="n">value_and_grad</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="n">stepsize</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
+  <span class="n">maxls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
+  <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>
+  <span class="n">acceleration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">decrease_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
+  <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+
+<div class="viewcode-block" id="ProximalGradient.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="n">hyperparams_prox</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProxGradState</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the solver state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      init_params: pytree containing the initial parameters.</span>
+<span class="sd">      hyperparams_prox: pytree containing hyperparameters of prox.</span>
+<span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">del</span> <span class="n">hyperparams_prox</span>  <span class="c1"># Not used.</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">:</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">aux</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span><span class="p">:</span>
+      <span class="n">state</span> <span class="o">=</span> <span class="n">ProxGradState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">velocity</span><span class="o">=</span><span class="n">init_params</span><span class="p">,</span>
+                            <span class="n">t</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+                            <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                            <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                            <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">state</span> <span class="o">=</span> <span class="n">ProxGradState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">t</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+                            <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                            <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                            <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">state</span></div>
+
+  <span class="k">def</span> <span class="nf">_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff_x</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">):</span>
+    <span class="n">diff_norm</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">diff_x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">diff_norm</span> <span class="o">/</span> <span class="n">stepsize</span>
+
+  <span class="k">def</span> <span class="nf">_prox_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">):</span>
+    <span class="n">update</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">prox</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">iter_num</span><span class="p">,</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="n">x_fun_val</span><span class="p">,</span>
+            <span class="n">x_fun_grad</span><span class="p">,</span>
+            <span class="n">stepsize</span><span class="p">,</span>
+            <span class="n">hyperparams_prox</span><span class="p">,</span>
+            <span class="n">args</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="c1"># with line search</span>
+      <span class="n">next_x</span><span class="p">,</span> <span class="n">next_stepsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fista_line_search</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxls</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_fun_val</span><span class="p">,</span>
+                                                      <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">,</span>
+                                                      <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span>
+                                                      <span class="n">kwargs</span><span class="p">)</span>
+      <span class="c1"># If step size becomes too small, we restart it to 1.0.</span>
+      <span class="c1"># Otherwise, we attempt to increase it.</span>
+      <span class="n">next_stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">next_stepsize</span> <span class="o">&lt;=</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>
+                                <span class="n">next_stepsize</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">decrease_factor</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">next_x</span><span class="p">,</span> <span class="n">next_stepsize</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># without line search</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
+        <span class="n">next_stepsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">(</span><span class="n">iter_num</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">next_stepsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span>
+      <span class="n">next_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prox_grad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span> <span class="n">next_stepsize</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">next_x</span><span class="p">,</span> <span class="n">next_stepsize</span>
+
+  <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">iter_num</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">iter_num</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stepsize</span>
+    <span class="p">(</span><span class="n">x_fun_val</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">x_fun_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">next_x</span><span class="p">,</span> <span class="n">next_stepsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">(</span><span class="n">iter_num</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_fun_val</span><span class="p">,</span> <span class="n">x_fun_grad</span><span class="p">,</span>
+                                       <span class="n">stepsize</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">(</span><span class="n">tree_sub</span><span class="p">(</span><span class="n">next_x</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">next_stepsize</span><span class="p">)</span>
+    <span class="n">next_state</span> <span class="o">=</span> <span class="n">ProxGradState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                               <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">next_stepsize</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                               <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                               <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">next_x</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">next_state</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_update_accel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">tree_single_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">iter_num</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">iter_num</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">velocity</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">t</span>
+    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stepsize</span>
+    <span class="p">(</span><span class="n">y_fun_val</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">y_fun_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">next_x</span><span class="p">,</span> <span class="n">next_stepsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">(</span><span class="n">iter_num</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_fun_val</span><span class="p">,</span> <span class="n">y_fun_grad</span><span class="p">,</span>
+                                       <span class="n">stepsize</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">next_t</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">t</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">diff_x</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">next_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">next_y</span> <span class="o">=</span> <span class="n">tree_add_scalar_mul</span><span class="p">(</span><span class="n">next_x</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">next_t</span><span class="p">,</span> <span class="n">diff_x</span><span class="p">)</span>
+    <span class="n">next_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">(</span><span class="n">diff_x</span><span class="p">,</span> <span class="n">next_stepsize</span><span class="p">)</span>
+    <span class="n">next_state</span> <span class="o">=</span> <span class="n">ProxGradState</span><span class="p">(</span><span class="n">iter_num</span><span class="o">=</span><span class="n">iter_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">next_y</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">next_t</span><span class="p">,</span>
+                               <span class="n">stepsize</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">next_stepsize</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                               <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">next_error</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+                               <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">next_x</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">next_state</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ProximalGradient.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+             <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span>
+             <span class="n">hyperparams_prox</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs one iteration of proximal gradient.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      params: pytree containing the parameters.</span>
+<span class="sd">      state: named tuple containing the solver state.</span>
+<span class="sd">      hyperparams_prox: pytree containing hyperparameters of prox.</span>
+<span class="sd">      *args: additional positional arguments to be passed to ``fun``.</span>
+<span class="sd">      **kwargs: additional keyword arguments to be passed to ``fun``.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      (params, state)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_accel</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">_fixed_point_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">prox</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ProximalGradient.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_point_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span></div>
+
+  <span class="k">def</span> <span class="nf">_value_and_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span><span class="p">,</span> <span class="n">grad</span>
+
+  <span class="k">def</span> <span class="nf">_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">_grad_with_aux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grad</span><span class="p">,</span> <span class="n">aux</span>
+
+  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+
+    <span class="n">fun_with_aux</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span> <span class="o">=</span> \
+      <span class="n">base</span><span class="o">.</span><span class="n">_make_funs_with_aux</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span>
+                               <span class="n">value_and_grad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">,</span>
+                               <span class="n">has_aux</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">)</span>
+    <span class="n">fun_without_aux</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="n">fun_with_aux</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Sets up reference signature.</span>
+    <span class="n">fun</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="s2">&quot;subfun&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">fun</span><span class="p">)</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">new_param</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;hyperparams_prox&quot;</span><span class="p">,</span>
+                                  <span class="n">kind</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="o">.</span><span class="n">POSITIONAL_OR_KEYWORD</span><span class="p">)</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">new_param</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reference_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Signature</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+    <span class="n">unroll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_unroll_option</span><span class="p">()</span>
+
+    <span class="n">fista_ls_with_fun</span><span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">fista_line_search</span><span class="p">,</span> <span class="n">fun_without_aux</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">_prox_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">unroll</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
+      <span class="n">jitted_fista_ls_with_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">fista_ls_with_fun</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_fista_line_search</span> <span class="o">=</span> <span class="n">jitted_fista_ls_with_fun</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_fista_line_search</span> <span class="o">=</span> <span class="n">fista_ls_with_fun</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
