@@ -1,6 +1,0 @@
-﻿jaxopt.prox.prox\_ridge
-=======================
-
-.. currentmodule:: jaxopt.prox
-
-.. autofunction:: prox_ridge

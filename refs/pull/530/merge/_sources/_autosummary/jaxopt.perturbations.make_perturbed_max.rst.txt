@@ -1,6 +1,0 @@
-﻿jaxopt.perturbations.make\_perturbed\_max
-=========================================
-
-.. currentmodule:: jaxopt.perturbations
-
-.. autofunction:: make_perturbed_max

@@ -1,6 +1,0 @@
-﻿jaxopt.loss.sparse\_sigmoid
-===========================
-
-.. currentmodule:: jaxopt.loss
-
-.. autofunction:: sparse_sigmoid

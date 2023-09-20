@@ -1,6 +1,0 @@
-﻿jaxopt.projection.projection\_l1\_sphere
-========================================
-
-.. currentmodule:: jaxopt.projection
-
-.. autofunction:: projection_l1_sphere

@@ -1,6 +1,0 @@
-﻿jaxopt.objective.ridge\_regression
-==================================
-
-.. currentmodule:: jaxopt.objective
-
-.. autofunction:: ridge_regression

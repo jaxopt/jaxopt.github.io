@@ -1,6 +1,0 @@
-﻿jaxopt.implicit\_diff.custom\_root
-==================================
-
-.. currentmodule:: jaxopt.implicit_diff
-
-.. autofunction:: custom_root

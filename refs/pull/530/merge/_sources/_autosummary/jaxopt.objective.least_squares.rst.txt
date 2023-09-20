@@ -1,6 +1,0 @@
-﻿jaxopt.objective.least\_squares
-===============================
-
-.. currentmodule:: jaxopt.objective
-
-.. autodata:: least_squares

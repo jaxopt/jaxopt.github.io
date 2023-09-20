@@ -1,6 +1,0 @@
-﻿jaxopt.tree\_util.tree\_sub
-===========================
-
-.. currentmodule:: jaxopt.tree_util
-
-.. autofunction:: tree_sub
