@@ -1,0 +1,6 @@
+﻿jaxopt.tree\_util.tree\_l2\_norm
+================================
+
+.. currentmodule:: jaxopt.tree_util
+
+.. autofunction:: tree_l2_norm

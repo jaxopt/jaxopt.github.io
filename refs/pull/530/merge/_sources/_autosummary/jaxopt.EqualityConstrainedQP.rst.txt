@@ -1,0 +1,41 @@
+﻿jaxopt.EqualityConstrainedQP
+============================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: EqualityConstrainedQP
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~EqualityConstrainedQP.__init__
+      ~EqualityConstrainedQP.attribute_names
+      ~EqualityConstrainedQP.attribute_values
+      ~EqualityConstrainedQP.l2_optimality_error
+      ~EqualityConstrainedQP.run
+      ~EqualityConstrainedQP.solve
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~EqualityConstrainedQP.fun
+      ~EqualityConstrainedQP.implicit_diff_solve
+      ~EqualityConstrainedQP.jit
+      ~EqualityConstrainedQP.matvec_A
+      ~EqualityConstrainedQP.matvec_Q
+      ~EqualityConstrainedQP.maxiter
+      ~EqualityConstrainedQP.refine_maxiter
+      ~EqualityConstrainedQP.refine_regularization
+      ~EqualityConstrainedQP.tol
+   
+   

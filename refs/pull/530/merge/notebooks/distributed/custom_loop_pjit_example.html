@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jax.experimental.pjit example using JAXopt. &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> example using JAXopt.</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/notebooks/distributed/custom_loop_pjit_example.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copyright 2022 Google LLC.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="jax-experimental-pjit-example-using-jaxopt">
+<h1><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> example using JAXopt.<a class="headerlink" href="#jax-experimental-pjit-example-using-jaxopt" title="Permalink to this heading"></a></h1>
+<p>The purpose of this example is to illustrate how JAXopt solvers can be easily
+used for distributed training thanks to <code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code>. In this case, we begin by
+implementing data parallel training of a multi-class logistic regression model
+on synthetic data.</p>
+<p><strong>NOTE: <code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> is not yet supported on Google Colab. Please connect to Google Cloud TPUs to execute the example.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#@markdown The number of optimization steps to perform:</span>
+<span class="n">MAXITER</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1">#@param{type:&quot;integer&quot;}</span>
+<span class="c1">#@markdown The number of samples in the (synthetic) dataset:</span>
+<span class="n">NUM_SAMPLES</span> <span class="o">=</span> <span class="mi">50000</span>  <span class="c1">#@param{type:&quot;integer&quot;}</span>
+<span class="c1">#@markdown The number of features in the (synthetic) dataset:</span>
+<span class="n">NUM_FEATURES</span> <span class="o">=</span> <span class="mi">784</span>  <span class="c1">#@param{type:&quot;integer&quot;}</span>
+<span class="c1">#@markdown The number of classes in the (synthetic) dataset:</span>
+<span class="n">NUM_CLASSES</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1">#@param{type:&quot;integer&quot;}</span>
+<span class="c1">#@markdown The stepsize for the optimizer (set to 0.0 to use line search):</span>
+<span class="n">STEPSIZE</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1">#@param{type:&quot;number&quot;}</span>
+<span class="c1">#@markdown The line search approach (either `&#39;zoom&#39;` or `backtracking`), ignored if `STEPSIZE &gt; 0.0`:</span>
+<span class="n">LINESEARCH</span> <span class="o">=</span> <span class="s1">&#39;zoom&#39;</span>  <span class="c1">#@param{type:&quot;string&quot;}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="imports-and-tpu-setup">
+<h1>Imports and TPU setup<a class="headerlink" href="#imports-and-tpu-setup" title="Permalink to this heading"></a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">capture</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">jaxopt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="c1"># activate TPUs if available</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">jax.tools.colab_tpu</span>
+    <span class="n">jax</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">colab_tpu</span><span class="o">.</span><span class="n">setup_tpu</span><span class="p">()</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TPU not found, continuing without it.&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">import</span> <span class="nn">jaxopt</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">jax</span><span class="o">.</span><span class="n">local_devices</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[TpuDevice(id=0, process_index=0, coords=(0,0,0), core_on_chip=0),
+ TpuDevice(id=1, process_index=0, coords=(0,0,0), core_on_chip=1),
+ TpuDevice(id=2, process_index=0, coords=(1,0,0), core_on_chip=0),
+ TpuDevice(id=3, process_index=0, coords=(1,0,0), core_on_chip=1),
+ TpuDevice(id=4, process_index=0, coords=(0,1,0), core_on_chip=0),
+ TpuDevice(id=5, process_index=0, coords=(0,1,0), core_on_chip=1),
+ TpuDevice(id=6, process_index=0, coords=(1,1,0), core_on_chip=0),
+ TpuDevice(id=7, process_index=0, coords=(1,1,0), core_on_chip=1)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="type-aliases">
+<h1>Type aliases<a class="headerlink" href="#type-aliases" title="Permalink to this heading"></a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="auxiliary-functions">
+<h1>Auxiliary functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this heading"></a></h1>
+<p>A minimal working example of how to create a <code class="docutils literal notranslate"><span class="pre">Mesh</span></code> for data parallel execution using <code class="docutils literal notranslate"><span class="pre">pjit</span></code>. Please note that, as opposed to <code class="docutils literal notranslate"><span class="pre">pmap</span></code>, <code class="docutils literal notranslate"><span class="pre">pjit</span></code> allows to seemlessly combine data and model parallel execution as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jax.sharding</span> <span class="kn">import</span> <span class="n">Mesh</span>
+<span class="kn">from</span> <span class="nn">jax.sharding</span> <span class="kn">import</span> <span class="n">PartitionSpec</span>
+<span class="kn">from</span> <span class="nn">jax.experimental.pjit</span> <span class="kn">import</span> <span class="n">pjit</span>
+
+
+<span class="k">def</span> <span class="nf">setup_data_parallel_mesh</span><span class="p">():</span>
+  <span class="n">global_mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+  <span class="n">jax</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">thread_resources</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">ResourceEnv</span><span class="p">(</span><span class="n">physical_mesh</span><span class="o">=</span><span class="n">global_mesh</span><span class="p">,</span> <span class="n">loops</span><span class="o">=</span><span class="p">()))</span>
+  
+<span class="n">setup_data_parallel_mesh</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="custom-loop">
+<h1>Custom-loop<a class="headerlink" href="#custom-loop" title="Permalink to this heading"></a></h1>
+<p>The following code uses data-parallelism in the train loop. Through the <code class="docutils literal notranslate"><span class="pre">use_pjit</span></code> keyword argument we can deactivate this parallelism. We’ll use this feature later to benchmark the impact of parallelism.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">],</span>
+    <span class="n">init_params</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="n">stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">linesearch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;zoom&#39;</span><span class="p">,</span>
+    <span class="n">use_pjit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Fits a multi-class logistic regression model for demonstration purposes.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    data: A tuple `(X, y)` with the training covariates and categorical labels,</span>
+<span class="sd">      respectively.</span>
+<span class="sd">    init_params: The initial value of the model&#39;s weights.</span>
+<span class="sd">    stepsize: The stepsize to use for the solver. If set to `0`, linesearch will</span>
+<span class="sd">      be used instead.</span>
+<span class="sd">    linesearch: The linesearch algorithm to use. If `stepsize &gt; 0`, linsearch</span>
+<span class="sd">      will be disabled.</span>
+<span class="sd">    use_pjit: Whether to distribute the computation across replicas or use only</span>
+<span class="sd">      the first device available.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    The per-step errors and runtimes, as well as the JIT-compile time for the</span>
+<span class="sd">    solver&#39;s `update` function.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># When using `pjit` to distribute the computation across devices, it is not</span>
+  <span class="c1"># necessary to override the `value_and_grad` of `fun` (though it is supported</span>
+  <span class="c1"># if desired for other reasons, e.g. gradient clipping).</span>
+  <span class="n">solver</span> <span class="o">=</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">LBFGS</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">jaxopt</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">multiclass_logreg</span><span class="p">,</span>
+                        <span class="n">stepsize</span><span class="o">=</span><span class="n">stepsize</span><span class="p">,</span>
+                        <span class="n">linesearch</span><span class="o">=</span><span class="n">linesearch</span><span class="p">)</span>
+  <span class="c1"># Apply the `jax.pmap` transform to the function to be computed in a</span>
+  <span class="c1"># distributed manner (the solver&#39;s `update` method in this case). Otherwise,</span>
+  <span class="c1"># we JIT compile it.</span>
+  <span class="k">if</span> <span class="n">use_pjit</span><span class="p">:</span>
+    <span class="n">update</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span>
+      <span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">,</span>
+      <span class="n">in_axis_resources</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)),</span>
+      <span class="n">out_axis_resources</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">update</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>
+
+  <span class="c1"># Initialize solver state.</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">init_params</span>
+  <span class="c1"># When using `pjit` for data-parallel training, we do not need to explicitly</span>
+  <span class="c1"># replicate model parameters across devices. Instead, replication is specified</span>
+  <span class="c1"># via the `in_axes_resources` argument of the `pjit` transformation.</span>
+
+  <span class="c1"># Finally, since in this demo we are *not* using mini-batches, it pays off to</span>
+  <span class="c1"># transfer data to the device beforehand. Otherwise, host-to-device transfers</span>
+  <span class="c1"># occur in each update. This is true regardless of whether we use distributed</span>
+  <span class="c1"># or single-device computation.</span>
+  <span class="k">if</span> <span class="n">use_pjit</span><span class="p">:</span>  <span class="c1"># Shards data and moves it to device,</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span>
+      <span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+      <span class="n">in_axis_resources</span><span class="o">=</span><span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span>
+      <span class="n">out_axis_resources</span><span class="o">=</span><span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">))(</span><span class="o">*</span><span class="n">data</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>  <span class="c1"># Just move data to device.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">device_put</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+  <span class="c1"># Pre-compiles update, preventing it from affecting step times.</span>
+  <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+  <span class="n">_</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+  <span class="n">compile_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">tic</span>
+
+  <span class="n">outer_tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+  <span class="n">step_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">MAXITER</span><span class="p">)</span>
+  <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">MAXITER</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAXITER</span><span class="p">):</span>
+    <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">block_until_ready</span><span class="p">(),</span> <span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">))</span>
+    <span class="n">step_times</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">tic</span>
+    <span class="n">errors</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+  <span class="nb">print</span><span class="p">(</span>
+      <span class="sa">f</span><span class="s1">&#39;Total time elapsed with </span><span class="si">{</span><span class="n">linesearch</span><span class="si">}</span><span class="s1"> linesearch and pjit = </span><span class="si">{</span><span class="n">use_pjit</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">,</span>
+      <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">outer_tic</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;seconds.&#39;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">errors</span><span class="p">,</span> <span class="n">step_times</span><span class="p">,</span> <span class="n">compile_time</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="boilerplate">
+<h1>Boilerplate<a class="headerlink" href="#boilerplate" title="Permalink to this heading"></a></h1>
+<p>Creates dataset, calls <code class="docutils literal notranslate"><span class="pre">fit</span></code> with and without <code class="docutils literal notranslate"><span class="pre">jax.pjit</span></code>, makes figures.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Boilerplate to run the demo experiment.&quot;&quot;&quot;</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">NUM_SAMPLES</span><span class="p">,</span>
+                                      <span class="n">n_features</span><span class="o">=</span><span class="n">NUM_FEATURES</span><span class="p">,</span>
+                                      <span class="n">n_classes</span><span class="o">=</span><span class="n">NUM_CLASSES</span><span class="p">,</span>
+                                      <span class="n">n_informative</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                                      <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">NUM_FEATURES</span><span class="p">,</span> <span class="n">NUM_CLASSES</span><span class="p">])</span>
+
+  <span class="n">errors</span><span class="p">,</span> <span class="n">step_times</span><span class="p">,</span> <span class="n">compile_time</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{},</span> <span class="p">{}</span>
+
+  <span class="k">for</span> <span class="n">use_pjit</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">exp_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;with&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">use_pjit</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;without&#39;</span><span class="si">}</span><span class="s2">_pjit&quot;</span>
+    <span class="n">_errors</span><span class="p">,</span> <span class="n">_step_times</span><span class="p">,</span> <span class="n">_compile_time</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                                              <span class="n">init_params</span><span class="o">=</span><span class="n">init_params</span><span class="p">,</span>
+                                              <span class="n">stepsize</span><span class="o">=</span><span class="n">STEPSIZE</span><span class="p">,</span>
+                                              <span class="n">linesearch</span><span class="o">=</span><span class="n">LINESEARCH</span><span class="p">,</span>
+                                              <span class="n">use_pjit</span><span class="o">=</span><span class="n">use_pjit</span><span class="p">)</span>
+    <span class="n">errors</span><span class="p">[</span><span class="n">exp_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_errors</span>
+    <span class="n">step_times</span><span class="p">[</span><span class="n">exp_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_step_times</span>
+    <span class="n">compile_time</span><span class="p">[</span><span class="n">exp_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_compile_time</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">6.18</span><span class="p">))</span>
+  <span class="k">for</span> <span class="n">use_pjit</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">exp_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;with&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">use_pjit</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;without&#39;</span><span class="si">}</span><span class="s2">_pjit&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">MAXITER</span><span class="p">),</span> <span class="n">errors</span><span class="p">[</span><span class="n">exp_name</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">exp_name</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Gradient error&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NUM_SAMPLES = </span><span class="si">{</span><span class="n">NUM_SAMPLES</span><span class="si">}</span><span class="s1">, NUM_FEATURES = </span><span class="si">{</span><span class="n">NUM_FEATURES</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">6.18</span><span class="p">))</span>
+  <span class="k">for</span> <span class="n">use_pjit</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">exp_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;with&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">use_pjit</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;without&#39;</span><span class="si">}</span><span class="s2">_pjit&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">MAXITER</span><span class="p">),</span> <span class="n">step_times</span><span class="p">[</span><span class="n">exp_name</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">exp_name</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iterations&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Step time&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NUM_SAMPLES = </span><span class="si">{</span><span class="n">NUM_SAMPLES</span><span class="si">}</span><span class="s1">, NUM_FEATURES = </span><span class="si">{</span><span class="n">NUM_FEATURES</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">errors</span><span class="p">,</span> <span class="n">step_times</span><span class="p">,</span> <span class="n">compile_time</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="main">
+<h1>Main<a class="headerlink" href="#main" title="Permalink to this heading"></a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;num_samples:&quot;</span><span class="p">,</span> <span class="n">NUM_SAMPLES</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;num_features:&quot;</span><span class="p">,</span> <span class="n">NUM_FEATURES</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;num_features:&quot;</span><span class="p">,</span> <span class="n">NUM_CLASSES</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;maxiter:&quot;</span><span class="p">,</span> <span class="n">MAXITER</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;stepsize:&quot;</span><span class="p">,</span> <span class="n">STEPSIZE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;linesearch (ignored if `stepsize` &gt; 0):&quot;</span><span class="p">,</span> <span class="n">LINESEARCH</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="n">errors</span><span class="p">,</span> <span class="n">step_times</span><span class="p">,</span> <span class="n">compile_time</span> <span class="o">=</span> <span class="n">run</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average speed-up (ignoring compile):&#39;</span><span class="p">,</span>
+      <span class="nb">round</span><span class="p">((</span><span class="n">step_times</span><span class="p">[</span><span class="s1">&#39;without_pjit&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">step_times</span><span class="p">[</span><span class="s1">&#39;with_pjit&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>num_samples: 50000
+num_features: 784
+num_features: 10
+maxiter: 100
+stepsize: 0.0
+linesearch (ignored if `stepsize` &gt; 0): zoom
+
+Total time elapsed with zoom linesearch and pjit = True: 3.79 seconds.
+Total time elapsed with zoom linesearch and pjit = False: 16.8 seconds.
+Average speed-up (ignoring compile): 9.57
+</pre></div>
+</div>
+<img alt="../../_images/817ab41a636b3581b1ab62badef1a0bde31dc7df109b38f1b2a70a6fb830c224.png" src="../../_images/817ab41a636b3581b1ab62badef1a0bde31dc7df109b38f1b2a70a6fb830c224.png" />
+<img alt="../../_images/16bff8fa5890e22a3e8a43c7c6806873b00d04d222bd93748e9fbfe0e980a3a9.png" src="../../_images/16bff8fa5890e22a3e8a43c7c6806873b00d04d222bd93748e9fbfe0e980a3a9.png" />
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

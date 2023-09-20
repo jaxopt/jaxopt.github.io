@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fixed point resolution &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jaxopt.FixedPointIteration" href="_autosummary/jaxopt.FixedPointIteration.html" />
+    <link rel="prev" title="jaxopt.Broyden" href="_autosummary/jaxopt.Broyden.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fixed point resolution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#equivalence-with-root-finding">Equivalence with root finding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fixed-point-iterations">Fixed point iterations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.FixedPointIteration.html">jaxopt.FixedPointIteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#differentiation">Differentiation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#anderson-acceleration">Anderson acceleration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.AndersonAcceleration.html">jaxopt.AndersonAcceleration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#accelerating-jaxopt-optimizers">Accelerating JAXopt optimizers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.AndersonWrapper.html">jaxopt.AndersonWrapper</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Fixed point resolution</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/fixed_point.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fixed-point-resolution">
+<h1>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Permalink to this heading"></a></h1>
+<p>This section is concerned with fixed-point resolution, that is finding
+<span class="math notranslate nohighlight">\(x\)</span> such that <span class="math notranslate nohighlight">\(T(x, \theta) = x\)</span>.</p>
+<section id="equivalence-with-root-finding">
+<h2>Equivalence with root finding<a class="headerlink" href="#equivalence-with-root-finding" title="Permalink to this heading"></a></h2>
+<p>If <span class="math notranslate nohighlight">\(x\)</span> is a fixed point of <span class="math notranslate nohighlight">\(T\)</span> then <span class="math notranslate nohighlight">\(x\)</span> is a root
+of <span class="math notranslate nohighlight">\(F(x, \theta) = T(x, \theta) - x\)</span>.  Reciprocally, if <span class="math notranslate nohighlight">\(x\)</span> is the
+root of some <span class="math notranslate nohighlight">\(F(x, \theta)\)</span> then it is also the fixed point of
+<span class="math notranslate nohighlight">\(T(x, \theta) = F(x, \theta) + x\)</span>.  Hence, root finding and fixed-point
+resolution are two different views of the same problem.
+This section is concerned with algorithms that are more naturally seen
+or are historically associated with fixed point resolution.
+The root finding viewpoint is discussed in <a class="reference internal" href="root_finding.html#root-finding"><span class="std std-ref">this section</span></a>.</p>
+</section>
+<section id="fixed-point-iterations">
+<h2>Fixed point iterations<a class="headerlink" href="#fixed-point-iterations" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration" title="jaxopt.FixedPointIteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.FixedPointIteration</span></code></a>(fixed_point_fun)</p></td>
+<td><p>Fixed point iteration method.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Fixed-point_iteration">fixed point iteration</a> method simply consists
+in iterating <span class="math notranslate nohighlight">\(x_{n+1}=T(x_n, \theta)\)</span>, which is guaranteed to converge to
+a fixed point if <span class="math notranslate nohighlight">\(x\mapsto T(x,\theta)\)</span> is a <strong>contractive map</strong>. See
+<a class="reference external" href="https://en.wikipedia.org/wiki/Banach_fixed-point_theorem">Banach fixed-point theorem</a> for more details.</p>
+<p>Code example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">FixedPointIteration</span>
+
+<span class="k">def</span> <span class="nf">T</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>  <span class="c1"># contractive map</span>
+  <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">theta</span>
+
+<span class="n">fpi</span> <span class="o">=</span> <span class="n">FixedPointIteration</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
+<span class="n">x_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fpi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x_init</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">FixedPointIteration</span></code> successfully finds the fixed point <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<section id="differentiation">
+<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this heading"></a></h3>
+<p>Fixed points can be differentiated with respect to <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">FixedPointIteration</span>
+
+<span class="k">def</span> <span class="nf">T</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>  <span class="c1"># contractive map</span>
+  <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">theta</span>
+
+<span class="n">fpi</span> <span class="o">=</span> <span class="n">FixedPointIteration</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">x_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fixed_point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">fpi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">fixed_point</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="n">x_init</span><span class="p">,</span> <span class="n">theta</span><span class="p">))</span>  <span class="c1"># only gradient</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">fixed_point</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="n">x_init</span><span class="p">,</span> <span class="n">theta</span><span class="p">))</span>  <span class="c1"># both value and gradient</span>
+</pre></div>
+</div>
+<p>Note that <span class="math notranslate nohighlight">\(x(\theta)=2\theta\)</span> so <span class="math notranslate nohighlight">\(\nabla x(\theta)=2\)</span>.</p>
+<p>Under the hood, we use the implicit function theorem in order to differentiate
+the fixed point.  See the <a class="reference internal" href="implicit_diff.html#implicit-diff"><span class="std std-ref">implicit differentiation</span></a>
+section for more details.</p>
+</section>
+</section>
+<section id="anderson-acceleration">
+<h2>Anderson acceleration<a class="headerlink" href="#anderson-acceleration" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration" title="jaxopt.AndersonAcceleration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.AndersonAcceleration</span></code></a>(fixed_point_fun)</p></td>
+<td><p>Anderson acceleration.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Anderson acceleration is an iterative method that aims to compute the next
+iterate <span class="math notranslate nohighlight">\(x_{n}\)</span> as a linear combination of the <span class="math notranslate nohighlight">\(m\)</span> last iterates
+<span class="math notranslate nohighlight">\([x_{n-m},x_{n-m+1},\ldots x_{n-1}]\)</span>. The coefficients of the
+linear combination are computed ‘on the fly’ at each iteration. As a result,
+not only the convergence is faster but the convergence conditions are weakened,
+allowing to tackle problems <code class="docutils literal notranslate"><span class="pre">FixedPointIteration</span></code> could not.  See <a class="reference external" href="https://arxiv.org/abs/1909.04638">Pollock
+and Rebholz</a> (2020) for more details.</p>
+<p>The size of the history <span class="math notranslate nohighlight">\(m\)</span> (denoted <code class="docutils literal notranslate"><span class="pre">history_size</span></code> below) plays a
+crucial role in the method’s performance. A higher <span class="math notranslate nohighlight">\(m\)</span> could speed up the
+convergence at the cost of higher memory consumption, and more numerical
+instabilities.  Those numerical instabilities can be mitigated by increasing
+the <code class="docutils literal notranslate"><span class="pre">ridge</span></code> regularization hyper-parameter.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonAcceleration</span>
+
+<span class="k">def</span> <span class="nf">T</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>  <span class="c1"># contractive map</span>
+  <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">theta</span>
+
+<span class="n">aa</span> <span class="o">=</span> <span class="n">AndersonAcceleration</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">history_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                          <span class="n">ridge</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+<span class="n">x_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">aa</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For implicit differentiation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonAcceleration</span>
+
+<span class="k">def</span> <span class="nf">T</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>  <span class="c1"># contractive map</span>
+  <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">theta</span>
+
+<span class="n">aa</span> <span class="o">=</span> <span class="n">AndersonAcceleration</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">history_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                          <span class="n">ridge</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">x_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fixed_point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">aa</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">fixed_point</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="n">x_init</span><span class="p">,</span> <span class="n">theta</span><span class="p">))</span>  <span class="c1"># only gradient</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">fixed_point</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="n">x_init</span><span class="p">,</span> <span class="n">theta</span><span class="p">))</span>  <span class="c1"># both value and gradient</span>
+</pre></div>
+</div>
+<aside class="topic">
+<p class="topic-title">Examples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_anderson_accelerate_gd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-accelerate-gd-py"><span class="std std-ref">Anderson acceleration of gradient descent.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_picard_ode.html#sphx-glr-auto-examples-fixed-point-plot-picard-ode-py"><span class="std std-ref">Anderson acceleration in application to Picard–Lindelöf theorem.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/fixed_point/deep_equilibrium_model.html#sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"><span class="std std-ref">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</span></a></p></li>
+</ul>
+</aside>
+</section>
+<section id="accelerating-jaxopt-optimizers">
+<h2>Accelerating JAXopt optimizers<a class="headerlink" href="#accelerating-jaxopt-optimizers" title="Permalink to this heading"></a></h2>
+<p>Anderson acceleration can also be used to accelerate optimization algorithms.
+To spare the user the burden of implementing Anderson acceleration for every
+solver, we propose the <code class="docutils literal notranslate"><span class="pre">AndersonWrapper</span></code> class. It directly takes an
+optimizer as input and applies Anderson acceleration to its iterates.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.AndersonWrapper.html#jaxopt.AndersonWrapper" title="jaxopt.AndersonWrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.AndersonWrapper</span></code></a>(solver[, ...])</p></td>
+<td><p>Wrapper for accelerating JAXopt solvers.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Its usage is transparent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gd</span> <span class="o">=</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">GradientDescent</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">ridge_reg_objective</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="n">aa</span> <span class="o">=</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">AndersonWrapper</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="n">gd</span><span class="p">,</span> <span class="n">history_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sol</span><span class="p">,</span> <span class="n">aa_state</span> <span class="o">=</span> <span class="n">aa</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+</pre></div>
+</div>
+<aside class="topic">
+<p class="topic-title">Examples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_anderson_wrapper_cd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"><span class="std std-ref">Anderson acceleration of block coordinate descent.</span></a></p></li>
+</ul>
+</aside>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_autosummary/jaxopt.Broyden.html" class="btn btn-neutral float-left" title="jaxopt.Broyden" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.FixedPointIteration.html" class="btn btn-neutral float-right" title="jaxopt.FixedPointIteration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

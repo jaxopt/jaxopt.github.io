@@ -1,0 +1,47 @@
+﻿jaxopt.AndersonAcceleration
+===========================
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: AndersonAcceleration
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AndersonAcceleration.__init__
+      ~AndersonAcceleration.attribute_names
+      ~AndersonAcceleration.attribute_values
+      ~AndersonAcceleration.init_state
+      ~AndersonAcceleration.l2_optimality_error
+      ~AndersonAcceleration.optimality_fun
+      ~AndersonAcceleration.run
+      ~AndersonAcceleration.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AndersonAcceleration.beta
+      ~AndersonAcceleration.has_aux
+      ~AndersonAcceleration.history_size
+      ~AndersonAcceleration.implicit_diff
+      ~AndersonAcceleration.implicit_diff_solve
+      ~AndersonAcceleration.jit
+      ~AndersonAcceleration.maxiter
+      ~AndersonAcceleration.mixing_frequency
+      ~AndersonAcceleration.ridge
+      ~AndersonAcceleration.tol
+      ~AndersonAcceleration.unroll
+      ~AndersonAcceleration.verbose
+      ~AndersonAcceleration.fixed_point_fun
+   
+   

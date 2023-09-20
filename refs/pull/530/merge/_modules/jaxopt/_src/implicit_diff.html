@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.implicit_diff &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.implicit_diff</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.implicit_diff</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Implicit differentiation of roots and fixed points.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">linear_solve</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_add</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_mul</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span>
+<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_sub</span>
+
+
+<div class="viewcode-block" id="root_vjp"><a class="viewcode-back" href="../../../_autosummary/jaxopt.implicit_diff.root_vjp.html#jaxopt.implicit_diff.root_vjp">[docs]</a><span class="k">def</span> <span class="nf">root_vjp</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+             <span class="n">sol</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+             <span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span>
+             <span class="n">cotangent</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+             <span class="n">solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Vector-Jacobian product of a root.</span>
+
+<span class="sd">  The invariant is ``optimality_fun(sol, *args) == 0``.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    optimality_fun: the optimality function to use.</span>
+<span class="sd">    sol: solution / root (pytree).</span>
+<span class="sd">    args: tuple containing the arguments with respect to which we wish to</span>
+<span class="sd">      differentiate ``sol`` against.</span>
+<span class="sd">    cotangent: vector to left-multiply the Jacobian with</span>
+<span class="sd">      (pytree, same structure as ``sol``).</span>
+<span class="sd">    solve: a linear solver of the form ``x = solve(matvec, b)``,</span>
+<span class="sd">      where ``matvec(x) = Ax`` and ``Ax=b``.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    tuple of the same length as ``len(args)`` containing the vjps w.r.t.</span>
+<span class="sd">    each argument. Each ``vjps[i]`` has the same pytree structure as</span>
+<span class="sd">    ``args[i]``.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">fun_sol</span><span class="p">(</span><span class="n">sol</span><span class="p">):</span>
+    <span class="c1"># We close over the arguments.</span>
+    <span class="k">return</span> <span class="n">optimality_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+  <span class="n">_</span><span class="p">,</span> <span class="n">vjp_fun_sol</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vjp</span><span class="p">(</span><span class="n">fun_sol</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span>
+
+  <span class="c1"># Compute the multiplication A^T u = (u^T A)^T.</span>
+  <span class="n">matvec</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">vjp_fun_sol</span><span class="p">(</span><span class="n">u</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+  <span class="c1"># The solution of A^T u = v, where</span>
+  <span class="c1"># A = jacobian(optimality_fun, argnums=0)</span>
+  <span class="c1"># v = -cotangent.</span>
+  <span class="n">v</span> <span class="o">=</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">cotangent</span><span class="p">)</span>
+  <span class="n">u</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">matvec</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">fun_args</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="c1"># We close over the solution.</span>
+    <span class="k">return</span> <span class="n">optimality_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+  <span class="n">_</span><span class="p">,</span> <span class="n">vjp_fun_args</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vjp</span><span class="p">(</span><span class="n">fun_args</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">vjp_fun_args</span><span class="p">(</span><span class="n">u</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_jvp_sol</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">tangent</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;JVP in the first argument of optimality_fun.&quot;&quot;&quot;</span>
+  <span class="c1"># We close over the arguments.</span>
+  <span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">optimality_fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">jvp</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="p">(</span><span class="n">sol</span><span class="p">,),</span> <span class="p">(</span><span class="n">tangent</span><span class="p">,))[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_jvp_args</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">tangents</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;JVP in the second argument of optimality_fun.&quot;&quot;&quot;</span>
+  <span class="c1"># We close over the solution.</span>
+  <span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">y</span><span class="p">:</span> <span class="n">optimality_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">y</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">jvp</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">tangents</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="root_jvp"><a class="viewcode-back" href="../../../_autosummary/jaxopt.implicit_diff.root_jvp.html#jaxopt.implicit_diff.root_jvp">[docs]</a><span class="k">def</span> <span class="nf">root_jvp</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+             <span class="n">sol</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+             <span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span>
+             <span class="n">tangents</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span>
+             <span class="n">solve</span><span class="p">:</span><span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Jacobian-vector product of a root.</span>
+
+<span class="sd">  The invariant is ``optimality_fun(sol, *args) == 0``.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    optimality_fun: the optimality function to use.</span>
+<span class="sd">    sol: solution / root (pytree).</span>
+<span class="sd">    args: tuple containing the arguments with respect to which to differentiate.</span>
+<span class="sd">    tangents: a tuple of the same size as ``len(args)``. Each ``tangents[i]``</span>
+<span class="sd">      has the same pytree structure as ``args[i]``.</span>
+<span class="sd">    solve: a linear solver of the form ``solve(matvec, b)``.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    a pytree with the same structure as ``sol``.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tangents</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;args and tangents should be tuples of the same length.&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Product with A = jacobian(fun, argnums=0).</span>
+  <span class="n">matvec</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">_jvp_sol</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+
+  <span class="n">v</span> <span class="o">=</span> <span class="n">tree_scalar_mul</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">tangents</span><span class="p">)</span>
+  <span class="n">Jv</span> <span class="o">=</span> <span class="n">_jvp_args</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">solve</span><span class="p">(</span><span class="n">matvec</span><span class="p">,</span> <span class="n">Jv</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_extract_kwargs</span><span class="p">(</span><span class="n">kwarg_keys</span><span class="p">,</span> <span class="n">flat_args</span><span class="p">):</span>
+  <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">flat_args</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwarg_keys</span><span class="p">)</span>
+  <span class="n">args</span><span class="p">,</span> <span class="n">kwarg_vals</span> <span class="o">=</span> <span class="n">flat_args</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">flat_args</span><span class="p">[</span><span class="n">n</span><span class="p">:]</span>
+  <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">kwarg_keys</span><span class="p">,</span> <span class="n">kwarg_vals</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+
+
+<span class="k">def</span> <span class="nf">_signature_bind</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="n">ba</span> <span class="o">=</span> <span class="n">signature</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">ba</span><span class="o">.</span><span class="n">apply_defaults</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">ba</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">ba</span><span class="o">.</span><span class="n">kwargs</span>
+
+
+<span class="k">def</span> <span class="nf">_signature_bind_and_match</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="c1"># We want to bind *args and **kwargs based on the provided</span>
+  <span class="c1"># signature, but also to associate the resulting positional</span>
+  <span class="c1"># arguments back. To achieve this, we lift arguments to a triple:</span>
+  <span class="c1">#</span>
+  <span class="c1">#   (was_kwarg, ref, value)</span>
+  <span class="c1">#</span>
+  <span class="c1"># where ref is an index position (int) if the original argument was</span>
+  <span class="c1"># from *args and a dictionary key if the original argument was from</span>
+  <span class="c1"># **kwargs. After binding to the inspected signature, we use the</span>
+  <span class="c1"># tags to associate the resolved positional arguments back to their</span>
+  <span class="c1"># arg and kwarg source.</span>
+
+  <span class="n">args</span> <span class="o">=</span> <span class="p">[(</span><span class="kc">False</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">)]</span>
+  <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+  <span class="n">ba</span> <span class="o">=</span> <span class="n">signature</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+  <span class="n">mapping</span> <span class="o">=</span> <span class="p">[(</span><span class="n">was_kwarg</span><span class="p">,</span> <span class="n">ref</span><span class="p">)</span> <span class="k">for</span> <span class="n">was_kwarg</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">ba</span><span class="o">.</span><span class="n">args</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">map_back</span><span class="p">(</span><span class="n">out_args</span><span class="p">):</span>
+    <span class="n">src_args</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">src_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">was_kwarg</span><span class="p">,</span> <span class="n">ref</span><span class="p">),</span> <span class="n">out_arg</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">out_args</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">was_kwarg</span><span class="p">:</span>
+        <span class="n">src_kwargs</span><span class="p">[</span><span class="n">ref</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_arg</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">src_args</span><span class="p">[</span><span class="n">ref</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_arg</span>
+    <span class="k">return</span> <span class="n">src_args</span><span class="p">,</span> <span class="n">src_kwargs</span>
+
+  <span class="n">out_args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">v</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ba</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+  <span class="n">out_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ba</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+  <span class="k">return</span> <span class="n">out_args</span><span class="p">,</span> <span class="n">out_kwargs</span><span class="p">,</span> <span class="n">map_back</span>
+
+
+<span class="k">def</span> <span class="nf">_custom_root</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">optimality_fun</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">has_aux</span><span class="p">,</span>
+                 <span class="n">reference_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="c1"># When caling through `jax.custom_vjp`, jax attempts to resolve all</span>
+  <span class="c1"># arguments passed by keyword to positions (this is in order to</span>
+  <span class="c1"># match against a `nondiff_argnums` parameter that we do not use</span>
+  <span class="c1"># here). It does so by resolving them according to the custom_jvp&#39;ed</span>
+  <span class="c1"># function&#39;s signature. It disallows functions defined with a</span>
+  <span class="c1"># catch-all `**kwargs` expression, since their signature cannot</span>
+  <span class="c1"># always resolve all keyword arguments to positions.</span>
+  <span class="c1">#</span>
+  <span class="c1"># We can loosen the constraint on the signature of `solver_fun` so</span>
+  <span class="c1"># long as we resolve keywords to positions ourselves. We can do so</span>
+  <span class="c1"># just in time, by flattening the `kwargs` dict (respecting its</span>
+  <span class="c1"># iteration order) and supplying `custom_vjp` with a</span>
+  <span class="c1"># positional-argument-only function. We then explicitly coordinate</span>
+  <span class="c1"># flattening and unflattening around the `custom_vjp` boundary.</span>
+  <span class="c1">#</span>
+  <span class="c1"># Once we make it past the `custom_vjp` boundary, we do some more</span>
+  <span class="c1"># work to align arguments with the reference signature (which is, by</span>
+  <span class="c1"># default, the signature of `optimality_fun`).</span>
+
+  <span class="n">solver_fun_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">reference_signature</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">reference_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">)</span>
+
+  <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reference_signature</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Signature</span><span class="p">):</span>
+    <span class="c1"># If is a CompositeLinearFunction, accesses subfun.</span>
+    <span class="c1"># Otherwise, assumes a Callable.</span>
+    <span class="n">fun</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">reference_signature</span><span class="p">,</span> <span class="s2">&quot;subfun&quot;</span><span class="p">,</span> <span class="n">reference_signature</span><span class="p">)</span>
+    <span class="n">reference_signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">fun</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">make_custom_vjp_solver_fun</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">kwarg_keys</span><span class="p">):</span>
+    <span class="nd">@jax</span><span class="o">.</span><span class="n">custom_vjp</span>
+    <span class="k">def</span> <span class="nf">solver_fun_flat</span><span class="p">(</span><span class="o">*</span><span class="n">flat_args</span><span class="p">):</span>
+      <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_extract_kwargs</span><span class="p">(</span><span class="n">kwarg_keys</span><span class="p">,</span> <span class="n">flat_args</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">solver_fun</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">solver_fun_fwd</span><span class="p">(</span><span class="o">*</span><span class="n">flat_args</span><span class="p">):</span>
+      <span class="n">res</span> <span class="o">=</span> <span class="n">solver_fun_flat</span><span class="p">(</span><span class="o">*</span><span class="n">flat_args</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">flat_args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">solver_fun_bwd</span><span class="p">(</span><span class="n">tup</span><span class="p">,</span> <span class="n">cotangent</span><span class="p">):</span>
+      <span class="n">res</span><span class="p">,</span> <span class="n">flat_args</span> <span class="o">=</span> <span class="n">tup</span>
+      <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_extract_kwargs</span><span class="p">(</span><span class="n">kwarg_keys</span><span class="p">,</span> <span class="n">flat_args</span><span class="p">)</span>
+
+      <span class="c1"># solver_fun can return auxiliary data if has_aux = True.</span>
+      <span class="k">if</span> <span class="n">has_aux</span><span class="p">:</span>
+        <span class="n">cotangent</span> <span class="o">=</span> <span class="n">cotangent</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">res</span>
+
+      <span class="n">ba_args</span><span class="p">,</span> <span class="n">ba_kwargs</span><span class="p">,</span> <span class="n">map_back</span> <span class="o">=</span> <span class="n">_signature_bind_and_match</span><span class="p">(</span>
+          <span class="n">reference_signature</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">ba_kwargs</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s2">&quot;keyword arguments to solver_fun could not be resolved to &quot;</span>
+            <span class="s2">&quot;positional arguments based on the signature &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">reference_signature</span><span class="si">}</span><span class="s2">. This can happen under custom_root if &quot;</span>
+            <span class="s2">&quot;optimality_fun takes catch-all **kwargs, or under &quot;</span>
+            <span class="s2">&quot;custom_fixed_point if fixed_point_fun takes catch-all **kwargs, &quot;</span>
+            <span class="s2">&quot;both of which are currently unsupported.&quot;</span><span class="p">)</span>
+
+      <span class="c1"># Compute VJPs w.r.t. args.</span>
+      <span class="n">vjps</span> <span class="o">=</span> <span class="n">root_vjp</span><span class="p">(</span><span class="n">optimality_fun</span><span class="o">=</span><span class="n">optimality_fun</span><span class="p">,</span> <span class="n">sol</span><span class="o">=</span><span class="n">sol</span><span class="p">,</span>
+                      <span class="n">args</span><span class="o">=</span><span class="n">ba_args</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">cotangent</span><span class="o">=</span><span class="n">cotangent</span><span class="p">,</span> <span class="n">solve</span><span class="o">=</span><span class="n">solve</span><span class="p">)</span>
+      <span class="c1"># Prepend None as the vjp for init_params.</span>
+      <span class="n">vjps</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span> <span class="o">+</span> <span class="n">vjps</span>
+
+      <span class="n">arg_vjps</span><span class="p">,</span> <span class="n">kws_vjps</span> <span class="o">=</span> <span class="n">map_back</span><span class="p">(</span><span class="n">vjps</span><span class="p">)</span>
+      <span class="n">ordered_vjps</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">arg_vjps</span><span class="p">)</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">kws_vjps</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+      <span class="k">return</span> <span class="n">ordered_vjps</span>
+
+    <span class="n">solver_fun_flat</span><span class="o">.</span><span class="n">defvjp</span><span class="p">(</span><span class="n">solver_fun_fwd</span><span class="p">,</span> <span class="n">solver_fun_bwd</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">solver_fun_flat</span>
+
+  <span class="k">def</span> <span class="nf">wrapped_solver_fun</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_signature_bind</span><span class="p">(</span><span class="n">solver_fun_signature</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">keys</span><span class="p">,</span> <span class="n">vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">make_custom_vjp_solver_fun</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">keys</span><span class="p">)(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="n">vals</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">wrapped_solver_fun</span>
+
+
+<div class="viewcode-block" id="custom_root"><a class="viewcode-back" href="../../../_autosummary/jaxopt.implicit_diff.custom_root.html#jaxopt.implicit_diff.custom_root">[docs]</a><span class="k">def</span> <span class="nf">custom_root</span><span class="p">(</span><span class="n">optimality_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+                <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="n">solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">,</span>
+                <span class="n">reference_signature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Decorator for adding implicit differentiation to a root solver.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    optimality_fun: an equation function, ``optimality_fun(params, *args)``.</span>
+<span class="sd">      The invariant is ``optimality_fun(sol, *args) == 0`` at the</span>
+<span class="sd">      solution / root ``sol``.</span>
+<span class="sd">    has_aux: whether the decorated solver function returns auxiliary data.</span>
+<span class="sd">    solve: a linear solver of the form ``solve(matvec, b)``.</span>
+<span class="sd">    reference_signature: optional function signature</span>
+<span class="sd">      (i.e. arguments and keyword arguments), with which the</span>
+<span class="sd">      solver and optimality functions are expected to agree. Defaults</span>
+<span class="sd">      to ``optimality_fun``. It is required that solver and optimality</span>
+<span class="sd">      functions share the same input signature, but both might be</span>
+<span class="sd">      defined in such a way that the signature correspondence is</span>
+<span class="sd">      ambiguous (e.g. if both accept catch-all ``**kwargs``). To</span>
+<span class="sd">      satisfy custom_root&#39;s requirement, any function with an</span>
+<span class="sd">      unambiguous signature can be provided here.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A solver function decorator, i.e.,</span>
+<span class="sd">    ``custom_root(optimality_fun)(solver_fun)``.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">solve</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">solve</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span>
+
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_custom_root</span><span class="p">(</span><span class="n">solver_fun</span><span class="p">,</span> <span class="n">optimality_fun</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">has_aux</span><span class="p">,</span>
+                        <span class="n">reference_signature</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="custom_fixed_point"><a class="viewcode-back" href="../../../_autosummary/jaxopt.implicit_diff.custom_fixed_point.html#jaxopt.implicit_diff.custom_fixed_point">[docs]</a><span class="k">def</span> <span class="nf">custom_fixed_point</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+                       <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                       <span class="n">solve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">linear_solve</span><span class="o">.</span><span class="n">solve_normal_cg</span><span class="p">,</span>
+                       <span class="n">reference_signature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Decorator for adding implicit differentiation to a fixed point solver.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    fixed_point_fun: a function, ``fixed_point_fun(params, *args)``.</span>
+<span class="sd">      The invariant is ``fixed_point_fun(sol, *args) == sol`` at the</span>
+<span class="sd">      solution ``sol``.</span>
+<span class="sd">    has_aux: whether the decorated solver function returns auxiliary data.</span>
+<span class="sd">    solve: a linear solver of the form ``solve(matvec, b)``.</span>
+<span class="sd">    reference_signature: optional function whose signature</span>
+<span class="sd">      (i.e. arguments and keyword arguments) is one with which the</span>
+<span class="sd">      solver and fixed-point functions are expected to agree. Defaults</span>
+<span class="sd">      to ``fixed_point_fun``. It is required that solver and</span>
+<span class="sd">      fixed-point functions share the same input signature, but both</span>
+<span class="sd">      might be defined in such a way that the signature correspondence</span>
+<span class="sd">      is ambiguous (e.g. if both accept catch-all ``**kwargs``). To</span>
+<span class="sd">      satisfy custom_fixed_points&#39;s requirement, any function with an</span>
+<span class="sd">      unambiguous signature can be provided here.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A solver function decorator, i.e.,</span>
+<span class="sd">    ``custom_fixed_point(fixed_point_fun)(solver_fun)``.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
+
+  <span class="c1"># carry over fixed_point_fun&#39;s signature</span>
+  <span class="n">optimality_fun</span><span class="o">.</span><span class="n">__wrapped__</span> <span class="o">=</span> <span class="n">fixed_point_fun</span>
+
+  <span class="k">return</span> <span class="n">custom_root</span><span class="p">(</span><span class="n">optimality_fun</span><span class="o">=</span><span class="n">optimality_fun</span><span class="p">,</span>
+                     <span class="n">has_aux</span><span class="o">=</span><span class="n">has_aux</span><span class="p">,</span>
+                     <span class="n">solve</span><span class="o">=</span><span class="n">solve</span><span class="p">,</span>
+                     <span class="n">reference_signature</span><span class="o">=</span><span class="n">reference_signature</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">make_kkt_optimality_fun</span><span class="p">(</span><span class="n">obj_fun</span><span class="p">,</span> <span class="n">eq_fun</span><span class="p">,</span> <span class="n">ineq_fun</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Makes the optimality function for KKT conditions.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    obj_fun: objective function ``obj_fun(primal_var, params_obj)``.</span>
+<span class="sd">    eq_fun: equality constraint function, so that</span>
+<span class="sd">      ``eq_fun(primal_var, params_eq) == 0`` is imposed.</span>
+<span class="sd">    ineq_fun: inequality constraint function, so that</span>
+<span class="sd">      ``ineq_fun(primal_var, params_ineq) &lt;= 0`` is imposed (optional).</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    optimality_fun(params, params_obj, params_eq, params_ineq) where</span>
+<span class="sd">      x = (primal_var, eq_dual_var, ineq_dual_var)</span>
+
+<span class="sd">    If ``ineq_fun`` is None, ``ineq_dual_var`` and ``params_ineq`` are</span>
+<span class="sd">    ignored (i.e., they can be set to ``None``).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">grad_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">obj_fun</span><span class="p">)</span>
+
+  <span class="c1"># We only consider the stationarity, primal_feasability and comp_slackness</span>
+  <span class="c1"># conditions, as primal and dual feasibility conditions can be ignored</span>
+  <span class="c1"># almost everywhere.</span>
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">):</span>
+    <span class="n">primal_var</span><span class="p">,</span> <span class="n">eq_dual_var</span><span class="p">,</span> <span class="n">ineq_dual_var</span> <span class="o">=</span> <span class="n">params</span>
+
+    <span class="n">stationarity</span> <span class="o">=</span> <span class="n">grad_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">eq_dual_var</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">eq_vjp_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vjp</span><span class="p">(</span><span class="n">eq_fun</span><span class="p">,</span> <span class="n">primal_var</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">)</span>
+      <span class="n">stationarity</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">stationarity</span><span class="p">,</span> <span class="n">eq_vjp_fun</span><span class="p">(</span><span class="n">eq_dual_var</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="c1"># Size: number of equality constraints.</span>
+      <span class="n">primal_feasability</span> <span class="o">=</span> <span class="n">eq_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">primal_feasability</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">ineq_dual_var</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">ineq_vjp_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vjp</span><span class="p">(</span><span class="n">ineq_fun</span><span class="p">,</span> <span class="n">primal_var</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span>
+      <span class="n">stationarity</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">stationarity</span><span class="p">,</span> <span class="n">ineq_vjp_fun</span><span class="p">(</span><span class="n">ineq_dual_var</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="c1"># Size: number of inequality constraints.</span>
+      <span class="n">comp_slackness</span> <span class="o">=</span> <span class="n">tree_mul</span><span class="p">(</span><span class="n">ineq_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">),</span>
+                                <span class="n">ineq_dual_var</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">comp_slackness</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">(</span><span class="n">stationarity</span><span class="p">,</span> <span class="n">primal_feasability</span><span class="p">,</span> <span class="n">comp_slackness</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">optimality_fun</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

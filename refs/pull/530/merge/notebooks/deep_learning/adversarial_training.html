@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adversarial training &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Adversarial training</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/notebooks/deep_learning/adversarial_training.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>Copyright 2022 Google LLC</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> https://www.apache.org/licenses/LICENSE-2.0
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="adversarial-training">
+<h1>Adversarial training<a class="headerlink" href="#adversarial-training" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/google/jaxopt/blob/main/docs/notebooks/deep_learning/adversarial_training.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>The following code trains a convolutional neural network (CNN) to be robust
+with respect to the projected gradient descent (PGD) method.</p>
+<p>The Projected Gradient Descent Method (PGD) is a simple yet effective method to
+generate adversarial images. At each iteration, it adds a small perturbation
+in the direction of the sign of the gradient with respect to the input followed
+by a projection onto the infinity ball. The gradient sign ensures this
+perturbation locally maximizes the objective, while the projection ensures this
+perturbation stays on the boundary of the infinity ball.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<p>Goodfellow, Ian J., Jonathon Shlens, and Christian Szegedy. “Explaining
+and harnessing adversarial examples.”, https://arxiv.org/abs/1412.6572</p>
+<p>Madry, Aleksander, et al. “Towards deep learning models resistant to
+adversarial attacks.”, https://arxiv.org/pdf/1706.06083.pdf</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">jaxopt</span> <span class="n">flax</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="c1"># activate TPUs if available</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">jax.tools.colab_tpu</span>
+    <span class="n">jax</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">colab_tpu</span><span class="o">.</span><span class="n">setup_tpu</span><span class="p">()</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TPU not found, continuing without it.&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">loss</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">tree_util</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">22</span><span class="p">})</span>
+
+<span class="kn">import</span> <span class="nn">optax</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+<span class="c1"># Hide any GPUs from TensorFlow. Otherwise TF might reserve memory and make</span>
+<span class="c1"># it unavailable to JAX.</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">([],</span> <span class="s2">&quot;GPU&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-09-01 13:33:38.090021: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+</pre></div>
+</div>
+</div>
+</div>
+<p>Show on which platform JAX is running. The code below should take around 3 min to run on GPU but might take longer on CPUs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;JAX running on&quot;</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JAX running on GPU
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Flags</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s2">&quot;Flags&quot;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;l2reg&quot;</span><span class="p">,</span>  <span class="c1"># amount of L2 regularization in the objective</span>
+        <span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span>  <span class="c1"># learning rate for the Adam optimizer</span>
+        <span class="s2">&quot;epochs&quot;</span><span class="p">,</span>  <span class="c1"># number of passes over the dataset</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">,</span>  <span class="c1"># one of &quot;mnist&quot;, &quot;kmnist&quot;, &quot;emnist&quot;, &quot;fashion_mnist&quot;, &quot;cifar10&quot;, &quot;cifar100&quot;</span>
+        <span class="s2">&quot;epsilon&quot;</span><span class="p">,</span> <span class="c1"># Adversarial perturbations lie within the infinity-ball of radius epsilon.</span>
+        <span class="s2">&quot;train_batch_size&quot;</span><span class="p">,</span>  <span class="c1"># Batch size at train time</span>
+        <span class="s2">&quot;test_batch_size&quot;</span>  <span class="c1"># Batch size at test time</span>
+    <span class="p">])</span>
+
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">Flags</span><span class="p">(</span>
+    <span class="n">l2reg</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;mnist&quot;</span><span class="p">,</span>
+    <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+    <span class="n">test_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_dataset</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_training</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Load dataset using tensorflow_datasets.&quot;&quot;&quot;</span>
+  <span class="n">version</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">dataset</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.*.*&quot;</span><span class="p">,</span>
+      <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># remove useless keys</span>
+      <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">,</span>
+      <span class="n">with_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">is_training</span><span class="p">:</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">tfds</span><span class="o">.</span><span class="n">as_numpy</span><span class="p">(</span><span class="n">ds</span><span class="p">)),</span> <span class="n">ds_info</span>
+
+
+<span class="k">class</span> <span class="nc">CNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;A simple CNN model.&quot;&quot;&quot;</span>
+  <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span>
+
+  <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">window_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">window_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># flatten</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="mi">256</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                 <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">)</span>
+<span class="n">test_ds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                          <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">)</span>
+<span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_classes</span>
+<span class="n">iter_per_epoch_train</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span>
+<span class="n">iter_per_epoch_test</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span>
+
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">CNN</span><span class="p">(</span><span class="n">num_classes</span><span class="p">)</span>
+
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
+  <span class="n">logits</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">inputs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span>
+
+<span class="n">logistic_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">multiclass_logistic_loss</span><span class="p">)</span>
+
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">loss_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the loss of the network.&quot;&quot;&quot;</span>
+  <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+  <span class="n">logits</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">x</span><span class="p">)</span>
+  <span class="n">sqnorm</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">loss_value</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">logistic_loss</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">loss_value</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">sqnorm</span>
+
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">pgd_attack</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;PGD attack on the L-infinity ball with radius epsilon.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    image: array-like, input data for the CNN</span>
+<span class="sd">    label: integer, class label corresponding to image</span>
+<span class="sd">    params: tree, parameters of the model to attack</span>
+<span class="sd">    epsilon: float, radius of the L-infinity ball.</span>
+<span class="sd">    maxiter: int, number of iterations of this algorithm.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    perturbed_image: Adversarial image on the boundary of the L-infinity ball</span>
+<span class="sd">      of radius epsilon and centered at image.</span>
+
+<span class="sd">  Notes:</span>
+<span class="sd">    PGD attack is described in (Madry et al. 2017),</span>
+<span class="sd">    https://arxiv.org/pdf/1706.06083.pdf</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">image_perturbation</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">adversarial_loss</span><span class="p">(</span><span class="n">perturbation</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">image</span> <span class="o">+</span> <span class="n">perturbation</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+
+  <span class="n">grad_adversarial</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">adversarial_loss</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxiter</span><span class="p">):</span>
+    <span class="c1"># compute gradient of the loss wrt to the image</span>
+    <span class="n">sign_grad</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">grad_adversarial</span><span class="p">(</span><span class="n">image_perturbation</span><span class="p">))</span>
+
+    <span class="c1"># heuristic step-size 2 eps / maxiter</span>
+    <span class="n">image_perturbation</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="n">maxiter</span><span class="p">)</span> <span class="o">*</span> <span class="n">sign_grad</span>
+    <span class="c1"># projection step onto the L-infinity ball centered at image</span>
+    <span class="n">image_perturbation</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image_perturbation</span><span class="p">,</span> <span class="o">-</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+
+  <span class="c1"># clip the image to ensure pixels are between 0 and 1</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image</span> <span class="o">+</span> <span class="n">image_perturbation</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-09-01 13:33:40.638106: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1956] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize solver and parameters.</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span>
+    <span class="n">opt</span><span class="o">=</span><span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">),</span>
+    <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span>
+    <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epochs</span> <span class="o">*</span> <span class="n">iter_per_epoch_train</span><span class="p">)</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">input_shape</span><span class="p">))[</span><span class="s2">&quot;params&quot;</span><span class="p">]</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">))</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">accuracy_train</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">accuracy_test</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">adversarial_accuracy_train</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">adversarial_accuracy_test</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">maxiter</span><span class="p">):</span>
+  <span class="c1"># training loop</span>
+  <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">)</span>
+  <span class="c1"># convert images to float as attack requires to take gradients wrt to them</span>
+  <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+
+  <span class="n">adversarial_images_train</span> <span class="o">=</span> <span class="n">pgd_attack</span><span class="p">(</span>
+      <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+  <span class="c1"># train on adversarial images</span>
+  <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+      <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+      <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
+      <span class="n">l2reg</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span>
+      <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">adversarial_images_train</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+
+  <span class="c1"># Once per epoch evaluate the model on the train and test sets.</span>
+  <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">%</span> <span class="n">iter_per_epoch_train</span> <span class="o">==</span> <span class="n">iter_per_epoch_train</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+
+    <span class="c1"># compute train set accuracy, both on clean and adversarial images</span>
+    <span class="n">adversarial_accuracy_train_sample</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">accuracy_train_sample</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_train</span><span class="p">):</span>
+      <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">)</span>
+      <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+      <span class="n">accuracy_train_sample</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span> <span class="o">/</span> <span class="n">iter_per_epoch_train</span>
+      <span class="n">adversarial_images_train</span> <span class="o">=</span> <span class="n">pgd_attack</span><span class="p">(</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+      <span class="n">adversarial_accuracy_train_sample</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+        <span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="n">adversarial_images_train</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span> <span class="o">/</span> <span class="n">iter_per_epoch_train</span>
+    <span class="n">accuracy_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy_train_sample</span><span class="p">)</span>
+    <span class="n">adversarial_accuracy_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adversarial_accuracy_train_sample</span><span class="p">)</span>
+
+    <span class="c1"># compute train set accuracy, both on clean and adversarial images</span>
+    <span class="n">adversarial_accuracy_test_sample</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">accuracy_test_sample</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_test</span><span class="p">):</span>
+      <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_ds</span><span class="p">)</span>
+      <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+      <span class="n">accuracy_test_sample</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span> <span class="o">/</span> <span class="n">iter_per_epoch_test</span>
+      <span class="n">adversarial_images_test</span> <span class="o">=</span> <span class="n">pgd_attack</span><span class="p">(</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+      <span class="n">adversarial_accuracy_test_sample</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+        <span class="n">accuracy</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="n">adversarial_images_test</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span> <span class="o">/</span> <span class="n">iter_per_epoch_test</span>
+    <span class="n">accuracy_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy_test_sample</span><span class="p">)</span>
+    <span class="n">adversarial_accuracy_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adversarial_accuracy_test_sample</span><span class="p">)</span>
+
+
+    <span class="n">time_elapsed</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">it</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">iter_per_epoch_train</span><span class="si">}</span><span class="s2"> out of </span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epochs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy on train set: </span><span class="si">{</span><span class="n">accuracy_train</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy on test set: </span><span class="si">{</span><span class="n">accuracy_test</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Adversarial accuracy on train set: </span><span class="si">{</span><span class="n">adversarial_accuracy_train</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Adversarial accuracy on test set: </span><span class="si">{</span><span class="n">adversarial_accuracy_test</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time elapsed: </span><span class="si">{</span><span class="n">time_elapsed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0 out of 10
+Accuracy on train set: 0.984
+Accuracy on test set: 0.984
+Adversarial accuracy on train set: 0.981
+Adversarial accuracy on test set: 0.982
+Time elapsed: 0:00:28
+
+Epoch 1 out of 10
+Accuracy on train set: 0.986
+Accuracy on test set: 0.986
+Adversarial accuracy on train set: 0.983
+Adversarial accuracy on test set: 0.982
+Time elapsed: 0:00:47
+
+Epoch 2 out of 10
+Accuracy on train set: 0.989
+Accuracy on test set: 0.987
+Adversarial accuracy on train set: 0.986
+Adversarial accuracy on test set: 0.985
+Time elapsed: 0:01:05
+
+Epoch 3 out of 10
+Accuracy on train set: 0.993
+Accuracy on test set: 0.990
+Adversarial accuracy on train set: 0.991
+Adversarial accuracy on test set: 0.988
+Time elapsed: 0:01:23
+
+Epoch 4 out of 10
+Accuracy on train set: 0.994
+Accuracy on test set: 0.990
+Adversarial accuracy on train set: 0.992
+Adversarial accuracy on test set: 0.988
+Time elapsed: 0:01:40
+
+Epoch 5 out of 10
+Accuracy on train set: 0.995
+Accuracy on test set: 0.990
+Adversarial accuracy on train set: 0.993
+Adversarial accuracy on test set: 0.988
+Time elapsed: 0:01:58
+
+Epoch 6 out of 10
+Accuracy on train set: 0.996
+Accuracy on test set: 0.991
+Adversarial accuracy on train set: 0.994
+Adversarial accuracy on test set: 0.989
+Time elapsed: 0:02:16
+
+Epoch 7 out of 10
+Accuracy on train set: 0.995
+Accuracy on test set: 0.991
+Adversarial accuracy on train set: 0.993
+Adversarial accuracy on test set: 0.989
+Time elapsed: 0:02:34
+
+Epoch 8 out of 10
+Accuracy on train set: 0.994
+Accuracy on test set: 0.989
+Adversarial accuracy on train set: 0.992
+Adversarial accuracy on test set: 0.986
+Time elapsed: 0:02:51
+
+Epoch 9 out of 10
+Accuracy on train set: 0.995
+Accuracy on test set: 0.991
+Adversarial accuracy on train set: 0.993
+Adversarial accuracy on test set: 0.989
+Time elapsed: 0:03:09
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Adversarial training on &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">dataset</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">accuracy_train</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;train set.&quot;</span> <span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">accuracy_test</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;test set.&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;accuracy on clean images&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">adversarial_accuracy_train</span><span class="p">,</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;adversarial accuracy on train set.&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">adversarial_accuracy_test</span><span class="p">,</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;adversarial accuracy on test set.&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;accuracy on adversarial images&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.5</span> <span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4f1b633a31f92a016599060307d46135d05cf476da94dc307ed2820d5b34b904.png" src="../../_images/4f1b633a31f92a016599060307d46135d05cf476da94dc307ed2820d5b34b904.png" />
+</div>
+</div>
+<p>Find a test set image that is correctly classified but not its adversarial perturbation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_adversarial_imgs</span><span class="p">():</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iter_per_epoch_test</span><span class="p">):</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_ds</span><span class="p">)</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">images</span><span class="p">)</span>
+    <span class="n">labels_clean</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">adversarial_images</span> <span class="o">=</span> <span class="n">pgd_attack</span><span class="p">(</span>
+      <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+    <span class="n">labels_adversarial</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">adversarial_images</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">idx_misclassified</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">labels_clean</span> <span class="o">!=</span> <span class="n">labels_adversarial</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx_misclassified</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">continue</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx_misclassified</span><span class="p">:</span>
+        <span class="n">img_clean</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">prediction_clean</span> <span class="o">=</span> <span class="n">labels_clean</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">prediction_clean</span> <span class="o">!=</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+          <span class="c1"># the clean image predicts the wrong label, skip</span>
+          <span class="k">continue</span>
+        <span class="n">img_adversarial</span> <span class="o">=</span> <span class="n">adversarial_images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">prediction_adversarial</span> <span class="o">=</span> <span class="n">labels_adversarial</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="c1"># we found our image</span>
+        <span class="k">return</span> <span class="n">img_clean</span><span class="p">,</span> <span class="n">prediction_clean</span><span class="p">,</span> <span class="n">img_adversarial</span><span class="p">,</span> <span class="n">prediction_adversarial</span>
+
+  <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No mismatch between clean and adversarial prediction found&quot;</span><span class="p">)</span>
+
+<span class="n">img_clean</span><span class="p">,</span> <span class="n">prediction_clean</span><span class="p">,</span> <span class="n">img_adversarial</span><span class="p">,</span> <span class="n">prediction_adversarial</span> <span class="o">=</span> \
+  <span class="n">find_adversarial_imgs</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Clean image </span><span class="se">\n</span><span class="s1"> Prediction </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">prediction_clean</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_clean</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;Greys&#39;</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Adversarial image </span><span class="se">\n</span><span class="s1"> Prediction </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">prediction_adversarial</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_adversarial</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;Greys&#39;</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;|Adversarial - clean| $\times$ </span><span class="si">%.0f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">img_clean</span> <span class="o">-</span> <span class="n">img_adversarial</span><span class="p">)</span> <span class="o">/</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;Greys&#39;</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(())</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_6360/607772561.py:4: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed two minor releases later. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap(obj)`` instead.
+  axes[0].imshow(img_clean, cmap=plt.cm.get_cmap(&#39;Greys&#39;), vmax=1, vmin=0)
+/tmp/ipykernel_6360/607772561.py:6: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed two minor releases later. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap(obj)`` instead.
+  axes[1].imshow(img_adversarial, cmap=plt.cm.get_cmap(&#39;Greys&#39;), vmax=1, vmin=0)
+/tmp/ipykernel_6360/607772561.py:8: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed two minor releases later. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap(obj)`` instead.
+  axes[2].imshow(jnp.abs(img_clean - img_adversarial) / FLAGS.epsilon, cmap=plt.cm.get_cmap(&#39;Greys&#39;), vmax=1, vmin=0)
+</pre></div>
+</div>
+<img alt="../../_images/b992fa3ca6fbd04c09036a63bf37b9e5812729900f21ab52869b07918e062dc2.png" src="../../_images/b992fa3ca6fbd04c09036a63bf37b9e5812729900f21ab52869b07918e062dc2.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

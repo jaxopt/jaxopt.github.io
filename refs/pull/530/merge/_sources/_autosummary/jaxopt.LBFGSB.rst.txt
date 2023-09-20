@@ -1,0 +1,57 @@
+﻿jaxopt.LBFGSB
+=============
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: LBFGSB
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LBFGSB.__init__
+      ~LBFGSB.attribute_names
+      ~LBFGSB.attribute_values
+      ~LBFGSB.init_state
+      ~LBFGSB.l2_optimality_error
+      ~LBFGSB.optimality_fun
+      ~LBFGSB.run
+      ~LBFGSB.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LBFGSB.condition
+      ~LBFGSB.decrease_factor
+      ~LBFGSB.has_aux
+      ~LBFGSB.history_size
+      ~LBFGSB.implicit_diff
+      ~LBFGSB.implicit_diff_solve
+      ~LBFGSB.increase_factor
+      ~LBFGSB.jit
+      ~LBFGSB.linesearch
+      ~LBFGSB.linesearch_init
+      ~LBFGSB.max_stepsize
+      ~LBFGSB.maxiter
+      ~LBFGSB.maxls
+      ~LBFGSB.min_stepsize
+      ~LBFGSB.stepsize
+      ~LBFGSB.stop_if_linesearch_fails
+      ~LBFGSB.theta
+      ~LBFGSB.tol
+      ~LBFGSB.unroll
+      ~LBFGSB.use_gamma
+      ~LBFGSB.value_and_grad
+      ~LBFGSB.verbose
+      ~LBFGSB.fun
+   
+   

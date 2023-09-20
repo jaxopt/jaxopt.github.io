@@ -1,0 +1,6 @@
+﻿jaxopt.loss.binary\_sparsemax\_loss
+===================================
+
+.. currentmodule:: jaxopt.loss
+
+.. autofunction:: binary_sparsemax_loss

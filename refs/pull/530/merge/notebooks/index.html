@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notebook gallery &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Example gallery" href="../auto_examples/index.html" />
+    <link rel="prev" title="jaxopt.tree_util.tree_zeros_like" href="../_autosummary/jaxopt.tree_util.tree_zeros_like.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Notebook gallery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#deep-learning">Deep learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implicit-differentiation">Implicit Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distributed-optimization">Distributed Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#perturbed-optimizers">Perturbed optimizers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Notebook gallery</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/notebooks/index.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="notebook-gallery">
+<span id="id1"></span><h1>Notebook gallery<a class="headerlink" href="#notebook-gallery" title="Permalink to this heading"></a></h1>
+<section id="deep-learning">
+<h2>Deep learning<a class="headerlink" href="#deep-learning" title="Permalink to this heading"></a></h2>
+<div class="sphx-glr-thumbnails">
+
+<div class="sphx-glr-thumbcontainer" tooltip="Resnet example with Flax and JAXopt."><figure class="align-default" id="id2">
+<img alt="Resnet example with Flax and JAXopt." src="../_images/resnet_flax.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/resnet_flax.html"><span class="doc">ResNet on CIFAR with Flax and JAXopt.</span></a></span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+
+<div class="sphx-glr-thumbcontainer" tooltip="Resnet example with Haiku and JAXopt."><figure class="align-default" id="id3">
+<img alt="Resnet example with Haiku and JAXopt." src="notebooks/deep_learning/thumbnails/resnet_haiku.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/resnet_haiku.html"><span class="doc">ResNet on CIFAR10 with Haiku and JAXopt.</span></a></span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+
+<div class="sphx-glr-thumbcontainer" tooltip="Adversarial training with JAXopt."><figure class="align-default" id="id4">
+<img alt="Adversarial Training." src="../_images/adversarial_training.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="deep_learning/adversarial_training.html"><span class="doc">Adversarial training</span></a></span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+
+</div><!-- end sphx-glr-thumbnails --></section>
+<section id="implicit-differentiation">
+<h2>Implicit Differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this heading"></a></h2>
+<div class="sphx-glr-thumbnails">
+
+<div class="sphx-glr-thumbcontainer" tooltip="Bi-level dataset distillation with JAXopt."><figure class="align-default" id="id5">
+<img alt="Dataset distillation example with JAXopt." src="../_images/plot_dataset_distillation.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="implicit_diff/dataset_distillation.html"><span class="doc">Dataset distillation</span></a></span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Few-shot Adaptation with Model Agnostic Meta-Learning (MAML)"><figure class="align-default" id="id6">
+<img alt="Few-shot Adaptation with Model Agnostic Meta-Learning (MAML)" src="../_images/maml.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="implicit_diff/maml.html"><span class="doc">Few-shot Adaptation with Model Agnostic Meta-Learning (MAML)</span></a></span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+
+</div><!-- end sphx-glr-thumbnails --></section>
+<section id="distributed-optimization">
+<h2>Distributed Optimization<a class="headerlink" href="#distributed-optimization" title="Permalink to this heading"></a></h2>
+<div class="sphx-glr-thumbnails">
+
+<div class="sphx-glr-thumbcontainer" tooltip="Distributed Optimization with JAXopt."><figure class="align-default" id="id7">
+<img alt="`jax.experimental.pjit` example using JAXopt." src="../_images/plot_custom_loop_pjit_example.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="distributed/custom_loop_pjit_example.html"><span class="doc">jax.experimental.pjit example using JAXopt.</span></a></span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div><div class="sphx-glr-thumbcontainer" tooltip="pmap example using jaxopt"><figure class="align-default" id="id8">
+<img alt="`jax.pmap` example using JAXopt." src="../_images/plot_custom_loop_pmap_example.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="distributed/custom_loop_pmap_example.html"><span class="doc">jax.pmap example using JAXopt.</span></a></span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+
+</div><!-- end sphx-glr-thumbnails --></section>
+<section id="perturbed-optimizers">
+<h2>Perturbed optimizers<a class="headerlink" href="#perturbed-optimizers" title="Permalink to this heading"></a></h2>
+<div class="sphx-glr-thumbnails">
+
+<div class="sphx-glr-thumbcontainer" tooltip="Perturbed optimizers with JAXopt."><figure class="align-default" id="id9">
+<img alt="Perturbed optimizers with JAXopt." src="../_images/perturbations.png" />
+<figcaption>
+<p><span class="caption-text"><a class="reference internal" href="perturbed_optimizers/perturbed_optimizers.html"><span class="doc">Perturbed optimizers</span></a></span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+
+</div><!-- end sphx-glr-thumbnails --></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../_autosummary/jaxopt.tree_util.tree_zeros_like.html" class="btn btn-neutral float-left" title="jaxopt.tree_util.tree_zeros_like" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../auto_examples/index.html" class="btn btn-neutral float-right" title="Example gallery" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

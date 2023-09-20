@@ -1,0 +1,6 @@
+﻿jaxopt.linear\_solve.solve\_normal\_cg
+======================================
+
+.. currentmodule:: jaxopt.linear_solve
+
+.. autofunction:: solve_normal_cg

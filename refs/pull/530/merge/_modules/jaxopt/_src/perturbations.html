@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxopt._src.perturbations &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxopt._src.perturbations</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxopt._src.perturbations</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;Introduces differentiation via perturbations.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+
+<div class="viewcode-block" id="Normal"><a class="viewcode-back" href="../../../_autosummary/jaxopt.perturbations.Normal.html#jaxopt.perturbations.Normal">[docs]</a><span class="k">class</span> <span class="nc">Normal</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Normal distribution.&quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">seed</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">,</span>
+             <span class="n">sample_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">sample_shape</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">log_prob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">inputs</span> <span class="o">**</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="Gumbel"><a class="viewcode-back" href="../../../_autosummary/jaxopt.perturbations.Gumbel.html#jaxopt.perturbations.Gumbel">[docs]</a><span class="k">class</span> <span class="nc">Gumbel</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Gumbel distribution.&quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">seed</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">,</span>
+             <span class="n">sample_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">gumbel</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">sample_shape</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">log_prob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">inputs</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">inputs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="make_perturbed_argmax"><a class="viewcode-back" href="../../../_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax">[docs]</a><span class="k">def</span> <span class="nf">make_perturbed_argmax</span><span class="p">(</span><span class="n">argmax_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span>
+                          <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+                          <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                          <span class="n">noise</span><span class="o">=</span><span class="n">Gumbel</span><span class="p">(),</span>
+                          <span class="n">control_variate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Transforms a function into a differentiable version with perturbations.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    argmax_fun: the argmax function to transform into a differentiable version.</span>
+<span class="sd">      Signature for argmax_fun currently supported for custom jvp and jit is:</span>
+<span class="sd">      + input [D1, ..., Dk], output [D1, ..., Dk], k &gt;= 1</span>
+<span class="sd">    num_samples: an int, the number of perturbed outputs to average over.</span>
+<span class="sd">    sigma: a float, the scale of the random perturbation.</span>
+<span class="sd">    noise: a distribution object that must implement a sample function and a</span>
+<span class="sd">      log-pdf of the desired distribution, similar to the examples above.</span>
+<span class="sd">      Default is Gumbel distribution.</span>
+<span class="sd">    control_variate : Boolean indicating whether a control variate is used in</span>
+<span class="sd">      the Monte-Carlo estimate of the Jacobian.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A function with the same signature (and an rng) that can be differentiated.</span>
+
+<span class="sd">  Example:</span>
+<span class="sd">    Given an argmax function such as::</span>
+
+<span class="sd">      def argmax_fun(x):</span>
+<span class="sd">        return jax.nn.one_hot(jnp.argmax(x), x.shape[0])</span>
+
+<span class="sd">      pert_argmax_fun = make_perturbed_argmax(argmax_fun,</span>
+<span class="sd">                                              num_samples=200,</span>
+<span class="sd">                                              sigma=0.01)</span>
+
+<span class="sd">    Then pert_argmax_fun is differentiable, a perturbed version of argmax_fun.</span>
+<span class="sd">    Since it relies on randomness, it requires an rng key::</span>
+
+<span class="sd">      pert_argmax = pert_argmax_fun(x, rng)</span>
+
+<span class="sd">    When handling a batched input, vmap can be applied to this function, with</span>
+<span class="sd">    some care in splitting the rng key::</span>
+
+<span class="sd">      batch_size = x_batch.shape[0]</span>
+<span class="sd">      rngs_batch = jax.random.split(rng, batch_size)</span>
+<span class="sd">      pert_argmax_batch = jax.vmap(pert_argmax_fun)(x_batch, rngs_batch)</span>
+
+<span class="sd">    Further, if the argmax_fun is jittable, then so is pert_argmax_fun.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">custom_jvp</span>
+  <span class="k">def</span> <span class="nf">forward_pert</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">noise</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
+                           <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,)</span> <span class="o">+</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">output_pert</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">argmax_fun</span><span class="p">)(</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">samples</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">output_pert</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">pert_jvp</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">noise</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
+                           <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,)</span> <span class="o">+</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">output_pert</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">argmax_fun</span><span class="p">)(</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">samples</span><span class="p">)</span>
+    <span class="c1"># noise.log_prob corresponds to -nu in the paper.</span>
+    <span class="n">nabla_z_flat</span> <span class="o">=</span> <span class="o">-</span><span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">log_prob</span><span class="p">))(</span><span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">tangent_flat</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_samples</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span>
+        <span class="s1">&#39;nd,ne,e-&gt;d&#39;</span><span class="p">,</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_pert</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nabla_z_flat</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)))</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent_flat</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">pert_jvp_control_variate</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">noise</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
+                           <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,)</span> <span class="o">+</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">output_pert</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">argmax_fun</span><span class="p">)(</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">samples</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">argmax_fun</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="c1"># noise.log_prob corresponds to -nu in the paper.</span>
+    <span class="n">nabla_z_flat</span> <span class="o">=</span> <span class="o">-</span><span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">log_prob</span><span class="p">))(</span><span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">tangent_flat</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_samples</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span>
+        <span class="s1">&#39;nd,ne,e-&gt;d&#39;</span><span class="p">,</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_pert</span> <span class="o">-</span> <span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nabla_z_flat</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)))</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent_flat</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">control_variate</span><span class="p">:</span>
+      <span class="n">forward_pert</span><span class="o">.</span><span class="n">defjvps</span><span class="p">(</span><span class="n">pert_jvp_control_variate</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+      <span class="n">forward_pert</span><span class="o">.</span><span class="n">defjvps</span><span class="p">(</span><span class="n">pert_jvp</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">forward_pert</span></div>
+
+
+<div class="viewcode-block" id="make_perturbed_max"><a class="viewcode-back" href="../../../_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max">[docs]</a><span class="k">def</span> <span class="nf">make_perturbed_max</span><span class="p">(</span><span class="n">argmax_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span>
+                       <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+                       <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                       <span class="n">noise</span><span class="o">=</span><span class="n">Gumbel</span><span class="p">()):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Turns an argmax in a differentiable version of the max with perturbations.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    argmax_fun: the argmax function to transform into a differentiable version.</span>
+<span class="sd">      Signature for argmax_fun currently supported for custom jvp and jit is:</span>
+<span class="sd">      + input [D1, ..., Dk], output [D1, ..., Dk], k &gt;= 1</span>
+<span class="sd">    num_samples: an int, the number of perturbed outputs to average over.</span>
+<span class="sd">    sigma: a float, the scale of the random perturbation.</span>
+<span class="sd">    noise: a distribution object that must implement a sample function and a</span>
+<span class="sd">      log-pdf of the desired distribution, similar to the examples above.</span>
+<span class="sd">      Default is Gumbel distribution.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A function with the same inputs (and an rng) that can be differentiated.</span>
+
+<span class="sd">  Example:</span>
+<span class="sd">    Given an argmax function, such as::</span>
+
+<span class="sd">      def argmax_fun(x):</span>
+<span class="sd">        return jax.nn.one_hot(jnp.argmax(x), x.shape[0])</span>
+
+<span class="sd">      pert_max_fun = make_perturbed_max(argmax_fun,</span>
+<span class="sd">                                        num_samples=200,</span>
+<span class="sd">                                        sigma=0.01)</span>
+
+<span class="sd">    Then pert_max_fun is differentiable, a perturbed version of the associated</span>
+<span class="sd">    max to argmax_fun. Since it relies on randomness, it requires an rng key::</span>
+
+<span class="sd">      pert_max = pert_max_fun(x, rng)</span>
+
+<span class="sd">    When handling a batched input, vmap can be applied to this function, with</span>
+<span class="sd">    some care in splitting the rng key::</span>
+
+<span class="sd">      batch_size = x_batch.shape[0]</span>
+<span class="sd">      rngs_batch = jax.random.split(rng, batch_size)</span>
+<span class="sd">      pert_max_batch = jax.vmap(pert_max_fun)(x_batch, rngs_batch)</span>
+
+<span class="sd">    Furthermore, if the argmax_fun is jittable, then so is pert_max_fun.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">custom_jvp</span>
+  <span class="k">def</span> <span class="nf">forward_pert</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">noise</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
+                           <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,)</span> <span class="o">+</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">output_pert</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">argmax_fun</span><span class="p">)(</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">samples</span><span class="p">)</span>
+    <span class="n">max_values</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nd,nd-&gt;n&#39;</span><span class="p">,</span>
+                            <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">samples</span><span class="p">,</span>
+                                        <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+                            <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_pert</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">max_values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">pert_jvp</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+    <span class="n">pert_argmax_fun</span> <span class="o">=</span> <span class="n">make_perturbed_argmax</span><span class="p">(</span><span class="n">argmax_fun</span><span class="p">,</span>
+                                            <span class="n">num_samples</span><span class="p">,</span>
+                                            <span class="n">sigma</span><span class="p">,</span>
+                                            <span class="n">noise</span><span class="p">)</span>
+    <span class="n">pert_argmax</span> <span class="o">=</span> <span class="n">pert_argmax_fun</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pert_argmax</span> <span class="o">*</span> <span class="n">tangent</span><span class="p">)</span>
+
+  <span class="n">forward_pert</span><span class="o">.</span><span class="n">defjvps</span><span class="p">(</span><span class="n">pert_jvp</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">forward_pert</span></div>
+
+
+<div class="viewcode-block" id="make_perturbed_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun">[docs]</a><span class="k">def</span> <span class="nf">make_perturbed_fun</span><span class="p">(</span><span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span> <span class="nb">float</span><span class="p">],</span>
+                       <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+                       <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                       <span class="n">noise</span><span class="o">=</span><span class="n">Gumbel</span><span class="p">()):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Transforms a function into a differentiable version with perturbations.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    fun: the function to transform into a differentiable version.</span>
+<span class="sd">      Signature for fun currently supported for custom jvp and jit is:</span>
+<span class="sd">      + input [D1, ..., Dk], output [R_1, ..., R_r]</span>
+<span class="sd">    num_samples: an int, the number of perturbed outputs to average over.</span>
+<span class="sd">    sigma: a float, the scale of the random perturbation.</span>
+<span class="sd">    noise: a distribution object that must implement a sample function and a</span>
+<span class="sd">      log-pdf of the desired distribution, similar to the examples above.</span>
+<span class="sd">      Default is Gumbel distribution.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A function with the same signature (and an rng) that can be differentiated.</span>
+
+<span class="sd">  Example:</span>
+<span class="sd">    Given an argmax function such as::</span>
+
+<span class="sd">      def fun(x):</span>
+<span class="sd">        return jax.nn.relu(x)</span>
+
+<span class="sd">      pert_fun = make_perturbed_fun(fun,</span>
+<span class="sd">                                    num_samples=200,</span>
+<span class="sd">                                    sigma=0.01)</span>
+
+<span class="sd">    Then pert_fun is differentiable, a perturbed version of fun.</span>
+<span class="sd">    Since it relies on randomness, it requires an rng key::</span>
+
+<span class="sd">      pert_output = pert_fun(x, rng)</span>
+
+<span class="sd">    When handling a batched input, vmap can be applied to this function, with</span>
+<span class="sd">    some care in splitting the rng key::</span>
+
+<span class="sd">      batch_size = x_batch.shape[0]</span>
+<span class="sd">      rngs_batch = jax.random.split(rng, batch_size)</span>
+<span class="sd">      pert_batch = jax.vmap(pert_fun)(x_batch, rngs_batch)</span>
+
+<span class="sd">    Further, if fun is jittable, then so is pert_fun.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">custom_jvp</span>
+  <span class="k">def</span> <span class="nf">forward_pert</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">noise</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
+                           <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,)</span> <span class="o">+</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">output_pert</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">fun</span><span class="p">)(</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">samples</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">output_pert</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">pert_jvp</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">noise</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
+                           <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,)</span> <span class="o">+</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">output_pert</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">fun</span><span class="p">)(</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">samples</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="c1"># noise.log_prob corresponds to -nu in the paper.</span>
+    <span class="n">nabla_z_flat</span> <span class="o">=</span> <span class="o">-</span><span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">log_prob</span><span class="p">))(</span><span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">tangent_flat</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_samples</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span>
+        <span class="s1">&#39;nd,ne,e-&gt;d&#39;</span><span class="p">,</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_pert</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nabla_z_flat</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)))</span>
+    <span class="n">tangent_out</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent_flat</span><span class="p">,</span> <span class="n">output_pert</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+    <span class="k">return</span> <span class="n">tangent_out</span>
+
+  <span class="n">forward_pert</span><span class="o">.</span><span class="n">defjvps</span><span class="p">(</span><span class="n">pert_jvp</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">forward_pert</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

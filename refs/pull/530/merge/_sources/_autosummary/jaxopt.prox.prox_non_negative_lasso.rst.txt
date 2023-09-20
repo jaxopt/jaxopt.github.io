@@ -1,0 +1,6 @@
+﻿jaxopt.prox.prox\_non\_negative\_lasso
+======================================
+
+.. currentmodule:: jaxopt.prox
+
+.. autofunction:: prox_non_negative_lasso

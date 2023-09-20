@@ -1,0 +1,6 @@
+﻿jaxopt.tree\_util.tree\_zeros\_like
+===================================
+
+.. currentmodule:: jaxopt.tree_util
+
+.. autofunction:: tree_zeros_like

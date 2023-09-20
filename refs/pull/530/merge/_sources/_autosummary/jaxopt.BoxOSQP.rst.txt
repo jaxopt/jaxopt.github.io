@@ -1,0 +1,59 @@
+﻿jaxopt.BoxOSQP
+==============
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: BoxOSQP
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BoxOSQP.__init__
+      ~BoxOSQP.attribute_names
+      ~BoxOSQP.attribute_values
+      ~BoxOSQP.init_params
+      ~BoxOSQP.init_state
+      ~BoxOSQP.l2_optimality_error
+      ~BoxOSQP.run
+      ~BoxOSQP.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BoxOSQP.DUAL_INFEASIBLE
+      ~BoxOSQP.PRIMAL_INFEASIBLE
+      ~BoxOSQP.SOLVED
+      ~BoxOSQP.UNSOLVED
+      ~BoxOSQP.check_primal_dual_infeasability
+      ~BoxOSQP.dual_infeasible_tol
+      ~BoxOSQP.eq_qp_solve
+      ~BoxOSQP.fun
+      ~BoxOSQP.implicit_diff
+      ~BoxOSQP.implicit_diff_solve
+      ~BoxOSQP.jit
+      ~BoxOSQP.matvec_A
+      ~BoxOSQP.matvec_Q
+      ~BoxOSQP.maxiter
+      ~BoxOSQP.momentum
+      ~BoxOSQP.primal_infeasible_tol
+      ~BoxOSQP.rho_max
+      ~BoxOSQP.rho_min
+      ~BoxOSQP.rho_start
+      ~BoxOSQP.sigma
+      ~BoxOSQP.stepsize_updates_frequency
+      ~BoxOSQP.termination_check_frequency
+      ~BoxOSQP.tol
+      ~BoxOSQP.unroll
+      ~BoxOSQP.verbose
+   
+   

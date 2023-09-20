@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPMD ResNet example with Flax and JAXopt. &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Fixed point resolution" href="../fixed_point/index.html" />
+    <link rel="prev" title="Comparison of different SGD algorithms." href="plot_sgd_solvers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../constrained/index.html">Constrained optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Deep learning</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="haiku_vae.html">VAE example with Haiku and JAXopt.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plot_sgd_solvers.html">Comparison of different SGD algorithms.</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">SPMD ResNet example with Flax and JAXopt.</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../fixed_point/index.html">Fixed point resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../implicit_diff/index.html">Implicit differentiation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Example gallery</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Deep learning</a></li>
+      <li class="breadcrumb-item active">SPMD ResNet example with Flax and JAXopt.</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/deep_learning/distributed_flax_imagenet.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-deep-learning-distributed-flax-imagenet-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="spmd-resnet-example-with-flax-and-jaxopt">
+<span id="sphx-glr-auto-examples-deep-learning-distributed-flax-imagenet-py"></span><h1>SPMD ResNet example with Flax and JAXopt.<a class="headerlink" href="#spmd-resnet-example-with-flax-and-jaxopt" title="Permalink to this heading"></a></h1>
+<p>The purpose of this example is to illustrate how JAXopt solvers can be easily
+used for distributed training thanks to <cite>jax.pjit</cite>. In this case, we begin by
+implementing data parallel training of a ResNet50 model on the ImageNet dataset
+as a fork of Flax’s official ImageNet example. General aspects to pay attention
+to include:</p>
+<ul class="simple">
+<li><p>How auxiliary information (e.g. Flax mutables, model outputs from train metrics,
+etc) can be extracted from <cite>loss_fun</cite> using the <cite>state.aux</cite> field
+of JAXopt’s optimizer state.</p></li>
+<li><p>How <cite>jax.pjit</cite> can be used to easily port single-device training loops to
+distributed training loops.</p></li>
+</ul>
+<p>Running on Google Cloud TPU:</p>
+<ol class="arabic simple">
+<li><p>Follow the instructions in Flax’s official ImageNet example to set a single
+VM with 8 TPUs (<cite>–accelerator_type v3-8</cite>).</p></li>
+<li><p>Likewise, follow the instructions in Flax’s official ImageNet example to
+prepare the ImageNet dataset and ensure the <cite>TFDS_DATA_DIR</cite> environment
+variable has been set appropriately.</p></li>
+</ol>
+<p>You may finally run the example as
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">python3</span> <span class="pre">distributed_flax_imagenet.py</span> <span class="pre">--workdir=$HOME/spmd_flax_imagenet</span>
+<span class="pre">`</span></code></p>
+<p>NOTES: this example supports TPU pod slices (e.g. <cite>–accelerator_type v3-32</cite>) as
+well as hosts with one or more GPUs attached. However, CPU-only execution is not
+yet supported.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">logging</span>
+
+<span class="kn">from</span> <span class="nn">chex</span> <span class="kn">import</span> <span class="n">Array</span><span class="p">,</span> <span class="n">ArrayTree</span><span class="p">,</span> <span class="n">Numeric</span><span class="p">,</span> <span class="n">PRNGKey</span>
+
+<span class="kn">from</span> <span class="nn">clu</span> <span class="kn">import</span> <span class="n">checkpoint</span>
+<span class="kn">from</span> <span class="nn">clu</span> <span class="kn">import</span> <span class="n">metric_writers</span>
+<span class="kn">from</span> <span class="nn">clu</span> <span class="kn">import</span> <span class="n">metrics</span> <span class="k">as</span> <span class="n">clu_metrics</span>
+<span class="kn">from</span> <span class="nn">clu</span> <span class="kn">import</span> <span class="n">periodic_actions</span>
+
+<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">struct</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="kn">from</span> <span class="nn">jax.sharding</span> <span class="kn">import</span> <span class="n">Mesh</span>
+<span class="kn">from</span> <span class="nn">jax.sharding</span> <span class="kn">import</span> <span class="n">PartitionSpec</span>
+<span class="kn">from</span> <span class="nn">jax.experimental.pjit</span> <span class="kn">import</span> <span class="n">pjit</span>
+
+<span class="kn">import</span> <span class="nn">jaxopt</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">tree_util</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">optax</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+
+
+<span class="c1">### Constants.</span>
+
+<span class="c1"># Input pipeline-related constants.</span>
+<span class="n">IMAGE_SIZE</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">CROP_PADDING</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">MEAN_RGB</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.485</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="mf">0.456</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="mf">0.406</span> <span class="o">*</span> <span class="mi">255</span><span class="p">]</span>
+<span class="n">STDDEV_RGB</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.229</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="mf">0.224</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="mf">0.225</span> <span class="o">*</span> <span class="mi">255</span><span class="p">]</span>
+<span class="c1"># Model-related constants.</span>
+<span class="n">SUPPORTED_MODELS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Resnet1&#39;</span><span class="p">,</span> <span class="s1">&#39;Resnet18&#39;</span><span class="p">,</span> <span class="s1">&#39;ResNet34&#39;</span><span class="p">,</span> <span class="s1">&#39;ResNet50&#39;</span><span class="p">,</span> <span class="s1">&#39;ResNet101&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;ResNet152&#39;</span><span class="p">,</span> <span class="s1">&#39;ResNet200&#39;</span><span class="p">]</span>
+<span class="n">NUM_CLASSES</span> <span class="o">=</span> <span class="mi">1000</span>
+
+
+<span class="c1">### Type aliases.</span>
+<span class="n">ArrayDType</span> <span class="o">=</span> <span class="nb">type</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+<span class="n">Batch</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="n">DataIter</span> <span class="o">=</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Batch</span><span class="p">]</span>
+<span class="n">LearningRateFn</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Numeric</span><span class="p">]</span>
+<span class="n">Metrics</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Numeric</span><span class="p">]</span>
+<span class="n">ModuleDef</span> <span class="o">=</span> <span class="n">Any</span>
+
+
+<span class="c1">### Input flags.</span>
+
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span><span class="s1">&#39;workdir&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Directory to store model data.&#39;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="s1">&#39;ResNet50&#39;</span><span class="p">,</span> <span class="n">SUPPORTED_MODELS</span><span class="p">,</span> <span class="s1">&#39;Model to use.&#39;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;imagenet2012:5.*.*&#39;</span><span class="p">,</span> <span class="s1">&#39;TFDS builder name.&#39;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;Learning rate.&#39;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s1">&#39;warmup_epochs&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Number of warmup epochs.&#39;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s1">&#39;momentum&#39;</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s1">&#39;Momentum.&#39;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="s1">&#39;Global batch size.&#39;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s1">&#39;num_epochs&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;Number of training epochs.&#39;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s1">&#39;log_every_steps&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;Number of steps between logging.&#39;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_bool</span><span class="p">(</span><span class="s1">&#39;cache&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;Whether to cache the dataset.&#39;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_bool</span><span class="p">(</span><span class="s1">&#39;half_precision&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;Whether to use FP16.&#39;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s1">&#39;num_train_steps&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Number of training steps.&#39;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s1">&#39;steps_per_eval&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Number of steps between logging.&#39;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s1">&#39;seed&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Seed for PRNG.&#39;</span><span class="p">)</span>
+
+
+<span class="c1">### Input pipeline (adapted from `flax/examples/imagenet/input_pipeline.py`).</span>
+
+
+<span class="k">def</span> <span class="nf">distorted_bounding_box_crop</span><span class="p">(</span>
+    <span class="n">image_bytes</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">bbox</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">min_object_covered</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">aspect_ratio_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.33</span><span class="p">),</span>
+    <span class="n">area_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">max_attempts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Generates cropped_image using one of the bboxes randomly distorted.</span>
+
+<span class="sd">  See `tf.image.sample_distorted_bounding_box` for more documentation.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    image_bytes: `Tensor` of binary image data.</span>
+<span class="sd">    bbox: `Tensor` of bounding boxes arranged `[1, num_boxes, coords]`</span>
+<span class="sd">        where each coordinate is [0, 1) and the coordinates are arranged</span>
+<span class="sd">        as `[ymin, xmin, ymax, xmax]`. If num_boxes is 0 then use the whole</span>
+<span class="sd">        image.</span>
+<span class="sd">    min_object_covered: An optional `float`. Defaults to `0.1`. The cropped</span>
+<span class="sd">        area of the image must contain at least this fraction of any bounding</span>
+<span class="sd">        box supplied.</span>
+<span class="sd">    aspect_ratio_range: An optional list of `float`s. The cropped area of the</span>
+<span class="sd">        image must have an aspect ratio = width / height within this range.</span>
+<span class="sd">    area_range: An optional list of `float`s. The cropped area of the image</span>
+<span class="sd">        must contain a fraction of the supplied image within in this range.</span>
+<span class="sd">    max_attempts: An optional `int`. Number of attempts at generating a cropped</span>
+<span class="sd">        region of the image of the specified constraints. After `max_attempts`</span>
+<span class="sd">        failures, return the entire image.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    cropped image `Tensor`</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">shape</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">extract_jpeg_shape</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">)</span>
+  <span class="n">sample_distorted_bounding_box</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">sample_distorted_bounding_box</span><span class="p">(</span>
+      <span class="n">shape</span><span class="p">,</span>
+      <span class="n">bounding_boxes</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span>
+      <span class="n">min_object_covered</span><span class="o">=</span><span class="n">min_object_covered</span><span class="p">,</span>
+      <span class="n">aspect_ratio_range</span><span class="o">=</span><span class="n">aspect_ratio_range</span><span class="p">,</span>
+      <span class="n">area_range</span><span class="o">=</span><span class="n">area_range</span><span class="p">,</span>
+      <span class="n">max_attempts</span><span class="o">=</span><span class="n">max_attempts</span><span class="p">,</span>
+      <span class="n">use_image_if_no_bounding_boxes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">bbox_begin</span><span class="p">,</span> <span class="n">bbox_size</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sample_distorted_bounding_box</span>
+
+  <span class="c1"># Crop the image to the specified bounding box.</span>
+  <span class="n">offset_y</span><span class="p">,</span> <span class="n">offset_x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">bbox_begin</span><span class="p">)</span>
+  <span class="n">target_height</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">bbox_size</span><span class="p">)</span>
+  <span class="n">crop_window</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">offset_y</span><span class="p">,</span> <span class="n">offset_x</span><span class="p">,</span> <span class="n">target_height</span><span class="p">,</span> <span class="n">target_width</span><span class="p">])</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">decode_and_crop_jpeg</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">,</span> <span class="n">crop_window</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">_resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">image_size</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">([</span><span class="n">image</span><span class="p">],</span> <span class="p">[</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">],</span>
+                         <span class="n">method</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ResizeMethod</span><span class="o">.</span><span class="n">BICUBIC</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_at_least_x_are_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;At least `x` of `a` and `b` `Tensors` are equal.&quot;&quot;&quot;</span>
+  <span class="n">match</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="n">match</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">greater_equal</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">match</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_decode_and_random_crop</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">,</span> <span class="n">image_size</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Make a random crop of image_size.&quot;&quot;&quot;</span>
+  <span class="n">bbox</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">distorted_bounding_box_crop</span><span class="p">(</span>
+      <span class="n">image_bytes</span><span class="p">,</span>
+      <span class="n">bbox</span><span class="p">,</span>
+      <span class="n">min_object_covered</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+      <span class="n">aspect_ratio_range</span><span class="o">=</span><span class="p">(</span><span class="mf">3.</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">4.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">),</span>
+      <span class="n">area_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+      <span class="n">max_attempts</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+  <span class="n">original_shape</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">extract_jpeg_shape</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">)</span>
+  <span class="n">bad</span> <span class="o">=</span> <span class="n">_at_least_x_are_equal</span><span class="p">(</span><span class="n">original_shape</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+      <span class="n">bad</span><span class="p">,</span>
+      <span class="k">lambda</span><span class="p">:</span> <span class="n">_decode_and_center_crop</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">,</span> <span class="n">image_size</span><span class="p">),</span>
+      <span class="k">lambda</span><span class="p">:</span> <span class="n">_resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">image_size</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">_decode_and_center_crop</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">,</span> <span class="n">image_size</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Crops to center of image with padding then scales image_size.&quot;&quot;&quot;</span>
+  <span class="n">shape</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">extract_jpeg_shape</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">)</span>
+  <span class="n">image_height</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">image_width</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="n">padded_center_crop_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+      <span class="p">((</span><span class="n">image_size</span> <span class="o">/</span> <span class="p">(</span><span class="n">image_size</span> <span class="o">+</span> <span class="n">CROP_PADDING</span><span class="p">))</span> <span class="o">*</span>
+       <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">image_height</span><span class="p">,</span> <span class="n">image_width</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)),</span>
+      <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+  <span class="n">offset_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">image_height</span> <span class="o">-</span> <span class="n">padded_center_crop_size</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+  <span class="n">offset_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">image_width</span> <span class="o">-</span> <span class="n">padded_center_crop_size</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+  <span class="n">crop_window</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">offset_height</span><span class="p">,</span> <span class="n">offset_width</span><span class="p">,</span>
+                          <span class="n">padded_center_crop_size</span><span class="p">,</span> <span class="n">padded_center_crop_size</span><span class="p">])</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">decode_and_crop_jpeg</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">,</span> <span class="n">crop_window</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">_resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">normalize_image</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+  <span class="n">image</span> <span class="o">-=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">MEAN_RGB</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="n">image</span> <span class="o">/=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">STDDEV_RGB</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">create_split</span><span class="p">(</span>
+    <span class="n">dataset_builder</span><span class="p">:</span> <span class="n">tfds</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">DatasetBuilder</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">DType</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">IMAGE_SIZE</span><span class="p">,</span>
+    <span class="n">cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates a split from the ImageNet dataset using TensorFlow Datasets.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    dataset_builder: TFDS dataset builder for ImageNet.</span>
+<span class="sd">    batch_size: the batch size returned by the data pipeline.</span>
+<span class="sd">    train: whether to load the train or evaluation split.</span>
+<span class="sd">    dtype: data type of the image.</span>
+<span class="sd">    image_size: the target size of the images.</span>
+<span class="sd">    cache: whether to cache the dataset.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    A `tf.data.Dataset`.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">split</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span> <span class="k">if</span> <span class="n">train</span> <span class="k">else</span> <span class="s1">&#39;validation&#39;</span>
+  <span class="n">num_examples</span> <span class="o">=</span> <span class="n">dataset_builder</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="n">split</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span>
+  <span class="n">split_size</span> <span class="o">=</span> <span class="n">num_examples</span> <span class="o">//</span> <span class="n">jax</span><span class="o">.</span><span class="n">process_count</span><span class="p">()</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">process_index</span><span class="p">()</span> <span class="o">*</span> <span class="n">split_size</span>
+  <span class="n">split</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s1">[</span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">split_size</span><span class="si">}</span><span class="s1">]&#39;</span>
+
+  <span class="k">def</span> <span class="nf">decode_example</span><span class="p">(</span><span class="n">example</span><span class="p">):</span>
+    <span class="n">decode_fn</span> <span class="o">=</span> <span class="n">_decode_and_random_crop</span> <span class="k">if</span> <span class="n">train</span> <span class="k">else</span> <span class="n">_decode_and_center_crop</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">decode_fn</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span> <span class="n">image_size</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">train</span><span class="p">:</span>
+      <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_flip_left_right</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">normalize_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">convert_image_dtype</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="n">image</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]}</span>
+
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">dataset_builder</span><span class="o">.</span><span class="n">as_dataset</span><span class="p">(</span>
+      <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">,</span>
+      <span class="n">decoders</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="n">tfds</span><span class="o">.</span><span class="n">decode</span><span class="o">.</span><span class="n">SkipDecoding</span><span class="p">()},</span>
+  <span class="p">)</span>
+  <span class="n">options</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Options</span><span class="p">()</span>
+  <span class="n">options</span><span class="o">.</span><span class="n">experimental_threading</span><span class="o">.</span><span class="n">private_threadpool_size</span> <span class="o">=</span> <span class="mi">48</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">with_options</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">cache</span><span class="p">:</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+
+  <span class="k">if</span> <span class="n">train</span><span class="p">:</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">decode_example</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">drop_remainder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">train</span><span class="p">:</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+
+  <span class="k">return</span> <span class="n">ds</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">create_input_iterators</span><span class="p">(</span>
+    <span class="n">dataset_builder</span><span class="p">:</span> <span class="n">tfds</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">DatasetBuilder</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">half_precision</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">IMAGE_SIZE</span><span class="p">,</span>
+    <span class="n">cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">DataIter</span><span class="p">,</span> <span class="n">DataIter</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns train and evaluation data iterators.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    dataset_builder: TFDS dataset builder for ImageNet.</span>
+<span class="sd">    batch_size: the (local) batch size returned by the data pipeline.</span>
+<span class="sd">    half_precision: whether to use FP16..</span>
+<span class="sd">    image_size: the target size of the images.</span>
+<span class="sd">    cache: whether to cache the dataset.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A tuple of `tf.data.Dataset` iterators over minibatches.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">input_dtype</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span>
+  <span class="k">if</span> <span class="n">half_precision</span><span class="p">:</span>
+    <span class="n">platform</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">local_devices</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">platform</span>
+    <span class="n">input_dtype</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">bfloat16</span> <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;tpu&#39;</span> <span class="k">else</span> <span class="n">tf</span><span class="o">.</span><span class="n">float16</span>
+
+  <span class="n">train_ds</span> <span class="o">=</span> <span class="n">create_split</span><span class="p">(</span>
+      <span class="n">dataset_builder</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">input_dtype</span><span class="p">,</span> <span class="n">image_size</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
+  <span class="n">eval_ds</span> <span class="o">=</span> <span class="n">create_split</span><span class="p">(</span>
+      <span class="n">dataset_builder</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">input_dtype</span><span class="p">,</span> <span class="n">image_size</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
+
+  <span class="n">train_ds</span><span class="p">,</span> <span class="n">eval_ds</span> <span class="o">=</span> <span class="n">train_ds</span><span class="o">.</span><span class="n">as_numpy_iterator</span><span class="p">(),</span> <span class="n">eval_ds</span><span class="o">.</span><span class="n">as_numpy_iterator</span><span class="p">()</span>
+  <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">train_ds</span><span class="p">),</span> <span class="nb">iter</span><span class="p">(</span><span class="n">eval_ds</span><span class="p">)</span>
+
+
+<span class="c1">### Model (adapted from `flax/examples/imagenet/models.py`).</span>
+
+
+<span class="k">class</span> <span class="nc">ResNetBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;ResNet block.&quot;&quot;&quot;</span>
+  <span class="n">filters</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">conv</span><span class="p">:</span> <span class="n">ModuleDef</span>
+  <span class="n">norm</span><span class="p">:</span> <span class="n">ModuleDef</span>
+  <span class="n">act</span><span class="p">:</span> <span class="n">Callable</span>
+  <span class="n">strides</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+  <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,):</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">strides</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">()(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">scale_init</span><span class="o">=</span><span class="n">nn</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">zeros</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">residual</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+      <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">strides</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv_proj&#39;</span><span class="p">)(</span><span class="n">residual</span><span class="p">)</span>
+      <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;norm_proj&#39;</span><span class="p">)(</span><span class="n">residual</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">residual</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BottleneckResNetBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Bottleneck ResNet block.&quot;&quot;&quot;</span>
+  <span class="n">filters</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">conv</span><span class="p">:</span> <span class="n">ModuleDef</span>
+  <span class="n">norm</span><span class="p">:</span> <span class="n">ModuleDef</span>
+  <span class="n">act</span><span class="p">:</span> <span class="n">Callable</span>
+  <span class="n">strides</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+  <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">()(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">strides</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">()(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">scale_init</span><span class="o">=</span><span class="n">nn</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">zeros</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">residual</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+      <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">strides</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv_proj&#39;</span><span class="p">)(</span><span class="n">residual</span><span class="p">)</span>
+      <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;norm_proj&#39;</span><span class="p">)(</span><span class="n">residual</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">residual</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ResNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;ResNetV1.&quot;&quot;&quot;</span>
+  <span class="n">stage_sizes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+  <span class="n">block_cls</span><span class="p">:</span> <span class="n">ModuleDef</span>
+  <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">num_filters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span>
+  <span class="n">dtype</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+  <span class="n">act</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">relu</span>
+
+  <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm</span><span class="p">,</span>
+                             <span class="n">use_running_average</span><span class="o">=</span><span class="ow">not</span> <span class="n">train</span><span class="p">,</span>
+                             <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                             <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+                             <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+             <span class="n">padding</span><span class="o">=</span><span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span>
+             <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv_init&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bn_init&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">max_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">block_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stage_sizes</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block_size</span><span class="p">):</span>
+        <span class="n">strides</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_cls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_filters</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">i</span><span class="p">,</span>
+                           <span class="n">strides</span><span class="o">=</span><span class="n">strides</span><span class="p">,</span>
+                           <span class="n">conv</span><span class="o">=</span><span class="n">conv</span><span class="p">,</span>
+                           <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+                           <span class="n">act</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="n">MODELS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ResNet1&#39;</span><span class="p">:</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">ResNetBlock</span><span class="p">),</span>
+    <span class="s1">&#39;ResNet18&#39;</span><span class="p">:</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">ResNetBlock</span><span class="p">),</span>
+    <span class="s1">&#39;ResNet34&#39;</span><span class="p">:</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">ResNetBlock</span><span class="p">),</span>
+    <span class="s1">&#39;ResNet50&#39;</span><span class="p">:</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">BottleneckResNetBlock</span><span class="p">),</span>
+    <span class="s1">&#39;ResNet101&#39;</span><span class="p">:</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">BottleneckResNetBlock</span><span class="p">),</span>
+    <span class="s1">&#39;ResNet152&#39;</span><span class="p">:</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">BottleneckResNetBlock</span><span class="p">),</span>
+    <span class="s1">&#39;ResNet200&#39;</span><span class="p">:</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">ResNet</span><span class="p">,</span> <span class="n">stage_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">block_cls</span><span class="o">=</span><span class="n">BottleneckResNetBlock</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<span class="c1">### SPMD utilities.</span>
+
+
+<span class="k">def</span> <span class="nf">setup_data_parallel_mesh</span><span class="p">():</span>
+  <span class="n">global_mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+  <span class="n">jax</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">thread_resources</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">ResourceEnv</span><span class="p">(</span><span class="n">physical_mesh</span><span class="o">=</span><span class="n">global_mesh</span><span class="p">,</span> <span class="n">loops</span><span class="o">=</span><span class="p">()))</span>
+
+
+<span class="c1">### Training loop utilities.</span>
+
+
+<span class="k">class</span> <span class="nc">LossFnAux</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Stores auxiliary values computed during loss function eval for reuse.&quot;&quot;&quot;</span>
+  <span class="n">batch_stats</span><span class="p">:</span> <span class="n">ArrayTree</span>
+  <span class="n">logits</span><span class="p">:</span> <span class="n">Array</span>
+
+
+<span class="k">def</span> <span class="nf">cross_entropy_loss</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="o">**</span><span class="n">_</span><span class="p">):</span>
+  <span class="n">xentropy</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">jaxopt</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">multiclass_logistic_loss</span><span class="p">)(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xentropy</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">loss_fun</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">batch_stats</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">batch</span><span class="p">:</span> <span class="n">Batch</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Numeric</span><span class="p">,</span> <span class="n">LossFnAux</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Loss function used for training.&quot;&quot;&quot;</span>
+  <span class="n">logits</span><span class="p">,</span> <span class="n">new_mutable_variables</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+      <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="s1">&#39;batch_stats&#39;</span><span class="p">:</span> <span class="n">batch_stats</span><span class="p">},</span>
+      <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span>
+      <span class="n">mutable</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;batch_stats&#39;</span><span class="p">])</span>
+
+  <span class="n">xentropy</span> <span class="o">=</span> <span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">)</span>
+  <span class="n">weight_penalty_params</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">weight_l2</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">weight_penalty_params</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">xentropy</span> <span class="o">+</span> <span class="n">weight_decay</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">weight_l2</span>
+
+  <span class="n">new_batch_stats</span> <span class="o">=</span> <span class="n">new_mutable_variables</span><span class="p">[</span><span class="s1">&#39;batch_stats&#39;</span><span class="p">]</span>
+  <span class="n">aux</span> <span class="o">=</span> <span class="n">LossFnAux</span><span class="p">(</span><span class="n">batch_stats</span><span class="o">=</span><span class="n">new_batch_stats</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">aux</span>
+
+
+<span class="nd">@struct</span><span class="o">.</span><span class="n">dataclass</span>
+<span class="k">class</span> <span class="nc">TrainMetrics</span><span class="p">(</span><span class="n">clu_metrics</span><span class="o">.</span><span class="n">Collection</span><span class="p">):</span>
+
+  <span class="n">accuracy</span><span class="p">:</span> <span class="n">clu_metrics</span><span class="o">.</span><span class="n">Accuracy</span>
+  <span class="n">learning_rate</span><span class="p">:</span> <span class="n">clu_metrics</span><span class="o">.</span><span class="n">Average</span><span class="o">.</span><span class="n">from_output</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">)</span>
+  <span class="n">loss</span><span class="p">:</span> <span class="n">clu_metrics</span><span class="o">.</span><span class="n">Average</span><span class="o">.</span><span class="n">from_output</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">)</span>
+  <span class="n">xent</span><span class="p">:</span> <span class="n">clu_metrics</span><span class="o">.</span><span class="n">Average</span><span class="o">.</span><span class="n">from_fun</span><span class="p">(</span><span class="n">cross_entropy_loss</span><span class="p">)</span>
+
+
+<span class="nd">@struct</span><span class="o">.</span><span class="n">dataclass</span>
+<span class="k">class</span> <span class="nc">EvalMetrics</span><span class="p">(</span><span class="n">clu_metrics</span><span class="o">.</span><span class="n">Collection</span><span class="p">):</span>
+
+  <span class="n">accuracy</span><span class="p">:</span> <span class="n">clu_metrics</span><span class="o">.</span><span class="n">Accuracy</span>
+  <span class="n">xent</span><span class="p">:</span> <span class="n">clu_metrics</span><span class="o">.</span><span class="n">Average</span><span class="o">.</span><span class="n">from_fun</span><span class="p">(</span><span class="n">cross_entropy_loss</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">train_step</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">batch</span><span class="p">:</span> <span class="n">Batch</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TrainMetrics</span><span class="p">],</span>
+    <span class="n">learning_rate_fn</span><span class="p">:</span> <span class="n">LearningRateFn</span><span class="p">,</span>
+    <span class="n">solver</span><span class="p">:</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">OptaxSolver</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ArrayTree</span><span class="p">,</span> <span class="n">ArrayTree</span><span class="p">,</span> <span class="n">TrainMetrics</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Performs a single training step.&quot;&quot;&quot;</span>
+  <span class="c1"># Retrieves Flax mutables from previous step, stored in `state.aux`.</span>
+  <span class="n">batch_stats</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">aux</span><span class="o">.</span><span class="n">batch_stats</span>
+  <span class="c1"># Computes updated model parameters and optimizer state.</span>
+  <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+      <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+      <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
+      <span class="n">batch_stats</span><span class="o">=</span><span class="n">batch_stats</span><span class="p">,</span>
+      <span class="n">batch</span><span class="o">=</span><span class="n">batch</span><span class="p">,</span>
+  <span class="p">)</span>
+  <span class="c1"># Computes train metrics for `batch`, re-using the auxiliary outputs from</span>
+  <span class="c1"># `loss_fun` (e.g. logits) that are stored in `state.aux``.</span>
+  <span class="n">new_metrics</span> <span class="o">=</span> <span class="n">TrainMetrics</span><span class="o">.</span><span class="n">single_from_model_output</span><span class="p">(</span>
+      <span class="n">logits</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">aux</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span>
+      <span class="n">labels</span><span class="o">=</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span>
+      <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_fn</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="p">),</span>
+      <span class="n">loss</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>  <span class="c1"># xentropy + L2 regularization.</span>
+  <span class="p">)</span>
+  <span class="c1"># Accumulates train metrics for current batch into history.</span>
+  <span class="k">if</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">new_metrics</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">new_metrics</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">metrics</span>
+
+
+<span class="k">def</span> <span class="nf">eval_step</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">batch</span><span class="p">:</span> <span class="n">Batch</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EvalMetrics</span><span class="p">],</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvalMetrics</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Performs a single evaluation step.&quot;&quot;&quot;</span>
+  <span class="c1"># Retrieves Flax mutables from last train step, stored in `state.aux`.</span>
+  <span class="n">batch_stats</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">aux</span><span class="o">.</span><span class="n">batch_stats</span>
+  <span class="c1"># Computes model outputs in inference-mode.</span>
+  <span class="n">variables</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="s1">&#39;batch_stats&#39;</span><span class="p">:</span> <span class="n">batch_stats</span><span class="p">}</span>
+  <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+      <span class="n">variables</span><span class="p">,</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="c1"># Computes eval metrics for `batch`.</span>
+  <span class="n">new_metrics</span> <span class="o">=</span> <span class="n">EvalMetrics</span><span class="o">.</span><span class="n">single_from_model_output</span><span class="p">(</span>
+      <span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
+  <span class="c1"># Accumulates eval metrics for current batch into history.</span>
+  <span class="k">if</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">new_metrics</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">new_metrics</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">metrics</span>
+
+
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">(</span>
+    <span class="n">model_cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">],</span>
+    <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">NUM_CLASSES</span><span class="p">,</span>
+    <span class="n">half_precision</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates FLAX model.&quot;&quot;&quot;</span>
+  <span class="n">model_dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+  <span class="k">if</span> <span class="n">half_precision</span><span class="p">:</span>
+    <span class="n">platform</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">local_devices</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">platform</span>
+    <span class="n">model_dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">bfloat16</span> <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;tpu&#39;</span> <span class="k">else</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float16</span>
+  <span class="k">return</span> <span class="n">model_cls</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">model_dtype</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">initialize_model</span><span class="p">(</span>
+    <span class="n">key</span><span class="p">:</span> <span class="n">PRNGKey</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">IMAGE_SIZE</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ArrayTree</span><span class="p">,</span> <span class="n">ArrayTree</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Initializes FLAX model, returning params and mutable variables.&quot;&quot;&quot;</span>
+  <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+  <span class="n">variables</span> <span class="o">=</span> <span class="n">init</span><span class="p">({</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">},</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">variables</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">],</span> <span class="n">variables</span><span class="p">[</span><span class="s1">&#39;batch_stats&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">create_learning_rate_fn</span><span class="p">(</span>
+    <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">steps_per_epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">warmup_epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LearningRateFn</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates learning rate schedule.&quot;&quot;&quot;</span>
+  <span class="n">base_learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">batch_size</span> <span class="o">/</span> <span class="mf">256.</span>
+  <span class="n">warmup_fn</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">linear_schedule</span><span class="p">(</span>
+      <span class="n">init_value</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">end_value</span><span class="o">=</span><span class="n">base_learning_rate</span><span class="p">,</span>
+      <span class="n">transition_steps</span><span class="o">=</span><span class="n">warmup_epochs</span> <span class="o">*</span> <span class="n">steps_per_epoch</span><span class="p">)</span>
+  <span class="n">cosine_epochs</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">num_epochs</span> <span class="o">-</span> <span class="n">warmup_epochs</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">cosine_fn</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">cosine_decay_schedule</span><span class="p">(</span>
+      <span class="n">init_value</span><span class="o">=</span><span class="n">base_learning_rate</span><span class="p">,</span>
+      <span class="n">decay_steps</span><span class="o">=</span><span class="n">cosine_epochs</span> <span class="o">*</span> <span class="n">steps_per_epoch</span><span class="p">)</span>
+  <span class="n">schedule_fn</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">join_schedules</span><span class="p">(</span>
+      <span class="n">schedules</span><span class="o">=</span><span class="p">[</span><span class="n">warmup_fn</span><span class="p">,</span> <span class="n">cosine_fn</span><span class="p">],</span>
+      <span class="n">boundaries</span><span class="o">=</span><span class="p">[</span><span class="n">warmup_epochs</span> <span class="o">*</span> <span class="n">steps_per_epoch</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">schedule_fn</span>
+
+
+<span class="k">def</span> <span class="nf">create_solver</span><span class="p">(</span>
+    <span class="n">learning_rate_fn</span><span class="p">:</span> <span class="n">LearningRateFn</span><span class="p">,</span>
+    <span class="n">momentum</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">OptaxSolver</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates JAXopt solver.&quot;&quot;&quot;</span>
+  <span class="n">opt</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">sgd</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_fn</span><span class="p">,</span>
+                  <span class="n">momentum</span><span class="o">=</span><span class="n">momentum</span><span class="p">,</span>
+                  <span class="n">nesterov</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">fun</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">zeros_like_fun_output</span><span class="p">(</span>
+    <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Replaces fun, outputting a pytree of zeroes with the original structure.&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">pytree</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">eval_shape</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">leaves</span><span class="p">,</span> <span class="n">treedef</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_flatten</span><span class="p">(</span><span class="n">pytree</span><span class="p">)</span>
+    <span class="n">leaves</span> <span class="o">=</span> <span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">leaf</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">leaf</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
+    <span class="n">zeros_like_pytree</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_unflatten</span><span class="p">(</span><span class="n">treedef</span><span class="p">,</span> <span class="n">leaves</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">zeros_like_pytree</span> <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">zeros_like_pytree</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<span class="k">def</span> <span class="nf">initialize_solver</span><span class="p">(</span>
+    <span class="n">solver</span><span class="p">:</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">OptaxSolver</span><span class="p">,</span>
+    <span class="n">init_params</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">init_batch_stats</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">first_batch</span><span class="p">:</span> <span class="n">Batch</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArrayTree</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Initializes the state of jaxopt.OptaxSolver.&quot;&quot;&quot;</span>
+  <span class="c1"># &quot;Default&quot; JAXopt initial optimizer state.</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+
+  <span class="c1"># To prevent `train_step` from being compiled twice, we must ensure all its</span>
+  <span class="c1"># input arguments have the same shape and dtype in all calls. To this end,</span>
+  <span class="c1"># we will</span>
+  <span class="c1">#   1) Initialize `state.aux` with a Pytree of the right shape and dtype.</span>
+  <span class="c1">#   2) Ensure that `state.value` and `state.error` are strongly typed.</span>
+  <span class="n">zeros_like_loss_fun</span> <span class="o">=</span> <span class="n">zeros_like_fun_output</span><span class="p">(</span>
+      <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span>
+  <span class="n">init_loss</span><span class="p">,</span> <span class="n">init_aux</span> <span class="o">=</span> <span class="n">zeros_like_loss_fun</span><span class="p">(</span>
+      <span class="n">init_params</span><span class="p">,</span> <span class="n">init_batch_stats</span><span class="p">,</span> <span class="n">first_batch</span><span class="p">)</span>
+  <span class="n">init_aux</span> <span class="o">=</span> <span class="n">init_aux</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">batch_stats</span><span class="o">=</span><span class="n">init_batch_stats</span><span class="p">)</span>
+  <span class="n">loss_dtype</span> <span class="o">=</span> <span class="n">init_loss</span><span class="o">.</span><span class="n">dtype</span>
+  <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span>
+      <span class="n">value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">loss_dtype</span><span class="p">),</span>
+      <span class="n">error</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">loss_dtype</span><span class="p">),</span>
+      <span class="n">aux</span><span class="o">=</span><span class="n">init_aux</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">initialize_metrics</span><span class="p">(</span>
+    <span class="n">init_params</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">init_state</span><span class="p">:</span> <span class="n">ArrayTree</span><span class="p">,</span>
+    <span class="n">first_batch</span><span class="p">:</span> <span class="n">Batch</span><span class="p">,</span>
+    <span class="n">learning_rate_fn</span><span class="p">:</span> <span class="n">LearningRateFn</span><span class="p">,</span>
+    <span class="n">solver</span><span class="p">:</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">OptaxSolver</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TrainMetrics</span><span class="p">,</span> <span class="n">EvalMetrics</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Initializes train and eval metric accumulators.&quot;&quot;&quot;</span>
+  <span class="c1"># To prevent `train_step` and `eval_step` from being compiled twice, we must</span>
+  <span class="c1"># ensure all its input arguments have the same shape and dtype in all calls.</span>
+  <span class="c1"># To this end, we will initialize the `train_metrics` and `eval_metrics`</span>
+  <span class="c1"># accumulators with Pytrees of the right shape and dtype but containing all</span>
+  <span class="c1"># zeroes (including for the `count` field).</span>
+  <span class="n">zeros_like_train_step_fun</span> <span class="o">=</span> <span class="n">zeros_like_fun_output</span><span class="p">(</span>
+      <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+          <span class="n">train_step</span><span class="p">,</span> <span class="n">learning_rate_fn</span><span class="o">=</span><span class="n">learning_rate_fn</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">),</span>
+      <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">zeros_like_eval_step_fun</span> <span class="o">=</span> <span class="n">zeros_like_fun_output</span><span class="p">(</span>
+      <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">eval_step</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span>
+
+  <span class="n">train_metrics_init</span> <span class="o">=</span> <span class="n">zeros_like_train_step_fun</span><span class="p">(</span>
+      <span class="n">init_params</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">first_batch</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="n">eval_metrics_init</span> <span class="o">=</span> <span class="n">zeros_like_eval_step_fun</span><span class="p">(</span>
+      <span class="n">init_params</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">first_batch</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">train_metrics_init</span><span class="p">,</span> <span class="n">eval_metrics_init</span>
+
+
+<span class="c1">### Training loop.</span>
+
+
+<span class="k">def</span> <span class="nf">train_and_evaluate</span><span class="p">(</span><span class="n">workdir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Execute model training and evaluation loop.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    workdir: Directory where the tensorboard summaries are written to.</span>
+<span class="sd">    seed: Initial seed for the PRNG.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Final OptState.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># Sets PRNG seed (same in all hosts and devices).</span>
+  <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+  <span class="c1"># Computes local (i.e. per-device) batch size.</span>
+  <span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">%</span> <span class="n">jax</span><span class="o">.</span><span class="n">device_count</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Batch size must be divisible by the number of devices&#39;</span><span class="p">)</span>
+  <span class="n">local_batch_size</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">//</span> <span class="n">jax</span><span class="o">.</span><span class="n">process_count</span><span class="p">()</span>
+
+  <span class="c1"># Obtains iterators for training and evaluation datasets.</span>
+  <span class="n">ds_builder</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">builder</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+  <span class="n">train_iter</span><span class="p">,</span> <span class="n">eval_iter</span> <span class="o">=</span> <span class="n">create_input_iterators</span><span class="p">(</span><span class="n">ds_builder</span><span class="p">,</span>
+                                                 <span class="n">local_batch_size</span><span class="p">,</span>
+                                                 <span class="n">FLAGS</span><span class="o">.</span><span class="n">half_precision</span><span class="p">,</span>
+                                                 <span class="n">IMAGE_SIZE</span><span class="p">,</span>
+                                                 <span class="n">FLAGS</span><span class="o">.</span><span class="n">cache</span><span class="p">)</span>
+
+  <span class="c1"># Computes period, in number of steps, for logging, evaluation and</span>
+  <span class="c1"># checkpointing.</span>
+  <span class="n">num_train_examples</span> <span class="o">=</span> <span class="n">ds_builder</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span>
+  <span class="n">num_validation_examples</span> <span class="o">=</span> <span class="n">ds_builder</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">num_examples</span>
+  <span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="n">num_train_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">batch_size</span>
+  <span class="n">num_train_steps</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_train_steps</span>
+  <span class="k">if</span> <span class="n">num_train_steps</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+    <span class="n">num_train_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">steps_per_epoch</span> <span class="o">*</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_epochs</span><span class="p">)</span>
+  <span class="n">steps_per_eval</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">steps_per_eval</span>
+  <span class="k">if</span> <span class="n">steps_per_eval</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+    <span class="n">steps_per_eval</span> <span class="o">=</span> <span class="n">num_validation_examples</span> <span class="o">//</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">batch_size</span>
+  <span class="n">steps_per_checkpoint</span> <span class="o">=</span> <span class="n">steps_per_epoch</span> <span class="o">*</span> <span class="mi">10</span>
+
+  <span class="c1"># Retrieves the first batch from the training iterator, to be used for</span>
+  <span class="c1"># initialization purposes, and puts it back into the iterator.</span>
+  <span class="n">first_batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_iter</span><span class="p">)</span>
+  <span class="n">train_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">([</span><span class="n">first_batch</span><span class="p">],</span> <span class="n">train_iter</span><span class="p">)</span>
+
+  <span class="c1"># Creates Flax model and initializes its parameters and mutable variables.</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">MODELS</span><span class="p">[</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">model</span><span class="p">],</span> <span class="n">NUM_CLASSES</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">half_precision</span><span class="p">)</span>
+  <span class="n">params</span><span class="p">,</span> <span class="n">batch_stats</span> <span class="o">=</span> <span class="n">initialize_model</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">IMAGE_SIZE</span><span class="p">)</span>
+
+  <span class="c1"># Creates learning rate schedule.</span>
+  <span class="n">learning_rate_fn</span> <span class="o">=</span> <span class="n">create_learning_rate_fn</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+                                             <span class="n">FLAGS</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+                                             <span class="n">steps_per_epoch</span><span class="p">,</span>
+                                             <span class="n">FLAGS</span><span class="o">.</span><span class="n">warmup_epochs</span><span class="p">,</span>
+                                             <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_epochs</span><span class="p">)</span>
+  <span class="c1"># Creates a JAXopt optimizer and initializes its state with special care to</span>
+  <span class="c1"># avoid recompilations.</span>
+  <span class="n">solver</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">learning_rate_fn</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="n">initialize_solver</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">batch_stats</span><span class="p">,</span> <span class="n">first_batch</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+  <span class="c1"># Initializes accumulators for train and eval metrics and defines inline util</span>
+  <span class="c1"># for replicating them across devices, also to prevent recompilations.</span>
+  <span class="n">train_metrics_init</span><span class="p">,</span> <span class="n">eval_metrics_init</span> <span class="o">=</span> <span class="n">initialize_metrics</span><span class="p">(</span>
+      <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">first_batch</span><span class="p">,</span> <span class="n">learning_rate_fn</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+  <span class="n">replicate_metrics_init</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span>
+      <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="n">in_shardings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_shardings</span><span class="o">=</span><span class="kc">None</span>
+  <span class="p">)</span>
+
+  <span class="c1"># Compiles data parallel train and eval steps using `jax.pjit`.</span>
+  <span class="n">p_train_step</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span>
+      <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+          <span class="n">train_step</span><span class="p">,</span> <span class="n">learning_rate_fn</span><span class="o">=</span><span class="n">learning_rate_fn</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span>
+      <span class="p">),</span>
+      <span class="n">in_shardings</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">),</span>
+      <span class="n">out_shardings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+  <span class="p">)</span>
+  <span class="n">p_eval_step</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span>
+      <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">eval_step</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span>
+      <span class="n">in_shardings</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">),</span>
+      <span class="n">out_shardings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+  <span class="p">)</span>
+
+  <span class="c1"># Instantiates metrics writer for logging.</span>
+  <span class="n">writer</span> <span class="o">=</span> <span class="n">metric_writers</span><span class="o">.</span><span class="n">create_default_writer</span><span class="p">(</span>
+      <span class="n">logdir</span><span class="o">=</span><span class="n">workdir</span><span class="p">,</span> <span class="n">just_logging</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">process_index</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+
+  <span class="c1"># Instantiates checkpointer manager and tries to restore state from `workdir`.</span>
+  <span class="n">ckpt</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="o">.</span><span class="n">MultihostCheckpoint</span><span class="p">(</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">workdir</span><span class="p">,</span> <span class="s1">&#39;checkpoints&#39;</span><span class="p">),</span> <span class="n">max_to_keep</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+  <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">ckpt</span><span class="o">.</span><span class="n">restore_or_initialize</span><span class="p">((</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">))</span>
+  <span class="n">step_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="p">)</span>
+
+  <span class="c1"># Sets up callbacks.</span>
+  <span class="n">report_progress</span> <span class="o">=</span> <span class="n">periodic_actions</span><span class="o">.</span><span class="n">ReportProgress</span><span class="p">(</span>
+      <span class="n">num_train_steps</span><span class="o">=</span><span class="n">num_train_steps</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">)</span>
+  <span class="n">hooks</span> <span class="o">=</span> <span class="p">[</span><span class="n">report_progress</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">jax</span><span class="o">.</span><span class="n">process_index</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">hooks</span> <span class="o">+=</span> <span class="p">[</span><span class="n">periodic_actions</span><span class="o">.</span><span class="n">Profile</span><span class="p">(</span><span class="n">num_profile_steps</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">logdir</span><span class="o">=</span><span class="n">workdir</span><span class="p">)]</span>
+
+  <span class="c1"># Runs training loop.</span>
+  <span class="n">train_metrics</span> <span class="o">=</span> <span class="n">replicate_metrics_init</span><span class="p">(</span><span class="n">train_metrics_init</span><span class="p">)</span>
+  <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">step_offset</span><span class="p">,</span> <span class="n">num_train_steps</span><span class="p">),</span> <span class="n">train_iter</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">train_metrics</span> <span class="o">=</span> <span class="n">p_train_step</span><span class="p">(</span>
+        <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">train_metrics</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="n">step_offset</span><span class="p">:</span>
+      <span class="n">time_elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">tic</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;p_train_step compilation done in </span><span class="si">%.2f</span><span class="s1"> s.&#39;</span><span class="p">,</span> <span class="n">time_elapsed</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hooks</span><span class="p">:</span>
+      <span class="n">h</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">log_every_steps</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">step</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">num_train_steps</span><span class="p">:</span>
+      <span class="n">summary</span> <span class="o">=</span> <span class="n">train_metrics</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+      <span class="n">writer</span><span class="o">.</span><span class="n">write_scalars</span><span class="p">(</span>
+          <span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="sa">f</span><span class="s1">&#39;train_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">summary</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+      <span class="c1"># Resets accumulator for train metrics.</span>
+      <span class="n">train_metrics</span> <span class="o">=</span> <span class="n">replicate_metrics_init</span><span class="p">(</span><span class="n">train_metrics_init</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">steps_per_epoch</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">with</span> <span class="n">report_progress</span><span class="o">.</span><span class="n">timed</span><span class="p">(</span><span class="s1">&#39;evaluation&#39;</span><span class="p">):</span>
+        <span class="n">eval_metrics</span> <span class="o">=</span> <span class="n">replicate_metrics_init</span><span class="p">(</span><span class="n">eval_metrics_init</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">eval_batch</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">steps_per_eval</span><span class="p">),</span> <span class="n">eval_iter</span><span class="p">):</span>
+          <span class="n">eval_metrics</span> <span class="o">=</span> <span class="n">p_eval_step</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">eval_batch</span><span class="p">,</span> <span class="n">eval_metrics</span><span class="p">)</span>
+
+        <span class="n">summary</span> <span class="o">=</span> <span class="n">eval_metrics</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">write_scalars</span><span class="p">(</span>
+            <span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="sa">f</span><span class="s1">&#39;eval_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">summary</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">steps_per_checkpoint</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">step</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">num_train_steps</span><span class="p">:</span>
+      <span class="k">with</span> <span class="n">report_progress</span><span class="o">.</span><span class="n">timed</span><span class="p">(</span><span class="s1">&#39;checkpointing&#39;</span><span class="p">):</span>
+        <span class="n">ckpt</span><span class="o">.</span><span class="n">save</span><span class="p">((</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">))</span>
+
+  <span class="c1"># Wait until computations are done before exiting</span>
+  <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">())</span><span class="o">.</span><span class="n">block_until_ready</span><span class="p">()</span>
+
+  <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span>
+
+
+<span class="c1">### Entry point.</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+  <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">([],</span> <span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
+
+  <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;JAX process: </span><span class="si">%d</span><span class="s1"> / </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">process_index</span><span class="p">(),</span> <span class="n">jax</span><span class="o">.</span><span class="n">process_count</span><span class="p">())</span>
+  <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;JAX local devices: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">local_devices</span><span class="p">())</span>
+
+  <span class="n">setup_data_parallel_mesh</span><span class="p">()</span>
+  <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;JAX PJIT mesh: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">thread_resources</span><span class="o">.</span><span class="n">env</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">train_and_evaluate</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">workdir</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.000 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-deep-learning-distributed-flax-imagenet-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/b652702dccb1d25e52191457e6f99347/distributed_flax_imagenet.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">distributed_flax_imagenet.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/6a15f0a6a7bd58639b7fd01d7781cda7/distributed_flax_imagenet.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">distributed_flax_imagenet.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plot_sgd_solvers.html" class="btn btn-neutral float-left" title="Comparison of different SGD algorithms." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../fixed_point/index.html" class="btn btn-neutral float-right" title="Fixed point resolution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

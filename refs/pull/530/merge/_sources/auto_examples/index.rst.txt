@@ -1,0 +1,343 @@
+:orphan:
+
+.. _general_examples:
+
+Example gallery
+===============
+
+To clone the repository and the examples, please run::
+
+  $ git clone https://github.com/google/jaxopt.git
+
+or download this `zip file <https://github.com/google/jaxopt/archive/refs/heads/main.zip>`_.
+
+To install the libraries that the examples depend on, please run::
+
+  $ pip install -r examples/requirements.txt
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    </div>
+
+
+Constrained optimization
+------------------------
+
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Non-negative matrix factorizaton (NMF) using alternating minimization.">
+
+.. only:: html
+
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_nmf_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_constrained_nmf.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Non-negative matrix factorizaton (NMF) using alternating minimization.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This quadratic program can be solved either with OSQP or with block coordinate descent.    Refe...">
+
+.. only:: html
+
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_multiclass_linear_svm_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_constrained_multiclass_linear_svm.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Multiclass linear SVM (without intercept).</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The dual objective of binary kernel SVMs with an intercept contains both box constraints and an...">
+
+.. only:: html
+
+  .. image:: /auto_examples/constrained/images/thumb/sphx_glr_binary_kernel_svm_with_intercept_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_constrained_binary_kernel_svm_with_intercept.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Binary kernel SVM with intercept.</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+Deep learning
+-------------
+
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="VAE example with Haiku and JAXopt.">
+
+.. only:: html
+
+  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_haiku_vae_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_deep_learning_haiku_vae.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">VAE example with Haiku and JAXopt.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The purpose of this example is to illustrate the power of adaptive stepsize algorithms.">
+
+.. only:: html
+
+  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_plot_sgd_solvers_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_deep_learning_plot_sgd_solvers.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Comparison of different SGD algorithms.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The purpose of this example is to illustrate how JAXopt solvers can be easily used for distribu...">
+
+.. only:: html
+
+  .. image:: /auto_examples/deep_learning/images/thumb/sphx_glr_distributed_flax_imagenet_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_deep_learning_distributed_flax_imagenet.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">SPMD ResNet example with Flax and JAXopt.</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+Fixed point resolution
+----------------------
+
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Thanks to the Picard–Lindelöf theorem, we can reduce differential equation solving to fixed poi...">
+
+.. only:: html
+
+  .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_picard_ode_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Anderson acceleration in application to Picard–Lindelöf theorem.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Block coordinate descent converges to a fixed point. It can therefore be accelerated with Ander...">
+
+.. only:: html
+
+  .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_anderson_wrapper_cd_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Anderson acceleration of block coordinate descent.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="For a strictly convex function f, \nabla f(x)=0 implies that x is the global optimum f.">
+
+.. only:: html
+
+  .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_anderson_accelerate_gd_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Anderson acceleration of gradient descent.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This implementation is strongly inspired by the Pytorch code snippets in [3].">
+
+.. only:: html
+
+  .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_deep_equilibrium_model_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+Implicit differentiation
+------------------------
+
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of lasso.">
+
+.. only:: html
+
+  .. image:: /auto_examples/implicit_diff/images/thumb/sphx_glr_lasso_implicit_diff_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_implicit_diff_lasso_implicit_diff.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Implicit differentiation of lasso.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Implicit differentiation of ridge regression.">
+
+.. only:: html
+
+  .. image:: /auto_examples/implicit_diff/images/thumb/sphx_glr_ridge_reg_implicit_diff_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_implicit_diff_ridge_reg_implicit_diff.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Implicit differentiation of ridge regression.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Sparse coding.">
+
+.. only:: html
+
+  .. image:: /auto_examples/implicit_diff/images/thumb/sphx_glr_sparse_coding_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_implicit_diff_sparse_coding.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Sparse coding.</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+
+   /auto_examples/constrained/index.rst
+   /auto_examples/deep_learning/index.rst
+   /auto_examples/fixed_point/index.rst
+   /auto_examples/implicit_diff/index.rst
+
+
+.. only:: html
+
+  .. container:: sphx-glr-footer sphx-glr-footer-gallery
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download all examples in Python source code: auto_examples_python.zip </auto_examples/auto_examples_python.zip>`
+
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download all examples in Jupyter notebooks: auto_examples_jupyter.zip </auto_examples/auto_examples_jupyter.zip>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

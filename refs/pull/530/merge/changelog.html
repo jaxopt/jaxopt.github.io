@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Development" href="developer.html" />
+    <link rel="prev" title="Sparse coding." href="auto_examples/implicit_diff/sparse_coding.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-9">Version 0.9</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bug-fixes-and-enhancements">Bug fixes and enhancements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-8">Version 0.8</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new-features">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contributors">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-7">Version 0.7</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-6">Version 0.6</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-5-5">Version 0.5.5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deprecations">Deprecations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-5">Version 0.5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-4-3">Version 0.4.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-4-2">Version 0.4.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-4-1">Version 0.4.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-4">Version 0.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id21">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-3-1">Version 0.3.1.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id24">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-3">Version 0.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id27">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id28">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id29">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-2">Version 0.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id30">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-examples">New examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id31">Bug fixes and enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id32">Deprecations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id33">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-1-1">Version 0.1.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id34">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bug-fixes">Bug fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id35">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-1-initial-release">Version 0.1 (initial release)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id36">Contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Changelog</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/changelog.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading"></a></h1>
+<section id="version-0-9">
+<h2>Version 0.9<a class="headerlink" href="#version-0-9" title="Permalink to this heading"></a></h2>
+<section id="bug-fixes-and-enhancements">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#bug-fixes-and-enhancements" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Improved example <a class="reference internal" href="notebooks/deep_learning/resnet_flax.html"><span class="doc">ResNet on CIFAR with Flax and JAXopt.</span></a> (better accuracy in less time) by Fabian Pedregosa.</p></li>
+<li><p>Improved example <a class="reference internal" href="notebooks/deep_learning/resnet_haiku.html"><span class="doc">ResNet on CIFAR10 with Haiku and JAXopt.</span></a>, by Fabian Pedregosa.</p></li>
+<li><p>Documentation is built as part of the continuous integration workflow, by Fabian Pedregosa</p></li>
+</ul>
+</section>
+</section>
+<section id="version-0-8">
+<h2>Version 0.8<a class="headerlink" href="#version-0-8" title="Permalink to this heading"></a></h2>
+<section id="new-features">
+<h3>New features<a class="headerlink" href="#new-features" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added Broyden algorithm to solve non linear root equations, by Zaccharie Ramzi.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed “LBFGSB produces NaN for certain conditions”, by Vincent Roulet.</p></li>
+<li><p>Better layout for notebook gallery, by Fabian Pedregosa.</p></li>
+<li><p>Added support for complex numbers in nonlinear conjugate gradient, by Gregor Thalhammer.</p></li>
+<li><p>Added support for complex numbers in LBFGS and zoom line search, by Gregor Thalhammer.</p></li>
+<li><p>Various LBFGS improvements, by Vincent Roulet.</p></li>
+<li><p>Completely revamped zoom linesearch, by Vincent Roulet.</p></li>
+<li><p>Added continuous integration for python 3.11, fixed typing extension issue, by Vincent Roulet.</p></li>
+<li><p>Added number of function/grad/prox/etc… evaluation for various solvers, by Zaccharie Ramzi.</p></li>
+<li><p>Fixed implicit differentiation in LBFGSB, by Nathan Simpson.</p></li>
+<li><p>Ensure weak-type consistency, by Mathieu Blondel.</p></li>
+<li><p>Extend convenience API for QP + doc, by Louis Bethune.</p></li>
+<li><p>Add interpolation explanations for Polyak/Armijo API doc, by Louis Bethune.</p></li>
+<li><p>Support has_aux in AndersonAcceleration, by Louis Bethune.</p></li>
+<li><p>Drop Python 3.7 support, by Mathieu Blondel.</p></li>
+<li><p>Fixed typos in perturbation docs, by Guillaume Dalle.</p></li>
+<li><p>Fixed pytree support in tree_inf_norm, by Emily Fertig.</p></li>
+<li><p>Fixed NaN handling in LBFGSB, by Srinivas Vasudevan.</p></li>
+<li><p>Use jnp.ndarray instead of jnp.array, by Peter Hawkins.</p></li>
+</ul>
+</section>
+<section id="contributors">
+<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading"></a></h3>
+<p>Louis Bethune, Emily Fertig, Fabian Pedregosa, Gregor Thalhammer-Thurner,
+Guillaume Dalle, Mathieu Blondel, Nathan Simpson, Peter Hawkins,
+Srinivas Vasudevan, Vincent Roulet, Zaccharie Ramzi.</p>
+</section>
+</section>
+<section id="version-0-7">
+<h2>Version 0.7<a class="headerlink" href="#version-0-7" title="Permalink to this heading"></a></h2>
+<section id="id2">
+<h3>New features<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added <a class="reference internal" href="_autosummary/jaxopt.LBFGSB.html#jaxopt.LBFGSB" title="jaxopt.LBFGSB"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LBFGSB</span></code></a>, by Emily Fertig.</p></li>
+<li><p>Added <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-func docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun()</span></code></a>, by Quentin Berthet.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Allow to pass a function as value_and_grad option, by Chansoo Lee.</p></li>
+<li><p>Fixed imaml tutorial (speed and correctness), by Zaccharie Ramzi.</p></li>
+<li><p>Misc improvements in resnet_flax example, by Fabian Pedregosa.</p></li>
+<li><p>Fixed prox to handle pytrees, by Vincent Roulet.</p></li>
+<li><p>Added control variate to make_perturbed_argmax, by Lawrence Stewart.</p></li>
+<li><p>Added inverse hessian approximation to the returned state, Aymeric Galan.</p></li>
+<li><p>Avoid closing over dynamic jax tracers in the bisection solver, by Roy Frostig.</p></li>
+<li><p>Follow pjit API changes, by Yash Katariya and Peter Hawkins.</p></li>
+<li><p>Added isotonic module to documentation, by Mathieu Blondel.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Contributors<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<p>Aymeric Galan, Chansoo Lee, Emily Fertig, Fabian Pedregosa,
+Lawrence Stewart, Mathieu Blondel, Peter Hawkins, Quentin Berthet,
+Roy Frostig, Vincent Roulet, Yash Katariya, Zaccharie Ramzi.</p>
+</section>
+</section>
+<section id="version-0-6">
+<h2>Version 0.6<a class="headerlink" href="#version-0-6" title="Permalink to this heading"></a></h2>
+<section id="id5">
+<h3>New features<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added new Hager-Zhang linesearch in LBFGS, by Srinivas Vasudevan (code review by Emily Fertig).</p></li>
+<li><p>Added perceptron and hinge losses, by Quentin Berthet.</p></li>
+<li><p>Added binary sparsemax loss, sparse_plus and sparse_sigmoid, by Vincent Roulet.</p></li>
+<li><p>Added isotonic regression, by Michael Sander.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added TPU support to notebooks, by Ayush Shridhar.</p></li>
+<li><p>Allowed users to restart from a previous optimizer state in LBFGS, by Zaccharie Ramzi.</p></li>
+<li><p>Added faster error computation in gradient descent algorithm, by Zaccharie Ramzi.</p></li>
+<li><p>Got rid of extra function call in BFGS and LBFGS, by Zaccharie Ramzi.</p></li>
+<li><p>Improved dtype consistency between input and output of update method, by Mathieu Blondel.</p></li>
+<li><p>Added perturbed optimizers notebook and narrative documentation, by Quentin Berthet and Fabian Pedregosa.</p></li>
+<li><p>Enabled auxiliary value returned by linesearch methods, by Zaccharie Ramzi.</p></li>
+<li><p>Added distributed examples to the website, by Fabian Pedregosa.</p></li>
+<li><p>Added Custom loop pjit example, by Felipe Llinares.</p></li>
+<li><p>Fixed wrong latex in maml.ipynb, by Fabian Pedregosa.</p></li>
+<li><p>Fixed bug in backtracking line search, by Srinivas Vasudevan (code review by Emily Fertig).</p></li>
+<li><p>Added pylintrc to top level directory, by Fabian Pedregosa.</p></li>
+<li><p>Corrected the condition function in LBFGS, by Zaccharie Ramzi.</p></li>
+<li><p>Added custom loop pmap example, by Felipe Llinares.</p></li>
+<li><p>Fixed pytree support in IterativeRefinement, by Louis Béthune.</p></li>
+<li><p>Fixed has_aux support in ArmijoSGD, by Louis Béthune.</p></li>
+<li><p>Documentation improvements, by Fabian Pedregosa and Mathieu Blondel.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Contributors<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<p>Ayush Shridhar, Fabian Pedregosa, Felipe Llinares, Louis Bethune,
+Mathieu Blondel, Michael Sander, Quentin Berthet, Srinivas Vasudevan, Vincent Roulet, Zaccharie Ramzi.</p>
+</section>
+</section>
+<section id="version-0-5-5">
+<h2>Version 0.5.5<a class="headerlink" href="#version-0-5-5" title="Permalink to this heading"></a></h2>
+<section id="id8">
+<h3>New features<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added MAML example by Fabian Pedregosa based on initial code by Paul Vicol and Eric Jiang.</p></li>
+<li><p>Added the possibility to stop LBFGS after a line search failure, by Zaccharie Ramzi.</p></li>
+<li><p>Added gamma to LBFGS state, by Zaccharie Ramzi.</p></li>
+<li><p>Added <a class="reference internal" href="_autosummary/jaxopt.BFGS.html#jaxopt.BFGS" title="jaxopt.BFGS"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BFGS</span></code></a>, by Mathieu Blondel.</p></li>
+<li><p>Added value_and_grad option to all gradient-based solvers, by Mathieu Blondel.</p></li>
+<li><p>Added Fenchel-Young loss, by Quentin Berthet.</p></li>
+<li><p>Added <a class="reference internal" href="_autosummary/jaxopt.projection.projection_sparse_simplex.html#jaxopt.projection.projection_sparse_simplex" title="jaxopt.projection.projection_sparse_simplex"><code class="xref py py-func docutils literal notranslate"><span class="pre">projection_sparse_simplex</span></code></a>, by Tianlin Liu.</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed missing args,kwargs in resnet example, by Louis Béthune.</p></li>
+<li><p>Corrected the implicit diff examples, by Zaccharie Ramzi.</p></li>
+<li><p>Small optimization in l2-regularized semi-dual OT, by Mathieu Blondel.</p></li>
+<li><p>Numerical stability improvements in <a class="reference internal" href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt" title="jaxopt.LevenbergMarquardt"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LevenbergMarquardt</span></code></a>, by Amir Saadat.</p></li>
+<li><p>Dtype consistency in LBFGS, by Alex Botev.</p></li>
+</ul>
+</section>
+<section id="deprecations">
+<h3>Deprecations<a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jaxopt.QuadraticProgramming</span></code> is now fully removed. Use
+<a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP" title="jaxopt.CvxpyQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.CvxpyQP</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a> and
+<a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP" title="jaxopt.EqualityConstrainedQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.EqualityConstrainedQP</span></code></a> instead.</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>Contributors<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<p>Alex Botev, Amir Saadat, Fabian Pedregosa, Louis Béthune, Mathieu Blondel, Quentin Berthet, Tianlin Liu, Zaccharie Ramzi.</p>
+</section>
+</section>
+<section id="version-0-5">
+<h2>Version 0.5<a class="headerlink" href="#version-0-5" title="Permalink to this heading"></a></h2>
+<section id="id11">
+<h3>New features<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added optimal transport related projections:
+<a class="reference internal" href="_autosummary/jaxopt.projection.projection_transport.html#jaxopt.projection.projection_transport" title="jaxopt.projection.projection_transport"><code class="xref py py-func docutils literal notranslate"><span class="pre">projection_transport</span></code></a>,
+<a class="reference internal" href="_autosummary/jaxopt.projection.projection_birkhoff.html#jaxopt.projection.projection_birkhoff" title="jaxopt.projection.projection_birkhoff"><code class="xref py py-func docutils literal notranslate"><span class="pre">projection_birkhoff</span></code></a>,
+<a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_transport.html#jaxopt.projection.kl_projection_transport" title="jaxopt.projection.kl_projection_transport"><code class="xref py py-func docutils literal notranslate"><span class="pre">kl_projection_transport</span></code></a>,
+and
+<a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_birkhoff.html#jaxopt.projection.kl_projection_birkhoff" title="jaxopt.projection.kl_projection_birkhoff"><code class="xref py py-func docutils literal notranslate"><span class="pre">kl_projection_birkhoff</span></code></a>,
+by Mathieu Blondel (semi-dual formulation) and Tianlin Liu (dual formulation).</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix LaTeX rendering issue in notebooks, by Amélie Héliou.</p></li>
+<li><p>Avoid gradient recompilations in zoom line search, by Mathieu Blondel.</p></li>
+<li><p>Fix unused Jacobian issue in <a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding" title="jaxopt.ScipyRootFinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ScipyRootFinding</span></code></a>, by Louis Béthune.</p></li>
+<li><p>Use zoom line search by default in <a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a> and <a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG" title="jaxopt.NonlinearCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.NonlinearCG</span></code></a>, by Mathieu Blondel.</p></li>
+<li><p>Pass tolerance argument to <a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize" title="jaxopt.ScipyMinimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ScipyMinimize</span></code></a>, by pipme.</p></li>
+<li><p>Handle has_aux in <a class="reference internal" href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt" title="jaxopt.LevenbergMarquardt"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LevenbergMarquardt</span></code></a>, by Keunhong Park.</p></li>
+<li><p>Add maxiter keyword argument in <a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize" title="jaxopt.ScipyMinimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ScipyMinimize</span></code></a>, by Fabian Pedregosa.</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>Contributors<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<p>Louis Béthune, Mathieu Blondel, Amélie Héliou, Keunhong Park, Fabian Pedregosa, pipme.</p>
+</section>
+</section>
+<section id="version-0-4-3">
+<h2>Version 0.4.3<a class="headerlink" href="#version-0-4-3" title="Permalink to this heading"></a></h2>
+<section id="id14">
+<h3>New features<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added zoom line search in <a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a>, by Mathieu Blondel. It can be enabled with the <code class="docutils literal notranslate"><span class="pre">linesearch=&quot;zoom&quot;</span></code> option.</p></li>
+</ul>
+</section>
+<section id="id15">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added support for quadratic polynomial <cite>fun</cite> in <a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a> and <a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a>, by Louis Béthune.</p></li>
+<li><p>Added a notebook for the dataset distillation example, by Amélie Héliou.</p></li>
+<li><p>Fixed wrong links and deprecation warnings in notebooks, by Fabian Pedregosa.</p></li>
+<li><p>Changed losses to avoid roundoff, by Jack Valmadre.</p></li>
+<li><p>Fixed init_params bug in multiclass_svm example, by Louis Béthune.</p></li>
+</ul>
+</section>
+<section id="id16">
+<h3>Contributors<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<p>Louis Béthune, Mathieu Blondel, Amélie Héliou, Fabian Pedregosa, Jack Valmadre.</p>
+</section>
+</section>
+<section id="version-0-4-2">
+<h2>Version 0.4.2<a class="headerlink" href="#version-0-4-2" title="Permalink to this heading"></a></h2>
+<section id="id17">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix issue with positional arguments in <a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a> and <a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG" title="jaxopt.NonlinearCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.NonlinearCG</span></code></a>,
+by Mathieu Blondel.</p></li>
+</ul>
+</section>
+<section id="id18">
+<h3>Contributors<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h3>
+<p>Mathieu Blondel.</p>
+</section>
+</section>
+<section id="version-0-4-1">
+<h2>Version 0.4.1<a class="headerlink" href="#version-0-4-1" title="Permalink to this heading"></a></h2>
+<section id="id19">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Improvements in <a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a>: fixed bug when using <code class="docutils literal notranslate"><span class="pre">use_gamma=True</span></code>,
+added <code class="docutils literal notranslate"><span class="pre">stepsize</span></code> option, strengthened tests, by Mathieu Blondel.</p></li>
+<li><p>Fixed link in resnet notebook, by Fabian Pedregosa.</p></li>
+</ul>
+</section>
+<section id="id20">
+<h3>Contributors<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h3>
+<p>Fabian Pedregosa, Mathieu Blondel.</p>
+</section>
+</section>
+<section id="version-0-4">
+<h2>Version 0.4<a class="headerlink" href="#version-0-4" title="Permalink to this heading"></a></h2>
+<section id="id21">
+<h3>New features<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added solver <a class="reference internal" href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt" title="jaxopt.LevenbergMarquardt"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LevenbergMarquardt</span></code></a>, by Amir Saadat.</p></li>
+<li><p>Added solver <a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a>, by Mathieu Blondel.</p></li>
+<li><p>Added <code class="xref py py-func docutils literal notranslate"><span class="pre">projection_hypercube</span></code>, by Mathieu Blondel.</p></li>
+</ul>
+</section>
+<section id="id22">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed <a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_normal_cg.html#jaxopt.linear_solve.solve_normal_cg" title="jaxopt.linear_solve.solve_normal_cg"><code class="xref py py-func docutils literal notranslate"><span class="pre">solve_normal_cg</span></code></a>
+when the linear operator is “nonsquare” (does not map to a space of same dimension),
+by Mathieu Blondel.</p></li>
+<li><p>Fixed edge case in <a class="reference internal" href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection" title="jaxopt.Bisection"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.Bisection</span></code></a>, by Mathieu Blondel.</p></li>
+<li><p>Replaced deprecated tree_multimap with tree_map, by Fan Yang.</p></li>
+<li><p>Added support for leaf cond pytrees in <code class="xref py py-func docutils literal notranslate"><span class="pre">tree_where</span></code>, by Felipe Llinares.</p></li>
+<li><p>Added Python 3.10 support officially, by Jeppe Klitgaard.</p></li>
+<li><p>Replaced deprecated tree_multimap with tree_map, by Fan Yang.</p></li>
+<li><p>In scipy wrappers, converted pytree leaves to jax arrays to determine their shape/dtype, by Roy Frostig.</p></li>
+<li><p>Converted the “Resnet” and “Adversarial Training” examples to notebooks, by Fabian Pedregosa.</p></li>
+</ul>
+</section>
+<section id="id23">
+<h3>Contributors<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h3>
+<p>Amir Saadat, Fabian Pedregosa, Fan Yang, Felipe Llinares, Jeppe Klitgaard, Mathieu Blondel, Roy Frostig.</p>
+</section>
+</section>
+<section id="version-0-3-1">
+<h2>Version 0.3.1.<a class="headerlink" href="#version-0-3-1" title="Permalink to this heading"></a></h2>
+<section id="id24">
+<h3>New features<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Pjit-based example of data parallel training using Flax, by Felipe Llinares.</p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/139">Support for GPU and state of the art adversarial training algorithm (PGD) on the robust_training.py example</a> by <a class="reference external" href="https://fa.bianp.net/">Fabian Pedregosa</a></p></li>
+<li><p>Update line search in LBFGS to use jit and unroll from LBFGS, by Ian Williamson.</p></li>
+<li><p>Support dynamic maximum iteration count in iterative solvers, by Roy Frostig.</p></li>
+<li><p>Fix tree_where for singleton pytrees, by Louis Béthune.</p></li>
+<li><p>Remove QuadraticProg in projections and set <code class="docutils literal notranslate"><span class="pre">init_params=None</span></code> by default in QP solvers, by Louis Béthune.</p></li>
+<li><p>Add missing ‘value’ attribute in LbfgsState, by Mathieu Blondel.</p></li>
+</ul>
+</section>
+<section id="id26">
+<h3>Contributors<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h3>
+<p>Felipe Llinares, Fabian Pedregosa, Ian Williamson, Louis Béthune, Mathieu Blondel, Roy Frostig.</p>
+</section>
+</section>
+<section id="version-0-3">
+<h2>Version 0.3<a class="headerlink" href="#version-0-3" title="Permalink to this heading"></a></h2>
+<section id="id27">
+<h3>New features<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch" title="jaxopt.BacktrackingLineSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BacktrackingLineSearch</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton" title="jaxopt.GaussNewton"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.GaussNewton</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG" title="jaxopt.NonlinearCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.NonlinearCG</span></code></a></p></li>
+</ul>
+</section>
+<section id="id28">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/143">Support implicit AD in higher-order differentiation</a>.</p></li>
+</ul>
+</section>
+<section id="id29">
+<h3>Contributors<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h3>
+<p>Amir Saadat, Fabian Pedregosa, Geoffrey Négiar, Hyunsung Lee, Mathieu Blondel, Roy Frostig.</p>
+</section>
+</section>
+<section id="version-0-2">
+<h2>Version 0.2<a class="headerlink" href="#version-0-2" title="Permalink to this heading"></a></h2>
+<section id="id30">
+<h3>New features<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Quadratic programming solvers <a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP" title="jaxopt.CvxpyQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.CvxpyQP</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a> and
+<a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP" title="jaxopt.EqualityConstrainedQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.EqualityConstrainedQP</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement" title="jaxopt.IterativeRefinement"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.IterativeRefinement</span></code></a>.</p></li>
+</ul>
+</section>
+<section id="new-examples">
+<h3>New examples<a class="headerlink" href="#new-examples" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_deep_learning_flax_resnet.py</span></p></li>
+</ul>
+</section>
+<section id="id31">
+<h3>Bug fixes and enhancements<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/113">Prevent recompilation of loops in solver.run if executing without jit</a>.</p></li>
+<li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/107">Prevents recomputation of gradient in OptaxSolver</a>.</p></li>
+<li><p><a class="reference external" href="https://github.com/google/jaxopt/pull/106">Make solver.update jittable and ensure output states are consistent</a>.</p></li>
+<li><p>Allow <code class="docutils literal notranslate"><span class="pre">Callable</span></code> for the <code class="docutils literal notranslate"><span class="pre">stepsize</span></code> argument in
+<a class="reference internal" href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient" title="jaxopt.ProximalGradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ProximalGradient</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient" title="jaxopt.ProjectedGradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ProjectedGradient</span></code></a> and
+<a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent" title="jaxopt.GradientDescent"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.GradientDescent</span></code></a>.</p></li>
+</ul>
+</section>
+<section id="id32">
+<h3>Deprecations<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.QuadraticProgramming</span></code> is deprecated and will be removed in v0.4. Use
+<a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP" title="jaxopt.CvxpyQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.CvxpyQP</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a> and
+<a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP" title="jaxopt.EqualityConstrainedQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.EqualityConstrainedQP</span></code></a> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">params,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">solver.init(...)</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">solver.init_state(...)</span></code> instead.</p></li>
+</ul>
+</section>
+<section id="id33">
+<h3>Contributors<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h3>
+<p>Fabian Pedregosa, Felipe Llinares, Geoffrey Negiar, Louis Béthune, Mathieu
+Blondel, Vikas Sindhwani.</p>
+</section>
+</section>
+<section id="version-0-1-1">
+<h2>Version 0.1.1<a class="headerlink" href="#version-0-1-1" title="Permalink to this heading"></a></h2>
+<section id="id34">
+<h3>New features<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added solver <a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a></p></li>
+<li><p>Added example <a class="reference internal" href="auto_examples/fixed_point/deep_equilibrium_model.html#sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"><span class="std std-ref">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</span></a></p></li>
+<li><p>Added example <a class="reference internal" href="auto_examples/deep_learning/plot_sgd_solvers.html#sphx-glr-auto-examples-deep-learning-plot-sgd-solvers-py"><span class="std std-ref">Comparison of different SGD algorithms.</span></a></p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h3>Bug fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Allow non-jittable proximity operators in <a class="reference internal" href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient" title="jaxopt.ProximalGradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ProximalGradient</span></code></a></p></li>
+<li><p>Raise an exception if a quadratic program is infeasible or unbounded</p></li>
+</ul>
+</section>
+<section id="id35">
+<h3>Contributors<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h3>
+<p>Fabian Pedregosa, Louis Bethune, Mathieu Blondel.</p>
+</section>
+</section>
+<section id="version-0-1-initial-release">
+<h2>Version 0.1 (initial release)<a class="headerlink" href="#version-0-1-initial-release" title="Permalink to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration" title="jaxopt.AndersonAcceleration"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.AndersonAcceleration</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.AndersonWrapper.html#jaxopt.AndersonWrapper" title="jaxopt.AndersonWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.AndersonWrapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection" title="jaxopt.Bisection"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.Bisection</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent" title="jaxopt.BlockCoordinateDescent"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BlockCoordinateDescent</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration" title="jaxopt.FixedPointIteration"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.FixedPointIteration</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent" title="jaxopt.GradientDescent"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.GradientDescent</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent" title="jaxopt.MirrorDescent"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.MirrorDescent</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient" title="jaxopt.ProjectedGradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ProjectedGradient</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient" title="jaxopt.ProximalGradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ProximalGradient</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.QuadraticProgramming</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ScipyBoundedLeastSquares</span></code></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize" title="jaxopt.ScipyBoundedMinimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ScipyBoundedMinimize</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ScipyLeastSquares</span></code></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize" title="jaxopt.ScipyMinimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ScipyMinimize</span></code></a></p></li>
+<li><p><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding" title="jaxopt.ScipyRootFinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.ScipyRootFinding</span></code></a></p></li>
+<li><p><a class="reference internal" href="implicit_diff.html#implicit-diff"><span class="std std-ref">Implicit differentiation</span></a></p></li>
+</ul>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="auto_examples/constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_deep_learning_flax_image_classif.py</span></p></li>
+<li><p>Image Classification with Haiku and JAXopt</p></li>
+<li><p><a class="reference internal" href="auto_examples/deep_learning/haiku_vae.html#sphx-glr-auto-examples-deep-learning-haiku-vae-py"><span class="std std-ref">VAE example with Haiku and JAXopt.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/lasso_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/constrained/multiclass_linear_svm.html#sphx-glr-auto-examples-constrained-multiclass-linear-svm-py"><span class="std std-ref">Multiclass linear SVM (without intercept).</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/constrained/nmf.html#sphx-glr-auto-examples-constrained-nmf-py"><span class="std std-ref">Non-negative matrix factorizaton (NMF) using alternating minimization.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_implicit_diff_plot_dataset_distillation.py</span></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/ridge_reg_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-ridge-reg-implicit-diff-py"><span class="std std-ref">Implicit differentiation of ridge regression.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/implicit_diff/sparse_coding.html#sphx-glr-auto-examples-implicit-diff-sparse-coding-py"><span class="std std-ref">Sparse coding.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_deep_learning_robust_training.py</span></p></li>
+<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_anderson_accelerate_gd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-accelerate-gd-py"><span class="std std-ref">Anderson acceleration of gradient descent.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_anderson_wrapper_cd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"><span class="std std-ref">Anderson acceleration of block coordinate descent.</span></a></p></li>
+<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_picard_ode.html#sphx-glr-auto-examples-fixed-point-plot-picard-ode-py"><span class="std std-ref">Anderson acceleration in application to Picard–Lindelöf theorem.</span></a></p></li>
+</ul>
+</section>
+<section id="id36">
+<h3>Contributors<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h3>
+<p>Fabian Pedregosa, Felipe Llinares, Louis Bethune, Marco Cuturi, Mathieu
+Blondel, Peter Hawkins, Quentin Berthet, Robert Gower, Roy Frostig, Ta-Chu Kao</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="auto_examples/implicit_diff/sparse_coding.html" class="btn btn-neutral float-left" title="Sparse coding." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="developer.html" class="btn btn-neutral float-right" title="Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

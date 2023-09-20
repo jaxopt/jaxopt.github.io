@@ -1,0 +1,6 @@
+﻿jaxopt.loss.multiclass\_perceptron\_loss
+========================================
+
+.. currentmodule:: jaxopt.loss
+
+.. autofunction:: multiclass_perceptron_loss

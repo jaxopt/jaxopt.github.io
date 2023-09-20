@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API at a glance &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jaxopt.isotonic.isotonic_l2_pav" href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html" />
+    <link rel="prev" title="jaxopt.perturbations.Gumbel" href="_autosummary/jaxopt.perturbations.Gumbel.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API at a glance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#optimization">Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#unconstrained">Unconstrained</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.BFGS.html">jaxopt.BFGS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html">jaxopt.GradientDescent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html">jaxopt.LBFGS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html">jaxopt.ScipyMinimize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html">jaxopt.NonlinearCG</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#constrained">Constrained</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.LBFGSB.html">jaxopt.LBFGSB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.MirrorDescent.html">jaxopt.MirrorDescent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.ProjectedGradient.html">jaxopt.ProjectedGradient</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.ScipyBoundedMinimize.html">jaxopt.ScipyBoundedMinimize</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quadratic-programming">Quadratic programming</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html">jaxopt.BoxCDQP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html">jaxopt.BoxOSQP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html">jaxopt.CvxpyQP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html">jaxopt.EqualityConstrainedQP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.OSQP.html">jaxopt.OSQP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#non-smooth">Non-smooth</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.ProximalGradient.html">jaxopt.ProximalGradient</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.BlockCoordinateDescent.html">jaxopt.BlockCoordinateDescent</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#stochastic">Stochastic</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html">jaxopt.ArmijoSGD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html">jaxopt.OptaxSolver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html">jaxopt.PolyakSGD</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#loss-functions">Loss functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_logistic_loss.html">jaxopt.loss.binary_logistic_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_sparsemax_loss.html">jaxopt.loss.binary_sparsemax_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_hinge_loss.html">jaxopt.loss.binary_hinge_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.binary_perceptron_loss.html">jaxopt.loss.binary_perceptron_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_plus.html">jaxopt.loss.sparse_plus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_sigmoid.html">jaxopt.loss.sparse_sigmoid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.huber_loss.html">jaxopt.loss.huber_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html">jaxopt.loss.multiclass_logistic_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html">jaxopt.loss.multiclass_sparsemax_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_hinge_loss.html">jaxopt.loss.multiclass_hinge_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_perceptron_loss.html">jaxopt.loss.multiclass_perceptron_loss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#linear-system-solving">Linear system solving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_lu.html">jaxopt.linear_solve.solve_lu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cholesky.html">jaxopt.linear_solve.solve_cholesky</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cg.html">jaxopt.linear_solve.solve_cg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_normal_cg.html">jaxopt.linear_solve.solve_normal_cg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_gmres.html">jaxopt.linear_solve.solve_gmres</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_bicgstab.html">jaxopt.linear_solve.solve_bicgstab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.IterativeRefinement.html">jaxopt.IterativeRefinement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nonlinear-least-squares">Nonlinear least squares</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.GaussNewton.html">jaxopt.GaussNewton</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.LevenbergMarquardt.html">jaxopt.LevenbergMarquardt</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#root-finding">Root finding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.Bisection.html">jaxopt.Bisection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.Broyden.html">jaxopt.Broyden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html">jaxopt.ScipyRootFinding</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#fixed-point-resolution">Fixed point resolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.FixedPointIteration.html">jaxopt.FixedPointIteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.AndersonAcceleration.html">jaxopt.AndersonAcceleration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.AndersonWrapper.html">jaxopt.AndersonWrapper</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#implicit-differentiation">Implicit differentiation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.custom_root.html">jaxopt.implicit_diff.custom_root</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.custom_fixed_point.html">jaxopt.implicit_diff.custom_fixed_point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.root_jvp.html">jaxopt.implicit_diff.root_jvp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.root_vjp.html">jaxopt.implicit_diff.root_vjp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#line-search">Line search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html">jaxopt.BacktrackingLineSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.HagerZhangLineSearch.html">jaxopt.HagerZhangLineSearch</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#perturbed-optimizers">Perturbed optimizers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html">jaxopt.perturbations.make_perturbed_argmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html">jaxopt.perturbations.make_perturbed_max</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html">jaxopt.perturbations.make_perturbed_fun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.Gumbel.html">jaxopt.perturbations.Gumbel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.perturbations.Normal.html">jaxopt.perturbations.Normal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#isotonic-regression">Isotonic regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html">jaxopt.isotonic.isotonic_l2_pav</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tree-utilities">Tree utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_add.html">jaxopt.tree_util.tree_add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_sub.html">jaxopt.tree_util.tree_sub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_mul.html">jaxopt.tree_util.tree_mul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_div.html">jaxopt.tree_util.tree_div</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_scalar_mul.html">jaxopt.tree_util.tree_scalar_mul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_add_scalar_mul.html">jaxopt.tree_util.tree_add_scalar_mul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_vdot.html">jaxopt.tree_util.tree_vdot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_sum.html">jaxopt.tree_util.tree_sum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_l2_norm.html">jaxopt.tree_util.tree_l2_norm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_zeros_like.html">jaxopt.tree_util.tree_zeros_like</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API at a glance</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/api.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-at-a-glance">
+<h1>API at a glance<a class="headerlink" href="#api-at-a-glance" title="Permalink to this heading"></a></h1>
+<section id="optimization">
+<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this heading"></a></h2>
+<section id="unconstrained">
+<h3>Unconstrained<a class="headerlink" href="#unconstrained" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BFGS.html#jaxopt.BFGS" title="jaxopt.BFGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BFGS</span></code></a>(fun[, value_and_grad, has_aux, ...])</p></td>
+<td><p>BFGS solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.GradientDescent.html#jaxopt.GradientDescent" title="jaxopt.GradientDescent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.GradientDescent</span></code></a>(fun[, prox, ...])</p></td>
+<td><p>Gradient Descent solver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.LBFGS.html#jaxopt.LBFGS" title="jaxopt.LBFGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.LBFGS</span></code></a>(fun[, value_and_grad, has_aux, ...])</p></td>
+<td><p>LBFGS solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize" title="jaxopt.ScipyMinimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyMinimize</span></code></a>([method, dtype, jit, ...])</p></td>
+<td><p><cite>scipy.optimize.minimize</cite> wrapper</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.NonlinearCG.html#jaxopt.NonlinearCG" title="jaxopt.NonlinearCG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.NonlinearCG</span></code></a>(fun[, value_and_grad, ...])</p></td>
+<td><p>Nonlinear conjugate gradient solver.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="constrained">
+<h3>Constrained<a class="headerlink" href="#constrained" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.LBFGSB.html#jaxopt.LBFGSB" title="jaxopt.LBFGSB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.LBFGSB</span></code></a>(fun[, value_and_grad, ...])</p></td>
+<td><p>L-BFGS-B solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent" title="jaxopt.MirrorDescent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.MirrorDescent</span></code></a>(fun, projection_grad, ...)</p></td>
+<td><p>Mirror descent solver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient" title="jaxopt.ProjectedGradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ProjectedGradient</span></code></a>(fun, projection[, ...])</p></td>
+<td><p>Projected gradient solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize" title="jaxopt.ScipyBoundedMinimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyBoundedMinimize</span></code></a>([method, dtype, ...])</p></td>
+<td><p><cite>scipy.optimize.minimize</cite> wrapper.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="quadratic-programming">
+<h3>Quadratic programming<a class="headerlink" href="#quadratic-programming" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a>([maxiter, tol, verbose, ...])</p></td>
+<td><p>Coordinate descent solver for box-constrained QPs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.BoxOSQP.html#jaxopt.BoxOSQP" title="jaxopt.BoxOSQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BoxOSQP</span></code></a>([matvec_Q, matvec_A, fun, ...])</p></td>
+<td><p>Operator Splitting Solver for Quadratic Programs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP" title="jaxopt.CvxpyQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.CvxpyQP</span></code></a>([solver, implicit_diff_solve])</p></td>
+<td><p>Wraps CVXPY's quadratic solver with implicit diff support.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP" title="jaxopt.EqualityConstrainedQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.EqualityConstrainedQP</span></code></a>([matvec_Q, ...])</p></td>
+<td><p>Quadratic programming with equality constraints only.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.OSQP.html#jaxopt.OSQP" title="jaxopt.OSQP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OSQP</span></code></a>(*[, matvec_Q, matvec_A, ...])</p></td>
+<td><p>OSQP solver for general quadratic programming.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="non-smooth">
+<h3>Non-smooth<a class="headerlink" href="#non-smooth" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient" title="jaxopt.ProximalGradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ProximalGradient</span></code></a>(fun[, prox, ...])</p></td>
+<td><p>Proximal gradient solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent" title="jaxopt.BlockCoordinateDescent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BlockCoordinateDescent</span></code></a>(fun, block_prox)</p></td>
+<td><p>Block coordinate solver.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stochastic">
+<h3>Stochastic<a class="headerlink" href="#stochastic" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
+<td><p>SGD with Armijo line search.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.OptaxSolver</span></code></a>(fun, opt[, ...])</p></td>
+<td><p>Optax solver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.PolyakSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
+<td><p>SGD with Polyak step size.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="loss-functions">
+<h3>Loss functions<a class="headerlink" href="#loss-functions" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss" title="jaxopt.loss.binary_logistic_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_logistic_loss</span></code></a>(label, logit)</p></td>
+<td><p>Binary logistic loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_sparsemax_loss.html#jaxopt.loss.binary_sparsemax_loss" title="jaxopt.loss.binary_sparsemax_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_sparsemax_loss</span></code></a>(label, logit)</p></td>
+<td><p>Binary sparsemax loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_hinge_loss.html#jaxopt.loss.binary_hinge_loss" title="jaxopt.loss.binary_hinge_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_hinge_loss</span></code></a>(label, score)</p></td>
+<td><p>Binary hinge loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_perceptron_loss.html#jaxopt.loss.binary_perceptron_loss" title="jaxopt.loss.binary_perceptron_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_perceptron_loss</span></code></a>(label, score)</p></td>
+<td><p>Binary perceptron loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_plus.html#jaxopt.loss.sparse_plus" title="jaxopt.loss.sparse_plus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.sparse_plus</span></code></a>(x)</p></td>
+<td><p>Sparse plus function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.sparse_sigmoid.html#jaxopt.loss.sparse_sigmoid" title="jaxopt.loss.sparse_sigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.sparse_sigmoid</span></code></a>(x)</p></td>
+<td><p>Sparse sigmoid function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.huber_loss.html#jaxopt.loss.huber_loss" title="jaxopt.loss.huber_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.huber_loss</span></code></a>(target, pred[, delta])</p></td>
+<td><p>Huber loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html#jaxopt.loss.multiclass_logistic_loss" title="jaxopt.loss.multiclass_logistic_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_logistic_loss</span></code></a>(label, ...)</p></td>
+<td><p>Multiclass logistic loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html#jaxopt.loss.multiclass_sparsemax_loss" title="jaxopt.loss.multiclass_sparsemax_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_sparsemax_loss</span></code></a>(label, ...)</p></td>
+<td><p>Multiclass sparsemax loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_hinge_loss.html#jaxopt.loss.multiclass_hinge_loss" title="jaxopt.loss.multiclass_hinge_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_hinge_loss</span></code></a>(label, scores)</p></td>
+<td><p>Multiclass hinge loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_perceptron_loss.html#jaxopt.loss.multiclass_perceptron_loss" title="jaxopt.loss.multiclass_perceptron_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_perceptron_loss</span></code></a>(...)</p></td>
+<td><p>Binary perceptron loss.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="linear-system-solving">
+<h2>Linear system solving<a class="headerlink" href="#linear-system-solving" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_lu.html#jaxopt.linear_solve.solve_lu" title="jaxopt.linear_solve.solve_lu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_lu</span></code></a>(matvec, b[, ridge])</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using <code class="docutils literal notranslate"><span class="pre">jax.lax.solve</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cholesky.html#jaxopt.linear_solve.solve_cholesky" title="jaxopt.linear_solve.solve_cholesky"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_cholesky</span></code></a>(matvec, b)</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code>, using Cholesky decomposition.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cg.html#jaxopt.linear_solve.solve_cg" title="jaxopt.linear_solve.solve_cg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_cg</span></code></a>(matvec, b[, ...])</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using conjugate gradient.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_normal_cg.html#jaxopt.linear_solve.solve_normal_cg" title="jaxopt.linear_solve.solve_normal_cg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_normal_cg</span></code></a>(matvec, b)</p></td>
+<td><p>Solves the normal equation <code class="docutils literal notranslate"><span class="pre">A^T</span> <span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A^T</span> <span class="pre">b</span></code> using conjugate gradient.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_gmres.html#jaxopt.linear_solve.solve_gmres" title="jaxopt.linear_solve.solve_gmres"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_gmres</span></code></a>(matvec, b[, ...])</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using gmres.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_bicgstab.html#jaxopt.linear_solve.solve_bicgstab" title="jaxopt.linear_solve.solve_bicgstab"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_bicgstab</span></code></a>(matvec, b)</p></td>
+<td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using bicgstab.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement" title="jaxopt.IterativeRefinement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.IterativeRefinement</span></code></a>([matvec_A, ...])</p></td>
+<td><p><a class="reference external" href="https://en.wikipedia.org/wiki/Iterative_refinement">Iterativement refinement</a> algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="nonlinear-least-squares">
+<h2>Nonlinear least squares<a class="headerlink" href="#nonlinear-least-squares" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.GaussNewton.html#jaxopt.GaussNewton" title="jaxopt.GaussNewton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.GaussNewton</span></code></a>(residual_fun[, maxiter, ...])</p></td>
+<td><p>Gauss-Newton nonlinear least-squares solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt" title="jaxopt.LevenbergMarquardt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.LevenbergMarquardt</span></code></a>(residual_fun[, ...])</p></td>
+<td><p>Levenberg-Marquardt (LM) nonlinear least-squares solver.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="root-finding">
+<h2>Root finding<a class="headerlink" href="#root-finding" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection" title="jaxopt.Bisection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.Bisection</span></code></a>(optimality_fun, lower, upper)</p></td>
+<td><p>One-dimensional root finding using bisection.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.Broyden.html#jaxopt.Broyden" title="jaxopt.Broyden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.Broyden</span></code></a>(fun[, has_aux, maxiter, tol, ...])</p></td>
+<td><p>Limited-memory Broyden solver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding" title="jaxopt.ScipyRootFinding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyRootFinding</span></code></a>([method, dtype, ...])</p></td>
+<td><p><cite>scipy.optimize.root</cite> wrapper.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fixed-point-resolution">
+<h2>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration" title="jaxopt.FixedPointIteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.FixedPointIteration</span></code></a>(fixed_point_fun)</p></td>
+<td><p>Fixed point iteration method.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration" title="jaxopt.AndersonAcceleration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.AndersonAcceleration</span></code></a>(fixed_point_fun)</p></td>
+<td><p>Anderson acceleration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.AndersonWrapper.html#jaxopt.AndersonWrapper" title="jaxopt.AndersonWrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.AndersonWrapper</span></code></a>(solver[, ...])</p></td>
+<td><p>Wrapper for accelerating JAXopt solvers.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="implicit-differentiation">
+<h2>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.custom_root.html#jaxopt.implicit_diff.custom_root" title="jaxopt.implicit_diff.custom_root"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.implicit_diff.custom_root</span></code></a>(optimality_fun)</p></td>
+<td><p>Decorator for adding implicit differentiation to a root solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.custom_fixed_point.html#jaxopt.implicit_diff.custom_fixed_point" title="jaxopt.implicit_diff.custom_fixed_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.implicit_diff.custom_fixed_point</span></code></a>(...)</p></td>
+<td><p>Decorator for adding implicit differentiation to a fixed point solver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.root_jvp.html#jaxopt.implicit_diff.root_jvp" title="jaxopt.implicit_diff.root_jvp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.implicit_diff.root_jvp</span></code></a>(...[, solve])</p></td>
+<td><p>Jacobian-vector product of a root.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.root_vjp.html#jaxopt.implicit_diff.root_vjp" title="jaxopt.implicit_diff.root_vjp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.implicit_diff.root_vjp</span></code></a>(...[, solve])</p></td>
+<td><p>Vector-Jacobian product of a root.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="line-search">
+<h2>Line search<a class="headerlink" href="#line-search" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch" title="jaxopt.BacktrackingLineSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BacktrackingLineSearch</span></code></a>(fun[, ...])</p></td>
+<td><p>Backtracking line search.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch" title="jaxopt.HagerZhangLineSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.HagerZhangLineSearch</span></code></a>(fun[, ...])</p></td>
+<td><p>Hager-Zhang line search.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="perturbed-optimizers">
+<h2>Perturbed optimizers<a class="headerlink" href="#perturbed-optimizers" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax" title="jaxopt.perturbations.make_perturbed_argmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_argmax</span></code></a>(...)</p></td>
+<td><p>Transforms a function into a differentiable version with perturbations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max" title="jaxopt.perturbations.make_perturbed_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_max</span></code></a>(...)</p></td>
+<td><p>Turns an argmax in a differentiable version of the max with perturbations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun</span></code></a>(fun)</p></td>
+<td><p>Transforms a function into a differentiable version with perturbations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.Gumbel.html#jaxopt.perturbations.Gumbel" title="jaxopt.perturbations.Gumbel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.Gumbel</span></code></a>()</p></td>
+<td><p>Gumbel distribution.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.perturbations.Normal.html#jaxopt.perturbations.Normal" title="jaxopt.perturbations.Normal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.perturbations.Normal</span></code></a>()</p></td>
+<td><p>Normal distribution.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="isotonic-regression">
+<h2>Isotonic regression<a class="headerlink" href="#isotonic-regression" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html#jaxopt.isotonic.isotonic_l2_pav" title="jaxopt.isotonic.isotonic_l2_pav"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.isotonic.isotonic_l2_pav</span></code></a>(y[, y_min, ...])</p></td>
+<td><p>Solves an isotonic regression problem using PAV.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tree-utilities">
+<h2>Tree utilities<a class="headerlink" href="#tree-utilities" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_add.html#jaxopt.tree_util.tree_add" title="jaxopt.tree_util.tree_add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_add</span></code></a>(tree, *rest[, is_leaf])</p></td>
+<td><p>Tree addition.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_sub.html#jaxopt.tree_util.tree_sub" title="jaxopt.tree_util.tree_sub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_sub</span></code></a>(tree, *rest[, is_leaf])</p></td>
+<td><p>Tree subtraction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_mul.html#jaxopt.tree_util.tree_mul" title="jaxopt.tree_util.tree_mul"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_mul</span></code></a>(tree, *rest[, is_leaf])</p></td>
+<td><p>Tree multiplication.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_div.html#jaxopt.tree_util.tree_div" title="jaxopt.tree_util.tree_div"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_div</span></code></a>(tree, *rest[, is_leaf])</p></td>
+<td><p>Tree division.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_scalar_mul.html#jaxopt.tree_util.tree_scalar_mul" title="jaxopt.tree_util.tree_scalar_mul"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_scalar_mul</span></code></a>(scalar, tree_x)</p></td>
+<td><p>Compute scalar * tree_x.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_add_scalar_mul.html#jaxopt.tree_util.tree_add_scalar_mul" title="jaxopt.tree_util.tree_add_scalar_mul"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_add_scalar_mul</span></code></a>(tree_x, ...)</p></td>
+<td><p>Compute tree_x + scalar * tree_y.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_vdot.html#jaxopt.tree_util.tree_vdot" title="jaxopt.tree_util.tree_vdot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_vdot</span></code></a>(tree_x, tree_y)</p></td>
+<td><p>Compute the inner product &lt;tree_x, tree_y&gt;.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_sum.html#jaxopt.tree_util.tree_sum" title="jaxopt.tree_util.tree_sum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_sum</span></code></a>(tree_x)</p></td>
+<td><p>Compute sum(tree_x).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_l2_norm.html#jaxopt.tree_util.tree_l2_norm" title="jaxopt.tree_util.tree_l2_norm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_l2_norm</span></code></a>(tree_x[, squared])</p></td>
+<td><p>Compute the l2 norm ||tree_x||.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.tree_util.tree_zeros_like.html#jaxopt.tree_util.tree_zeros_like" title="jaxopt.tree_util.tree_zeros_like"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.tree_util.tree_zeros_like</span></code></a>(tree_x)</p></td>
+<td><p>Creates an all-zero tree with the same structure as tree_x.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_autosummary/jaxopt.perturbations.Gumbel.html" class="btn btn-neutral float-left" title="jaxopt.perturbations.Gumbel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.isotonic.isotonic_l2_pav.html" class="btn btn-neutral float-right" title="jaxopt.isotonic.isotonic_l2_pav" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

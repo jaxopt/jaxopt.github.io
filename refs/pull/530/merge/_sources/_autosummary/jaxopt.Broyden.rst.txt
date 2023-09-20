@@ -1,0 +1,54 @@
+﻿jaxopt.Broyden
+==============
+
+.. currentmodule:: jaxopt
+
+.. autoclass:: Broyden
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Broyden.__init__
+      ~Broyden.attribute_names
+      ~Broyden.attribute_values
+      ~Broyden.init_state
+      ~Broyden.l2_optimality_error
+      ~Broyden.optimality_fun
+      ~Broyden.run
+      ~Broyden.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Broyden.condition
+      ~Broyden.decrease_factor
+      ~Broyden.gamma
+      ~Broyden.has_aux
+      ~Broyden.history_size
+      ~Broyden.implicit_diff
+      ~Broyden.implicit_diff_solve
+      ~Broyden.increase_factor
+      ~Broyden.jit
+      ~Broyden.linesearch
+      ~Broyden.max_stepsize
+      ~Broyden.maxiter
+      ~Broyden.maxls
+      ~Broyden.min_stepsize
+      ~Broyden.stepsize
+      ~Broyden.stop_if_linesearch_fails
+      ~Broyden.tol
+      ~Broyden.unroll
+      ~Broyden.verbose
+      ~Broyden.fun
+   
+   

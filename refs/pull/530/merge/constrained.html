@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Constrained optimization &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jaxopt.ProjectedGradient" href="_autosummary/jaxopt.ProjectedGradient.html" />
+    <link rel="prev" title="jaxopt.NonlinearCG" href="_autosummary/jaxopt.NonlinearCG.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Constrained optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#projected-gradient">Projected gradient</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.ProjectedGradient.html">jaxopt.ProjectedGradient</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instantiating-and-running-the-solver">Instantiating and running the solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-projection-parameters">Specifying projection parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#differentiation">Differentiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#projections">Projections</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_non_negative.html">jaxopt.projection.projection_non_negative</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_box.html">jaxopt.projection.projection_box</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_simplex.html">jaxopt.projection.projection_simplex</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_sparse_simplex.html">jaxopt.projection.projection_sparse_simplex</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_l1_sphere.html">jaxopt.projection.projection_l1_sphere</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_l1_ball.html">jaxopt.projection.projection_l1_ball</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_l2_sphere.html">jaxopt.projection.projection_l2_sphere</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_l2_ball.html">jaxopt.projection.projection_l2_ball</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_linf_ball.html">jaxopt.projection.projection_linf_ball</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_hyperplane.html">jaxopt.projection.projection_hyperplane</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_halfspace.html">jaxopt.projection.projection_halfspace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_affine_set.html">jaxopt.projection.projection_affine_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_polyhedron.html">jaxopt.projection.projection_polyhedron</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_box_section.html">jaxopt.projection.projection_box_section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_transport.html">jaxopt.projection.projection_transport</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.projection_birkhoff.html">jaxopt.projection.projection_birkhoff</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mirror-descent">Mirror descent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.MirrorDescent.html">jaxopt.MirrorDescent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kullback-leibler-projections">Kullback-Leibler projections</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_transport.html">jaxopt.projection.kl_projection_transport</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_birkhoff.html">jaxopt.projection.kl_projection_birkhoff</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#box-constraints">Box constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.ScipyBoundedMinimize.html">jaxopt.ScipyBoundedMinimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/jaxopt.LBFGSB.html">jaxopt.LBFGSB</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Example gallery</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Constrained optimization</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/constrained.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="constrained-optimization">
+<span id="constrained-optim"></span><h1>Constrained optimization<a class="headerlink" href="#constrained-optimization" title="Permalink to this heading"></a></h1>
+<p>This section is concerned with problems of the form</p>
+<div class="math notranslate nohighlight">
+\[\min_{x} f(x, \theta) \textrm{ subject to } x \in \mathcal{C}(\upsilon),\]</div>
+<p>where <span class="math notranslate nohighlight">\(f(x, \theta)\)</span> is differentiable (almost everywhere), <span class="math notranslate nohighlight">\(x\)</span> are
+the parameters with respect to which the function is minimized, <span class="math notranslate nohighlight">\(\theta\)</span>
+are optional additional arguments, <span class="math notranslate nohighlight">\(\mathcal{C}(\upsilon)\)</span> is a convex
+set and <span class="math notranslate nohighlight">\(\upsilon\)</span> are parameter the convex set may depend on.</p>
+<section id="projected-gradient">
+<h2>Projected gradient<a class="headerlink" href="#projected-gradient" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient" title="jaxopt.ProjectedGradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ProjectedGradient</span></code></a>(fun, projection[, ...])</p></td>
+<td><p>Projected gradient solver.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="instantiating-and-running-the-solver">
+<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this heading"></a></h3>
+<p>To solve constrained optimization problems, we can use projected gradient
+descent, which is gradient descent with an additional projection onto the
+constraint set. Constraints are specified by setting the <code class="docutils literal notranslate"><span class="pre">projection</span></code>
+argument. For instance, non-negativity constraints can be specified using
+<a class="reference internal" href="_autosummary/jaxopt.projection.projection_non_negative.html#jaxopt.projection.projection_non_negative" title="jaxopt.projection.projection_non_negative"><code class="xref py py-func docutils literal notranslate"><span class="pre">projection_non_negative</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">ProjectedGradient</span>
+<span class="kn">from</span> <span class="nn">jaxopt.projection</span> <span class="kn">import</span> <span class="n">projection_non_negative</span>
+
+<span class="n">pg</span> <span class="o">=</span> <span class="n">ProjectedGradient</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">projection_non_negative</span><span class="p">)</span>
+<span class="n">pg_sol</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">w_init</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+<p>Numerous projections are available, see below.</p>
+</section>
+<section id="specifying-projection-parameters">
+<h3>Specifying projection parameters<a class="headerlink" href="#specifying-projection-parameters" title="Permalink to this heading"></a></h3>
+<p>Some projections have a hyperparameter that can be specified.  For
+instance, the hyperparameter of <a class="reference internal" href="_autosummary/jaxopt.projection.projection_l2_ball.html#jaxopt.projection.projection_l2_ball" title="jaxopt.projection.projection_l2_ball"><code class="xref py py-func docutils literal notranslate"><span class="pre">projection_l2_ball</span></code></a> is the radius of the <span class="math notranslate nohighlight">\(L_2\)</span> ball.
+This can be passed using the <code class="docutils literal notranslate"><span class="pre">hyperparams_proj</span></code> argument of <code class="docutils literal notranslate"><span class="pre">run</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt.projection</span> <span class="kn">import</span> <span class="n">projection_l2_ball</span>
+
+<span class="n">radius</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">pg</span> <span class="o">=</span> <span class="n">ProjectedGradient</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">projection_l2_ball</span><span class="p">)</span>
+<span class="n">pg_sol</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">w_init</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+<aside class="topic">
+<p class="topic-title">Examples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="auto_examples/constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></p></li>
+</ul>
+</aside>
+</section>
+<section id="differentiation">
+<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this heading"></a></h3>
+<p>In some applications, it is useful to differentiate the solution of the solver
+with respect to some hyperparameters.  Continuing the previous example, we can
+now differentiate the solution w.r.t. <code class="docutils literal notranslate"><span class="pre">radius</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">radius</span><span class="p">):</span>
+  <span class="n">pg</span> <span class="o">=</span> <span class="n">ProjectedGradient</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">projection_l2_ball</span><span class="p">,</span> <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">pg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">w_init</span><span class="p">,</span> <span class="n">hyperparams_proj</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">solution</span><span class="p">)(</span><span class="n">radius</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Under the hood, we use the implicit function theorem if <code class="docutils literal notranslate"><span class="pre">implicit_diff=True</span></code>
+and autodiff of unrolled iterations if <code class="docutils literal notranslate"><span class="pre">implicit_diff=False</span></code>.  See the
+<a class="reference internal" href="implicit_diff.html#implicit-diff"><span class="std std-ref">implicit differentiation</span></a> section for more details.</p>
+</section>
+<section id="projections">
+<h3>Projections<a class="headerlink" href="#projections" title="Permalink to this heading"></a></h3>
+<p>The Euclidean projection onto <span class="math notranslate nohighlight">\(\mathcal{C}(\upsilon)\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\text{proj}_{\mathcal{C}}(x', \upsilon) :=
+\underset{x}{\text{argmin}} ~ ||x' - x||^2 \textrm{ subject to } x \in \mathcal{C}(\upsilon).\]</div>
+<p>The following operators are available.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_non_negative.html#jaxopt.projection.projection_non_negative" title="jaxopt.projection.projection_non_negative"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_non_negative</span></code></a>(x)</p></td>
+<td><p>Projection onto the non-negative orthant:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_box.html#jaxopt.projection.projection_box" title="jaxopt.projection.projection_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_box</span></code></a>(x, hyperparams)</p></td>
+<td><p>Projection onto box constraints:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_simplex.html#jaxopt.projection.projection_simplex" title="jaxopt.projection.projection_simplex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_simplex</span></code></a>(x[, value])</p></td>
+<td><p>Projection onto a simplex:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_sparse_simplex.html#jaxopt.projection.projection_sparse_simplex" title="jaxopt.projection.projection_sparse_simplex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_sparse_simplex</span></code></a>(x, ...)</p></td>
+<td><p>Projection onto the simplex with cardinality constraint (maximum number of non-zero elements).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_l1_sphere.html#jaxopt.projection.projection_l1_sphere" title="jaxopt.projection.projection_l1_sphere"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_l1_sphere</span></code></a>(x[, ...])</p></td>
+<td><p>Projection onto the l1 sphere:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_l1_ball.html#jaxopt.projection.projection_l1_ball" title="jaxopt.projection.projection_l1_ball"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_l1_ball</span></code></a>(x[, ...])</p></td>
+<td><p>Projection onto the l1 ball:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_l2_sphere.html#jaxopt.projection.projection_l2_sphere" title="jaxopt.projection.projection_l2_sphere"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_l2_sphere</span></code></a>(x[, ...])</p></td>
+<td><p>Projection onto the l2 sphere:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_l2_ball.html#jaxopt.projection.projection_l2_ball" title="jaxopt.projection.projection_l2_ball"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_l2_ball</span></code></a>(x[, ...])</p></td>
+<td><p>Projection onto the l2 ball:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_linf_ball.html#jaxopt.projection.projection_linf_ball" title="jaxopt.projection.projection_linf_ball"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_linf_ball</span></code></a>(x[, ...])</p></td>
+<td><p>Projection onto the l-infinity ball:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_hyperplane.html#jaxopt.projection.projection_hyperplane" title="jaxopt.projection.projection_hyperplane"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_hyperplane</span></code></a>(x, ...)</p></td>
+<td><p>Projection onto a hyperplane:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_halfspace.html#jaxopt.projection.projection_halfspace" title="jaxopt.projection.projection_halfspace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_halfspace</span></code></a>(x, ...)</p></td>
+<td><p>Projection onto a halfspace:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_affine_set.html#jaxopt.projection.projection_affine_set" title="jaxopt.projection.projection_affine_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_affine_set</span></code></a>(x, ...)</p></td>
+<td><p>Projection onto an affine set:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_polyhedron.html#jaxopt.projection.projection_polyhedron" title="jaxopt.projection.projection_polyhedron"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_polyhedron</span></code></a>(x, ...)</p></td>
+<td><p>Projection onto a polyhedron:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_box_section.html#jaxopt.projection.projection_box_section" title="jaxopt.projection.projection_box_section"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_box_section</span></code></a>(x, ...)</p></td>
+<td><p>Projection onto a box section:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_transport.html#jaxopt.projection.projection_transport" title="jaxopt.projection.projection_transport"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_transport</span></code></a>(...)</p></td>
+<td><p>Projection onto the transportation polytope.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.projection_birkhoff.html#jaxopt.projection.projection_birkhoff" title="jaxopt.projection.projection_birkhoff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.projection_birkhoff</span></code></a>(sim_matrix)</p></td>
+<td><p>Projection onto the Birkhoff polytope, the set of doubly stochastic matrices.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Projections always have two arguments: the input to be projected and the
+parameters of the convex set.</p>
+</section>
+</section>
+<section id="mirror-descent">
+<h2>Mirror descent<a class="headerlink" href="#mirror-descent" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent" title="jaxopt.MirrorDescent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.MirrorDescent</span></code></a>(fun, projection_grad, ...)</p></td>
+<td><p>Mirror descent solver.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="kullback-leibler-projections">
+<h3>Kullback-Leibler projections<a class="headerlink" href="#kullback-leibler-projections" title="Permalink to this heading"></a></h3>
+<p>The Kullback-Leibler projection onto <span class="math notranslate nohighlight">\(\mathcal{C}(\upsilon)\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\text{proj}_{\mathcal{C}}(x', \upsilon) :=
+\underset{x}{\text{argmin}} ~ \text{KL}(x, \exp(x')) \textrm{ subject to } x \in \mathcal{C}(\upsilon).\]</div>
+<p>The following operators are available.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_transport.html#jaxopt.projection.kl_projection_transport" title="jaxopt.projection.kl_projection_transport"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.kl_projection_transport</span></code></a>(...)</p></td>
+<td><p>Kullback-Leibler projection onto the transportation polytope.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.projection.kl_projection_birkhoff.html#jaxopt.projection.kl_projection_birkhoff" title="jaxopt.projection.kl_projection_birkhoff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.projection.kl_projection_birkhoff</span></code></a>(...)</p></td>
+<td><p>Kullback-Leibler projection onto the Birkhoff polytope, the set of doubly stochastic matrices.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="box-constraints">
+<h2>Box constraints<a class="headerlink" href="#box-constraints" title="Permalink to this heading"></a></h2>
+<p>For optimization with box constraints, in addition to projected gradient
+descent, we can use our SciPy wrapper.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize" title="jaxopt.ScipyBoundedMinimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyBoundedMinimize</span></code></a>([method, dtype, ...])</p></td>
+<td><p><cite>scipy.optimize.minimize</cite> wrapper.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/jaxopt.LBFGSB.html#jaxopt.LBFGSB" title="jaxopt.LBFGSB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.LBFGSB</span></code></a>(fun[, value_and_grad, ...])</p></td>
+<td><p>L-BFGS-B solver.</p></td>
+</tr>
+</tbody>
+</table>
+<p>This example shows how to apply non-negativity constraints, which can
+be achieved by setting box constraints <span class="math notranslate nohighlight">\([0, \infty)\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">ScipyBoundedMinimize</span>
+
+<span class="n">w_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>
+<span class="n">lbfgsb</span> <span class="o">=</span> <span class="n">ScipyBoundedMinimize</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;l-bfgs-b&quot;</span><span class="p">)</span>
+<span class="n">lower_bounds</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">w_init</span><span class="p">)</span>
+<span class="n">upper_bounds</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">w_init</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inf</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_bounds</span><span class="p">,</span> <span class="n">upper_bounds</span><span class="p">)</span>
+<span class="n">lbfgsb_sol</span> <span class="o">=</span> <span class="n">lbfgsb</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">w_init</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_autosummary/jaxopt.NonlinearCG.html" class="btn btn-neutral float-left" title="jaxopt.NonlinearCG" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/jaxopt.ProjectedGradient.html" class="btn btn-neutral float-right" title="jaxopt.ProjectedGradient" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

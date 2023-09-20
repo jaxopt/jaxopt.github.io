@@ -1,0 +1,6 @@
+﻿jaxopt.loss.huber\_loss
+=======================
+
+.. currentmodule:: jaxopt.loss
+
+.. autofunction:: huber_loss

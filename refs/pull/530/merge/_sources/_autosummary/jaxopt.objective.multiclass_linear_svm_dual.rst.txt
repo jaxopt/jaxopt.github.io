@@ -1,0 +1,6 @@
+﻿jaxopt.objective.multiclass\_linear\_svm\_dual
+==============================================
+
+.. currentmodule:: jaxopt.objective
+
+.. autodata:: multiclass_linear_svm_dual

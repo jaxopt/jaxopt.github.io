@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep Equilibrium (DEQ) model in Flax with Anderson acceleration. &mdash; JAXopt 0.8 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Implicit differentiation" href="../implicit_diff/index.html" />
+    <link rel="prev" title="Anderson acceleration of gradient descent." href="plot_anderson_accelerate_gd.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            JAXopt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unconstrained.html">Unconstrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constrained.html">Constrained optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quadratic_programming.html">Quadratic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_smooth.html">Non-smooth optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stochastic.html">Stochastic optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../root_finding.html">Root finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixed_point.html">Fixed point resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nonlinear_least_squares.html">Nonlinear least squares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linear_system_solvers.html">Linear system solving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implicit_diff.html">Implicit differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../objective_and_loss.html">Loss and objective functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../line_search.html">Line search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../perturbations.html">Perturbed optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API at a glance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/index.html">Notebook gallery</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Example gallery</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#constrained-optimization">Constrained optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#deep-learning">Deep learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fixed-point-resolution">Fixed point resolution</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#implicit-differentiation">Implicit differentiation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../constrained/index.html">Constrained optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deep_learning/index.html">Deep learning</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Fixed point resolution</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="plot_picard_ode.html">Anderson acceleration in application to Picard–Lindelöf theorem.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plot_anderson_wrapper_cd.html">Anderson acceleration of block coordinate descent.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plot_anderson_accelerate_gd.html">Anderson acceleration of gradient descent.</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../implicit_diff/index.html">Implicit differentiation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/graphs/contributors">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt">Source code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/google/jaxopt/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">JAXopt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Example gallery</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Fixed point resolution</a></li>
+      <li class="breadcrumb-item active">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/fixed_point/deep_equilibrium_model.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-fixed-point-deep-equilibrium-model-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="deep-equilibrium-deq-model-in-flax-with-anderson-acceleration">
+<span id="sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"></span><h1>Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.<a class="headerlink" href="#deep-equilibrium-deq-model-in-flax-with-anderson-acceleration" title="Permalink to this heading"></a></h1>
+<p>This implementation is strongly inspired by the Pytorch code snippets in [3].</p>
+<p>A similar model called “implicit deep learning” is also proposed in [2].</p>
+<p>In practice BatchNormalization and initialization of weights in convolutions are
+important to ensure convergence.</p>
+<p>[1] Bai, S., Kolter, J.Z. and Koltun, V., 2019. Deep Equilibrium Models.
+Advances in Neural Information Processing Systems, 32, pp.690-701.</p>
+<p>[2] El Ghaoui, L., Gu, F., Travacca, B., Askari, A. and Tsai, A., 2021.
+Implicit deep learning. SIAM Journal on Mathematics of Data Science, 3(3),
+pp.930-958.</p>
+<p>[3] <a class="reference external" href="http://implicit-layers-tutorial.org/deep_equilibrium_models/">http://implicit-layers-tutorial.org/deep_equilibrium_models/</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
+
+<span class="kn">import</span> <span class="nn">flax</span>
+<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">from</span> <span class="nn">jax.tree_util</span> <span class="kn">import</span> <span class="n">tree_structure</span>
+
+<span class="kn">import</span> <span class="nn">jaxopt</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">loss</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">FixedPointIteration</span>
+<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonAcceleration</span>
+<span class="kn">from</span> <span class="nn">jaxopt.linear_solve</span> <span class="kn">import</span> <span class="n">solve_gmres</span><span class="p">,</span> <span class="n">solve_normal_cg</span>
+<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_sub</span><span class="p">,</span> <span class="n">tree_l2_norm</span>
+
+<span class="kn">import</span> <span class="nn">optax</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+
+<span class="n">dataset_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;mnist&quot;</span><span class="p">,</span> <span class="s2">&quot;kmnist&quot;</span><span class="p">,</span> <span class="s2">&quot;emnist&quot;</span><span class="p">,</span> <span class="s2">&quot;fashion_mnist&quot;</span><span class="p">,</span> <span class="s2">&quot;cifar10&quot;</span><span class="p">,</span> <span class="s2">&quot;cifar100&quot;</span>
+<span class="p">]</span>
+
+<span class="c1"># training hyper-parameters</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;l2reg&quot;</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="s2">&quot;L2 regularization.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="s2">&quot;Learning rate.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;maxiter&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;Maximum number of iterations.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s2">&quot;dataset&quot;</span><span class="p">,</span> <span class="s2">&quot;mnist&quot;</span><span class="p">,</span> <span class="n">dataset_names</span><span class="p">,</span> <span class="s2">&quot;Dataset to train on.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;net_width&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Multiplicator of neural network width.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;evaluation_frequency&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                     <span class="s2">&quot;Number of iterations between two evaluation measures.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;train_batch_size&quot;</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="s2">&quot;Batch size at train time.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;test_batch_size&quot;</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="s2">&quot;Batch size at test time.&quot;</span><span class="p">)</span>
+
+
+<span class="n">solvers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;normal_cg&quot;</span><span class="p">,</span> <span class="s2">&quot;gmres&quot;</span><span class="p">,</span> <span class="s2">&quot;anderson&quot;</span><span class="p">]</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s2">&quot;backward_solver&quot;</span><span class="p">,</span> <span class="s2">&quot;normal_cg&quot;</span><span class="p">,</span> <span class="n">solvers</span><span class="p">,</span>
+                  <span class="s2">&quot;Solver of linear sytem in implicit differentiation.&quot;</span><span class="p">)</span>
+
+<span class="c1"># anderson acceleration parameters</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_enum</span><span class="p">(</span><span class="s2">&quot;forward_solver&quot;</span><span class="p">,</span> <span class="s2">&quot;anderson&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;anderson&quot;</span><span class="p">,</span> <span class="s2">&quot;fixed_point&quot;</span><span class="p">],</span>
+                  <span class="s2">&quot;Whether to use Anderson acceleration.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;forward_maxiter&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;Number of fixed point iterations.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;forward_tol&quot;</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="s2">&quot;Tolerance in fixed point iterations.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;anderson_history_size&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
+                     <span class="s2">&quot;Size of history in Anderson updates.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;anderson_ridge&quot;</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span>
+                   <span class="s2">&quot;Ridge regularization in Anderson updates.&quot;</span><span class="p">)</span>
+
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
+
+
+<span class="k">def</span> <span class="nf">load_dataset</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_training</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Loads the dataset as a generator of batches.&quot;&quot;&quot;</span>
+  <span class="n">ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">dataset</span><span class="si">}</span><span class="s2">:3.*.*&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">,</span>
+                          <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">is_training</span><span class="p">:</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">tfds</span><span class="o">.</span><span class="n">as_numpy</span><span class="p">(</span><span class="n">ds</span><span class="p">)),</span> <span class="n">ds_info</span>
+
+
+<span class="k">class</span> <span class="nc">ResNetBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;ResNet block.&quot;&quot;&quot;</span>
+
+  <span class="n">channels</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">channels_bottleneck</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">num_groups</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
+  <span class="n">kernel_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">act</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">relu</span>
+
+  <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="c1"># Note that stddev=0.01 is important to avoid divergence.</span>
+    <span class="c1"># Empirically it ensures that fixed point iterations converge.</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channels_bottleneck</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span>
+                <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
+                <span class="n">kernel_init</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GroupNorm</span><span class="p">(</span><span class="n">num_groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_groups</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span>
+                <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
+                <span class="n">kernel_init</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">x</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GroupNorm</span><span class="p">(</span><span class="n">num_groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_groups</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GroupNorm</span><span class="p">(</span><span class="n">num_groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_groups</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+
+<span class="k">class</span> <span class="nc">DEQFixedPoint</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Batched computation of ``block`` using ``fixed_point_solver``.&quot;&quot;&quot;</span>
+
+  <span class="n">block</span><span class="p">:</span> <span class="n">Any</span>  <span class="c1"># nn.Module</span>
+  <span class="n">fixed_point_solver</span><span class="p">:</span> <span class="n">Any</span>  <span class="c1"># AndersonAcceleration or FixedPointIteration</span>
+
+  <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="c1"># shape of a single example</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">rng</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">block_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s2">&quot;block_params&quot;</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">block_apply</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">block_params</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">block_params</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+    <span class="n">solver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_solver</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="o">=</span><span class="n">block_apply</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">batch_run</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">block_params</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">solver</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">block_params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># We use vmap since we want to compute the fixed point separately for each</span>
+    <span class="c1"># example in the batch.</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">batch_run</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="kc">None</span><span class="p">),</span> <span class="n">out_axes</span><span class="o">=</span><span class="mi">0</span><span class="p">)(</span><span class="n">x</span><span class="p">,</span> <span class="n">block_params</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">FullDEQ</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;DEQ model.&quot;&quot;&quot;</span>
+
+  <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">channels</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">channels_bottleneck</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">fixed_point_solver</span><span class="p">:</span> <span class="n">Callable</span>
+
+  <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">train</span><span class="p">):</span>
+    <span class="c1"># Note that x is a batch of examples:</span>
+    <span class="c1"># because of BatchNorm we cannot define the forward pass in the network for</span>
+    <span class="c1"># a single example.</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm</span><span class="p">(</span><span class="n">use_running_average</span><span class="o">=</span><span class="ow">not</span> <span class="n">train</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                     <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">ResNetBlock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels_bottleneck</span><span class="p">)</span>
+    <span class="n">deq_fixed_point</span> <span class="o">=</span> <span class="n">DEQFixedPoint</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_solver</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">deq_fixed_point</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm</span><span class="p">(</span><span class="n">use_running_average</span><span class="o">=</span><span class="ow">not</span> <span class="n">train</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                     <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">window_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>  <span class="c1"># flatten</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="c1"># For completeness, we also allow Anderson acceleration for solving</span>
+<span class="c1"># the implicit differentiation linear system occurring in the backward pass.</span>
+<span class="k">def</span> <span class="nf">solve_linear_system_fixed_point</span><span class="p">(</span><span class="n">matvec</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Solve linear system matvec(u) = v.</span>
+
+<span class="sd">  The solution u* of the system is the fixed point of:</span>
+<span class="sd">    T(u) = matvec(u) + u - v</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">fixed_point_fun</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+    <span class="n">d_1_T_transpose_u</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">matvec</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="n">u</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">d_1_T_transpose_u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+  <span class="n">aa</span> <span class="o">=</span> <span class="n">AndersonAcceleration</span><span class="p">(</span><span class="n">fixed_point_fun</span><span class="p">,</span>
+                            <span class="n">history_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">anderson_history_size</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span>
+                            <span class="n">ridge</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">anderson_ridge</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">aa</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">v</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">argv</span>
+
+  <span class="c1"># Hide any GPUs from TensorFlow. Otherwise TF might reserve memory and make</span>
+  <span class="c1"># it unavailable to JAX.</span>
+  <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">([],</span> <span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
+
+  <span class="c1"># Solver used for implicit differentiation (backward pass).</span>
+  <span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">backward_solver</span> <span class="o">==</span> <span class="s2">&quot;normal_cg&quot;</span><span class="p">:</span>
+    <span class="n">implicit_solver</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">solve_normal_cg</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">backward_solver</span> <span class="o">==</span> <span class="s2">&quot;gmres&quot;</span><span class="p">:</span>
+    <span class="n">implicit_solver</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">solve_gmres</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">backward_solver</span> <span class="o">==</span> <span class="s2">&quot;anderson&quot;</span><span class="p">:</span>
+    <span class="n">implicit_solver</span> <span class="o">=</span> <span class="n">solve_linear_system_fixed_point</span>
+
+  <span class="c1"># Solver used for fixed point resolution (forward pass).</span>
+  <span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">forward_solver</span> <span class="o">==</span> <span class="s2">&quot;anderson&quot;</span><span class="p">:</span>
+    <span class="n">fixed_point_solver</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">AndersonAcceleration</span><span class="p">,</span>
+                                 <span class="n">history_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">anderson_history_size</span><span class="p">,</span>
+                                 <span class="n">ridge</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">anderson_ridge</span><span class="p">,</span>
+                                 <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">forward_maxiter</span><span class="p">,</span>
+                                 <span class="n">tol</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">forward_tol</span><span class="p">,</span> <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                 <span class="n">implicit_diff_solve</span><span class="o">=</span><span class="n">implicit_solver</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">fixed_point_solver</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">FixedPointIteration</span><span class="p">,</span>
+                                 <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">forward_maxiter</span><span class="p">,</span>
+                                 <span class="n">tol</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">forward_tol</span><span class="p">,</span> <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                 <span class="n">implicit_diff_solve</span><span class="o">=</span><span class="n">implicit_solver</span><span class="p">)</span>
+
+  <span class="n">train_ds</span><span class="p">,</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">)</span>
+  <span class="n">test_ds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">batch_size</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">)</span>
+  <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">num_classes</span> <span class="o">=</span> <span class="n">ds_info</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_classes</span>
+
+  <span class="n">net</span> <span class="o">=</span> <span class="n">FullDEQ</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">net_width</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">net_width</span><span class="p">,</span>
+                <span class="n">fixed_point_solver</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">all_params</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Forward pass in the network on the images.&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span>
+    <span class="n">mutable</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;batch_stats&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">train</span> <span class="k">else</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">all_params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span>
+
+  <span class="n">logistic_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">multiclass_logistic_loss</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">loss_from_logits</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">sqnorm</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">mean_loss</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">logistic_loss</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">mean_loss</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">sqnorm</span>
+
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+  <span class="k">def</span> <span class="nf">accuracy_and_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
+    <span class="n">all_vars</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;batch_stats&quot;</span><span class="p">:</span> <span class="n">aux</span><span class="p">}</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">all_vars</span><span class="p">,</span> <span class="n">images</span><span class="p">)</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_from_logits</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">loss</span>
+
+  <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+  <span class="k">def</span> <span class="nf">loss_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
+    <span class="n">all_vars</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;batch_stats&quot;</span><span class="p">:</span> <span class="n">aux</span><span class="p">}</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="n">logits</span><span class="p">,</span> <span class="n">net_state</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">all_vars</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_from_logits</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">net_state</span><span class="p">[</span><span class="s2">&quot;batch_stats&quot;</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">print_evaluation</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">aux</span><span class="p">):</span>
+    <span class="c1"># We don&#39;t need `data` because we evaluate on the test set.</span>
+    <span class="k">del</span> <span class="n">data</span>
+
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">%</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">evaluation_frequency</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="c1"># Periodically evaluate classification accuracy on test set.</span>
+      <span class="n">accuracy</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">accuracy_and_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">test_ds</span><span class="p">),</span>
+                                         <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
+
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Step </span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="n">iter_num</span><span class="si">}</span><span class="s2">] &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Test accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Test loss: </span><span class="si">{</span><span class="n">loss</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span>
+
+  <span class="c1"># Initialize solver and parameters.</span>
+  <span class="n">solver</span> <span class="o">=</span> <span class="n">OptaxSolver</span><span class="p">(</span><span class="n">opt</span><span class="o">=</span><span class="n">optax</span><span class="o">.</span><span class="n">adam</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">),</span>
+                       <span class="n">fun</span><span class="o">=</span><span class="n">loss_fun</span><span class="p">,</span>
+                       <span class="n">maxiter</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">maxiter</span><span class="p">,</span>
+                       <span class="n">pre_update</span><span class="o">=</span><span class="n">print_evaluation</span><span class="p">,</span>
+                       <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="n">rng</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">init_vars</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">input_shape</span><span class="p">),</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="n">init_vars</span><span class="p">[</span><span class="s2">&quot;params&quot;</span><span class="p">]</span>
+  <span class="n">batch_stats</span> <span class="o">=</span> <span class="n">init_vars</span><span class="p">[</span><span class="s2">&quot;batch_stats&quot;</span><span class="p">]</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">iternum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">maxiter</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
+                                  <span class="n">l2reg</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">train_ds</span><span class="p">),</span>
+                                  <span class="n">aux</span><span class="o">=</span><span class="n">batch_stats</span><span class="p">)</span>
+    <span class="n">batch_stats</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">aux</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.000 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-deep-equilibrium-model-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/f1a99bab28e2124350df2f48e8eb2453/deep_equilibrium_model.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">deep_equilibrium_model.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/40da60c6db525da5cc98bc32fd274eda/deep_equilibrium_model.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">deep_equilibrium_model.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plot_anderson_accelerate_gd.html" class="btn btn-neutral float-left" title="Anderson acceleration of gradient descent." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../implicit_diff/index.html" class="btn btn-neutral float-right" title="Implicit differentiation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, the JAXopt authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
