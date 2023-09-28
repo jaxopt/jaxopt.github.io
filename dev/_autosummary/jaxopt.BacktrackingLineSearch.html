@@ -135,7 +135,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>value_and_grad</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>value_and_grad</strong> (<em>Union</em><em>[</em><em>bool</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
@@ -163,7 +163,8 @@
 <span class="sig-name descname"><span class="pre">value_and_grad</span></span><a class="headerlink" href="#jaxopt.BacktrackingLineSearch.value_and_grad" title="Permalink to this definition"></a></dt>
 <dd><p>if <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">fun</span></code> should return the function value only.
 If <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">fun</span></code> should return both the function value and the
-gradient.</p>
+gradient. If it is a Callable, fun should return the value while value_and_grad
+returns value and gradient of the objective.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -242,7 +243,7 @@ is a pytree of auxiliary values.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>value_and_grad</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>value_and_grad</strong> (<em>Union</em><em>[</em><em>bool</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
@@ -401,8 +402,8 @@ is a pytree of auxiliary values.</p>
 <li><p><strong>stepsize</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – current estimate of the step size.</p></li>
 <li><p><strong>state</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code>) – named tuple containing the line search state.</p></li>
 <li><p><strong>params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – current parameters.</p></li>
-<li><p><strong>value</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – current function value (recomputed if None).</p></li>
-<li><p><strong>grad</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – current gradient (recomputed if None).</p></li>
+<li><p><strong>value</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – current function value (computed at initialization, unused here).</p></li>
+<li><p><strong>grad</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – current gradient (computed at initialization, unused here).</p></li>
 <li><p><strong>descent_direction</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – descent direction (negative gradient if None).</p></li>
 <li><p><strong>fun_args</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – additional positional arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
 <li><p><strong>fun_kwargs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – additional keyword arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>

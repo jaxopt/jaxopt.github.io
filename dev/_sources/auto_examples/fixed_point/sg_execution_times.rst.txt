@@ -6,14 +6,14 @@
 
 Computation times
 =================
-**00:12.439** total execution time for **auto_examples_fixed_point** files:
+**00:12.837** total execution time for **auto_examples_fixed_point** files:
 
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py` (``plot_picard_ode.py``)                         | 00:06.999 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py` (``plot_picard_ode.py``)                         | 00:07.202 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py` (``plot_anderson_wrapper_cd.py``)       | 00:02.854 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py` (``plot_anderson_wrapper_cd.py``)       | 00:02.960 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py` (``plot_anderson_accelerate_gd.py``) | 00:02.586 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py` (``plot_anderson_accelerate_gd.py``) | 00:02.675 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py` (``deep_equilibrium_model.py``)           | 00:00.000 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+
