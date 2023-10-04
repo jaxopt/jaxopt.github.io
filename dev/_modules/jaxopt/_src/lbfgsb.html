@@ -374,7 +374,7 @@
 <span class="sd">    increase_factor: factor by which to increase the stepsize during line search</span>
 <span class="sd">      (default: 1.5).</span>
 <span class="sd">    max_stepsize: upper bound on stepsize.</span>
-<span class="sd">    min_stepsize: lower bound on stepsize.</span>
+<span class="sd">    min_stepsize: lower bound on stepsize guess at start of each linesearch run.</span>
 <span class="sd">    history_size: size of the memory to use.</span>
 <span class="sd">    use_gamma: whether to initialize the Hessian approximation with gamma *</span>
 <span class="sd">      theta, where gamma is chosen following equation (7.20) of &#39;Numerical</span>
@@ -401,7 +401,7 @@
   <span class="n">linesearch_init</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;increase&quot;</span>
   <span class="n">stop_if_linesearch_fails</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">condition</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># deprecated in v0.8</span>
-  <span class="n">maxls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+  <span class="n">maxls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
   <span class="n">decrease_factor</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># deprecated in v0.8</span>
   <span class="n">increase_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span>
   <span class="n">max_stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>

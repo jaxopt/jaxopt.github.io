@@ -194,7 +194,7 @@
 <span class="sd">    c1: constant used by the Wolfe and Approximate Wolfe condition.</span>
 <span class="sd">    c2: constant strictly less than 1 used by the Wolfe and Approximate Wolfe</span>
 <span class="sd">      condition.</span>
-<span class="sd">    max_stepsize: upper bound on stepsize.</span>
+<span class="sd">    max_stepsize: upper bound on stepsize (unused).</span>
 
 <span class="sd">    maxiter: maximum number of line search iterations.</span>
 <span class="sd">    tol: tolerance of the stopping criterion.</span>
@@ -216,7 +216,8 @@
   <span class="n">expansion_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span>
   <span class="n">shrinkage_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.66</span>
   <span class="n">approximate_wolfe_threshold</span> <span class="o">=</span> <span class="mf">1e-6</span>
-  <span class="n">max_stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+  <span class="c1"># TODO(vroulet): remove max_stepsize argument as it is not used</span>
+  <span class="n">max_stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span> 
 
   <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
   <span class="n">jit</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
