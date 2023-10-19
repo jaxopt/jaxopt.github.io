@@ -71,223 +71,233 @@ learning rate.
     Dl Size...: 0 MiB [00:00, ? MiB/s]
 
     Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:   0%|          | 0/4 [00:00<?, ? url/s]
+    Dl Size...: 0 MiB [00:00, ? MiB/s]
+
+    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.63 url/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.63 url/s]
+    Dl Size...: 0 MiB [00:00, ? MiB/s]
+
+    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.63 url/s]
     Dl Size...:   0%|          | 0/4 [00:00<?, ? MiB/s]
 
-    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:   0%|          | 0/4 [00:00<?, ? url/s]
+    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.63 url/s]
     Dl Size...:   0%|          | 0/4 [00:00<?, ? MiB/s]
 
-    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:   0%|          | 0/4 [00:00<?, ? url/s]
-    Dl Size...:   0%|          | 0/29 [00:00<?, ? MiB/s]
-
-    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:   0%|          | 0/4 [00:00<?, ? url/s]
-    Dl Size...:   0%|          | 0/29 [00:00<?, ? MiB/s]
-
-    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.46 url/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.46 url/s]
-    Dl Size...:   0%|          | 0/29 [00:00<?, ? MiB/s]
-
-    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.46 url/s]
-    Dl Size...:   0%|          | 0/29 [00:00<?, ? MiB/s]
+    Extraction completed...: 0 file [00:00, ? file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.63 url/s]
+    Dl Size...:   0%|          | 0/4 [00:00<?, ? MiB/s]
 
     Extraction completed...:   0%|          | 0/1 [00:00<?, ? file/s]
 
-    Extraction completed...: 100%|██████████| 1/1 [00:00<00:00,  2.44 file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.46 url/s]
+    Extraction completed...: 100%|██████████| 1/1 [00:00<00:00,  2.59 file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.63 url/s]
+    Dl Size...:   0%|          | 0/4 [00:00<?, ? MiB/s]
+
+    Extraction completed...: 100%|██████████| 1/1 [00:00<00:00,  2.59 file/s]    Dl Completed...:  25%|██▌       | 1/4 [00:00<00:01,  2.63 url/s]
     Dl Size...:   0%|          | 0/29 [00:00<?, ? MiB/s]
 
-    Extraction completed...: 100%|██████████| 1/1 [00:00<00:00,  2.44 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:00<00:00,  3.87 url/s]    Dl Completed...:  50%|█████     | 2/4 [00:00<00:00,  3.87 url/s]
+    Extraction completed...: 100%|██████████| 1/1 [00:00<00:00,  2.59 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:00<00:00,  4.32 url/s]    Dl Completed...:  50%|█████     | 2/4 [00:00<00:00,  4.32 url/s]
     Dl Size...:   0%|          | 0/29 [00:00<?, ? MiB/s]
 
-    Extraction completed...: 100%|██████████| 1/1 [00:00<00:00,  2.44 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:00<00:00,  3.87 url/s]
+    Extraction completed...: 100%|██████████| 1/1 [00:00<00:00,  2.59 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:00<00:00,  4.32 url/s]
     Dl Size...:   0%|          | 0/29 [00:00<?, ? MiB/s]
 
-    Extraction completed...:  50%|█████     | 1/2 [00:00<00:00,  2.44 file/s]
+    Extraction completed...:  50%|█████     | 1/2 [00:00<00:00,  2.59 file/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:00<00:00,  3.85 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:00<00:00,  3.87 url/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:00<00:00,  4.30 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:00<00:00,  4.32 url/s]
     Dl Size...:   0%|          | 0/29 [00:00<?, ? MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:00<00:00,  3.85 file/s]
-    Dl Size...:   3%|▎         | 1/29 [00:01<00:37,  1.35s/ MiB]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:   3%|▎         | 1/29 [00:01<00:37,  1.35s/ MiB]
+    Extraction completed...: 100%|██████████| 2/2 [00:00<00:00,  4.30 file/s]
+    Dl Size...:   3%|▎         | 1/29 [00:01<00:31,  1.14s/ MiB]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  4.32 url/s]
+    Dl Size...:   3%|▎         | 1/29 [00:01<00:31,  1.14s/ MiB]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:   7%|▋         | 2/29 [00:01<00:36,  1.35s/ MiB]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  4.32 url/s]
+    Dl Size...:   7%|▋         | 2/29 [00:01<00:30,  1.14s/ MiB]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]
-    Dl Size...:  10%|█         | 3/29 [00:01<00:10,  2.46 MiB/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:  10%|█         | 3/29 [00:01<00:10,  2.46 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]
+    Dl Size...:  10%|█         | 3/29 [00:01<00:08,  2.91 MiB/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  4.32 url/s]
+    Dl Size...:  10%|█         | 3/29 [00:01<00:08,  2.91 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:  14%|█▍        | 4/29 [00:01<00:10,  2.46 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  4.32 url/s]
+    Dl Size...:  14%|█▍        | 4/29 [00:01<00:08,  2.91 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:  17%|█▋        | 5/29 [00:01<00:09,  2.46 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  4.32 url/s]
+    Dl Size...:  17%|█▋        | 5/29 [00:01<00:08,  2.91 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:  21%|██        | 6/29 [00:01<00:09,  2.46 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  4.32 url/s]
+    Dl Size...:  21%|██        | 6/29 [00:01<00:07,  2.91 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]
-    Dl Size...:  24%|██▍       | 7/29 [00:01<00:03,  6.34 MiB/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:  24%|██▍       | 7/29 [00:01<00:03,  6.34 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]
+    Dl Size...:  24%|██▍       | 7/29 [00:01<00:02,  7.55 MiB/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  4.32 url/s]
+    Dl Size...:  24%|██▍       | 7/29 [00:01<00:02,  7.55 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:  28%|██▊       | 8/29 [00:01<00:03,  6.34 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  24%|██▍       | 7/29 [00:01<00:02,  7.55 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  50%|█████     | 2/4 [00:01<00:00,  3.87 url/s]
-    Dl Size...:  31%|███       | 9/29 [00:01<00:03,  6.34 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  28%|██▊       | 8/29 [00:01<00:02,  7.55 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  31%|███       | 9/29 [00:01<00:03,  6.34 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  31%|███       | 9/29 [00:01<00:02,  7.55 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  34%|███▍      | 10/29 [00:01<00:02,  6.34 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  34%|███▍      | 10/29 [00:01<00:02,  7.55 MiB/s]
 
-    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  3.85 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  34%|███▍      | 10/29 [00:01<00:02,  6.34 MiB/s]
+    Extraction completed...: 100%|██████████| 2/2 [00:01<00:00,  4.30 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  34%|███▍      | 10/29 [00:01<00:02,  7.55 MiB/s]
 
-    Extraction completed...:  67%|██████▋   | 2/3 [00:01<00:00,  3.85 file/s]
+    Extraction completed...:  67%|██████▋   | 2/3 [00:01<00:00,  4.30 file/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  34%|███▍      | 10/29 [00:01<00:02,  6.34 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  34%|███▍      | 10/29 [00:01<00:02,  7.55 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.46 file/s]
-    Dl Size...:  38%|███▊      | 11/29 [00:01<00:01,  9.96 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  38%|███▊      | 11/29 [00:01<00:01,  9.96 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]
+    Dl Size...:  38%|███▊      | 11/29 [00:01<00:01, 11.49 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  38%|███▊      | 11/29 [00:01<00:01, 11.49 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  41%|████▏     | 12/29 [00:01<00:01,  9.96 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  41%|████▏     | 12/29 [00:01<00:01, 11.49 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.46 file/s]
-    Dl Size...:  45%|████▍     | 13/29 [00:01<00:01, 10.66 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  45%|████▍     | 13/29 [00:01<00:01, 10.66 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  45%|████▍     | 13/29 [00:01<00:01, 11.49 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  48%|████▊     | 14/29 [00:01<00:01, 10.66 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]
+    Dl Size...:  48%|████▊     | 14/29 [00:01<00:01, 13.49 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  48%|████▊     | 14/29 [00:01<00:01, 13.49 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.53 url/s]
-    Dl Size...:  52%|█████▏    | 15/29 [00:01<00:01, 10.66 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  52%|█████▏    | 15/29 [00:01<00:01, 13.49 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.46 file/s]
-    Dl Size...:  55%|█████▌    | 16/29 [00:02<00:01, 12.58 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  55%|█████▌    | 16/29 [00:02<00:01, 12.58 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  55%|█████▌    | 16/29 [00:01<00:00, 13.49 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  59%|█████▊    | 17/29 [00:02<00:00, 12.58 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]
+    Dl Size...:  59%|█████▊    | 17/29 [00:01<00:00, 13.19 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  59%|█████▊    | 17/29 [00:01<00:00, 13.19 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]
-    Dl Size...:  62%|██████▏   | 18/29 [00:02<00:00, 12.72 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  62%|██████▏   | 18/29 [00:02<00:00, 12.72 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:01<00:00,  1.87 url/s]
+    Dl Size...:  62%|██████▏   | 18/29 [00:01<00:00, 13.19 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  66%|██████▌   | 19/29 [00:02<00:00, 12.72 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:01<00:00,  1.69 file/s]
+    Dl Size...:  66%|██████▌   | 19/29 [00:02<00:00, 13.84 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  66%|██████▌   | 19/29 [00:02<00:00, 13.84 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  69%|██████▉   | 20/29 [00:02<00:00, 12.72 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  69%|██████▉   | 20/29 [00:02<00:00, 13.84 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]
-    Dl Size...:  72%|███████▏  | 21/29 [00:02<00:00, 14.21 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  72%|███████▏  | 21/29 [00:02<00:00, 14.21 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]
+    Dl Size...:  72%|███████▏  | 21/29 [00:02<00:00, 14.24 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  72%|███████▏  | 21/29 [00:02<00:00, 14.24 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  76%|███████▌  | 22/29 [00:02<00:00, 14.21 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  76%|███████▌  | 22/29 [00:02<00:00, 14.24 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]
-    Dl Size...:  79%|███████▉  | 23/29 [00:02<00:00, 14.07 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  79%|███████▉  | 23/29 [00:02<00:00, 14.07 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  79%|███████▉  | 23/29 [00:02<00:00, 14.24 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  83%|████████▎ | 24/29 [00:02<00:00, 14.07 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]
+    Dl Size...:  83%|████████▎ | 24/29 [00:02<00:00, 16.30 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  83%|████████▎ | 24/29 [00:02<00:00, 16.30 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]
-    Dl Size...:  86%|████████▌ | 25/29 [00:02<00:00, 13.71 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  86%|████████▌ | 25/29 [00:02<00:00, 13.71 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  86%|████████▌ | 25/29 [00:02<00:00, 16.30 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  90%|████████▉ | 26/29 [00:02<00:00, 13.71 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]
+    Dl Size...:  90%|████████▉ | 26/29 [00:02<00:00, 16.08 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  90%|████████▉ | 26/29 [00:02<00:00, 16.08 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  93%|█████████▎| 27/29 [00:02<00:00, 13.71 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  93%|█████████▎| 27/29 [00:02<00:00, 16.08 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]
-    Dl Size...:  97%|█████████▋| 28/29 [00:02<00:00, 15.21 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...:  97%|█████████▋| 28/29 [00:02<00:00, 15.21 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]
+    Dl Size...:  97%|█████████▋| 28/29 [00:02<00:00, 16.08 MiB/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...:  97%|█████████▋| 28/29 [00:02<00:00, 16.08 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.53 url/s]
-    Dl Size...: 100%|██████████| 29/29 [00:02<00:00, 15.21 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]    Dl Completed...:  75%|███████▌  | 3/4 [00:02<00:00,  1.87 url/s]
+    Dl Size...: 100%|██████████| 29/29 [00:02<00:00, 16.08 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...: 100%|██████████| 4/4 [00:02<00:00,  1.13 url/s]    Dl Completed...: 100%|██████████| 4/4 [00:02<00:00,  1.13 url/s]
-    Dl Size...: 100%|██████████| 29/29 [00:02<00:00, 15.21 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]    Dl Completed...: 100%|██████████| 4/4 [00:02<00:00,  1.25 url/s]    Dl Completed...: 100%|██████████| 4/4 [00:02<00:00,  1.25 url/s]
+    Dl Size...: 100%|██████████| 29/29 [00:02<00:00, 16.08 MiB/s]
 
-    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.46 file/s]    Dl Completed...: 100%|██████████| 4/4 [00:03<00:00,  1.13 url/s]
-    Dl Size...: 100%|██████████| 29/29 [00:03<00:00, 15.21 MiB/s]
+    Extraction completed...: 100%|██████████| 3/3 [00:02<00:00,  1.69 file/s]    Dl Completed...: 100%|██████████| 4/4 [00:03<00:00,  1.25 url/s]
+    Dl Size...: 100%|██████████| 29/29 [00:03<00:00, 16.08 MiB/s]
 
-    Extraction completed...:  75%|███████▌  | 3/4 [00:03<00:00,  1.46 file/s]
+    Extraction completed...:  75%|███████▌  | 3/4 [00:03<00:00,  1.69 file/s]
 
-    Extraction completed...: 100%|██████████| 4/4 [00:03<00:00,  1.06s/ file]    Dl Completed...: 100%|██████████| 4/4 [00:03<00:00,  1.13 url/s]
-    Dl Size...: 100%|██████████| 29/29 [00:03<00:00, 15.21 MiB/s]
+    Extraction completed...: 100%|██████████| 4/4 [00:03<00:00,  1.04 file/s]    Dl Completed...: 100%|██████████| 4/4 [00:03<00:00,  1.25 url/s]
+    Dl Size...: 100%|██████████| 29/29 [00:03<00:00, 16.08 MiB/s]
 
-    Extraction completed...: 100%|██████████| 4/4 [00:03<00:00,  1.06s/ file]    Extraction completed...: 100%|██████████| 4/4 [00:03<00:00,  1.18 file/s]
-    Dl Size...: 100%|██████████| 29/29 [00:03<00:00,  8.56 MiB/s]
-    Dl Completed...: 100%|██████████| 4/4 [00:03<00:00,  1.18 url/s]
+    Extraction completed...: 100%|██████████| 4/4 [00:03<00:00,  1.04 file/s]    Extraction completed...: 100%|██████████| 4/4 [00:03<00:00,  1.30 file/s]
+    Dl Size...: 100%|██████████| 29/29 [00:03<00:00,  9.43 MiB/s]
+    Dl Completed...: 100%|██████████| 4/4 [00:03<00:00,  1.30 url/s]
     Generating splits...:   0%|          | 0/2 [00:00<?, ? splits/s]
     Generating train examples...:   0%|          | 0/60000 [00:00<?, ? examples/s]
-    Generating train examples...:   2%|▏         | 1285/60000 [00:01<00:45, 1284.71 examples/s]
-    Generating train examples...:   5%|▍         | 2881/60000 [00:02<00:38, 1467.71 examples/s]
-    Generating train examples...:   7%|▋         | 4488/60000 [00:03<00:36, 1531.03 examples/s]
-    Generating train examples...:  10%|█         | 6094/60000 [00:04<00:34, 1560.59 examples/s]
-    Generating train examples...:  13%|█▎        | 7706/60000 [00:05<00:33, 1579.07 examples/s]
-    Generating train examples...:  16%|█▌        | 9312/60000 [00:06<00:31, 1588.05 examples/s]
-    Generating train examples...:  18%|█▊        | 10904/60000 [00:07<00:30, 1589.29 examples/s]
-    Generating train examples...:  21%|██        | 12511/60000 [00:08<00:29, 1594.64 examples/s]
-    Generating train examples...:  24%|██▎       | 14120/60000 [00:09<00:28, 1598.92 examples/s]
-    Generating train examples...:  26%|██▌       | 15731/60000 [00:10<00:27, 1602.37 examples/s]
-    Generating train examples...:  29%|██▉       | 17341/60000 [00:11<00:26, 1604.65 examples/s]
-    Generating train examples...:  32%|███▏      | 18946/60000 [00:12<00:25, 1602.91 examples/s]
-    Generating train examples...:  34%|███▍      | 20552/60000 [00:13<00:24, 1603.74 examples/s]
-    Generating train examples...:  37%|███▋      | 22160/60000 [00:14<00:23, 1605.01 examples/s]
-    Generating train examples...:  40%|███▉      | 23769/60000 [00:15<00:22, 1605.96 examples/s]
-    Generating train examples...:  42%|████▏     | 25375/60000 [00:16<00:21, 1602.23 examples/s]
-    Generating train examples...:  45%|████▍     | 26983/60000 [00:17<00:20, 1603.86 examples/s]
-    Generating train examples...:  48%|████▊     | 28590/60000 [00:18<00:19, 1604.50 examples/s]
-    Generating train examples...:  50%|█████     | 30196/60000 [00:19<00:18, 1604.81 examples/s]
-    Generating train examples...:  53%|█████▎    | 31801/60000 [00:20<00:17, 1604.09 examples/s]
-    Generating train examples...:  56%|█████▌    | 33407/60000 [00:21<00:16, 1604.40 examples/s]
-    Generating train examples...:  58%|█████▊    | 35014/60000 [00:22<00:15, 1605.06 examples/s]
-    Generating train examples...:  61%|██████    | 36620/60000 [00:23<00:14, 1604.24 examples/s]
-    Generating train examples...:  64%|██████▎   | 38225/60000 [00:24<00:13, 1604.44 examples/s]
-    Generating train examples...:  66%|██████▋   | 39830/60000 [00:25<00:12, 1604.24 examples/s]
-    Generating train examples...:  69%|██████▉   | 41435/60000 [00:26<00:11, 1603.83 examples/s]
-    Generating train examples...:  72%|███████▏  | 43043/60000 [00:27<00:10, 1604.79 examples/s]
-    Generating train examples...:  74%|███████▍  | 44648/60000 [00:28<00:09, 1603.42 examples/s]
-    Generating train examples...:  77%|███████▋  | 46252/60000 [00:29<00:08, 1603.22 examples/s]
-    Generating train examples...:  80%|███████▉  | 47857/60000 [00:30<00:07, 1603.54 examples/s]
-    Generating train examples...:  82%|████████▏ | 49461/60000 [00:31<00:06, 1599.84 examples/s]
-    Generating train examples...:  85%|████████▌ | 51061/60000 [00:32<00:05, 1599.78 examples/s]
-    Generating train examples...:  88%|████████▊ | 52661/60000 [00:33<00:04, 1597.94 examples/s]
-    Generating train examples...:  90%|█████████ | 54263/60000 [00:34<00:03, 1599.08 examples/s]
-    Generating train examples...:  93%|█████████▎| 55863/60000 [00:35<00:02, 1599.19 examples/s]
-    Generating train examples...:  96%|█████████▌| 57464/60000 [00:36<00:01, 1599.43 examples/s]
-    Generating train examples...:  98%|█████████▊| 59064/60000 [00:37<00:00, 1598.35 examples/s]
+    Generating train examples...:   2%|▏         | 1103/60000 [00:01<00:53, 1102.90 examples/s]
+    Generating train examples...:   4%|▍         | 2396/60000 [00:02<00:47, 1214.71 examples/s]
+    Generating train examples...:   6%|▌         | 3614/60000 [00:03<00:46, 1216.09 examples/s]
+    Generating train examples...:   8%|▊         | 4859/60000 [00:04<00:44, 1227.38 examples/s]
+    Generating train examples...:  10%|█         | 6097/60000 [00:05<00:43, 1231.00 examples/s]
+    Generating train examples...:  12%|█▏        | 7371/60000 [00:06<00:42, 1245.52 examples/s]
+    Generating train examples...:  14%|█▍        | 8617/60000 [00:07<00:41, 1227.49 examples/s]
+    Generating train examples...:  16%|█▋        | 9846/60000 [00:08<00:41, 1219.46 examples/s]
+    Generating train examples...:  19%|█▊        | 11105/60000 [00:09<00:39, 1231.61 examples/s]
+    Generating train examples...:  21%|██        | 12370/60000 [00:10<00:38, 1241.80 examples/s]
+    Generating train examples...:  23%|██▎       | 13613/60000 [00:11<00:37, 1235.09 examples/s]
+    Generating train examples...:  25%|██▍       | 14885/60000 [00:12<00:36, 1245.99 examples/s]
+    Generating train examples...:  27%|██▋       | 16174/60000 [00:13<00:34, 1258.08 examples/s]
+    Generating train examples...:  29%|██▉       | 17446/60000 [00:14<00:33, 1261.93 examples/s]
+    Generating train examples...:  31%|███       | 18709/60000 [00:15<00:32, 1262.11 examples/s]
+    Generating train examples...:  33%|███▎      | 20022/60000 [00:16<00:31, 1277.20 examples/s]
+    Generating train examples...:  36%|███▌      | 21350/60000 [00:17<00:29, 1292.15 examples/s]
+    Generating train examples...:  38%|███▊      | 22647/60000 [00:18<00:28, 1293.59 examples/s]
+    Generating train examples...:  40%|███▉      | 23946/60000 [00:19<00:27, 1295.19 examples/s]
+    Generating train examples...:  42%|████▏     | 25242/60000 [00:20<00:26, 1293.75 examples/s]
+    Generating train examples...:  44%|████▍     | 26536/60000 [00:21<00:25, 1291.72 examples/s]
+    Generating train examples...:  46%|████▋     | 27828/60000 [00:22<00:25, 1286.83 examples/s]
+    Generating train examples...:  49%|████▊     | 29122/60000 [00:23<00:23, 1288.95 examples/s]
+    Generating train examples...:  51%|█████     | 30412/60000 [00:24<00:23, 1278.17 examples/s]
+    Generating train examples...:  53%|█████▎    | 31691/60000 [00:25<00:22, 1273.62 examples/s]
+    Generating train examples...:  55%|█████▍    | 32968/60000 [00:26<00:21, 1274.46 examples/s]
+    Generating train examples...:  57%|█████▋    | 34250/60000 [00:27<00:20, 1276.59 examples/s]
+    Generating train examples...:  59%|█████▉    | 35557/60000 [00:28<00:19, 1285.50 examples/s]
+    Generating train examples...:  61%|██████▏   | 36843/60000 [00:29<00:18, 1283.47 examples/s]
+    Generating train examples...:  64%|██████▎   | 38127/60000 [00:30<00:17, 1276.62 examples/s]
+    Generating train examples...:  66%|██████▌   | 39422/60000 [00:31<00:16, 1282.10 examples/s]
+    Generating train examples...:  68%|██████▊   | 40731/60000 [00:32<00:14, 1290.11 examples/s]
+    Generating train examples...:  70%|███████   | 42040/60000 [00:33<00:13, 1295.54 examples/s]
+    Generating train examples...:  72%|███████▏  | 43341/60000 [00:34<00:12, 1297.11 examples/s]
+    Generating train examples...:  74%|███████▍  | 44639/60000 [00:35<00:11, 1284.03 examples/s]
+    Generating train examples...:  77%|███████▋  | 45925/60000 [00:36<00:10, 1284.48 examples/s]
+    Generating train examples...:  79%|███████▊  | 47210/60000 [00:37<00:10, 1258.41 examples/s]
+    Generating train examples...:  81%|████████  | 48509/60000 [00:38<00:09, 1270.16 examples/s]
+    Generating train examples...:  83%|████████▎ | 49824/60000 [00:39<00:07, 1283.22 examples/s]
+    Generating train examples...:  85%|████████▌ | 51109/60000 [00:40<00:07, 1268.92 examples/s]
+    Generating train examples...:  87%|████████▋ | 52403/60000 [00:41<00:05, 1276.20 examples/s]
+    Generating train examples...:  89%|████████▉ | 53697/60000 [00:42<00:04, 1281.24 examples/s]
+    Generating train examples...:  92%|█████████▏| 55009/60000 [00:43<00:03, 1290.40 examples/s]
+    Generating train examples...:  94%|█████████▍| 56300/60000 [00:44<00:02, 1284.28 examples/s]
+    Generating train examples...:  96%|█████████▌| 57585/60000 [00:45<00:01, 1279.12 examples/s]
+    Generating train examples...:  98%|█████████▊| 58865/60000 [00:46<00:00, 1275.24 examples/s]
                                                                                                 
-    Shuffling /home/runner/tensorflow_datasets/fashion_mnist/3.0.1.incompleteVJPFTA/fashion_mnist-train.tfrecord*...:   0%|          | 0/60000 [00:00<?, ? examples/s]
-    Shuffling /home/runner/tensorflow_datasets/fashion_mnist/3.0.1.incompleteVJPFTA/fashion_mnist-train.tfrecord*...:  30%|███       | 18179/60000 [00:00<00:00, 181777.17 examples/s]
-    Shuffling /home/runner/tensorflow_datasets/fashion_mnist/3.0.1.incompleteVJPFTA/fashion_mnist-train.tfrecord*...:  93%|█████████▎| 55686/60000 [00:00<00:00, 295461.61 examples/s]
-                                                                                                                                                                                          Generating splits...:  50%|█████     | 1/2 [00:37<00:37, 37.87s/ splits]
+    Shuffling /home/runner/tensorflow_datasets/fashion_mnist/3.0.1.incompleteF9QGUF/fashion_mnist-train.tfrecord*...:   0%|          | 0/60000 [00:00<?, ? examples/s]
+    Shuffling /home/runner/tensorflow_datasets/fashion_mnist/3.0.1.incompleteF9QGUF/fashion_mnist-train.tfrecord*...:  27%|██▋       | 16332/60000 [00:00<00:00, 163301.08 examples/s]
+    Shuffling /home/runner/tensorflow_datasets/fashion_mnist/3.0.1.incompleteF9QGUF/fashion_mnist-train.tfrecord*...:  74%|███████▍  | 44513/60000 [00:00<00:00, 233000.84 examples/s]
+                                                                                                                                                                                          Generating splits...:  50%|█████     | 1/2 [00:47<00:47, 47.55s/ splits]
     Generating test examples...:   0%|          | 0/10000 [00:00<?, ? examples/s]
-    Generating test examples...:  16%|█▌        | 1580/10000 [00:01<00:05, 1579.80 examples/s]
-    Generating test examples...:  32%|███▏      | 3194/10000 [00:02<00:04, 1599.55 examples/s]
-    Generating test examples...:  48%|████▊     | 4804/10000 [00:03<00:03, 1604.15 examples/s]
-    Generating test examples...:  64%|██████▍   | 6418/10000 [00:04<00:02, 1607.73 examples/s]
-    Generating test examples...:  80%|████████  | 8031/10000 [00:05<00:01, 1609.37 examples/s]
-    Generating test examples...:  96%|█████████▋| 9645/10000 [00:06<00:00, 1610.82 examples/s]
+    Generating test examples...:  13%|█▎        | 1294/10000 [00:01<00:06, 1293.44 examples/s]
+    Generating test examples...:  26%|██▌       | 2592/10000 [00:02<00:05, 1295.75 examples/s]
+    Generating test examples...:  39%|███▉      | 3901/10000 [00:03<00:04, 1301.74 examples/s]
+    Generating test examples...:  52%|█████▏    | 5203/10000 [00:04<00:03, 1295.18 examples/s]
+    Generating test examples...:  65%|██████▌   | 6500/10000 [00:05<00:02, 1295.51 examples/s]
+    Generating test examples...:  78%|███████▊  | 7806/10000 [00:06<00:01, 1298.77 examples/s]
+    Generating test examples...:  91%|█████████ | 9105/10000 [00:07<00:00, 1295.25 examples/s]
                                                                                               
-    Shuffling /home/runner/tensorflow_datasets/fashion_mnist/3.0.1.incompleteVJPFTA/fashion_mnist-test.tfrecord*...:   0%|          | 0/10000 [00:00<?, ? examples/s]
-                                                                                                                                                                         Generating splits...: 100%|██████████| 2/2 [00:44<00:00, 19.28s/ splits]                                                                            Dataset fashion_mnist downloaded and prepared to /home/runner/tensorflow_datasets/fashion_mnist/3.0.1. Subsequent calls will reuse this data.
+    Shuffling /home/runner/tensorflow_datasets/fashion_mnist/3.0.1.incompleteF9QGUF/fashion_mnist-test.tfrecord*...:   0%|          | 0/10000 [00:00<?, ? examples/s]
+                                                                                                                                                                         Generating splits...: 100%|██████████| 2/2 [00:55<00:00, 24.14s/ splits]                                                                            Dataset fashion_mnist downloaded and prepared to /home/runner/tensorflow_datasets/fashion_mnist/3.0.1. Subsequent calls will reuse this data.
     [Polyak SGD] (   0), error=0.272, loss=2.301, stepsize=1.000000
-    [Polyak SGD] (  20), error=1.887, loss=1.476, stepsize=0.414197
-    [Polyak SGD] (  40), error=2.054, loss=1.342, stepsize=0.317994
-    [Polyak SGD] (  60), error=1.689, loss=0.831, stepsize=0.291400
-    [Polyak SGD] (  80), error=1.325, loss=1.168, stepsize=0.665042
-    [Polyak SGD] ( 100), error=1.382, loss=0.916, stepsize=0.479756
-    101 iterations of Polyak SGD took 19.83s
+    [Polyak SGD] (  20), error=2.041, loss=1.512, stepsize=0.363120
+    [Polyak SGD] (  40), error=2.291, loss=1.247, stepsize=0.237692
+    [Polyak SGD] (  60), error=1.960, loss=1.016, stepsize=0.264367
+    [Polyak SGD] (  80), error=2.166, loss=1.204, stepsize=0.256637
+    [Polyak SGD] ( 100), error=2.035, loss=0.995, stepsize=0.240228
+    101 iterations of Polyak SGD took 22.30s
 
     [Armijo SGD] (   0), error=0.227, loss=2.313, stepsize=1.000000
     [Armijo SGD] (  20), error=2.221, loss=1.331, stepsize=0.065971
@@ -295,23 +305,23 @@ learning rate.
     [Armijo SGD] (  60), error=3.499, loss=1.059, stepsize=0.027022
     [Armijo SGD] (  80), error=1.456, loss=0.863, stepsize=0.021617
     [Armijo SGD] ( 100), error=1.689, loss=0.819, stepsize=0.021617
-    101 iterations of Armijo SGD took 23.17s
+    101 iterations of Armijo SGD took 27.10s
 
     [RMSProp] (   0), error=0.223, loss=2.299
     [RMSProp] (  20), error=0.869, loss=1.913
-    [RMSProp] (  40), error=1.151, loss=1.453
-    [RMSProp] (  60), error=1.115, loss=1.211
-    [RMSProp] (  80), error=1.627, loss=1.088
-    [RMSProp] ( 100), error=1.581, loss=1.002
-    101 iterations of RMSProp took 17.58s
+    [RMSProp] (  40), error=1.152, loss=1.453
+    [RMSProp] (  60), error=1.114, loss=1.211
+    [RMSProp] (  80), error=1.569, loss=1.086
+    [RMSProp] ( 100), error=1.585, loss=1.002
+    101 iterations of RMSProp took 21.05s
 
     [SGD] (   0), error=0.190, loss=2.306
     [SGD] (  20), error=0.384, loss=2.236
     [SGD] (  40), error=2.765, loss=1.878
     [SGD] (  60), error=1.222, loss=1.092
     [SGD] (  80), error=1.637, loss=1.146
-    [SGD] ( 100), error=4.393, loss=1.671
-    101 iterations of SGD took 17.34s
+    [SGD] ( 100), error=4.392, loss=1.671
+    101 iterations of SGD took 20.50s
 
 
 
@@ -505,7 +515,7 @@ learning rate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (2 minutes 33.975 seconds)
+   **Total running time of the script:** (3 minutes 26.760 seconds)
 
 
 .. _sphx_glr_download_auto_examples_deep_learning_plot_sgd_solvers.py:
