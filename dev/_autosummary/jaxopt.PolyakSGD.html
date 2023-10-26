@@ -27,6 +27,8 @@
         <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -133,25 +135,40 @@
 <h1>jaxopt.PolyakSGD<a class="headerlink" href="#jaxopt-polyaksgd" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.PolyakSGD">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">PolyakSGD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/polyak_sgd.html#PolyakSGD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.PolyakSGD" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">PolyakSGD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SPS_max'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/polyak_sgd.html#PolyakSGD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.PolyakSGD" title="Permalink to this definition"></a></dt>
 <dd><p>SGD with Polyak step size.</p>
-<p>This solver computes step sizes in an adaptive manner. If the computed step
-size at a given iteration is smaller than <code class="docutils literal notranslate"><span class="pre">max_stepsize</span></code>, it is accepted.
-Otherwise, <code class="docutils literal notranslate"><span class="pre">max_stepsize</span></code> is used. This ensures that the solver does not
-take over-confident steps. This is why <code class="docutils literal notranslate"><span class="pre">max_stepsize</span></code> is the most important
-hyper-parameter.</p>
-<dl class="simple">
-<dt>This implementation assumes that the interpolation property holds:</dt><dd><p>the global optimum over D must also be a global optimum for any finite sample of D</p>
-</dd>
-</dl>
-<p>This is typically achieved by overparametrized models (e.g neural networks)
-in classification tasks with separable classes, or on regression tasks without noise.</p>
+<p>The stochastic Polyak step-size is a simple and efficient step-size for SGD.
+Although this algorithm does not require to set a step-size parameter, it does
+require knowledge of a lower bound on the objective function (see below).
+Furthermore, some variants accept other hyperparameters.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method requires knowledge of an approximate value of the of the objective function
+minimum, passed through the <code class="docutils literal notranslate"><span class="pre">fun_min</span></code> argument. For overparametrized models, this can be
+set to 0 (default value). Failing to set an appropriate value for <code class="docutils literal notranslate"><span class="pre">fun_min</span></code> can lead to
+a model that diverges or converges to a suboptimal solution.</p>
+</div>
+<p>This class implements two different variants of the stochastic Polyak step size method: <code class="docutils literal notranslate"><span class="pre">SPS_max</span></code>
+and <code class="docutils literal notranslate"><span class="pre">SPS+</span></code>. The <code class="docutils literal notranslate"><span class="pre">SPS_max</span></code> variant from (Loizou et al. 2021) accepts the hyperparameters
+<code class="docutils literal notranslate"><span class="pre">max_stepsize</span></code> and <code class="docutils literal notranslate"><span class="pre">delta</span></code> and sets the current step-size <span class="math notranslate nohighlight">\(\gamma\)</span>  as</p>
+<div class="math notranslate nohighlight">
+\[\gamma = \min\left\{\frac{\text{fun}(x) - \text{fun}(x^\star)}{\|\nabla \text{fun}(x)\|^2 + \text{delta}}, \text{max_stepsize}\right\}\]</div>
+<p>while for the <code class="docutils literal notranslate"><span class="pre">SPS+</span></code> variant, it is given by</p>
+<div class="math notranslate nohighlight">
+\[\gamma = \max\left\{0, \frac{\text{fun}(x) - \text{fun}(x^\star)}{\|\nabla \text{fun}(x)\|^2}\right\}\]</div>
+<p>and the step-size is zero whenever <span class="math notranslate nohighlight">\(\|\nabla \text{fun}(x)\|^2\)</span> is zero.</p>
+<p>In all cases, the step size is then used in the update</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}v_{t+1} &amp;= \text{momentum} v_t - \gamma \nabla \text{fun}(x) \\
+x_{t+1} &amp;= x_t + v_{t+1}\end{split}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>value_and_grad</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>fun_min</strong> (<em>float</em>) – </p></li>
+<li><p><strong>variant</strong> (<em>str</em>) – </p></li>
 <li><p><strong>max_stepsize</strong> (<em>float</em>) – </p></li>
 <li><p><strong>delta</strong> (<em>float</em>) – </p></li>
 <li><p><strong>momentum</strong> (<em>float</em>) – </p></li>
@@ -172,6 +189,13 @@ in classification tasks with separable classes, or on regression tasks without n
 <dd><p>a function of the form <code class="docutils literal notranslate"><span class="pre">fun(params,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>, where
 <code class="docutils literal notranslate"><span class="pre">params</span></code> are parameters of the model,
 <code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> are additional arguments.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.PolyakSGD.value_and_grad">
+<span class="sig-name descname"><span class="pre">value_and_grad</span></span><a class="headerlink" href="#jaxopt.PolyakSGD.value_and_grad" title="Permalink to this definition"></a></dt>
+<dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> just returns the value (False) or both the
+value and gradient (True).</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -197,9 +221,22 @@ At each iteration of the algorithm, the auxiliary outputs are stored</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.PolyakSGD.fun_min">
+<span class="sig-name descname"><span class="pre">fun_min</span></span><a class="headerlink" href="#jaxopt.PolyakSGD.fun_min" title="Permalink to this definition"></a></dt>
+<dd><p>a lower bound on fun.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxopt.PolyakSGD.variant">
+<span class="sig-name descname"><span class="pre">variant</span></span><a class="headerlink" href="#jaxopt.PolyakSGD.variant" title="Permalink to this definition"></a></dt>
+<dd><p>which version of the stochastic Polyak step-size is implemented.
+Can be one of “SPS_max” or “SPS+”.</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.PolyakSGD.max_stepsize">
 <span class="sig-name descname"><span class="pre">max_stepsize</span></span><a class="headerlink" href="#jaxopt.PolyakSGD.max_stepsize" title="Permalink to this definition"></a></dt>
-<dd><p>a maximum step size to use.</p>
+<dd><p>a maximum step size to use. Only used when variant=”SPS_max”.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -267,24 +304,24 @@ iterations.</p>
 
 <p class="rubric">References</p>
 <p>Berrada, Leonard and Zisserman, Andrew and Kumar, M Pawan.
-“Training neural networks for and by interpolation”.
-International Conference on Machine Learning, 2020.
-<a class="reference external" href="https://arxiv.org/abs/1906.05661">https://arxiv.org/abs/1906.05661</a></p>
+<a class="reference external" href="https://arxiv.org/abs/1906.05661">“Training neural networks for and by interpolation”</a>.
+International Conference on Machine Learning, 2020.</p>
 <p>Loizou, Nicolas and Vaswani, Sharan and Laradji, Issam Hadj and
 Lacoste-Julien, Simon.
-“Stochastic polyak step-size for sgd: An adaptive learning rate for fast
-convergence”.
-International Conference on Artificial Intelligence and Statistics, 2021.
-<a class="reference external" href="https://arxiv.org/abs/2002.10542">https://arxiv.org/abs/2002.10542</a></p>
+<a class="reference external" href="https://arxiv.org/abs/2002.10542">“Stochastic polyak step-size for sgd: An adaptive learning rate for fast
+convergence”</a>.
+International Conference on Artificial Intelligence and Statistics, 2021.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.PolyakSGD.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.PolyakSGD.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SPS_max'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.PolyakSGD.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>value_and_grad</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>fun_min</strong> (<em>float</em>) – </p></li>
+<li><p><strong>variant</strong> (<em>str</em>) – </p></li>
 <li><p><strong>max_stepsize</strong> (<em>float</em>) – </p></li>
 <li><p><strong>delta</strong> (<em>float</em>) – </p></li>
 <li><p><strong>momentum</strong> (<em>float</em>) – </p></li>
@@ -342,37 +379,43 @@ International Conference on Artificial Intelligence and Statistics, 2021.
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.delta" title="jaxopt.PolyakSGD.delta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delta</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.has_aux" title="jaxopt.PolyakSGD.has_aux"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_aux</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.fun_min" title="jaxopt.PolyakSGD.fun_min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fun_min</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.implicit_diff" title="jaxopt.PolyakSGD.implicit_diff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.has_aux" title="jaxopt.PolyakSGD.has_aux"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_aux</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.implicit_diff_solve" title="jaxopt.PolyakSGD.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.implicit_diff" title="jaxopt.PolyakSGD.implicit_diff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.jit" title="jaxopt.PolyakSGD.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.implicit_diff_solve" title="jaxopt.PolyakSGD.implicit_diff_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit_diff_solve</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.max_stepsize" title="jaxopt.PolyakSGD.max_stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_stepsize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.jit" title="jaxopt.PolyakSGD.jit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jit</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.maxiter" title="jaxopt.PolyakSGD.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.max_stepsize" title="jaxopt.PolyakSGD.max_stepsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_stepsize</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.momentum" title="jaxopt.PolyakSGD.momentum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">momentum</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.maxiter" title="jaxopt.PolyakSGD.maxiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxiter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.pre_update" title="jaxopt.PolyakSGD.pre_update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pre_update</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.momentum" title="jaxopt.PolyakSGD.momentum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">momentum</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.tol" title="jaxopt.PolyakSGD.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.pre_update" title="jaxopt.PolyakSGD.pre_update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pre_update</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.unroll" title="jaxopt.PolyakSGD.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.tol" title="jaxopt.PolyakSGD.tol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tol</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">value_and_grad</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.unroll" title="jaxopt.PolyakSGD.unroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unroll</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.value_and_grad" title="jaxopt.PolyakSGD.value_and_grad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value_and_grad</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.variant" title="jaxopt.PolyakSGD.variant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">variant</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.PolyakSGD.verbose" title="jaxopt.PolyakSGD.verbose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verbose</span></code></a></p></td>

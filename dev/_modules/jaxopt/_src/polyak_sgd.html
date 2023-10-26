@@ -126,14 +126,12 @@
 
 <span class="sd">&quot;&quot;&quot;SGD solver with Polyak step size.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">import</span> <span class="nn">dataclasses</span>
-
-<span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
@@ -161,23 +159,50 @@
 
 <div class="viewcode-block" id="PolyakSGD"><a class="viewcode-back" href="../../../_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">PolyakSGD</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">StochasticSolver</span><span class="p">):</span>
-<span class="w">  </span><span class="sd">&quot;&quot;&quot;SGD with Polyak step size.</span>
+<span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;SGD with Polyak step size.</span>
 
-<span class="sd">  This solver computes step sizes in an adaptive manner. If the computed step</span>
-<span class="sd">  size at a given iteration is smaller than ``max_stepsize``, it is accepted.</span>
-<span class="sd">  Otherwise, ``max_stepsize`` is used. This ensures that the solver does not</span>
-<span class="sd">  take over-confident steps. This is why ``max_stepsize`` is the most important</span>
-<span class="sd">  hyper-parameter.</span>
+<span class="sd">  The stochastic Polyak step-size is a simple and efficient step-size for SGD.</span>
+<span class="sd">  Although this algorithm does not require to set a step-size parameter, it does</span>
+<span class="sd">  require knowledge of a lower bound on the objective function (see below).</span>
+<span class="sd">  Furthermore, some variants accept other hyperparameters. </span>
 
-<span class="sd">  This implementation assumes that the interpolation property holds:</span>
-<span class="sd">    the global optimum over D must also be a global optimum for any finite sample of D</span>
-<span class="sd">  This is typically achieved by overparametrized models (e.g neural networks)</span>
-<span class="sd">  in classification tasks with separable classes, or on regression tasks without noise.</span>
+<span class="sd">  .. warning::</span>
+<span class="sd">      This method requires knowledge of an approximate value of the of the objective function</span>
+<span class="sd">      minimum, passed through the ``fun_min`` argument. For overparametrized models, this can be</span>
+<span class="sd">      set to 0 (default value). Failing to set an appropriate value for ``fun_min`` can lead to</span>
+<span class="sd">      a model that diverges or converges to a suboptimal solution.</span>
+
+
+<span class="sd">  This class implements two different variants of the stochastic Polyak step size method: ``SPS_max``</span>
+<span class="sd">  and ``SPS+``. The ``SPS_max`` variant from (Loizou et al. 2021) accepts the hyperparameters</span>
+<span class="sd">  ``max_stepsize`` and ``delta`` and sets the current step-size :math:`\gamma`  as</span>
+
+<span class="sd">  .. math::</span>
+
+<span class="sd">    \gamma = \min\left\{\frac{\text{fun}(x) - \text{fun}(x^\star)}{\|\nabla \text{fun}(x)\|^2 + \text{delta}}, \text{max_stepsize}\right\}</span>
+
+<span class="sd">  while for the ``SPS+`` variant, it is given by</span>
+
+<span class="sd">  .. math::</span>
+
+<span class="sd">    \gamma = \max\left\{0, \frac{\text{fun}(x) - \text{fun}(x^\star)}{\|\nabla \text{fun}(x)\|^2}\right\}</span>
+
+<span class="sd">  and the step-size is zero whenever :math:`\|\nabla \text{fun}(x)\|^2` is zero.</span>
+
+<span class="sd">  In all cases, the step size is then used in the update</span>
+
+<span class="sd">  .. math::</span>
+
+<span class="sd">    v_{t+1} &amp;= \text{momentum} v_t - \gamma \nabla \text{fun}(x) \\</span>
+<span class="sd">    x_{t+1} &amp;= x_t + v_{t+1}</span>
+
 
 <span class="sd">  Attributes:</span>
 <span class="sd">    fun: a function of the form ``fun(params, *args, **kwargs)``, where</span>
 <span class="sd">      ``params`` are parameters of the model,</span>
 <span class="sd">      ``*args`` and ``**kwargs`` are additional arguments.</span>
+<span class="sd">    value_and_grad: whether ``fun`` just returns the value (False) or both the</span>
+<span class="sd">      value and gradient (True).</span>
 <span class="sd">    has_aux: whether ``fun`` outputs auxiliary data or not.</span>
 <span class="sd">      If ``has_aux`` is False, ``fun`` is expected to be</span>
 <span class="sd">        scalar-valued.</span>
@@ -189,8 +214,11 @@
 <span class="sd">      ``(value, aux), grad = fun(...)``.</span>
 <span class="sd">      At each iteration of the algorithm, the auxiliary outputs are stored</span>
 <span class="sd">        in ``state.aux``.</span>
+<span class="sd">    fun_min: a lower bound on fun.</span>
 
-<span class="sd">    max_stepsize: a maximum step size to use.</span>
+<span class="sd">    variant: which version of the stochastic Polyak step-size is implemented.</span>
+<span class="sd">      Can be one of &quot;SPS_max&quot; or &quot;SPS+&quot;.</span>
+<span class="sd">    max_stepsize: a maximum step size to use. Only used when variant=&quot;SPS_max&quot;.</span>
 <span class="sd">    delta: a value to add in the denominator of the update (default: 0).</span>
 <span class="sd">    momentum: momentum parameter, 0 corresponding to no momentum.</span>
 <span class="sd">    pre_update: a function to execute before the solver&#39;s update.</span>
@@ -210,21 +238,22 @@
 
 <span class="sd">  References:</span>
 <span class="sd">    Berrada, Leonard and Zisserman, Andrew and Kumar, M Pawan.</span>
-<span class="sd">    &quot;Training neural networks for and by interpolation&quot;.</span>
+<span class="sd">    `&quot;Training neural networks for and by interpolation&quot; &lt;https://arxiv.org/abs/1906.05661&gt;`_.</span>
 <span class="sd">    International Conference on Machine Learning, 2020.</span>
-<span class="sd">    https://arxiv.org/abs/1906.05661</span>
+
 
 <span class="sd">    Loizou, Nicolas and Vaswani, Sharan and Laradji, Issam Hadj and</span>
 <span class="sd">    Lacoste-Julien, Simon.</span>
-<span class="sd">    &quot;Stochastic polyak step-size for sgd: An adaptive learning rate for fast</span>
-<span class="sd">    convergence&quot;.</span>
+<span class="sd">    `&quot;Stochastic polyak step-size for sgd: An adaptive learning rate for fast</span>
+<span class="sd">    convergence&quot; &lt;https://arxiv.org/abs/2002.10542&gt;`_.</span>
 <span class="sd">    International Conference on Artificial Intelligence and Statistics, 2021.</span>
-<span class="sd">    https://arxiv.org/abs/2002.10542</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span>
   <span class="n">value_and_grad</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">fun_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
 
+  <span class="n">variant</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SPS_max&quot;</span>
   <span class="n">max_stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
   <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
   <span class="n">momentum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -294,8 +323,20 @@
     <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">grad_sqnorm</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="p">(</span><span class="n">grad_sqnorm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">),</span>
-                           <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variant</span> <span class="o">==</span> <span class="s2">&quot;SPS_max&quot;</span><span class="p">:</span>
+      <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span>
+          <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun_min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">grad_sqnorm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span>
+      <span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">variant</span> <span class="o">==</span> <span class="s2">&quot;SPS+&quot;</span><span class="p">:</span>
+      <span class="c1"># if grad_sqnorm is smaller than machine epsilon, we set the stepsize to 0</span>
+      <span class="n">stepsize</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+          <span class="n">grad_sqnorm</span> <span class="o">&lt;=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span>
+          <span class="mf">0.0</span><span class="p">,</span>
+          <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">((</span><span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">grad_sqnorm</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+      <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown variant </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">variant</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
     <span class="n">stepsize</span> <span class="o">=</span> <span class="n">stepsize</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">stepsize</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -330,10 +371,13 @@
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> \
-      <span class="n">base</span><span class="o">.</span><span class="n">_make_funs_with_aux</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span>
-                               <span class="n">value_and_grad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">,</span>
-                               <span class="n">has_aux</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">_make_funs_with_aux</span><span class="p">(</span>
+            <span class="n">fun</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span>
+            <span class="n">value_and_grad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">,</span>
+            <span class="n">has_aux</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">reference_signature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span></div>
 </pre></div>

@@ -157,7 +157,7 @@ Here `m` denotes the history size, and `K` the frequency of Anderson updates.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.827 seconds)
+   **Total running time of the script:** (0 minutes 3.276 seconds)
 
 
 .. _sphx_glr_download_auto_examples_fixed_point_plot_anderson_accelerate_gd.py:
