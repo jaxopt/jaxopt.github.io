@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -166,7 +165,9 @@
   <span class="n">hess_res</span><span class="p">:</span> <span class="n">Any</span>
   <span class="n">aux</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="LevenbergMarquardt"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="LevenbergMarquardt">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">LevenbergMarquardt</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Levenberg-Marquardt (LM) nonlinear least-squares solver.</span>
 
@@ -294,7 +295,9 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-<div class="viewcode-block" id="LevenbergMarquardt.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+<div class="viewcode-block" id="LevenbergMarquardt.init_state">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.init_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LevenbergMarquardtState</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the solver state.</span>
 
@@ -345,7 +348,10 @@
         <span class="n">hess_res</span><span class="o">=</span><span class="n">hess_res</span><span class="p">,</span>
         <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LevenbergMarquardt.update_state_using_gain_ratio"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_gain_ratio">[docs]</a>  <span class="k">def</span> <span class="nf">update_state_using_gain_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gain_ratio</span><span class="p">,</span> <span class="n">contribution_ratio_diff</span><span class="p">,</span>
+
+<div class="viewcode-block" id="LevenbergMarquardt.update_state_using_gain_ratio">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_gain_ratio">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_state_using_gain_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gain_ratio</span><span class="p">,</span> <span class="n">contribution_ratio_diff</span><span class="p">,</span>
                                     <span class="n">gain_ratio_test_init_state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
                                     <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The function to return state variables based on gain ratio.</span>
@@ -421,7 +427,10 @@
 
     <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span></div>
 
-<div class="viewcode-block" id="LevenbergMarquardt.update_state_using_delta_params"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_delta_params">[docs]</a>  <span class="k">def</span> <span class="nf">update_state_using_delta_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_curr</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">delta_params</span><span class="p">,</span>
+
+<div class="viewcode-block" id="LevenbergMarquardt.update_state_using_delta_params">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update_state_using_delta_params">[docs]</a>
+  <span class="k">def</span> <span class="nf">update_state_using_delta_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_curr</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">delta_params</span><span class="p">,</span>
                                       <span class="n">contribution_ratio_diff</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span>
                                       <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span>
                                       <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -461,7 +470,10 @@
 
     <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span></div>
 
-<div class="viewcode-block" id="LevenbergMarquardt.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+
+<div class="viewcode-block" id="LevenbergMarquardt.update">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs one iteration of the least-squares solver.</span>
 
 <span class="sd">    Args:</span>
@@ -562,6 +574,7 @@
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span></div>
 
+
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
 
@@ -611,10 +624,13 @@
                       <span class="s2">&quot;computational overhead. Consider using either a matrix-free iterative &quot;</span>
                       <span class="s2">&quot;solver such as cg or bicg or using materialize_jac=True.&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LevenbergMarquardt.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="LevenbergMarquardt.optimality_fun">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.LevenbergMarquardt.html#jaxopt.LevenbergMarquardt.optimality_fun">[docs]</a>
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
     <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jt_op</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
   <span class="k">def</span> <span class="nf">_jt_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Product of J^T and residual -- J: jacobian of fun at params.&quot;&quot;&quot;</span>
@@ -659,6 +675,7 @@
       <span class="n">acceleration</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="n">acceleration</span><span class="p">,</span> <span class="n">delta_params</span><span class="p">)</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">print_iteration</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">LevenbergMarquardtState</span><span class="p">):</span>

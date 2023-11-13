@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -246,7 +245,9 @@
   <span class="n">velocity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="ArmijoSGD"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="ArmijoSGD">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ArmijoSGD</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">StochasticSolver</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;SGD with Armijo line search.</span>
 
@@ -344,7 +345,9 @@
   <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
 
-<div class="viewcode-block" id="ArmijoSGD.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArmijoState</span><span class="p">:</span>
+<div class="viewcode-block" id="ArmijoSGD.init_state">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.init_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArmijoState</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the state.</span>
 
 <span class="sd">    Args:</span>
@@ -374,7 +377,10 @@
                                             <span class="n">dtype</span><span class="o">=</span><span class="n">params_dtype</span><span class="p">),</span>
                        <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ArmijoSGD.reset_stepsize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.reset_stepsize">[docs]</a>  <span class="k">def</span> <span class="nf">reset_stepsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ArmijoSGD.reset_stepsize">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.reset_stepsize">[docs]</a>
+  <span class="k">def</span> <span class="nf">reset_stepsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return new step size for current step, according to reset_option.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_option</span> <span class="o">==</span> <span class="s1">&#39;goldstein&#39;</span><span class="p">:</span>
       <span class="k">return</span> <span class="n">stepsize</span>
@@ -383,7 +389,10 @@
     <span class="n">stepsize</span> <span class="o">=</span> <span class="n">stepsize</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">increase_factor</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">stepsize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ArmijoSGD.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
+
+<div class="viewcode-block" id="ArmijoSGD.update">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs one iteration of the solver.</span>
 
 <span class="sd">    Args:</span>
@@ -429,9 +438,13 @@
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">next_params</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ArmijoSGD.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ArmijoSGD.optimality_fun">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD.optimality_fun">[docs]</a>
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
   <span class="k">def</span> <span class="nf">_value_and_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -467,6 +480,7 @@
       <span class="bp">self</span><span class="o">.</span><span class="n">_armijo_line_search</span> <span class="o">=</span> <span class="n">jitted_armijo</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_armijo_line_search</span> <span class="o">=</span> <span class="n">armijo_with_fun</span></div>
+
 </pre></div>
 
            </div>

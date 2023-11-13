@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -128,7 +127,7 @@
            <div itemprop="articleBody">
              
   <section id="unconstrained-optimization">
-<span id="unconstrained-optim"></span><h1>Unconstrained optimization<a class="headerlink" href="#unconstrained-optimization" title="Permalink to this heading"></a></h1>
+<span id="unconstrained-optim"></span><h1>Unconstrained optimization<a class="headerlink" href="#unconstrained-optimization" title="Link to this heading"></a></h1>
 <p>This section is concerned with problems of the form</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} f(x, \theta)\]</div>
@@ -136,7 +135,7 @@
 are the parameters with respect to which the function is minimized and
 <span class="math notranslate nohighlight">\(\theta\)</span> are optional extra arguments.</p>
 <section id="defining-an-objective-function">
-<h2>Defining an objective function<a class="headerlink" href="#defining-an-objective-function" title="Permalink to this heading"></a></h2>
+<h2>Defining an objective function<a class="headerlink" href="#defining-an-objective-function" title="Link to this heading"></a></h2>
 <p>Objective functions must always include as first argument the variables with
 respect to which the function is minimized. The function can also contain extra
 arguments.</p>
@@ -151,7 +150,7 @@ and <code class="docutils literal notranslate"><span class="pre">y</span></code>
 notation above.</p>
 </section>
 <section id="solvers">
-<h2>Solvers<a class="headerlink" href="#solvers" title="Permalink to this heading"></a></h2>
+<h2>Solvers<a class="headerlink" href="#solvers" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BFGS.html#jaxopt.BFGS" title="jaxopt.BFGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BFGS</span></code></a>(fun[, value_and_grad, has_aux, ...])</p></td>
@@ -172,7 +171,7 @@ notation above.</p>
 </tbody>
 </table>
 <section id="instantiating-and-running-the-solver">
-<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this heading"></a></h3>
+<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Link to this heading"></a></h3>
 <p>Continuing the ridge regression example above, gradient descent can be
 instantiated and run as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span> <span class="o">=</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">LBFGS</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">ridge_reg_objective</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">)</span>
@@ -186,7 +185,7 @@ instantiated and run as follows:</p>
 </div>
 </section>
 <section id="unpacking-results">
-<h3>Unpacking results<a class="headerlink" href="#unpacking-results" title="Permalink to this heading"></a></h3>
+<h3>Unpacking results<a class="headerlink" href="#unpacking-results" title="Link to this heading"></a></h3>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">res</span></code> has the form <code class="docutils literal notranslate"><span class="pre">NamedTuple(params,</span> <span class="pre">state)</span></code>, where <code class="docutils literal notranslate"><span class="pre">params</span></code>
 are the approximate solution found by the solver and <code class="docutils literal notranslate"><span class="pre">state</span></code> contains
 solver-specific information about convergence.</p>

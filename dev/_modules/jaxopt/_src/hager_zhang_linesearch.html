@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -174,7 +173,9 @@
   <span class="n">num_grad_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
 
-<div class="viewcode-block" id="HagerZhangLineSearch"><a class="viewcode-back" href="../../../_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="HagerZhangLineSearch">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">HagerZhangLineSearch</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeLineSearch</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Hager-Zhang line search.</span>
 
@@ -460,7 +461,9 @@
     <span class="n">num_fun_grad_calls</span> <span class="o">+=</span> <span class="n">new_num_fun_grad_calls</span>
     <span class="k">return</span> <span class="n">failed</span><span class="p">,</span> <span class="n">final_low</span><span class="p">,</span> <span class="n">final_high</span><span class="p">,</span> <span class="n">num_fun_grad_calls</span>
 
-<div class="viewcode-block" id="HagerZhangLineSearch.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span>
+<div class="viewcode-block" id="HagerZhangLineSearch.init_state">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.init_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span>
       <span class="bp">self</span><span class="p">,</span>
       <span class="n">init_stepsize</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
       <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -550,7 +553,10 @@
         <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">num_fun_eval</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
         <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">num_grad_eval</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="HagerZhangLineSearch.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+
+<div class="viewcode-block" id="HagerZhangLineSearch.update">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.HagerZhangLineSearch.html#jaxopt.HagerZhangLineSearch.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
       <span class="bp">self</span><span class="p">,</span>
       <span class="n">stepsize</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
       <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span>
@@ -668,8 +674,10 @@
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">LineSearchStep</span><span class="p">(</span><span class="n">stepsize</span><span class="o">=</span><span class="n">new_stepsize</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>
 
+
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun_with_aux</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">_make_funs_with_aux</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_aux</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

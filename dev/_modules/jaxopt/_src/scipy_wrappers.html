@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -391,7 +390,9 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">decorator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="ScipyMinimize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="ScipyMinimize">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ScipyMinimize</span><span class="p">(</span><span class="n">ScipyWrapper</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;`scipy.optimize.minimize` wrapper</span>
 
@@ -425,9 +426,12 @@
   <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
   <span class="n">value_and_grad</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="ScipyMinimize.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ScipyMinimize.optimality_fun">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.optimality_fun">[docs]</a>
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
   <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Wraps `scipy.optimize.minimize`.&quot;&quot;&quot;</span>
@@ -471,22 +475,26 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="n">hess_inv</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">try</span><span class="p">:</span>
-      <span class="n">num_hess_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nhev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-      <span class="n">num_hess_eval</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+    <span class="n">nev_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;nfev&#39;</span><span class="p">,</span> <span class="s1">&#39;njev&#39;</span><span class="p">,</span> <span class="s1">&#39;nhev&#39;</span><span class="p">]:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">nev_dict</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">attr</span><span class="p">),</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">nev_dict</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="n">ScipyMinimizeInfo</span><span class="p">(</span><span class="n">fun_val</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
                              <span class="n">success</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
                              <span class="n">status</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
                              <span class="n">iter_num</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">,</span>
                              <span class="n">hess_inv</span><span class="o">=</span><span class="n">hess_inv</span><span class="p">,</span>
-                             <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
-                             <span class="n">num_jac_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">njev</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">),</span>
-                             <span class="n">num_hess_eval</span><span class="o">=</span><span class="n">num_hess_eval</span><span class="p">)</span>
+                             <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">nev_dict</span><span class="p">[</span><span class="s1">&#39;nfev&#39;</span><span class="p">],</span>
+                             <span class="n">num_jac_eval</span><span class="o">=</span><span class="n">nev_dict</span><span class="p">[</span><span class="s1">&#39;njev&#39;</span><span class="p">],</span>
+                             <span class="n">num_hess_eval</span><span class="o">=</span><span class="n">nev_dict</span><span class="p">[</span><span class="s1">&#39;nhev&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ScipyMinimize.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="ScipyMinimize.run">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyMinimize.html#jaxopt.ScipyMinimize.run">[docs]</a>
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
@@ -500,6 +508,7 @@
 <span class="sd">      (params, info).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
@@ -520,7 +529,10 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;maxiter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span></div>
 
 
-<div class="viewcode-block" id="ScipyBoundedMinimize"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ScipyBoundedMinimize">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ScipyBoundedMinimize</span><span class="p">(</span><span class="n">ScipyMinimize</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;`scipy.optimize.minimize` wrapper.</span>
 
@@ -545,12 +557,17 @@
     <span class="n">step</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">projection</span><span class="o">.</span><span class="n">projection_box</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ScipyBoundedMinimize.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ScipyBoundedMinimize.optimality_fun">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.optimality_fun">[docs]</a>
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
     <span class="n">fp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_point_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ScipyBoundedMinimize.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+
+<div class="viewcode-block" id="ScipyBoundedMinimize.run">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyBoundedMinimize.html#jaxopt.ScipyBoundedMinimize.run">[docs]</a>
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
           <span class="n">bounds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
@@ -566,10 +583,14 @@
 <span class="sd">    Returns:</span>
 <span class="sd">      (params, info).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="ScipyRootFinding"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ScipyRootFinding">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ScipyRootFinding</span><span class="p">(</span><span class="n">ScipyWrapper</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;`scipy.optimize.root` wrapper.</span>
 
@@ -609,7 +630,9 @@
   <span class="n">options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">use_jacrev</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="ScipyRootFinding.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="ScipyRootFinding.run">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding.run">[docs]</a>
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
           <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
           <span class="o">*</span><span class="n">args</span><span class="p">,</span>
           <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">:</span>
@@ -671,6 +694,7 @@
                          <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">num_fun_eval</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span></div>
 
+
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
 
@@ -685,6 +709,7 @@
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_jac_fun</span><span class="p">)</span></div>
+
 
 
 <span class="c1"># NOTE: relative to `scipy.optimize.least_squares`, the functions below absorb</span>

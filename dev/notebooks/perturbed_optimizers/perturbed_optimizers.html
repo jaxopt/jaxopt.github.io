@@ -19,14 +19,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -117,7 +116,7 @@
 <p>https://www.apache.org/licenses/LICENSE-2.0</p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
 <section class="tex2jax_ignore mathjax_ignore" id="perturbed-optimizers">
-<h1>Perturbed optimizers<a class="headerlink" href="#perturbed-optimizers" title="Permalink to this heading"></a></h1>
+<h1>Perturbed optimizers<a class="headerlink" href="#perturbed-optimizers" title="Link to this heading"></a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/google/jaxopt/blob/main/docs/notebooks/perturbed_optimizers/perturbed_optimizers.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>We review in this notebook a universal method to transform any optimizer <span class="math notranslate nohighlight">\(y^*\)</span> in a differentiable approximation <span class="math notranslate nohighlight">\(y_\varepsilon^*\)</span>, using pertutbations following the method of <a class="reference external" href="https://arxiv.org/abs/2002.08676">Berthet et al. (2020)</a>. JAXopt provides an implementation that we illustrate here on some examples.</p>
 <p>Concretely, for an optimizer function <span class="math notranslate nohighlight">\(y^*\)</span> defined by</p>
@@ -163,10 +162,10 @@
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="argmax-one-hot">
-<h1>Argmax one-hot<a class="headerlink" href="#argmax-one-hot" title="Permalink to this heading"></a></h1>
+<h1>Argmax one-hot<a class="headerlink" href="#argmax-one-hot" title="Link to this heading"></a></h1>
 <p>We consider an optimizer, such as the following <code class="docutils literal notranslate"><span class="pre">argmax_one_hot</span></code> function. It transforms a real-valued vector into a binary vector with a 1 in the coefficient with largest magnitude and 0 elsewhere. It corresponds to <span class="math notranslate nohighlight">\(y^*\)</span> for <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> being the unit simplex. We run it on an example input <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p>
 <section id="one-hot-function">
-<h2>One-hot function<a class="headerlink" href="#one-hot-function" title="Permalink to this heading"></a></h2>
+<h2>One-hot function<a class="headerlink" href="#one-hot-function" title="Link to this heading"></a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">argmax_one_hot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
@@ -192,7 +191,7 @@
 </div>
 </section>
 <section id="one-hot-with-pertubations">
-<h2>One-hot with pertubations<a class="headerlink" href="#one-hot-with-pertubations" title="Permalink to this heading"></a></h2>
+<h2>One-hot with pertubations<a class="headerlink" href="#one-hot-with-pertubations" title="Link to this heading"></a></h2>
 <p>Our implementation transforms the <code class="docutils literal notranslate"><span class="pre">argmax_one_hot</span></code> function into a perturbed one that we call <code class="docutils literal notranslate"><span class="pre">pert_one_hot</span></code>. In this case we use Gumbel noise for the perturbation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -239,7 +238,7 @@ square norm of difference = 4.40e-03
 </div>
 </section>
 <section id="gradients-for-one-hot-with-perturbations">
-<h2>Gradients for one-hot with perturbations<a class="headerlink" href="#gradients-for-one-hot-with-perturbations" title="Permalink to this heading"></a></h2>
+<h2>Gradients for one-hot with perturbations<a class="headerlink" href="#gradients-for-one-hot-with-perturbations" title="Link to this heading"></a></h2>
 <p>The perturbed optimizer <span class="math notranslate nohighlight">\(y_\varepsilon^*\)</span> is differentiable, and its gradient can be computed with stochastic estimation automatically, using <code class="docutils literal notranslate"><span class="pre">jax.grad</span></code>.</p>
 <p>We create a scalar loss <code class="docutils literal notranslate"><span class="pre">loss_simplex</span></code> of the perturbed optimizer <span class="math notranslate nohighlight">\(y^*_\varepsilon\)</span></p>
 <div class="math notranslate nohighlight">
@@ -341,9 +340,9 @@ target diff. one-hot = [0.1  0.15 0.2  0.25 0.3 ]
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="differentiable-ranking">
-<h1>Differentiable ranking<a class="headerlink" href="#differentiable-ranking" title="Permalink to this heading"></a></h1>
+<h1>Differentiable ranking<a class="headerlink" href="#differentiable-ranking" title="Link to this heading"></a></h1>
 <section id="ranking-function">
-<h2>Ranking function<a class="headerlink" href="#ranking-function" title="Permalink to this heading"></a></h2>
+<h2>Ranking function<a class="headerlink" href="#ranking-function" title="Link to this heading"></a></h2>
 <p>We consider an optimizer, such as the following <code class="docutils literal notranslate"><span class="pre">ranking</span></code> function. It transforms a real-valued vector of size <span class="math notranslate nohighlight">\(n\)</span> into a vector with coefficients being a permutation of <span class="math notranslate nohighlight">\(\{0,\ldots, n-1\}\)</span> corresponding to the order of the coefficients of the original vector. It corresponds to <span class="math notranslate nohighlight">\(y^*\)</span> for <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> being the permutahedron. We run it on an example input <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -378,7 +377,7 @@ ranking = [2 0 4 5 3 1]
 </div>
 </section>
 <section id="ranking-with-perturbations">
-<h2>Ranking with perturbations<a class="headerlink" href="#ranking-with-perturbations" title="Permalink to this heading"></a></h2>
+<h2>Ranking with perturbations<a class="headerlink" href="#ranking-with-perturbations" title="Link to this heading"></a></h2>
 <p>As above, our implementation transforms this function into a perturbed one that we call <code class="docutils literal notranslate"><span class="pre">pert_ranking</span></code>. In this case we use Gumbel noise for the perturbation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -416,7 +415,7 @@ diff_ranks = [2.37      0.02      3.85      4.96      2.4099998 1.39     ]
 </div>
 </section>
 <section id="gradients-for-ranking-with-perturbations">
-<h2>Gradients for ranking with perturbations<a class="headerlink" href="#gradients-for-ranking-with-perturbations" title="Permalink to this heading"></a></h2>
+<h2>Gradients for ranking with perturbations<a class="headerlink" href="#gradients-for-ranking-with-perturbations" title="Link to this heading"></a></h2>
 <p>As above, the perturbed optimizer <span class="math notranslate nohighlight">\(y_\varepsilon^*\)</span> is differentiable, and its gradient can be computed with stochastic estimation automatically, using <code class="docutils literal notranslate"><span class="pre">jax.grad</span></code>.</p>
 <p>We showcase this on a loss of <span class="math notranslate nohighlight">\(y_\varepsilon(\theta)\)</span> that can be directly differentiated w.r.t. the <code class="docutils literal notranslate"><span class="pre">values</span></code> equal to <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
 <div class="cell docutils container">

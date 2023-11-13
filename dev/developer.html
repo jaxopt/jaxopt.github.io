@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -123,9 +122,9 @@
            <div itemprop="articleBody">
              
   <section id="development">
-<h1>Development<a class="headerlink" href="#development" title="Permalink to this heading"></a></h1>
+<h1>Development<a class="headerlink" href="#development" title="Link to this heading"></a></h1>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
 <p>To rebuild the documentation, install several packages:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">docs</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
@@ -141,14 +140,14 @@ if you’d prefer to build the docs without executing the notebooks, you can run
 </div>
 <p>You can then see the generated documentation in <code class="docutils literal notranslate"><span class="pre">docs/_build/html/index.html</span></code>.</p>
 <section id="update-notebooks">
-<h3>Update notebooks<a class="headerlink" href="#update-notebooks" title="Permalink to this heading"></a></h3>
+<h3>Update notebooks<a class="headerlink" href="#update-notebooks" title="Link to this heading"></a></h3>
 <p>We use <a class="reference external" href="https://jupytext.readthedocs.io">jupytext</a> to maintain two synced copies of the notebooks
 in <code class="docutils literal notranslate"><span class="pre">docs/notebooks</span></code>: one in <code class="docutils literal notranslate"><span class="pre">ipynb</span></code> format, and one in <code class="docutils literal notranslate"><span class="pre">md</span></code> format. The advantage of the former
 is that it can be opened and executed directly in Colab; the advantage of the latter is that
 it makes it much easier to track diffs within version control.</p>
 </section>
 <section id="editing-ipynb">
-<h3>Editing ipynb<a class="headerlink" href="#editing-ipynb" title="Permalink to this heading"></a></h3>
+<h3>Editing ipynb<a class="headerlink" href="#editing-ipynb" title="Link to this heading"></a></h3>
 <p>For making large changes that substantially modify code and outputs, it is easiest to
 edit the notebooks in Jupyter or in Colab. To edit notebooks in the Colab interface,
 open <a class="reference external" href="http://colab.research.google.com">http://colab.research.google.com</a> and <code class="docutils literal notranslate"><span class="pre">Upload</span></code> from your local repo.
@@ -156,12 +155,12 @@ Update it as needed, <code class="docutils literal notranslate"><span class="pre
 You may want to test that it executes properly, using <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> as explained above.</p>
 </section>
 <section id="editing-md">
-<h3>Editing md<a class="headerlink" href="#editing-md" title="Permalink to this heading"></a></h3>
+<h3>Editing md<a class="headerlink" href="#editing-md" title="Link to this heading"></a></h3>
 <p>For making smaller changes to the text content of the notebooks, it is easiest to edit the
 <code class="docutils literal notranslate"><span class="pre">.md</span></code> versions using a text editor.</p>
 </section>
 <section id="syncing-notebooks">
-<h3>Syncing notebooks<a class="headerlink" href="#syncing-notebooks" title="Permalink to this heading"></a></h3>
+<h3>Syncing notebooks<a class="headerlink" href="#syncing-notebooks" title="Link to this heading"></a></h3>
 <p>After editing either the ipynb or md versions of the notebooks, you can sync the two versions
 using <a class="reference external" href="https://jupytext.readthedocs.io">jupytext</a>. For example, to sync the files inside the <code class="docutils literal notranslate"><span class="pre">docs/notebooks/deep_learning/</span></code>, run the command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupytext</span> <span class="o">--</span><span class="n">sync</span> <span class="n">docs</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">deep_learning</span><span class="o">/*.*</span>
@@ -178,7 +177,7 @@ on all staged files in your git repository, automatically using the correct jupy
 environment to execute this automatically.</p>
 </section>
 <section id="creating-new-notebooks">
-<h3>Creating new notebooks<a class="headerlink" href="#creating-new-notebooks" title="Permalink to this heading"></a></h3>
+<h3>Creating new notebooks<a class="headerlink" href="#creating-new-notebooks" title="Link to this heading"></a></h3>
 <p>If you are adding a new notebook to the documentation and would like to use the <code class="docutils literal notranslate"><span class="pre">jupytext</span> <span class="pre">--sync</span></code>
 command discussed here, you can set up your notebook for jupytext by using the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupytext</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">formats</span> <span class="n">ipynb</span><span class="p">,</span><span class="n">md</span><span class="p">:</span><span class="n">myst</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">the</span><span class="o">/</span><span class="n">notebook</span><span class="o">.</span><span class="n">ipynb</span>
@@ -188,7 +187,7 @@ command discussed here, you can set up your notebook for jupytext by using the f
 desired formats, and which the <code class="docutils literal notranslate"><span class="pre">jupytext</span> <span class="pre">--sync</span></code> command recognizes when invoked.</p>
 </section>
 <section id="notebooks-within-the-sphinx-build">
-<h3>Notebooks within the sphinx build<a class="headerlink" href="#notebooks-within-the-sphinx-build" title="Permalink to this heading"></a></h3>
+<h3>Notebooks within the sphinx build<a class="headerlink" href="#notebooks-within-the-sphinx-build" title="Link to this heading"></a></h3>
 <p>We exclude some notebooks from the build, e.g., because they contain long computations.
 See <code class="docutils literal notranslate"><span class="pre">exclude_patterns</span></code> in <a class="reference external" href="https://github.com/google/jaxopt/blob/main/docs/conf.py">conf.py</a>.</p>
 </section>

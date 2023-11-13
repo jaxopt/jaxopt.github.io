@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -214,7 +213,9 @@
   <span class="k">return</span> <span class="n">optimality_fun</span>
 
 
-<div class="viewcode-block" id="EqualityConstrainedQP"><a class="viewcode-back" href="../../../_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="EqualityConstrainedQP">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">EqualityConstrainedQP</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Solver</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Quadratic programming with equality constraints only.</span>
 
@@ -319,7 +320,9 @@
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">solver</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-<div class="viewcode-block" id="EqualityConstrainedQP.run"><a class="viewcode-back" href="../../../_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+<div class="viewcode-block" id="EqualityConstrainedQP.run">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.run">[docs]</a>
+  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">init_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">params_obj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -381,7 +384,10 @@
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">(</span><span class="n">primal</span><span class="p">,</span> <span class="n">dual_eq</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                         <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="EqualityConstrainedQP.l2_optimality_error"><a class="viewcode-back" href="../../../_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.l2_optimality_error">[docs]</a>  <span class="k">def</span> <span class="nf">l2_optimality_error</span><span class="p">(</span>
+
+<div class="viewcode-block" id="EqualityConstrainedQP.l2_optimality_error">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.EqualityConstrainedQP.html#jaxopt.EqualityConstrainedQP.l2_optimality_error">[docs]</a>
+  <span class="k">def</span> <span class="nf">l2_optimality_error</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">KKTSolution</span><span class="p">,</span>
     <span class="n">params_obj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
@@ -390,6 +396,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes the L2 norm of the KKT residuals.&quot;&quot;&quot;</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_Q</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec_A</span> <span class="ow">is</span> <span class="kc">None</span>
@@ -425,6 +432,7 @@
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

@@ -19,14 +19,13 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/clipboard.min.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -126,56 +125,56 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-scipyboundedminimize">
-<h1>jaxopt.ScipyBoundedMinimize<a class="headerlink" href="#jaxopt-scipyboundedminimize" title="Permalink to this heading"></a></h1>
+<h1>jaxopt.ScipyBoundedMinimize<a class="headerlink" href="#jaxopt-scipyboundedminimize" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ScipyBoundedMinimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyBoundedMinimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ScipyBoundedMinimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyBoundedMinimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize" title="Link to this definition"></a></dt>
 <dd><p><cite>scipy.optimize.minimize</cite> wrapper.</p>
 <p>This wrapper is for minimization subject to box constraints only.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>method</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – </p></li>
-<li><p><strong>dtype</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
+<li><p><strong>method</strong> (<em>str</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>dtype</strong> (<em>Any</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>callback</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>tol</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
-<li><p><strong>options</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>tol</strong> (<em>float</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>options</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
-<li><p><strong>value_and_grad</strong> (<em>Union</em><em>[</em><em>bool</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>value_and_grad</strong> (<em>bool</em><em> | </em><em>Callable</em>) – </p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.fun">
-<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.fun" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.fun" title="Link to this definition"></a></dt>
 <dd><p>a smooth function of the form <cite>fun(x, *args, **kwargs)</cite>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.method">
-<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.method" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.method" title="Link to this definition"></a></dt>
 <dd><p>the <cite>method</cite> argument for <cite>scipy.optimize.minimize</cite>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.tol">
-<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.tol" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.tol" title="Link to this definition"></a></dt>
 <dd><p>the <cite>tol</cite> argument for <cite>scipy.optimize.minimize</cite>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.options">
-<span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.options" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.options" title="Link to this definition"></a></dt>
 <dd><p>the <cite>options</cite> argument for <cite>scipy.optimize.minimize</cite>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.dtype">
-<span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.dtype" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.dtype" title="Link to this definition"></a></dt>
 <dd><p>if not None, cast all NumPy arrays to this dtype. Note that some
 methods relying on FORTRAN code, such as the <cite>L-BFGS-B</cite> solver for
 <cite>scipy.optimize.minimize</cite>, require casting to float64.</p>
@@ -183,19 +182,19 @@ methods relying on FORTRAN code, such as the <cite>L-BFGS-B</cite> solver for
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.jit">
-<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.jit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.jit" title="Link to this definition"></a></dt>
 <dd><p>whether to JIT-compile JAX-based values and grad evals.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.implicit_diff_solve">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.implicit_diff_solve" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.implicit_diff_solve" title="Link to this definition"></a></dt>
 <dd><p>the linear system solver to use.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.has_aux">
-<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.has_aux" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.has_aux" title="Link to this definition"></a></dt>
 <dd><p>whether function <cite>fun</cite> outputs one (False) or more values (True).
 When True it will be assumed by default that <cite>fun(…)[0]</cite> is the
 objective.</p>
@@ -203,21 +202,21 @@ objective.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad=False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float64'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad=False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.__init__" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>method</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – </p></li>
-<li><p><strong>dtype</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
+<li><p><strong>method</strong> (<em>str</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>dtype</strong> (<em>Any</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>fun</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>callback</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>tol</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
-<li><p><strong>options</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>tol</strong> (<em>float</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>options</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
-<li><p><strong>value_and_grad</strong> (<em>Union</em><em>[</em><em>bool</em><em>, </em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>value_and_grad</strong> (<em>bool</em><em> | </em><em>Callable</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -286,38 +285,38 @@ objective.</p>
 </table>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.l2_optimality_error">
-<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.l2_optimality_error" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.l2_optimality_error" title="Link to this definition"></a></dt>
 <dd><p>Computes the L2 optimality error.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.optimality_fun">
-<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyBoundedMinimize.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.optimality_fun" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyBoundedMinimize.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.optimality_fun" title="Link to this definition"></a></dt>
 <dd><p>Optimality function mapping compatible with <cite>&#64;custom_root</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ScipyBoundedMinimize.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyBoundedMinimize.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.run" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/scipy_wrappers.html#ScipyBoundedMinimize.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ScipyBoundedMinimize.run" title="Link to this definition"></a></dt>
 <dd><p>Runs the solver.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
-<li><p><strong>bounds</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – an optional tuple <cite>(lb, ub)</cite> of pytrees with structure identical
+<li><p><strong>init_params</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>bounds</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span>) – an optional tuple <cite>(lb, ub)</cite> of pytrees with structure identical
 to <cite>init_params</cite>, representing box constraints.</p></li>
 <li><p><strong>*args</strong> – additional positional arguments to be passed to <cite>fun</cite>.</p></li>
 <li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to <cite>fun</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(params, info).</p>

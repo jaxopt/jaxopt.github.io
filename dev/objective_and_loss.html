@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -156,11 +155,11 @@
            <div itemprop="articleBody">
              
   <section id="loss-and-objective-functions">
-<h1>Loss and objective functions<a class="headerlink" href="#loss-and-objective-functions" title="Permalink to this heading"></a></h1>
+<h1>Loss and objective functions<a class="headerlink" href="#loss-and-objective-functions" title="Link to this heading"></a></h1>
 <section id="loss-functions">
-<h2>Loss functions<a class="headerlink" href="#loss-functions" title="Permalink to this heading"></a></h2>
+<h2>Loss functions<a class="headerlink" href="#loss-functions" title="Link to this heading"></a></h2>
 <section id="regression">
-<h3>Regression<a class="headerlink" href="#regression" title="Permalink to this heading"></a></h3>
+<h3>Regression<a class="headerlink" href="#regression" title="Link to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.huber_loss.html#jaxopt.loss.huber_loss" title="jaxopt.loss.huber_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.huber_loss</span></code></a>(target, pred[, delta])</p></td>
@@ -172,7 +171,7 @@
 where <code class="docutils literal notranslate"><span class="pre">target</span></code> is the ground-truth and <code class="docutils literal notranslate"><span class="pre">pred</span></code> is the model’s output.</p>
 </section>
 <section id="binary-classification">
-<h3>Binary classification<a class="headerlink" href="#binary-classification" title="Permalink to this heading"></a></h3>
+<h3>Binary classification<a class="headerlink" href="#binary-classification" title="Link to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss" title="jaxopt.loss.binary_logistic_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.binary_logistic_loss</span></code></a>(label, logit)</p></td>
@@ -204,7 +203,7 @@ where <code class="docutils literal notranslate"><span class="pre">label</span><
 </table>
 </section>
 <section id="multiclass-classification">
-<h3>Multiclass classification<a class="headerlink" href="#multiclass-classification" title="Permalink to this heading"></a></h3>
+<h3>Multiclass classification<a class="headerlink" href="#multiclass-classification" title="Link to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.loss.multiclass_logistic_loss.html#jaxopt.loss.multiclass_logistic_loss" title="jaxopt.loss.multiclass_logistic_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.loss.multiclass_logistic_loss</span></code></a>(label, ...)</p></td>
@@ -226,15 +225,15 @@ where <code class="docutils literal notranslate"><span class="pre">label</span><
 <code class="docutils literal notranslate"><span class="pre">scores</span></code> is an array of size <code class="docutils literal notranslate"><span class="pre">n_classes</span></code>.</p>
 </section>
 <section id="applying-loss-functions-on-a-batch">
-<h3>Applying loss functions on a batch<a class="headerlink" href="#applying-loss-functions-on-a-batch" title="Permalink to this heading"></a></h3>
+<h3>Applying loss functions on a batch<a class="headerlink" href="#applying-loss-functions-on-a-batch" title="Link to this heading"></a></h3>
 <p>All loss functions above are pointwise, meaning that they operate on a single sample. Use <code class="docutils literal notranslate"><span class="pre">jax.vmap(loss)</span></code>
 followed by a reduction such as <code class="docutils literal notranslate"><span class="pre">jnp.mean</span></code> or <code class="docutils literal notranslate"><span class="pre">jnp.sum</span></code> to use on a batch.</p>
 </section>
 </section>
 <section id="objective-functions">
-<h2>Objective functions<a class="headerlink" href="#objective-functions" title="Permalink to this heading"></a></h2>
+<h2>Objective functions<a class="headerlink" href="#objective-functions" title="Link to this heading"></a></h2>
 <section id="composite-linear-functions">
-<span id="id1"></span><h3>Composite linear functions<a class="headerlink" href="#composite-linear-functions" title="Permalink to this heading"></a></h3>
+<span id="id1"></span><h3>Composite linear functions<a class="headerlink" href="#composite-linear-functions" title="Link to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.objective.least_squares.html#jaxopt.objective.least_squares" title="jaxopt.objective.least_squares"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.objective.least_squares</span></code></a></p></td>
@@ -255,7 +254,7 @@ followed by a reduction such as <code class="docutils literal notranslate"><span
 <a class="reference internal" href="non_smooth.html#block-coordinate-descent"><span class="std std-ref">block coordinate descent</span></a>.</p>
 </section>
 <section id="other-functions">
-<h3>Other functions<a class="headerlink" href="#other-functions" title="Permalink to this heading"></a></h3>
+<h3>Other functions<a class="headerlink" href="#other-functions" title="Link to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.objective.ridge_regression.html#jaxopt.objective.ridge_regression" title="jaxopt.objective.ridge_regression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.objective.ridge_regression</span></code></a>(params, ...)</p></td>

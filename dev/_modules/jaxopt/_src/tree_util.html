@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -193,14 +192,20 @@
 <span class="n">tree_div</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Tree division.&quot;</span>
 
 
-<div class="viewcode-block" id="tree_scalar_mul"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_scalar_mul.html#jaxopt.tree_util.tree_scalar_mul">[docs]</a><span class="k">def</span> <span class="nf">tree_scalar_mul</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">):</span>
+<div class="viewcode-block" id="tree_scalar_mul">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_scalar_mul.html#jaxopt.tree_util.tree_scalar_mul">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_scalar_mul</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute scalar * tree_x.&quot;&quot;&quot;</span>
   <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scalar</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="tree_add_scalar_mul"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_add_scalar_mul.html#jaxopt.tree_util.tree_add_scalar_mul">[docs]</a><span class="k">def</span> <span class="nf">tree_add_scalar_mul</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
+
+<div class="viewcode-block" id="tree_add_scalar_mul">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_add_scalar_mul.html#jaxopt.tree_util.tree_add_scalar_mul">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_add_scalar_mul</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute tree_x + scalar * tree_y.&quot;&quot;&quot;</span>
   <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">scalar</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span></div>
+
 
 
 <span class="n">_vdot</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">Precision</span><span class="o">.</span><span class="n">HIGHEST</span><span class="p">)</span>
@@ -210,10 +215,13 @@
   <span class="k">return</span> <span class="n">_vdot</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="tree_vdot"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_vdot.html#jaxopt.tree_util.tree_vdot">[docs]</a><span class="k">def</span> <span class="nf">tree_vdot</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
+<div class="viewcode-block" id="tree_vdot">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_vdot.html#jaxopt.tree_util.tree_vdot">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_vdot</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the inner product &lt;tree_x, tree_y&gt;.&quot;&quot;&quot;</span>
   <span class="n">vdots</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">_vdot_safe</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">tree_reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">vdots</span><span class="p">)</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">_vdot_real</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -241,13 +249,18 @@
   <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">,</span> <span class="n">tree_y</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="tree_sum"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_sum.html#jaxopt.tree_util.tree_sum">[docs]</a><span class="k">def</span> <span class="nf">tree_sum</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
+<div class="viewcode-block" id="tree_sum">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_sum.html#jaxopt.tree_util.tree_sum">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_sum</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute sum(tree_x).&quot;&quot;&quot;</span>
   <span class="n">sums</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">tree_reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">sums</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="tree_l2_norm"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_l2_norm.html#jaxopt.tree_util.tree_l2_norm">[docs]</a><span class="k">def</span> <span class="nf">tree_l2_norm</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="tree_l2_norm">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_l2_norm.html#jaxopt.tree_util.tree_l2_norm">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_l2_norm</span><span class="p">(</span><span class="n">tree_x</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the l2 norm ||tree_x||.&quot;&quot;&quot;</span>
   <span class="n">squared_tree</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">real</span><span class="p">)</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">imag</span><span class="p">),</span> <span class="n">tree_x</span><span class="p">)</span>
   <span class="n">sqnorm</span> <span class="o">=</span> <span class="n">tree_sum</span><span class="p">(</span><span class="n">squared_tree</span><span class="p">)</span>
@@ -257,9 +270,13 @@
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sqnorm</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="tree_zeros_like"><a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_zeros_like.html#jaxopt.tree_util.tree_zeros_like">[docs]</a><span class="k">def</span> <span class="nf">tree_zeros_like</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
+
+<div class="viewcode-block" id="tree_zeros_like">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.tree_util.tree_zeros_like.html#jaxopt.tree_util.tree_zeros_like">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_zeros_like</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates an all-zero tree with the same structure as tree_x.&quot;&quot;&quot;</span>
   <span class="k">return</span> <span class="n">tree_map</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">,</span> <span class="n">tree_x</span><span class="p">)</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">tree_ones_like</span><span class="p">(</span><span class="n">tree_x</span><span class="p">):</span>

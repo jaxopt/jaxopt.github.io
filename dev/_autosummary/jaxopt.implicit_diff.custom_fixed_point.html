@@ -19,14 +19,13 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/clipboard.min.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -127,20 +126,20 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-implicit-diff-custom-fixed-point">
-<h1>jaxopt.implicit_diff.custom_fixed_point<a class="headerlink" href="#jaxopt-implicit-diff-custom-fixed-point" title="Permalink to this heading"></a></h1>
+<h1>jaxopt.implicit_diff.custom_fixed_point<a class="headerlink" href="#jaxopt-implicit-diff-custom-fixed-point" title="Link to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxopt.implicit_diff.custom_fixed_point">
-<span class="sig-prename descclassname"><span class="pre">jaxopt.implicit_diff.</span></span><span class="sig-name descname"><span class="pre">custom_fixed_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fixed_point_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_signature=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/implicit_diff.html#custom_fixed_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.implicit_diff.custom_fixed_point" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jaxopt.implicit_diff.</span></span><span class="sig-name descname"><span class="pre">custom_fixed_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fixed_point_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_signature=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/implicit_diff.html#custom_fixed_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.implicit_diff.custom_fixed_point" title="Link to this definition"></a></dt>
 <dd><p>Decorator for adding implicit differentiation to a fixed point solver.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fixed_point_fun</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – a function, <code class="docutils literal notranslate"><span class="pre">fixed_point_fun(params,</span> <span class="pre">*args)</span></code>.
+<li><p><strong>fixed_point_fun</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></span>) – a function, <code class="docutils literal notranslate"><span class="pre">fixed_point_fun(params,</span> <span class="pre">*args)</span></code>.
 The invariant is <code class="docutils literal notranslate"><span class="pre">fixed_point_fun(sol,</span> <span class="pre">*args)</span> <span class="pre">==</span> <span class="pre">sol</span></code> at the
 solution <code class="docutils literal notranslate"><span class="pre">sol</span></code>.</p></li>
-<li><p><strong>has_aux</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – whether the decorated solver function returns auxiliary data.</p></li>
-<li><p><strong>solve</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – a linear solver of the form <code class="docutils literal notranslate"><span class="pre">solve(matvec,</span> <span class="pre">b)</span></code>.</p></li>
-<li><p><strong>reference_signature</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>]) – optional function whose signature
+<li><p><strong>has_aux</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – whether the decorated solver function returns auxiliary data.</p></li>
+<li><p><strong>solve</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></span>) – a linear solver of the form <code class="docutils literal notranslate"><span class="pre">solve(matvec,</span> <span class="pre">b)</span></code>.</p></li>
+<li><p><strong>reference_signature</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>]</span>) – optional function whose signature
 (i.e. arguments and keyword arguments) is one with which the
 solver and fixed-point functions are expected to agree. Defaults
 to <code class="docutils literal notranslate"><span class="pre">fixed_point_fun</span></code>. It is required that solver and

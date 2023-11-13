@@ -19,14 +19,13 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/clipboard.min.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -130,10 +129,10 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-nonlinearcg">
-<h1>jaxopt.NonlinearCG<a class="headerlink" href="#jaxopt-nonlinearcg" title="Permalink to this heading"></a></h1>
+<h1>jaxopt.NonlinearCG<a class="headerlink" href="#jaxopt-nonlinearcg" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">NonlinearCG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polak-ribiere'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/nonlinear_cg.html#NonlinearCG"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.NonlinearCG" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">NonlinearCG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polak-ribiere'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/nonlinear_cg.html#NonlinearCG"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.NonlinearCG" title="Link to this definition"></a></dt>
 <dd><p>Nonlinear conjugate gradient solver.</p>
 <p>Supports complex variables, see second reference.</p>
 <dl class="field-list simple">
@@ -154,29 +153,29 @@
 <li><p><strong>max_stepsize</strong> (<em>float</em>) – </p></li>
 <li><p><strong>min_stepsize</strong> (<em>float</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+<li><p><strong>unroll</strong> (<em>str</em><em> | </em><em>bool</em>) – </p></li>
 <li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.fun">
-<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.fun" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.fun" title="Link to this definition"></a></dt>
 <dd><p>a smooth function of the form <code class="docutils literal notranslate"><span class="pre">fun(x,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.value_and_grad">
-<span class="sig-name descname"><span class="pre">value_and_grad</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.value_and_grad" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">value_and_grad</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.value_and_grad" title="Link to this definition"></a></dt>
 <dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> just returns the value (False) or both
 the value and gradient (True).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.has_aux">
-<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.has_aux" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.has_aux" title="Link to this definition"></a></dt>
 <dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> outputs auxiliary data or not.
 If <code class="docutils literal notranslate"><span class="pre">value_and_grad</span> <span class="pre">==</span> <span class="pre">False</span></code>, the output should be
 <code class="docutils literal notranslate"><span class="pre">value,</span> <span class="pre">aux</span> <span class="pre">=</span> <span class="pre">fun(...)</span></code>.
@@ -187,19 +186,19 @@ The auxiliary outputs are stored in <code class="docutils literal notranslate"><
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.maxiter">
-<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.maxiter" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.maxiter" title="Link to this definition"></a></dt>
 <dd><p>maximum number of proximal gradient descent iterations.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.tol">
-<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.tol" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.tol" title="Link to this definition"></a></dt>
 <dd><p>tolerance of the stopping criterion.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.method">
-<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.method" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.method" title="Link to this definition"></a></dt>
 <dd><p>which variant to calculate the beta parameter in Nonlinear CG.
 “polak-ribiere”, “fletcher-reeves”, “hestenes-stiefel”
 (default: “polak-ribiere”)</p>
@@ -207,7 +206,7 @@ The auxiliary outputs are stored in <code class="docutils literal notranslate"><
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.linesearch">
-<span class="sig-name descname"><span class="pre">linesearch</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.linesearch" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">linesearch</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.linesearch" title="Link to this definition"></a></dt>
 <dd><p>the type of line search to use: “backtracking” for backtracking
 line search, “zoom” for zoom line search or “hager-zhang” for Hager-Zhang
 line search.</p>
@@ -215,7 +214,7 @@ line search.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.linesearch_init">
-<span class="sig-name descname"><span class="pre">linesearch_init</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.linesearch_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">linesearch_init</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.linesearch_init" title="Link to this definition"></a></dt>
 <dd><p>strategy for line-search initialization. By default, it
 will use “increase”, which will increased the step-size by a factor of
 <cite>increase_factor</cite> at each iteration if the step-size is larger than
@@ -227,71 +226,71 @@ iteration.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.condition">
-<span class="sig-name descname"><span class="pre">condition</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.condition" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">condition</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.condition" title="Link to this definition"></a></dt>
 <dd><p>Deprecated. Condition used to select the stepsize when using
 backtracking linesearch.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.maxls">
-<span class="sig-name descname"><span class="pre">maxls</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.maxls" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">maxls</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.maxls" title="Link to this definition"></a></dt>
 <dd><p>maximum number of iterations to use in the line search.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.decrease_factor">
-<span class="sig-name descname"><span class="pre">decrease_factor</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.decrease_factor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">decrease_factor</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.decrease_factor" title="Link to this definition"></a></dt>
 <dd><p>Deprecated. Factor by which to decrease the stepsize during
 line search when using backtracking linesearch (default: 0.8).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.increase_factor">
-<span class="sig-name descname"><span class="pre">increase_factor</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.increase_factor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">increase_factor</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.increase_factor" title="Link to this definition"></a></dt>
 <dd><p>factor by which to increase the stepsize during line search
 (default: 1.2).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.max_stepsize">
-<span class="sig-name descname"><span class="pre">max_stepsize</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.max_stepsize" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">max_stepsize</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.max_stepsize" title="Link to this definition"></a></dt>
 <dd><p>upper bound on stepsize.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.min_stepsize">
-<span class="sig-name descname"><span class="pre">min_stepsize</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.min_stepsize" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">min_stepsize</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.min_stepsize" title="Link to this definition"></a></dt>
 <dd><p>lower bound on stepsize guess at start of each linesearch run.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.implicit_diff">
-<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.implicit_diff" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.implicit_diff" title="Link to this definition"></a></dt>
 <dd><p>whether to enable implicit diff or autodiff of unrolled
 iterations.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.implicit_diff_solve">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.implicit_diff_solve" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.implicit_diff_solve" title="Link to this definition"></a></dt>
 <dd><p>the linear system solver to use.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.jit">
-<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.jit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.jit" title="Link to this definition"></a></dt>
 <dd><p>whether to JIT-compile the optimization loop (default: True).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.unroll">
-<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.unroll" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.unroll" title="Link to this definition"></a></dt>
 <dd><p>whether to unroll the optimization loop (default: “auto”).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.verbose">
-<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.verbose" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.NonlinearCG.verbose" title="Link to this definition"></a></dt>
 <dd><p>whether to print error on every iteration or not.</p>
 </dd></dl>
 
@@ -304,7 +303,7 @@ Unconstrained Optimization of Real Functions in Complex Variables.
 SIAM J. Optim., Vol. 22, No. 3, pp. 879-898</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polak-ribiere'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.NonlinearCG.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polak-ribiere'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.NonlinearCG.__init__" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -323,9 +322,9 @@ SIAM J. Optim., Vol. 22, No. 3, pp. 879-898</p>
 <li><p><strong>max_stepsize</strong> (<em>float</em>) – </p></li>
 <li><p><strong>min_stepsize</strong> (<em>float</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+<li><p><strong>unroll</strong> (<em>str</em><em> | </em><em>bool</em>) – </p></li>
 <li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
 </ul>
 </dd>
@@ -428,18 +427,18 @@ SIAM J. Optim., Vol. 22, No. 3, pp. 879-898</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.init_state">
-<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/nonlinear_cg.html#NonlinearCG.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.NonlinearCG.init_state" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/nonlinear_cg.html#NonlinearCG.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.NonlinearCG.init_state" title="Link to this definition"></a></dt>
 <dd><p>Initialize the solver state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>init_params</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – pytree containing the initial parameters.</p></li>
 <li><p><strong>*args</strong> – additional positional arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
 <li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">NonlinearCGState</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonlinearCGState</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>state</p>
@@ -449,30 +448,30 @@ SIAM J. Optim., Vol. 22, No. 3, pp. 879-898</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.l2_optimality_error">
-<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.NonlinearCG.l2_optimality_error" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.NonlinearCG.l2_optimality_error" title="Link to this definition"></a></dt>
 <dd><p>Computes the L2 optimality error.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.optimality_fun">
-<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/nonlinear_cg.html#NonlinearCG.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.NonlinearCG.optimality_fun" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/nonlinear_cg.html#NonlinearCG.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.NonlinearCG.optimality_fun" title="Link to this definition"></a></dt>
 <dd><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.NonlinearCG.run" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.NonlinearCG.run" title="Link to this definition"></a></dt>
 <dd><p>Runs the optimization loop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>init_params</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – pytree containing the initial parameters.</p></li>
 <li><p><strong>*args</strong> – additional positional arguments to be passed to the update method.</p></li>
 <li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to the update method.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(params, state)</p>
@@ -482,19 +481,19 @@ SIAM J. Optim., Vol. 22, No. 3, pp. 879-898</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.NonlinearCG.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/nonlinear_cg.html#NonlinearCG.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.NonlinearCG.update" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/nonlinear_cg.html#NonlinearCG.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.NonlinearCG.update" title="Link to this definition"></a></dt>
 <dd><p>Performs one iteration of Fletcher-Reeves Algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the parameters.</p></li>
-<li><p><strong>state</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">NonlinearCGState</span></code>) – named tuple containing the solver state.</p></li>
+<li><p><strong>params</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – pytree containing the parameters.</p></li>
+<li><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonlinearCGState</span></code></span>) – named tuple containing the solver state.</p></li>
 <li><p><strong>*args</strong> – additional positional arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
 <li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(params, state)</p>

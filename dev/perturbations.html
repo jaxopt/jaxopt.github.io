@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -134,10 +133,10 @@
            <div itemprop="articleBody">
              
   <section id="perturbed-optimization">
-<h1>Perturbed optimization<a class="headerlink" href="#perturbed-optimization" title="Permalink to this heading"></a></h1>
+<h1>Perturbed optimization<a class="headerlink" href="#perturbed-optimization" title="Link to this heading"></a></h1>
 <p>The perturbed optimization module allows to transform a non-smooth function such as a max or arg-max into a differentiable function using random perturbations. This is useful for optimization algorithms that require differentiability, such as gradient descent (e.g. see <a class="reference internal" href="notebooks/perturbed_optimizers/perturbed_optimizers.html"><span class="doc">Notebook</span></a> on perturbed optimizers).</p>
 <section id="max-perturbations">
-<h2>Max perturbations<a class="headerlink" href="#max-perturbations" title="Permalink to this heading"></a></h2>
+<h2>Max perturbations<a class="headerlink" href="#max-perturbations" title="Link to this heading"></a></h2>
 <p>Consider a maximum function of the form:</p>
 <div class="math notranslate nohighlight">
 \[F(\theta) = \max_{y \in \mathcal{C}} \langle y, \theta\rangle\,,\]</div>
@@ -155,7 +154,7 @@
 <p>where <span class="math notranslate nohighlight">\(Z\)</span> is a random variable. The distribution of this random variable can be specified through the keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code>. The default is a Gumbel distribution, which is a good choice for discrete variables. For continuous variables, a normal distribution is more appropriate.</p>
 </section>
 <section id="argmax-perturbations">
-<h2>Argmax perturbations<a class="headerlink" href="#argmax-perturbations" title="Permalink to this heading"></a></h2>
+<h2>Argmax perturbations<a class="headerlink" href="#argmax-perturbations" title="Link to this heading"></a></h2>
 <p>Consider an arg-max function of the form:</p>
 <div class="math notranslate nohighlight">
 \[y^*(\theta) = \mathop{\mathrm{arg\,max}}_{y \in \mathcal{C}} \langle y, \theta\rangle\,,\]</div>
@@ -173,7 +172,7 @@
 </table>
 </section>
 <section id="scalar-perturbations">
-<h2>Scalar perturbations<a class="headerlink" href="#scalar-perturbations" title="Permalink to this heading"></a></h2>
+<h2>Scalar perturbations<a class="headerlink" href="#scalar-perturbations" title="Link to this heading"></a></h2>
 <p>Consider any function, <span class="math notranslate nohighlight">\(f\)</span> that is not necessarily differentiable, e.g. piecewise-constant of the form:</p>
 <div class="math notranslate nohighlight">
 \[f(\theta) = g(y^*(\theta))\,,\]</div>
@@ -193,7 +192,7 @@
 </table>
 </section>
 <section id="noise-distributions">
-<h2>Noise distributions<a class="headerlink" href="#noise-distributions" title="Permalink to this heading"></a></h2>
+<h2>Noise distributions<a class="headerlink" href="#noise-distributions" title="Link to this heading"></a></h2>
 <p>The functions <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_max.html#jaxopt.perturbations.make_perturbed_max" title="jaxopt.perturbations.make_perturbed_max"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_max()</span></code></a>, <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_argmax.html#jaxopt.perturbations.make_perturbed_argmax" title="jaxopt.perturbations.make_perturbed_argmax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_argmax()</span></code></a> and <a class="reference internal" href="_autosummary/jaxopt.perturbations.make_perturbed_fun.html#jaxopt.perturbations.make_perturbed_fun" title="jaxopt.perturbations.make_perturbed_fun"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jaxopt.perturbations.make_perturbed_fun()</span></code></a> take a keyword argument <code class="docutils literal notranslate"><span class="pre">noise</span></code> that specifies the distribution of random perturbations. Pre-defined distributions for this argument are the following:</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>

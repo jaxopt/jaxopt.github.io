@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -153,7 +152,9 @@
   <span class="n">num_fun_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
 
-<div class="viewcode-block" id="FixedPointIteration"><a class="viewcode-back" href="../../../_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="FixedPointIteration">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">FixedPointIteration</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Fixed point iteration method.</span>
 <span class="sd">  Attributes:</span>
@@ -187,7 +188,9 @@
   <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
 
-<div class="viewcode-block" id="FixedPointIteration.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="FixedPointIteration.init_state">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.init_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">init_params</span><span class="p">,</span>
                  <span class="o">*</span><span class="n">args</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FixedPointState</span><span class="p">:</span>
@@ -206,7 +209,10 @@
                            <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">NUM_EVAL_DTYPE</span><span class="p">)</span>
                            <span class="p">)</span></div>
 
-<div class="viewcode-block" id="FixedPointIteration.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+
+<div class="viewcode-block" id="FixedPointIteration.update">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
              <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span>
              <span class="o">*</span><span class="n">args</span><span class="p">,</span>
@@ -230,10 +236,14 @@
                                  <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_fun_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">next_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">next_state</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FixedPointIteration.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FixedPointIteration.optimality_fun">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration.optimality_fun">[docs]</a>
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
     <span class="n">new_params</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">new_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
 
   <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
@@ -244,6 +254,7 @@
       <span class="bp">self</span><span class="o">.</span><span class="n">_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_fun</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">reference_signature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_point_fun</span></div>
+
 </pre></div>
 
            </div>

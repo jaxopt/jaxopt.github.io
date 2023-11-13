@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -157,7 +156,7 @@
            <div itemprop="articleBody">
              
   <section id="constrained-optimization">
-<span id="constrained-optim"></span><h1>Constrained optimization<a class="headerlink" href="#constrained-optimization" title="Permalink to this heading"></a></h1>
+<span id="constrained-optim"></span><h1>Constrained optimization<a class="headerlink" href="#constrained-optimization" title="Link to this heading"></a></h1>
 <p>This section is concerned with problems of the form</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} f(x, \theta) \textrm{ subject to } x \in \mathcal{C}(\upsilon),\]</div>
@@ -166,7 +165,7 @@ the parameters with respect to which the function is minimized, <span class="mat
 are optional additional arguments, <span class="math notranslate nohighlight">\(\mathcal{C}(\upsilon)\)</span> is a convex
 set and <span class="math notranslate nohighlight">\(\upsilon\)</span> are parameter the convex set may depend on.</p>
 <section id="projected-gradient">
-<h2>Projected gradient<a class="headerlink" href="#projected-gradient" title="Permalink to this heading"></a></h2>
+<h2>Projected gradient<a class="headerlink" href="#projected-gradient" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ProjectedGradient.html#jaxopt.ProjectedGradient" title="jaxopt.ProjectedGradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ProjectedGradient</span></code></a>(fun, projection[, ...])</p></td>
@@ -175,7 +174,7 @@ set and <span class="math notranslate nohighlight">\(\upsilon\)</span> are param
 </tbody>
 </table>
 <section id="instantiating-and-running-the-solver">
-<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this heading"></a></h3>
+<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Link to this heading"></a></h3>
 <p>To solve constrained optimization problems, we can use projected gradient
 descent, which is gradient descent with an additional projection onto the
 constraint set. Constraints are specified by setting the <code class="docutils literal notranslate"><span class="pre">projection</span></code>
@@ -191,7 +190,7 @@ argument. For instance, non-negativity constraints can be specified using
 <p>Numerous projections are available, see below.</p>
 </section>
 <section id="specifying-projection-parameters">
-<h3>Specifying projection parameters<a class="headerlink" href="#specifying-projection-parameters" title="Permalink to this heading"></a></h3>
+<h3>Specifying projection parameters<a class="headerlink" href="#specifying-projection-parameters" title="Link to this heading"></a></h3>
 <p>Some projections have a hyperparameter that can be specified.  For
 instance, the hyperparameter of <a class="reference internal" href="_autosummary/jaxopt.projection.projection_l2_ball.html#jaxopt.projection.projection_l2_ball" title="jaxopt.projection.projection_l2_ball"><code class="xref py py-func docutils literal notranslate"><span class="pre">projection_l2_ball</span></code></a> is the radius of the <span class="math notranslate nohighlight">\(L_2\)</span> ball.
 This can be passed using the <code class="docutils literal notranslate"><span class="pre">hyperparams_proj</span></code> argument of <code class="docutils literal notranslate"><span class="pre">run</span></code>:</p>
@@ -205,12 +204,12 @@ This can be passed using the <code class="docutils literal notranslate"><span cl
 <aside class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/constrained/binary_kernel_svm_with_intercept.html#sphx-glr-auto-examples-constrained-binary-kernel-svm-with-intercept-py"><span class="std std-ref">Binary kernel SVM with intercept.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_constrained_binary_kernel_svm_with_intercept.py</span></p></li>
 </ul>
 </aside>
 </section>
 <section id="differentiation">
-<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this heading"></a></h3>
+<h3>Differentiation<a class="headerlink" href="#differentiation" title="Link to this heading"></a></h3>
 <p>In some applications, it is useful to differentiate the solution of the solver
 with respect to some hyperparameters.  Continuing the previous example, we can
 now differentiate the solution w.r.t. <code class="docutils literal notranslate"><span class="pre">radius</span></code>:</p>
@@ -226,7 +225,7 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 <a class="reference internal" href="implicit_diff.html#implicit-diff"><span class="std std-ref">implicit differentiation</span></a> section for more details.</p>
 </section>
 <section id="projections">
-<h3>Projections<a class="headerlink" href="#projections" title="Permalink to this heading"></a></h3>
+<h3>Projections<a class="headerlink" href="#projections" title="Link to this heading"></a></h3>
 <p>The Euclidean projection onto <span class="math notranslate nohighlight">\(\mathcal{C}(\upsilon)\)</span> is:</p>
 <div class="math notranslate nohighlight">
 \[\text{proj}_{\mathcal{C}}(x', \upsilon) :=
@@ -289,7 +288,7 @@ parameters of the convex set.</p>
 </section>
 </section>
 <section id="mirror-descent">
-<h2>Mirror descent<a class="headerlink" href="#mirror-descent" title="Permalink to this heading"></a></h2>
+<h2>Mirror descent<a class="headerlink" href="#mirror-descent" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.MirrorDescent.html#jaxopt.MirrorDescent" title="jaxopt.MirrorDescent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.MirrorDescent</span></code></a>(fun, projection_grad, ...)</p></td>
@@ -298,7 +297,7 @@ parameters of the convex set.</p>
 </tbody>
 </table>
 <section id="kullback-leibler-projections">
-<h3>Kullback-Leibler projections<a class="headerlink" href="#kullback-leibler-projections" title="Permalink to this heading"></a></h3>
+<h3>Kullback-Leibler projections<a class="headerlink" href="#kullback-leibler-projections" title="Link to this heading"></a></h3>
 <p>The Kullback-Leibler projection onto <span class="math notranslate nohighlight">\(\mathcal{C}(\upsilon)\)</span> is:</p>
 <div class="math notranslate nohighlight">
 \[\text{proj}_{\mathcal{C}}(x', \upsilon) :=
@@ -317,7 +316,7 @@ parameters of the convex set.</p>
 </section>
 </section>
 <section id="box-constraints">
-<h2>Box constraints<a class="headerlink" href="#box-constraints" title="Permalink to this heading"></a></h2>
+<h2>Box constraints<a class="headerlink" href="#box-constraints" title="Link to this heading"></a></h2>
 <p>For optimization with box constraints, in addition to projected gradient
 descent, we can use our SciPy wrapper.</p>
 <table class="autosummary longtable docutils align-default">

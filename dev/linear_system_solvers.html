@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -133,13 +132,13 @@
            <div itemprop="articleBody">
              
   <section id="linear-system-solving">
-<h1>Linear system solving<a class="headerlink" href="#linear-system-solving" title="Permalink to this heading"></a></h1>
+<h1>Linear system solving<a class="headerlink" href="#linear-system-solving" title="Link to this heading"></a></h1>
 <p>This section is concerned with solving problems of the form</p>
 <div class="math notranslate nohighlight">
 \[Ax = b\]</div>
 <p>with unknown <span class="math notranslate nohighlight">\(x\)</span> for a linear operator <span class="math notranslate nohighlight">\(A\)</span> and vector <span class="math notranslate nohighlight">\(b\)</span>.</p>
 <section id="indirect-solvers">
-<h2>Indirect solvers<a class="headerlink" href="#indirect-solvers" title="Permalink to this heading"></a></h2>
+<h2>Indirect solvers<a class="headerlink" href="#indirect-solvers" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_cg.html#jaxopt.linear_solve.solve_cg" title="jaxopt.linear_solve.solve_cg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_cg</span></code></a>(matvec, b[, ...])</p></td>
@@ -183,7 +182,7 @@ They can be <em>warm-started</em> using the <code class="docutils literal notran
 Other options, such as <code class="docutils literal notranslate"><span class="pre">tol</span></code> or <code class="docutils literal notranslate"><span class="pre">maxiter</span></code>, are also supported.</p>
 </section>
 <section id="direct-solvers">
-<h2>Direct solvers<a class="headerlink" href="#direct-solvers" title="Permalink to this heading"></a></h2>
+<h2>Direct solvers<a class="headerlink" href="#direct-solvers" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.linear_solve.solve_lu.html#jaxopt.linear_solve.solve_lu" title="jaxopt.linear_solve.solve_lu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.linear_solve.solve_lu</span></code></a>(matvec, b[, ridge])</p></td>
@@ -213,7 +212,7 @@ They need to materialize the matrix in memory.</p>
 </div>
 </section>
 <section id="iterative-refinement">
-<h2>Iterative refinement<a class="headerlink" href="#iterative-refinement" title="Permalink to this heading"></a></h2>
+<h2>Iterative refinement<a class="headerlink" href="#iterative-refinement" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.IterativeRefinement.html#jaxopt.IterativeRefinement" title="jaxopt.IterativeRefinement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.IterativeRefinement</span></code></a>([matvec_A, ...])</p></td>

@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -131,11 +130,11 @@
            <div itemprop="articleBody">
              
   <section id="fixed-point-resolution">
-<h1>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Permalink to this heading"></a></h1>
+<h1>Fixed point resolution<a class="headerlink" href="#fixed-point-resolution" title="Link to this heading"></a></h1>
 <p>This section is concerned with fixed-point resolution, that is finding
 <span class="math notranslate nohighlight">\(x\)</span> such that <span class="math notranslate nohighlight">\(T(x, \theta) = x\)</span>.</p>
 <section id="equivalence-with-root-finding">
-<h2>Equivalence with root finding<a class="headerlink" href="#equivalence-with-root-finding" title="Permalink to this heading"></a></h2>
+<h2>Equivalence with root finding<a class="headerlink" href="#equivalence-with-root-finding" title="Link to this heading"></a></h2>
 <p>If <span class="math notranslate nohighlight">\(x\)</span> is a fixed point of <span class="math notranslate nohighlight">\(T\)</span> then <span class="math notranslate nohighlight">\(x\)</span> is a root
 of <span class="math notranslate nohighlight">\(F(x, \theta) = T(x, \theta) - x\)</span>.  Reciprocally, if <span class="math notranslate nohighlight">\(x\)</span> is the
 root of some <span class="math notranslate nohighlight">\(F(x, \theta)\)</span> then it is also the fixed point of
@@ -146,7 +145,7 @@ or are historically associated with fixed point resolution.
 The root finding viewpoint is discussed in <a class="reference internal" href="root_finding.html#root-finding"><span class="std std-ref">this section</span></a>.</p>
 </section>
 <section id="fixed-point-iterations">
-<h2>Fixed point iterations<a class="headerlink" href="#fixed-point-iterations" title="Permalink to this heading"></a></h2>
+<h2>Fixed point iterations<a class="headerlink" href="#fixed-point-iterations" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.FixedPointIteration.html#jaxopt.FixedPointIteration" title="jaxopt.FixedPointIteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.FixedPointIteration</span></code></a>(fixed_point_fun)</p></td>
@@ -172,7 +171,7 @@ a fixed point if <span class="math notranslate nohighlight">\(x\mapsto T(x,\thet
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">FixedPointIteration</span></code> successfully finds the fixed point <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
 <section id="differentiation">
-<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this heading"></a></h3>
+<h3>Differentiation<a class="headerlink" href="#differentiation" title="Link to this heading"></a></h3>
 <p>Fixed points can be differentiated with respect to <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">FixedPointIteration</span>
 
@@ -197,7 +196,7 @@ section for more details.</p>
 </section>
 </section>
 <section id="anderson-acceleration">
-<h2>Anderson acceleration<a class="headerlink" href="#anderson-acceleration" title="Permalink to this heading"></a></h2>
+<h2>Anderson acceleration<a class="headerlink" href="#anderson-acceleration" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.AndersonAcceleration.html#jaxopt.AndersonAcceleration" title="jaxopt.AndersonAcceleration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.AndersonAcceleration</span></code></a>(fixed_point_fun)</p></td>
@@ -251,14 +250,14 @@ the <code class="docutils literal notranslate"><span class="pre">ridge</span></c
 <aside class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_anderson_accelerate_gd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-accelerate-gd-py"><span class="std std-ref">Anderson acceleration of gradient descent.</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_picard_ode.html#sphx-glr-auto-examples-fixed-point-plot-picard-ode-py"><span class="std std-ref">Anderson acceleration in application to Picard–Lindelöf theorem.</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/fixed_point/deep_equilibrium_model.html#sphx-glr-auto-examples-fixed-point-deep-equilibrium-model-py"><span class="std std-ref">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py</span></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_fixed_point_plot_picard_ode.py</span></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py</span></p></li>
 </ul>
 </aside>
 </section>
 <section id="accelerating-jaxopt-optimizers">
-<h2>Accelerating JAXopt optimizers<a class="headerlink" href="#accelerating-jaxopt-optimizers" title="Permalink to this heading"></a></h2>
+<h2>Accelerating JAXopt optimizers<a class="headerlink" href="#accelerating-jaxopt-optimizers" title="Link to this heading"></a></h2>
 <p>Anderson acceleration can also be used to accelerate optimization algorithms.
 To spare the user the burden of implementing Anderson acceleration for every
 solver, we propose the <code class="docutils literal notranslate"><span class="pre">AndersonWrapper</span></code> class. It directly takes an
@@ -280,7 +279,7 @@ optimizer as input and applies Anderson acceleration to its iterates.</p>
 <aside class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/fixed_point/plot_anderson_wrapper_cd.html#sphx-glr-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"><span class="std std-ref">Anderson acceleration of block coordinate descent.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py</span></p></li>
 </ul>
 </aside>
 </section>

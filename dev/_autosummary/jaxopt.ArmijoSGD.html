@@ -19,14 +19,13 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/clipboard.min.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -130,10 +129,10 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-armijosgd">
-<h1>jaxopt.ArmijoSGD<a class="headerlink" href="#jaxopt-armijosgd" title="Permalink to this heading"></a></h1>
+<h1>jaxopt.ArmijoSGD<a class="headerlink" href="#jaxopt-armijosgd" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ArmijoSGD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggressiveness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">ArmijoSGD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggressiveness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD" title="Link to this definition"></a></dt>
 <dd><p>SGD with Armijo line search.</p>
 <dl class="simple">
 <dt>This implementation assumes that the “interpolation property” holds, see for example Vaswani et al. 2019 (<a class="reference external" href="https://arxiv.org/abs/1905.09997">https://arxiv.org/abs/1905.09997</a>):</dt><dd><p>the global optimum over D must also be a global optimum for any finite sample of D</p>
@@ -154,21 +153,21 @@ In practice this algorithm works well outside this setting.</p>
 <li><p><strong>reset_option</strong> (<em>str</em>) – </p></li>
 <li><p><strong>momentum</strong> (<em>float</em>) – </p></li>
 <li><p><strong>max_stepsize</strong> (<em>float</em>) – </p></li>
-<li><p><strong>pre_update</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>pre_update</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>maxls</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+<li><p><strong>unroll</strong> (<em>str</em><em> | </em><em>bool</em>) – </p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.fun">
-<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.fun" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.fun" title="Link to this definition"></a></dt>
 <dd><p>a function of the form <code class="docutils literal notranslate"><span class="pre">fun(params,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>, where
 <code class="docutils literal notranslate"><span class="pre">params</span></code> are parameters of the model,
 <code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> are additional arguments.</p>
@@ -176,14 +175,14 @@ In practice this algorithm works well outside this setting.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.value_and_grad">
-<span class="sig-name descname"><span class="pre">value_and_grad</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.value_and_grad" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">value_and_grad</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.value_and_grad" title="Link to this definition"></a></dt>
 <dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> just returns the value (False) or both
 the value and gradient (True).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.has_aux">
-<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.has_aux" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">has_aux</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.has_aux" title="Link to this definition"></a></dt>
 <dd><p>whether <code class="docutils literal notranslate"><span class="pre">fun</span></code> outputs auxiliary data or not.
 If <code class="docutils literal notranslate"><span class="pre">has_aux</span></code> is False, <code class="docutils literal notranslate"><span class="pre">fun</span></code> is expected to be</p>
 <blockquote>
@@ -205,7 +204,7 @@ At each iteration of the algorithm, the auxiliary outputs are stored</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.aggressiveness">
-<span class="sig-name descname"><span class="pre">aggressiveness</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.aggressiveness" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">aggressiveness</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.aggressiveness" title="Link to this definition"></a></dt>
 <dd><p>controls “agressiveness” of optimizer. (default: 0.9)
 Bigger values encourage bigger stepsize. Must belong to open interval
 (0,1).  If <code class="docutils literal notranslate"><span class="pre">aggressiveness&gt;0.5</span></code> the learning_rate is guaranteed to be at
@@ -215,21 +214,21 @@ constant of the loss on the current batch.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.decrease_factor">
-<span class="sig-name descname"><span class="pre">decrease_factor</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.decrease_factor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">decrease_factor</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.decrease_factor" title="Link to this definition"></a></dt>
 <dd><p>factor by which to decrease the stepsize during line search
 (default: 0.8).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.increase_factor">
-<span class="sig-name descname"><span class="pre">increase_factor</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.increase_factor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">increase_factor</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.increase_factor" title="Link to this definition"></a></dt>
 <dd><p>factor by which to increase the stepsize during line search
 (default: 1.5).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.reset_option">
-<span class="sig-name descname"><span class="pre">reset_option</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.reset_option" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reset_option</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.reset_option" title="Link to this definition"></a></dt>
 <dd><p>strategy to use for resetting the stepsize at each iteration
 (default: “increase”).</p>
 <ul class="simple">
@@ -245,19 +244,19 @@ theoretical guarantees.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.momentum">
-<span class="sig-name descname"><span class="pre">momentum</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.momentum" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">momentum</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.momentum" title="Link to this definition"></a></dt>
 <dd><p>momentum parameter, 0 corresponding to no momentum.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.max_stepsize">
-<span class="sig-name descname"><span class="pre">max_stepsize</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.max_stepsize" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">max_stepsize</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.max_stepsize" title="Link to this definition"></a></dt>
 <dd><p>a maximum step size to use. (default: 1.)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.pre_update">
-<span class="sig-name descname"><span class="pre">pre_update</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.pre_update" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pre_update</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.pre_update" title="Link to this definition"></a></dt>
 <dd><p>a function to execute before the solver’s update.
 The function signature must be
 <code class="docutils literal notranslate"><span class="pre">params,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">pre_update(params,</span> <span class="pre">state,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>.</p>
@@ -265,50 +264,50 @@ The function signature must be
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.maxiter">
-<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.maxiter" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.maxiter" title="Link to this definition"></a></dt>
 <dd><p>maximum number of solver iterations.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.maxls">
-<span class="sig-name descname"><span class="pre">maxls</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.maxls" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">maxls</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.maxls" title="Link to this definition"></a></dt>
 <dd><p>maximum number of steps in line search.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.tol">
-<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.tol" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.tol" title="Link to this definition"></a></dt>
 <dd><p>tolerance to use.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.verbose">
-<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.verbose" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.verbose" title="Link to this definition"></a></dt>
 <dd><p>whether to print error on every iteration or not.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.implicit_diff">
-<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.implicit_diff" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.implicit_diff" title="Link to this definition"></a></dt>
 <dd><p>whether to enable implicit diff or autodiff of unrolled
 iterations.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.implicit_diff_solve">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.implicit_diff_solve" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.implicit_diff_solve" title="Link to this definition"></a></dt>
 <dd><p>the linear system solver to use.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.jit">
-<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.jit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.jit" title="Link to this definition"></a></dt>
 <dd><p>whether to JIT-compile the optimization loop (default: True).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.unroll">
-<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.unroll" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">unroll</span></span><a class="headerlink" href="#jaxopt.ArmijoSGD.unroll" title="Link to this definition"></a></dt>
 <dd><p>whether to unroll the optimization loop (default: “auto”).</p>
 </dd></dl>
 
@@ -320,7 +319,7 @@ rates.
 Advances in Neural Information Processing Systems 32.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggressiveness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ArmijoSGD.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_and_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_aux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggressiveness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decrease_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increase'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ArmijoSGD.__init__" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -333,15 +332,15 @@ Advances in Neural Information Processing Systems 32.</p>
 <li><p><strong>reset_option</strong> (<em>str</em>) – </p></li>
 <li><p><strong>momentum</strong> (<em>float</em>) – </p></li>
 <li><p><strong>max_stepsize</strong> (<em>float</em>) – </p></li>
-<li><p><strong>pre_update</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>pre_update</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>maxls</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>unroll</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+<li><p><strong>unroll</strong> (<em>str</em><em> | </em><em>bool</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -446,7 +445,7 @@ Advances in Neural Information Processing Systems 32.</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.init_state">
-<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD.init_state" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD.init_state" title="Link to this definition"></a></dt>
 <dd><p>Initialize the state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -457,7 +456,7 @@ Advances in Neural Information Processing Systems 32.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ArmijoState</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArmijoState</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>state</p>
@@ -467,36 +466,36 @@ Advances in Neural Information Processing Systems 32.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.l2_optimality_error">
-<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ArmijoSGD.l2_optimality_error" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ArmijoSGD.l2_optimality_error" title="Link to this definition"></a></dt>
 <dd><p>Computes the L2 optimality error.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.optimality_fun">
-<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD.optimality_fun" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">optimality_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD.optimality_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD.optimality_fun" title="Link to this definition"></a></dt>
 <dd><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.reset_stepsize">
-<span class="sig-name descname"><span class="pre">reset_stepsize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stepsize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD.reset_stepsize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD.reset_stepsize" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reset_stepsize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stepsize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD.reset_stepsize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD.reset_stepsize" title="Link to this definition"></a></dt>
 <dd><p>Return new step size for current step, according to reset_option.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ArmijoSGD.run" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ArmijoSGD.run" title="Link to this definition"></a></dt>
 <dd><p>Runs the optimization loop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>init_params</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – pytree containing the initial parameters.</p></li>
 <li><p><strong>*args</strong> – additional positional arguments to be passed to the update method.</p></li>
 <li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to the update method.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(params, state)</p>
@@ -506,19 +505,19 @@ Advances in Neural Information Processing Systems 32.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.run_iterator">
-<span class="sig-name descname"><span class="pre">run_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterator</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ArmijoSGD.run_iterator" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterator</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.ArmijoSGD.run_iterator" title="Link to this definition"></a></dt>
 <dd><p>Runs the optimization loop over an iterator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree containing the initial parameters.</p></li>
+<li><p><strong>init_params</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – pytree containing the initial parameters.</p></li>
 <li><p><strong>iterator</strong> – iterator generating data batches.</p></li>
 <li><p><strong>*args</strong> – additional positional arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
 <li><p><strong>**kwargs</strong> – additional keyword arguments to be passed to <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(params, state)</p>
@@ -528,7 +527,7 @@ Advances in Neural Information Processing Systems 32.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.ArmijoSGD.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD.update" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/armijo_sgd.html#ArmijoSGD.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.ArmijoSGD.update" title="Link to this definition"></a></dt>
 <dd><p>Performs one iteration of the solver.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -540,7 +539,7 @@ Advances in Neural Information Processing Systems 32.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(params, state)</p>

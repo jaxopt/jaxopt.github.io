@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -123,7 +122,7 @@
            <div itemprop="articleBody">
              
   <section id="line-search">
-<h1>Line search<a class="headerlink" href="#line-search" title="Permalink to this heading"></a></h1>
+<h1>Line search<a class="headerlink" href="#line-search" title="Link to this heading"></a></h1>
 <p>Given current parameters <span class="math notranslate nohighlight">\(x_k\)</span> and a descent direction <span class="math notranslate nohighlight">\(p_k\)</span>,
 the goal of a line search method is to find a step size <span class="math notranslate nohighlight">\(\alpha_k\)</span>
 such that the one-dimensional function</p>
@@ -131,7 +130,7 @@ such that the one-dimensional function</p>
 \[\varphi(\alpha_k) \triangleq f(x_k + \alpha_k p_k)\]</div>
 <p>is minimized or at least a sufficient decrease is guaranteed.</p>
 <section id="sufficient-decrease-and-curvature-conditions">
-<h2>Sufficient decrease and curvature conditions<a class="headerlink" href="#sufficient-decrease-and-curvature-conditions" title="Permalink to this heading"></a></h2>
+<h2>Sufficient decrease and curvature conditions<a class="headerlink" href="#sufficient-decrease-and-curvature-conditions" title="Link to this heading"></a></h2>
 <p>Exactly minimizing <span class="math notranslate nohighlight">\(\varphi\)</span> is often computationally costly.
 Instead, it is often preferred to search for <span class="math notranslate nohighlight">\(\alpha_k\)</span> satisfying certain conditions.
 One example of these conditions are the <strong>Wolfe conditions</strong></p>
@@ -156,7 +155,7 @@ f(x_k + \alpha_k p_k) &amp;\le f(x_k) + c_1 \alpha_k \nabla f(x_k)^\top p_k \\
 <p>where again <span class="math notranslate nohighlight">\(0 &lt; c_1 &lt; c_2 &lt; 1\)</span>. See Nocedal and Wright, equations (3.7a) and (3.7b).</p>
 </section>
 <section id="algorithms">
-<h2>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this heading"></a></h2>
+<h2>Algorithms<a class="headerlink" href="#algorithms" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.BacktrackingLineSearch.html#jaxopt.BacktrackingLineSearch" title="jaxopt.BacktrackingLineSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.BacktrackingLineSearch</span></code></a>(fun[, ...])</p></td>

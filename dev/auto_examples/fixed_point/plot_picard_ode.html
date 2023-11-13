@@ -19,14 +19,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -126,7 +125,7 @@
           <li class="breadcrumb-item"><a href="index.html">Fixed point resolution</a></li>
       <li class="breadcrumb-item active">Anderson acceleration in application to Picard–Lindelöf theorem.</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/fixed_point/plot_picard_ode.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/fixed_point/plot_picard_ode.ipynb" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -134,29 +133,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="sphx-glr-download-link-note admonition note">
-<p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-fixed-point-plot-picard-ode-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code</p>
-</div>
-<section class="sphx-glr-example-title" id="anderson-acceleration-in-application-to-picardlindelof-theorem">
-<span id="sphx-glr-auto-examples-fixed-point-plot-picard-ode-py"></span><h1>Anderson acceleration in application to Picard–Lindelöf theorem.<a class="headerlink" href="#anderson-acceleration-in-application-to-picardlindelof-theorem" title="Permalink to this heading"></a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="anderson-acceleration-in-application-to-picardlindelof-theorem">
+<h1>Anderson acceleration in application to Picard–Lindelöf theorem.<a class="headerlink" href="#anderson-acceleration-in-application-to-picardlindelof-theorem" title="Link to this heading"></a></h1>
 <p>Thanks to the <a class="reference external" href="https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem">Picard–Lindelöf theorem,</a> we can
 reduce differential equation solving to fixed point computations and simple
 integration.  More precisely consider the ODE:</p>
-<div class="math notranslate nohighlight">
-\[y'(t)=f(t,y(t))\]</div>
+<p>\begin{align}y’(t)=f(t,y(t))\end{align}</p>
 <p>of some time-dependant dynamic
 <span class="math notranslate nohighlight">\(f:\mathbb{R}\times\mathbb{R}^d\rightarrow\mathbb{R}^d\)</span> and initial
 conditions <span class="math notranslate nohighlight">\(y(0)=y_0\)</span>.  Then <span class="math notranslate nohighlight">\(y\)</span> is the fixed point of the following
 map:</p>
-<div class="math notranslate nohighlight">
-\[y(t)=T(y)(t)\mathrel{\mathop:}=y_0+\int_0^t f(s,y(s))\mathrm{d}s\]</div>
+<p>\begin{align}y(t)=T(y)(t)\mathrel{\mathop:}=y_0+\int_0^t f(s,y(s))\mathrm{d}s\end{align}</p>
 <p>Then we can define the sequence of functions <span class="math notranslate nohighlight">\((\phi_k)\)</span> with
 <span class="math notranslate nohighlight">\(\phi_0=0\)</span> recursively as follows:</p>
-<div class="math notranslate nohighlight">
-\[\phi_{k+1}(t)=T(\phi_k)(t)\mathrel{\mathop:} =
-y_0+\int_0^t f(s,\phi_k(s))\mathrm{d}s\]</div>
+<p>\begin{align}\phi_{k+1}(t)=T(\phi_k)(t)\mathrel{\mathop:} =
+y_0+\int_0^t f(s,\phi_k(s))\mathrm{d}s\end{align}</p>
 <p>Such sequence converges to the solution of the ODE, i.e.,
 <span class="math notranslate nohighlight">\(\lim_{k\rightarrow\infty}\phi_k=y\)</span>.</p>
 <p>In this example we choose <span class="math notranslate nohighlight">\(f(t,y(t))=1+y(t)^2\)</span>. We know that the
@@ -164,13 +155,9 @@ analytical solution is <span class="math notranslate nohighlight">\(y(t)=\tan{t}
 evaluate our numerical scheme.
 We used <code class="docutils literal notranslate"><span class="pre">scipy.integrate.cumtrapz</span></code> to perform
 integration, but any other integration method can be used.</p>
-<img src="../../_images/sphx_glr_plot_picard_ode_001.png" srcset="../../_images/sphx_glr_plot_picard_ode_001.png" alt="Anderson acceleration for ODE solving" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Error of 0.0362665057182312 with ground truth tan(t)
-</pre></div>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonAcceleration</span>
@@ -237,16 +224,22 @@ integration, but any other integration method can be used.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 9.919 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-plot-picard-ode-py">
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/98e1bf14a10586b1e53abfe4758d3664/plot_picard_ode.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_picard_ode.py</span></code></a></p>
 </div>
-<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/01a2d18af25acebddecd43811566c753/plot_picard_ode.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_picard_ode.ipynb</span></code></a></p>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">jax</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonAcceleration</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">objective</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_scalar_mul</span><span class="p">,</span> <span class="n">tree_sub</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;jaxopt&#39;
+</pre></div>
 </div>
 </div>
-<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
 </section>
 
 

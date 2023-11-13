@@ -19,14 +19,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -123,7 +122,7 @@
           <li class="breadcrumb-item"><a href="index.html">Deep learning</a></li>
       <li class="breadcrumb-item active">SPMD ResNet example with Flax and JAXopt.</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/deep_learning/distributed_flax_imagenet.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/deep_learning/distributed_flax_imagenet.ipynb" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -131,41 +130,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="sphx-glr-download-link-note admonition note">
-<p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-deep-learning-distributed-flax-imagenet-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code</p>
-</div>
-<section class="sphx-glr-example-title" id="spmd-resnet-example-with-flax-and-jaxopt">
-<span id="sphx-glr-auto-examples-deep-learning-distributed-flax-imagenet-py"></span><h1>SPMD ResNet example with Flax and JAXopt.<a class="headerlink" href="#spmd-resnet-example-with-flax-and-jaxopt" title="Permalink to this heading"></a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="spmd-resnet-example-with-flax-and-jaxopt">
+<h1>SPMD ResNet example with Flax and JAXopt.<a class="headerlink" href="#spmd-resnet-example-with-flax-and-jaxopt" title="Link to this heading"></a></h1>
 <p>The purpose of this example is to illustrate how JAXopt solvers can be easily
-used for distributed training thanks to <cite>jax.pjit</cite>. In this case, we begin by
+used for distributed training thanks to <code class="docutils literal notranslate"><span class="pre">jax.pjit</span></code>. In this case, we begin by
 implementing data parallel training of a ResNet50 model on the ImageNet dataset
 as a fork of Flax’s official ImageNet example. General aspects to pay attention
 to include:</p>
 <ul class="simple">
 <li><p>How auxiliary information (e.g. Flax mutables, model outputs from train metrics,
-etc) can be extracted from <cite>loss_fun</cite> using the <cite>state.aux</cite> field
+etc) can be extracted from <code class="docutils literal notranslate"><span class="pre">loss_fun</span></code> using the <code class="docutils literal notranslate"><span class="pre">state.aux</span></code> field
 of JAXopt’s optimizer state.</p></li>
-<li><p>How <cite>jax.pjit</cite> can be used to easily port single-device training loops to
+<li><p>How <code class="docutils literal notranslate"><span class="pre">jax.pjit</span></code> can be used to easily port single-device training loops to
 distributed training loops.</p></li>
 </ul>
 <p>Running on Google Cloud TPU:</p>
 <ol class="arabic simple">
 <li><p>Follow the instructions in Flax’s official ImageNet example to set a single
-VM with 8 TPUs (<cite>–accelerator_type v3-8</cite>).</p></li>
+VM with 8 TPUs (<code class="docutils literal notranslate"><span class="pre">--accelerator_type</span> <span class="pre">v3-8</span></code>).</p></li>
 <li><p>Likewise, follow the instructions in Flax’s official ImageNet example to
-prepare the ImageNet dataset and ensure the <cite>TFDS_DATA_DIR</cite> environment
+prepare the ImageNet dataset and ensure the <code class="docutils literal notranslate"><span class="pre">TFDS_DATA_DIR</span></code> environment
 variable has been set appropriately.</p></li>
 </ol>
-<p>You may finally run the example as
-<code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">python3</span> <span class="pre">distributed_flax_imagenet.py</span> <span class="pre">--workdir=$HOME/spmd_flax_imagenet</span>
-<span class="pre">`</span></code></p>
-<p>NOTES: this example supports TPU pod slices (e.g. <cite>–accelerator_type v3-32</cite>) as
+<section id="you-may-finally-run-the-example-as">
+<h2>You may finally run the example as<a class="headerlink" href="#you-may-finally-run-the-example-as" title="Link to this heading"></a></h2>
+<p>python3 distributed_flax_imagenet.py –workdir=$HOME/spmd_flax_imagenet</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+NOTES: this example supports TPU pod slices (e.g. `--accelerator_type v3-32`) as
 well as hosts with one or more GPUs attached. However, CPU-only execution is not
-yet supported.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+yet supported.
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -990,16 +988,23 @@ yet supported.</p>
   <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.000 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-deep-learning-distributed-flax-imagenet-py">
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/b652702dccb1d25e52191457e6f99347/distributed_flax_imagenet.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">distributed_flax_imagenet.py</span></code></a></p>
 </div>
-<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/6a15f0a6a7bd58639b7fd01d7781cda7/distributed_flax_imagenet.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">distributed_flax_imagenet.ipynb</span></code></a></p>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">13</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">logging</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">chex</span> <span class="kn">import</span> <span class="n">Array</span><span class="p">,</span> <span class="n">ArrayTree</span><span class="p">,</span> <span class="n">Numeric</span><span class="p">,</span> <span class="n">PRNGKey</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">clu</span> <span class="kn">import</span> <span class="n">checkpoint</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">clu</span> <span class="kn">import</span> <span class="n">metric_writers</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">clu</span> <span class="kn">import</span> <span class="n">metrics</span> <span class="k">as</span> <span class="n">clu_metrics</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;clu&#39;
+</pre></div>
 </div>
 </div>
-<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</section>
 </section>
 
 

@@ -19,14 +19,13 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/clipboard.min.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -146,10 +145,10 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-projection-projection-transport">
-<h1>jaxopt.projection.projection_transport<a class="headerlink" href="#jaxopt-projection-projection-transport" title="Permalink to this heading"></a></h1>
+<h1>jaxopt.projection.projection_transport<a class="headerlink" href="#jaxopt-projection-projection-transport" title="Link to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxopt.projection.projection_transport">
-<span class="sig-prename descclassname"><span class="pre">jaxopt.projection.</span></span><span class="sig-name descname"><span class="pre">projection_transport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_semi_dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projection.html#projection_transport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.projection.projection_transport" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jaxopt.projection.</span></span><span class="sig-name descname"><span class="pre">projection_transport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_semi_dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/projection.html#projection_transport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.projection.projection_transport" title="Link to this definition"></a></dt>
 <dd><p>Projection onto the transportation polytope.</p>
 <p>We solve</p>
 <div class="math notranslate nohighlight">
@@ -169,13 +168,13 @@ using LBFGS but the solver can be overidden using the <code class="docutils lite
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sim_matrix</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>) – similarity matrix, shape=(size_a, size_b).</p></li>
-<li><p><strong>marginals</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>) – a tuple (marginals_a, marginals_b),
+<li><p><strong>sim_matrix</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – similarity matrix, shape=(size_a, size_b).</p></li>
+<li><p><strong>marginals</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></span>) – a tuple (marginals_a, marginals_b),
 where marginals_a has shape=(size_a,) and
 marginals_b has shape=(size_b,).</p></li>
-<li><p><strong>make_solver</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – a function of the form make_solver(fun),
+<li><p><strong>make_solver</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></span>) – a function of the form make_solver(fun),
 for creating an iterative solver to minimize fun.</p></li>
-<li><p><strong>use_semi_dual</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – if true, use the semi-dual formulation in
+<li><p><strong>use_semi_dual</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – if true, use the semi-dual formulation in
 Equation (10) of <a class="reference external" href="https://arxiv.org/abs/1710.06276">https://arxiv.org/abs/1710.06276</a>. Otherwise, use
 the dual-formulation in Equation (7).</p></li>
 </ul>

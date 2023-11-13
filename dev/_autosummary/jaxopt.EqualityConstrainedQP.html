@@ -19,14 +19,13 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/clipboard.min.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -132,10 +131,10 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-equalityconstrainedqp">
-<h1>jaxopt.EqualityConstrainedQP<a class="headerlink" href="#jaxopt-equalityconstrainedqp" title="Permalink to this heading"></a></h1>
+<h1>jaxopt.EqualityConstrainedQP<a class="headerlink" href="#jaxopt-equalityconstrainedqp" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">EqualityConstrainedQP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_regularization=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/eq_qp.html#EqualityConstrainedQP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.EqualityConstrainedQP" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">EqualityConstrainedQP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_regularization=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/eq_qp.html#EqualityConstrainedQP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.EqualityConstrainedQP" title="Link to this definition"></a></dt>
 <dd><p>Quadratic programming with equality constraints only.</p>
 <p>Supports implicit differentiation, matvec, pytrees, and quadratic functions.
 Can benefit from GPU/TPU acceleration.</p>
@@ -144,22 +143,22 @@ Can benefit from GPU/TPU acceleration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec_Q</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>matvec_A</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>matvec_Q</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>matvec_A</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>fun</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>solve</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>refine_regularization</strong> (<em>float</em>) – </p></li>
 <li><p><strong>refine_maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.matvec_Q">
-<span class="sig-name descname"><span class="pre">matvec_Q</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.matvec_Q" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">matvec_Q</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.matvec_Q" title="Link to this definition"></a></dt>
 <dd><p>a Callable matvec_Q(params_Q, u).
 By default, matvec_Q(Q, u) = dot(Q, u), where Q = params_Q.
 <code class="docutils literal notranslate"><span class="pre">matvec_Q</span></code> incompatible with the specification of <code class="docutils literal notranslate"><span class="pre">fun</span></code>.
@@ -168,14 +167,14 @@ The shape of primal variables may be inferred from params_obj = (matvec_Q, c).</
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.matvec_A">
-<span class="sig-name descname"><span class="pre">matvec_A</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.matvec_A" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">matvec_A</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.matvec_A" title="Link to this definition"></a></dt>
 <dd><p>a Callable matvec_A(params_A, u).
 By default, matvec_A(A, u) = dot(A, u), where A = params_A.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.fun">
-<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.fun" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.fun" title="Link to this definition"></a></dt>
 <dd><p>(optional) a function with signature fun(params, params_obj) that is promised
 to be a quadratic polynomial convex with respect to params, i.e fun can be written</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">cste</span>
@@ -193,7 +192,7 @@ so the user should provide it in init_params.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.solve">
-<span class="sig-name descname"><span class="pre">solve</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.solve" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">solve</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.solve" title="Link to this definition"></a></dt>
 <dd><p>a Callable to solve linear systems, that accepts matvecs
 (default: linear_solve.solve_gmres).</p>
 <dl class="field-list simple">
@@ -201,8 +200,8 @@ so the user should provide it in init_params.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>matvec</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>b</strong> (<em>Any</em>) – </p></li>
-<li><p><strong>ridge</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – </p></li>
-<li><p><strong>init</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
+<li><p><strong>ridge</strong> (<em>float</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>init</strong> (<em>Any</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 </ul>
 </dd>
@@ -214,7 +213,7 @@ so the user should provide it in init_params.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.refine_regularization">
-<span class="sig-name descname"><span class="pre">refine_regularization</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.refine_regularization" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">refine_regularization</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.refine_regularization" title="Link to this definition"></a></dt>
 <dd><p>a float (default: 0.) used to regularize the system.
 Useful for badly conditioned problems that lead to divergence.
 <code class="docutils literal notranslate"><span class="pre">IterativeRefinement</span></code> is used to correct the error introduced.</p>
@@ -222,57 +221,57 @@ Useful for badly conditioned problems that lead to divergence.
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.refine_maxiter">
-<span class="sig-name descname"><span class="pre">refine_maxiter</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.refine_maxiter" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">refine_maxiter</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.refine_maxiter" title="Link to this definition"></a></dt>
 <dd><p>maximum number of refinement steps, when
 refine_regularization is not 0.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.maxiter">
-<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.maxiter" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.maxiter" title="Link to this definition"></a></dt>
 <dd><p>maximum number of iterations.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.tol">
-<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.tol" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.tol" title="Link to this definition"></a></dt>
 <dd><p>tolerance (stoping criterion).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.implicit_diff">
-<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.implicit_diff" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.implicit_diff" title="Link to this definition"></a></dt>
 <dd><p>whether to enable implicit diff or autodiff of unrolled
 iterations.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.implicit_diff_solve">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.implicit_diff_solve" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.implicit_diff_solve" title="Link to this definition"></a></dt>
 <dd><p>the linear system solver to use.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.jit">
-<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.jit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">jit</span></span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.jit" title="Link to this definition"></a></dt>
 <dd><p>whether to JIT-compile the optimization loop (default: “auto”).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_regularization=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_Q=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_regularization=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.__init__" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec_Q</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>matvec_A</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>matvec_Q</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>matvec_A</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>fun</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>solve</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>refine_regularization</strong> (<em>float</em>) – </p></li>
 <li><p><strong>refine_maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
 </ul>
 </dd>
@@ -339,14 +338,14 @@ iterations.</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.l2_optimality_error">
-<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/eq_qp.html#EqualityConstrainedQP.l2_optimality_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.l2_optimality_error" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/eq_qp.html#EqualityConstrainedQP.l2_optimality_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.l2_optimality_error" title="Link to this definition"></a></dt>
 <dd><p>Computes the L2 norm of the KKT residuals.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>params</strong> (<em>KKTSolution</em>) – </p></li>
-<li><p><strong>params_obj</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
-<li><p><strong>params_eq</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
+<li><p><strong>params_obj</strong> (<em>Any</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>params_eq</strong> (<em>Any</em><em> | </em><em>None</em>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -354,26 +353,26 @@ iterations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.EqualityConstrainedQP.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/eq_qp.html#EqualityConstrainedQP.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.run" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/eq_qp.html#EqualityConstrainedQP.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.EqualityConstrainedQP.run" title="Link to this definition"></a></dt>
 <dd><p>Solves 0.5 * x^T Q x + c^T x subject to Ax = b.</p>
 <p>This solver returns both the primal solution (x) and the dual solution.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">KKTSolution</span></code>]) – (optional), used to infer the shape of primal variables.
+<li><p><strong>init_params</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">KKTSolution</span></code>]</span>) – (optional), used to infer the shape of primal variables.
 Mandatory if <code class="docutils literal notranslate"><span class="pre">fun</span></code> is not None, since the shape of primal variables
 cannot be inferred from <code class="docutils literal notranslate"><span class="pre">params_obj</span></code></p></li>
-<li><p><strong>params_obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – parameters of the quadratic objective, can be:
+<li><p><strong>params_obj</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span>) – parameters of the quadratic objective, can be:
 a tuple (Q, c) with Q a pytree of matrices,
 or a tuple (params_Q, c) if <code class="docutils literal notranslate"><span class="pre">matvec_Q</span></code> is provided,
 or an arbitrary pytree if <code class="docutils literal notranslate"><span class="pre">fun</span></code> is provided.</p></li>
-<li><p><strong>params_eq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – parameters of the equality constraints, can be:
+<li><p><strong>params_eq</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span>) – parameters of the equality constraints, can be:
 a tuple (A, b) with A a pytree of matrices,
 or a tuple (params_A, b) if matvec_A is provided.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(params, state),  where params = (primal_var, dual_var_eq, None)</p>
@@ -383,21 +382,21 @@ or a tuple (params_A, b) if matvec_A is provided.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using gmres.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – product between <code class="docutils literal notranslate"><span class="pre">A</span></code> and a vector.</p></li>
-<li><p><strong>b</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – pytree.</p></li>
-<li><p><strong>ridge</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – optional ridge regularization.</p></li>
-<li><p><strong>init</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – optional initialization to be used by gmres.</p></li>
+<li><p><strong>matvec</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></span>) – product between <code class="docutils literal notranslate"><span class="pre">A</span></code> and a vector.</p></li>
+<li><p><strong>b</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – pytree.</p></li>
+<li><p><strong>ridge</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span>) – optional ridge regularization.</p></li>
+<li><p><strong>init</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span>) – optional initialization to be used by gmres.</p></li>
 <li><p><strong>**kwargs</strong> – additional keyword arguments for solver.</p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pytree with same structure as <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>

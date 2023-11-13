@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -128,7 +127,7 @@
            <div itemprop="articleBody">
              
   <section id="stochastic-optimization">
-<h1>Stochastic optimization<a class="headerlink" href="#stochastic-optimization" title="Permalink to this heading"></a></h1>
+<h1>Stochastic optimization<a class="headerlink" href="#stochastic-optimization" title="Link to this heading"></a></h1>
 <p>This section is concerned with problems of the form</p>
 <div class="math notranslate nohighlight">
 \[\min_{x} \mathbb{E}_{D}[f(x, \theta, D)],\]</div>
@@ -141,12 +140,12 @@ variable (typically a mini-batch).</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="notebooks/deep_learning/resnet_haiku.html"><span class="doc">ResNet on CIFAR10 with Haiku and JAXopt.</span></a></p></li>
 <li><p><a class="reference internal" href="notebooks/deep_learning/resnet_flax.html"><span class="doc">ResNet on CIFAR with Flax and JAXopt.</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/deep_learning/haiku_vae.html#sphx-glr-auto-examples-deep-learning-haiku-vae-py"><span class="std std-ref">VAE example with Haiku and JAXopt.</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/deep_learning/plot_sgd_solvers.html#sphx-glr-auto-examples-deep-learning-plot-sgd-solvers-py"><span class="std std-ref">Comparison of different SGD algorithms.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_deep_learning_haiku_vae.py</span></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_deep_learning_plot_sgd_solvers.py</span></p></li>
 </ul>
 </aside>
 <section id="defining-an-objective-function">
-<h2>Defining an objective function<a class="headerlink" href="#defining-an-objective-function" title="Permalink to this heading"></a></h2>
+<h2>Defining an objective function<a class="headerlink" href="#defining-an-objective-function" title="Link to this heading"></a></h2>
 <p>Objective functions must contain a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument corresponding to <span class="math notranslate nohighlight">\(D\)</span> above.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ridge_reg_objective</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -157,7 +156,7 @@ variable (typically a mini-batch).</p>
 </div>
 </section>
 <section id="data-iterator">
-<h2>Data iterator<a class="headerlink" href="#data-iterator" title="Permalink to this heading"></a></h2>
+<h2>Data iterator<a class="headerlink" href="#data-iterator" title="Link to this heading"></a></h2>
 <p>Sampling realizations of the random variable <span class="math notranslate nohighlight">\(D\)</span> can be done using an iterator.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">data_iterator</span><span class="p">():</span>
@@ -168,7 +167,7 @@ variable (typically a mini-batch).</p>
 </div>
 </section>
 <section id="solvers">
-<h2>Solvers<a class="headerlink" href="#solvers" title="Permalink to this heading"></a></h2>
+<h2>Solvers<a class="headerlink" href="#solvers" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ArmijoSGD.html#jaxopt.ArmijoSGD" title="jaxopt.ArmijoSGD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ArmijoSGD</span></code></a>(fun[, value_and_grad, ...])</p></td>
@@ -183,7 +182,7 @@ variable (typically a mini-batch).</p>
 </tbody>
 </table>
 <section id="optax-solvers">
-<h3>Optax solvers<a class="headerlink" href="#optax-solvers" title="Permalink to this heading"></a></h3>
+<h3>Optax solvers<a class="headerlink" href="#optax-solvers" title="Link to this heading"></a></h3>
 <p><a class="reference external" href="https://optax.readthedocs.io">Optax</a> solvers can be used in JAXopt using
 <a class="reference internal" href="_autosummary/jaxopt.OptaxSolver.html#jaxopt.OptaxSolver" title="jaxopt.OptaxSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptaxSolver</span></code></a>. Here’s an example with Adam:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
@@ -196,7 +195,7 @@ variable (typically a mini-batch).</p>
 optax documentation for a list of available stochastic solvers.</p>
 </section>
 <section id="adaptive-solvers">
-<h3>Adaptive solvers<a class="headerlink" href="#adaptive-solvers" title="Permalink to this heading"></a></h3>
+<h3>Adaptive solvers<a class="headerlink" href="#adaptive-solvers" title="Link to this heading"></a></h3>
 <p>Adaptive solvers update the step size at each iteration dynamically.
 An example is <a class="reference internal" href="_autosummary/jaxopt.PolyakSGD.html#jaxopt.PolyakSGD" title="jaxopt.PolyakSGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolyakSGD</span></code></a>, a solver
 which computes step sizes adaptively using function values.</p>
@@ -211,7 +210,7 @@ in classification tasks with separable classes, or on regression tasks without n
 </section>
 </section>
 <section id="run-iterator-vs-manual-loop">
-<h2>Run iterator vs. manual loop<a class="headerlink" href="#run-iterator-vs-manual-loop" title="Permalink to this heading"></a></h2>
+<h2>Run iterator vs. manual loop<a class="headerlink" href="#run-iterator-vs-manual-loop" title="Link to this heading"></a></h2>
 <p>The following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iterator</span> <span class="o">=</span> <span class="n">data_iterator</span><span class="p">()</span>
 <span class="n">solver</span><span class="o">.</span><span class="n">run_iterator</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">)</span>

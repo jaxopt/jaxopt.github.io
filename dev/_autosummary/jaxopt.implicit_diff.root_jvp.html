@@ -19,14 +19,13 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/clipboard.min.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -127,25 +126,25 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-implicit-diff-root-jvp">
-<h1>jaxopt.implicit_diff.root_jvp<a class="headerlink" href="#jaxopt-implicit-diff-root-jvp" title="Permalink to this heading"></a></h1>
+<h1>jaxopt.implicit_diff.root_jvp<a class="headerlink" href="#jaxopt-implicit-diff-root-jvp" title="Link to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxopt.implicit_diff.root_jvp">
-<span class="sig-prename descclassname"><span class="pre">jaxopt.implicit_diff.</span></span><span class="sig-name descname"><span class="pre">root_jvp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimality_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tangents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/implicit_diff.html#root_jvp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.implicit_diff.root_jvp" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jaxopt.implicit_diff.</span></span><span class="sig-name descname"><span class="pre">root_jvp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimality_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tangents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=&lt;function</span> <span class="pre">solve_normal_cg&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/implicit_diff.html#root_jvp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.implicit_diff.root_jvp" title="Link to this definition"></a></dt>
 <dd><p>Jacobian-vector product of a root.</p>
 <p>The invariant is <code class="docutils literal notranslate"><span class="pre">optimality_fun(sol,</span> <span class="pre">*args)</span> <span class="pre">==</span> <span class="pre">0</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>optimality_fun</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – the optimality function to use.</p></li>
-<li><p><strong>sol</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – solution / root (pytree).</p></li>
-<li><p><strong>args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>) – tuple containing the arguments with respect to which to differentiate.</p></li>
-<li><p><strong>tangents</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>) – a tuple of the same size as <code class="docutils literal notranslate"><span class="pre">len(args)</span></code>. Each <code class="docutils literal notranslate"><span class="pre">tangents[i]</span></code>
+<li><p><strong>optimality_fun</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></span>) – the optimality function to use.</p></li>
+<li><p><strong>sol</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – solution / root (pytree).</p></li>
+<li><p><strong>args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></span>) – tuple containing the arguments with respect to which to differentiate.</p></li>
+<li><p><strong>tangents</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></span>) – a tuple of the same size as <code class="docutils literal notranslate"><span class="pre">len(args)</span></code>. Each <code class="docutils literal notranslate"><span class="pre">tangents[i]</span></code>
 has the same pytree structure as <code class="docutils literal notranslate"><span class="pre">args[i]</span></code>.</p></li>
-<li><p><strong>solve</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – a linear solver of the form <code class="docutils literal notranslate"><span class="pre">solve(matvec,</span> <span class="pre">b)</span></code>.</p></li>
+<li><p><strong>solve</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></span>) – a linear solver of the form <code class="docutils literal notranslate"><span class="pre">solve(matvec,</span> <span class="pre">b)</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>a pytree with the same structure as <code class="docutils literal notranslate"><span class="pre">sol</span></code>.</p>

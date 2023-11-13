@@ -19,14 +19,13 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/clipboard.min.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -132,10 +131,10 @@
            <div itemprop="articleBody">
              
   <section id="jaxopt-osqp">
-<h1>jaxopt.OSQP<a class="headerlink" href="#jaxopt-osqp" title="Permalink to this heading"></a></h1>
+<h1>jaxopt.OSQP<a class="headerlink" href="#jaxopt-osqp" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.OSQP">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">OSQP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">OSQP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP" title="Link to this definition"></a></dt>
 <dd><p>OSQP solver for general quadratic programming.</p>
 <p>Meant as drop-in replacement for CvxpyQP.
 Depending on the format of your problem, BoxOSQP API may be more appropriate.
@@ -151,16 +150,16 @@ Hyper-parameters defaults to the same values as in BoxQP.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec_Q</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>matvec_A</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>matvec_G</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>matvec_Q</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>matvec_A</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>matvec_G</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>fun</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.matvec_Q">
-<span class="sig-name descname"><span class="pre">matvec_Q</span></span><a class="headerlink" href="#jaxopt.OSQP.matvec_Q" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">matvec_Q</span></span><a class="headerlink" href="#jaxopt.OSQP.matvec_Q" title="Link to this definition"></a></dt>
 <dd><p>(optional) a Callable matvec_Q(params_Q, x).
 By default, matvec_Q(P, x) = tree_dot(P, x), where the pytree Q = params_Q matches x structure.
 <code class="docutils literal notranslate"><span class="pre">matvec_Q</span></code> incompatible with the specification of <code class="docutils literal notranslate"><span class="pre">fun</span></code>.
@@ -169,21 +168,21 @@ The shape of primal variables may be inferred from params_obj = (matvec_Q, c).</
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.matvec_A">
-<span class="sig-name descname"><span class="pre">matvec_A</span></span><a class="headerlink" href="#jaxopt.OSQP.matvec_A" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">matvec_A</span></span><a class="headerlink" href="#jaxopt.OSQP.matvec_A" title="Link to this definition"></a></dt>
 <dd><p>(optional) a Callable matvec_A(params_A, x).
 By default, matvec_A(A, x) = tree_dot(A, x), where tree pytree A = params_A matches x structure.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.matvec_G">
-<span class="sig-name descname"><span class="pre">matvec_G</span></span><a class="headerlink" href="#jaxopt.OSQP.matvec_G" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">matvec_G</span></span><a class="headerlink" href="#jaxopt.OSQP.matvec_G" title="Link to this definition"></a></dt>
 <dd><p>(optional) a Callable matvec_G(params_G, x).
 By default, matvec_G(G, x) = tree_dot(G, x), where tree pytree G = params_G matches x structure.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.fun">
-<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.OSQP.fun" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fun</span></span><a class="headerlink" href="#jaxopt.OSQP.fun" title="Link to this definition"></a></dt>
 <dd><p>(optional) a function with signature fun(params, params_obj) that is promised
 to be quadratic polynomial convex with respect to params, i.e fun can be written</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">cste</span>
@@ -201,7 +200,7 @@ so the user should provide it in init_params.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.check_primal_dual_infeasability">
-<span class="sig-name descname"><span class="pre">check_primal_dual_infeasability</span></span><a class="headerlink" href="#jaxopt.OSQP.check_primal_dual_infeasability" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">check_primal_dual_infeasability</span></span><a class="headerlink" href="#jaxopt.OSQP.check_primal_dual_infeasability" title="Link to this definition"></a></dt>
 <dd><p>if True populates the <code class="docutils literal notranslate"><span class="pre">status</span></code> field of <code class="docutils literal notranslate"><span class="pre">state</span></code>
 with one of <code class="docutils literal notranslate"><span class="pre">BoxOSQP.PRIMAL_INFEASIBLE</span></code>, <code class="docutils literal notranslate"><span class="pre">BoxOSQP.DUAL_INFEASIBLE</span></code>. (default: True).
 If False it improves speed but does not check feasability.
@@ -210,13 +209,13 @@ If jit=False, and if the problem is primal or dual infeasible, then a ValueError
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.sigma">
-<span class="sig-name descname"><span class="pre">sigma</span></span><a class="headerlink" href="#jaxopt.OSQP.sigma" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sigma</span></span><a class="headerlink" href="#jaxopt.OSQP.sigma" title="Link to this definition"></a></dt>
 <dd><p>ridge regularization parameter in linear system.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.momentum">
-<span class="sig-name descname"><span class="pre">momentum</span></span><a class="headerlink" href="#jaxopt.OSQP.momentum" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">momentum</span></span><a class="headerlink" href="#jaxopt.OSQP.momentum" title="Link to this definition"></a></dt>
 <dd><p>relaxation parameter (default: 1.6), must belong to the open interval (0,2).
 momentum=1 =&gt; no relaxation.
 momentum&lt;1 =&gt; under-relaxation.
@@ -226,7 +225,7 @@ Boyd [2, p21] suggests chosing momentum in [1.5, 1.8].</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.eq_qp_solve">
-<span class="sig-name descname"><span class="pre">eq_qp_solve</span></span><a class="headerlink" href="#jaxopt.OSQP.eq_qp_solve" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">eq_qp_solve</span></span><a class="headerlink" href="#jaxopt.OSQP.eq_qp_solve" title="Link to this definition"></a></dt>
 <dd><p>‘cg’, ‘cg+jacobi’ or ‘lu’ (default: ‘cg’).
 ‘cg’ is conjugate gradient: an indirect solver that works with matvecs or pytree of matrices.
 ‘cg+jacobi’ is conjugate gradient with Jacobi preconditioning: only works on pytree of matrices</p>
@@ -238,76 +237,76 @@ Boyd [2, p21] suggests chosing momentum in [1.5, 1.8].</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.rho_start">
-<span class="sig-name descname"><span class="pre">rho_start</span></span><a class="headerlink" href="#jaxopt.OSQP.rho_start" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rho_start</span></span><a class="headerlink" href="#jaxopt.OSQP.rho_start" title="Link to this definition"></a></dt>
 <dd><p>initial learning rate. (default: 1e-1)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.rho_min">
-<span class="sig-name descname"><span class="pre">rho_min</span></span><a class="headerlink" href="#jaxopt.OSQP.rho_min" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rho_min</span></span><a class="headerlink" href="#jaxopt.OSQP.rho_min" title="Link to this definition"></a></dt>
 <dd><p>minimum learning rate. (default: 1e-6)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.rho_max">
-<span class="sig-name descname"><span class="pre">rho_max</span></span><a class="headerlink" href="#jaxopt.OSQP.rho_max" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rho_max</span></span><a class="headerlink" href="#jaxopt.OSQP.rho_max" title="Link to this definition"></a></dt>
 <dd><p>maximum learning rate. (default: 1e6)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.stepsize_updates_frequency">
-<span class="sig-name descname"><span class="pre">stepsize_updates_frequency</span></span><a class="headerlink" href="#jaxopt.OSQP.stepsize_updates_frequency" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">stepsize_updates_frequency</span></span><a class="headerlink" href="#jaxopt.OSQP.stepsize_updates_frequency" title="Link to this definition"></a></dt>
 <dd><p>frequency of stepsize updates. (default: 10).
 One every <cite>stepsize_updates_frequency</cite> updates computes a new stepsize.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.primal_infeasible_tol">
-<span class="sig-name descname"><span class="pre">primal_infeasible_tol</span></span><a class="headerlink" href="#jaxopt.OSQP.primal_infeasible_tol" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">primal_infeasible_tol</span></span><a class="headerlink" href="#jaxopt.OSQP.primal_infeasible_tol" title="Link to this definition"></a></dt>
 <dd><p>relative tolerance for primal infeasability detection. (default: 1e-4)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.dual_infeasible_tol">
-<span class="sig-name descname"><span class="pre">dual_infeasible_tol</span></span><a class="headerlink" href="#jaxopt.OSQP.dual_infeasible_tol" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">dual_infeasible_tol</span></span><a class="headerlink" href="#jaxopt.OSQP.dual_infeasible_tol" title="Link to this definition"></a></dt>
 <dd><p>relative tolerance for dual infeasability detection. (default: 1e-4)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.maxiter">
-<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.OSQP.maxiter" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">maxiter</span></span><a class="headerlink" href="#jaxopt.OSQP.maxiter" title="Link to this definition"></a></dt>
 <dd><p>maximum number of iterations.  (default: 4000)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.tol">
-<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.OSQP.tol" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#jaxopt.OSQP.tol" title="Link to this definition"></a></dt>
 <dd><p>absolute tolerance for stoping criterion (default: 1e-3).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.termination_check_frequency">
-<span class="sig-name descname"><span class="pre">termination_check_frequency</span></span><a class="headerlink" href="#jaxopt.OSQP.termination_check_frequency" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">termination_check_frequency</span></span><a class="headerlink" href="#jaxopt.OSQP.termination_check_frequency" title="Link to this definition"></a></dt>
 <dd><p>frequency of termination check. (default: 5).
 One every <cite>termination_check_frequency</cite> the error is computed.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.OSQP.implicit_diff_solve">
-<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.OSQP.implicit_diff_solve" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implicit_diff_solve</span></span><a class="headerlink" href="#jaxopt.OSQP.implicit_diff_solve" title="Link to this definition"></a></dt>
 <dd><p>the linear system solver to use.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.OSQP.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP.__init__" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec_Q</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>matvec_A</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>matvec_G</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
-<li><p><strong>fun</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – </p></li>
+<li><p><strong>matvec_Q</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>matvec_A</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>matvec_G</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>fun</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -346,7 +345,7 @@ One every <cite>termination_check_frequency</cite> the error is computed.</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.OSQP.init_params">
-<span class="sig-name descname"><span class="pre">init_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP.init_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP.init_params" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">init_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP.init_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP.init_params" title="Link to this definition"></a></dt>
 <dd><p>Return default params for initialization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -368,7 +367,7 @@ One every <cite>termination_check_frequency</cite> the error is computed.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.OSQP.l2_optimality_error">
-<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP.l2_optimality_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP.l2_optimality_error" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP.l2_optimality_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP.l2_optimality_error" title="Link to this definition"></a></dt>
 <dd><p>Computes the L2 norm of the KKT residuals.</p>
 <p>Note that this function is exposed for consistency of the API, but the differentiation is actually
 performed in the BoxOSQP class.</p>
@@ -376,9 +375,9 @@ performed in the BoxOSQP class.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>params</strong> (<em>Array</em>) – </p></li>
-<li><p><strong>params_obj</strong> (<em>Union</em><em>[</em><em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>]</em><em>, </em><em>Any</em><em>]</em>) – </p></li>
-<li><p><strong>params_eq</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>]</em><em>]</em>) – </p></li>
-<li><p><strong>params_ineq</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>params_obj</strong> (<em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>] </em><em>| </em><em>Any</em>) – </p></li>
+<li><p><strong>params_eq</strong> (<em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>] </em><em>| </em><em>None</em>) – </p></li>
+<li><p><strong>params_ineq</strong> (<em>Tuple</em><em>[</em><em>Array</em><em>, </em><em>Array</em><em>] </em><em>| </em><em>None</em>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -386,24 +385,24 @@ performed in the BoxOSQP class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.OSQP.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP.run" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_eq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ineq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/osqp.html#OSQP.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.OSQP.run" title="Link to this definition"></a></dt>
 <dd><p>Runs the quadratic programming solver in BoxOSQP.</p>
 <p>The returned params contains both the primal and dual solutions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>init_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – init_params: (optional) initial KKTSolution for warm-start.
+<li><p><strong>init_params</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – init_params: (optional) initial KKTSolution for warm-start.
 Must be provided if <code class="docutils literal notranslate"><span class="pre">fun</span></code> is not None.</p></li>
-<li><p><strong>params_obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – parameters of the quadratic objective, can be:
+<li><p><strong>params_obj</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span>) – parameters of the quadratic objective, can be:
 a tuple (Q, c) with Q a pytree of matrices,
 or a tuple (params_Q, c) if <code class="docutils literal notranslate"><span class="pre">matvec_Q</span></code> is provided,
 or an arbitrary pytree if <code class="docutils literal notranslate"><span class="pre">fun</span></code> is provided.</p></li>
-<li><p><strong>params_eq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – (A, b) or None if no equality constraints.</p></li>
-<li><p><strong>params_ineq</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – (G, h) or None if no inequality constraints.</p></li>
+<li><p><strong>params_eq</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – (A, b) or None if no equality constraints.</p></li>
+<li><p><strong>params_ineq</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – (G, h) or None if no inequality constraints.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptStep</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(params, state), <code class="docutils literal notranslate"><span class="pre">params</span> <span class="pre">=</span> <span class="pre">(primal_var,</span> <span class="pre">dual_var_eq,</span> <span class="pre">dual_var_ineq)</span></code></p>

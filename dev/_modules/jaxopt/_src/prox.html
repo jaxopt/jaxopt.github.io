@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -136,7 +135,9 @@
 <span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">tree_util</span>
 
 
-<div class="viewcode-block" id="prox_none"><a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_none.html#jaxopt.prox.prox_none">[docs]</a><span class="k">def</span> <span class="nf">prox_none</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+<div class="viewcode-block" id="prox_none">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_none.html#jaxopt.prox.prox_none">[docs]</a>
+<span class="k">def</span> <span class="nf">prox_none</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
               <span class="n">hyperparams</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
               <span class="n">scaling</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Proximal operator for :math:`g(x) = 0`, i.e., the identity function.</span>
@@ -158,7 +159,10 @@
   <span class="k">return</span> <span class="n">x</span></div>
 
 
-<div class="viewcode-block" id="prox_lasso"><a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_lasso.html#jaxopt.prox.prox_lasso">[docs]</a><span class="k">def</span> <span class="nf">prox_lasso</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+
+<div class="viewcode-block" id="prox_lasso">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_lasso.html#jaxopt.prox.prox_lasso">[docs]</a>
+<span class="k">def</span> <span class="nf">prox_lasso</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
                <span class="n">l1reg</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                <span class="n">scaling</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Proximal operator for the l1 norm, i.e., soft-thresholding operator.</span>
@@ -188,7 +192,10 @@
   <span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">-</span> <span class="n">v</span> <span class="o">*</span> <span class="n">scaling</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">l1reg</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="prox_non_negative_lasso"><a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_non_negative_lasso.html#jaxopt.prox.prox_non_negative_lasso">[docs]</a><span class="k">def</span> <span class="nf">prox_non_negative_lasso</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+
+<div class="viewcode-block" id="prox_non_negative_lasso">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_non_negative_lasso.html#jaxopt.prox.prox_non_negative_lasso">[docs]</a>
+<span class="k">def</span> <span class="nf">prox_non_negative_lasso</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
                             <span class="n">l1reg</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                             <span class="n">scaling</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Proximal operator for the l1 norm on the non-negative orthant.</span>
@@ -213,7 +220,10 @@
   <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">,</span> <span class="n">pytree</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="prox_elastic_net"><a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_elastic_net.html#jaxopt.prox.prox_elastic_net">[docs]</a><span class="k">def</span> <span class="nf">prox_elastic_net</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+
+<div class="viewcode-block" id="prox_elastic_net">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_elastic_net.html#jaxopt.prox.prox_elastic_net">[docs]</a>
+<span class="k">def</span> <span class="nf">prox_elastic_net</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
                      <span class="n">hyperparams</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                      <span class="n">scaling</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Proximal operator for the elastic net.</span>
@@ -249,7 +259,10 @@
   <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">gam</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="prox_group_lasso"><a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_group_lasso.html#jaxopt.prox.prox_group_lasso">[docs]</a><span class="k">def</span> <span class="nf">prox_group_lasso</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+
+<div class="viewcode-block" id="prox_group_lasso">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_group_lasso.html#jaxopt.prox.prox_group_lasso">[docs]</a>
+<span class="k">def</span> <span class="nf">prox_group_lasso</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
                      <span class="n">l2reg</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
                      <span class="n">scaling</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Proximal operator for the l2 norm, i.e., block soft-thresholding operator.</span>
@@ -278,7 +291,10 @@
   <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_scalar_mul</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="prox_ridge"><a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_ridge.html#jaxopt.prox.prox_ridge">[docs]</a><span class="k">def</span> <span class="nf">prox_ridge</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+
+<div class="viewcode-block" id="prox_ridge">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_ridge.html#jaxopt.prox.prox_ridge">[docs]</a>
+<span class="k">def</span> <span class="nf">prox_ridge</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
                <span class="n">l2reg</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
                <span class="n">scaling</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Proximal operator for the squared l2 norm.</span>
@@ -303,7 +319,10 @@
   <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_scalar_mul</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="prox_non_negative_ridge"><a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_non_negative_ridge.html#jaxopt.prox.prox_non_negative_ridge">[docs]</a><span class="k">def</span> <span class="nf">prox_non_negative_ridge</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+
+<div class="viewcode-block" id="prox_non_negative_ridge">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.prox_non_negative_ridge.html#jaxopt.prox.prox_non_negative_ridge">[docs]</a>
+<span class="k">def</span> <span class="nf">prox_non_negative_ridge</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
                             <span class="n">l2reg</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
                             <span class="n">scaling</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Proximal operator for the squared l2 norm on the non-negative orthant.</span>
@@ -328,12 +347,16 @@
   <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">,</span> <span class="n">pytree</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="make_prox_from_projection"><a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.make_prox_from_projection.html#jaxopt.prox.make_prox_from_projection">[docs]</a><span class="k">def</span> <span class="nf">make_prox_from_projection</span><span class="p">(</span><span class="n">projection</span><span class="p">):</span>
+
+<div class="viewcode-block" id="make_prox_from_projection">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.prox.make_prox_from_projection.html#jaxopt.prox.make_prox_from_projection">[docs]</a>
+<span class="k">def</span> <span class="nf">make_prox_from_projection</span><span class="p">(</span><span class="n">projection</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Transforms a projection into a proximal operator.&quot;&quot;&quot;</span>
   <span class="k">def</span> <span class="nf">prox</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hyperparams</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="k">del</span> <span class="n">scaling</span>  <span class="c1"># The scaling parameter is meaningless for projections.</span>
     <span class="k">return</span> <span class="n">projection</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">prox</span></div>
+
 </pre></div>
 
            </div>

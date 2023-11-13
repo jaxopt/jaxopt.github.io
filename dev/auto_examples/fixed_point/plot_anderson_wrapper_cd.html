@@ -19,14 +19,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -124,7 +123,7 @@
           <li class="breadcrumb-item"><a href="index.html">Fixed point resolution</a></li>
       <li class="breadcrumb-item active">Anderson acceleration of block coordinate descent.</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/fixed_point/plot_anderson_wrapper_cd.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/google/jaxopt/blob/main/docs/auto_examples/fixed_point/plot_anderson_wrapper_cd.ipynb" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -132,31 +131,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="sphx-glr-download-link-note admonition note">
-<p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code</p>
-</div>
-<section class="sphx-glr-example-title" id="anderson-acceleration-of-block-coordinate-descent">
-<span id="sphx-glr-auto-examples-fixed-point-plot-anderson-wrapper-cd-py"></span><h1>Anderson acceleration of block coordinate descent.<a class="headerlink" href="#anderson-acceleration-of-block-coordinate-descent" title="Permalink to this heading"></a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="anderson-acceleration-of-block-coordinate-descent">
+<h1>Anderson acceleration of block coordinate descent.<a class="headerlink" href="#anderson-acceleration-of-block-coordinate-descent" title="Link to this heading"></a></h1>
 <p>Block coordinate descent converges to a fixed point. It can therefore be
 accelerated with Anderson acceleration.</p>
-<p>Here <cite>m</cite> denotes the history size, and <cite>K</cite> the frequency of Anderson updates.</p>
+<p>Here <code class="docutils literal notranslate"><span class="pre">m</span></code> denotes the history size, and <code class="docutils literal notranslate"><span class="pre">K</span></code> the frequency of Anderson updates.</p>
 <p>Bertrand, Q. and Massias, M.
 Anderson acceleration of coordinate descent.
 AISTATS, 2021.</p>
-<img src="../../_images/sphx_glr_plot_anderson_wrapper_cd_001.png" srcset="../../_images/sphx_glr_plot_anderson_wrapper_cd_001.png" alt="Least Square linear regression with Lasso penalty" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Error=0.005844 at parameters [41.41567342 24.42725366 84.72518529 65.29784113 55.85775041 -0.
-  1.90997369 -0.        ] for Anderson (m=5, K=1)
-Error=0.006948 at parameters [41.48824252 24.40273141 84.62864931 65.2343065  55.75704819 -0.
-  1.89223564 -0.        ] for Anderson (m=5, K=5)
-Error=0.210910 at parameters [41.96279774 22.87172541 82.24353772 62.41637252 52.63227623 -0.
-  2.28158684 -0.        ] for Block CD
-</pre></div>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonWrapper</span>
@@ -211,7 +196,7 @@ Error=0.210910 at parameters [41.96279774 22.87172541 82.24353772 62.41637252 52
 
 <span class="c1"># Plot trajectory in parameter space (8 dimensions)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-  <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">])</span>
+  <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="o">%</span><span class="k">2</span>])
   <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bcd_sols</span><span class="p">[:,</span><span class="n">i</span><span class="p">],</span> <span class="n">bcd_sols</span><span class="p">[:,</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Coordinate Descent&quot;</span><span class="p">)</span>
   <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aa_sols</span><span class="p">[:,</span><span class="n">i</span><span class="p">],</span> <span class="n">aa_sols</span><span class="p">[:,</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Anderson Accelerated CD (m=5, K=1)&quot;</span><span class="p">)</span>
   <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aam_sols</span><span class="p">[:,</span><span class="n">i</span><span class="p">],</span> <span class="n">aam_sols</span><span class="p">[:,</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Anderson Accelerated CD (m=5, K=5)&quot;</span><span class="p">)</span>
@@ -235,16 +220,22 @@ Error=0.210910 at parameters [41.96279774 22.87172541 82.24353772 62.41637252 52
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.943 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-fixed-point-plot-anderson-wrapper-cd-py">
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/92c8449f2d30e00dc7b5416acba96844/plot_anderson_wrapper_cd.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_anderson_wrapper_cd.py</span></code></a></p>
 </div>
-<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/d511c892b92bfbc610d778803c1a17a8/plot_anderson_wrapper_cd.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_anderson_wrapper_cd.ipynb</span></code></a></p>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">jax</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">AndersonWrapper</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BlockCoordinateDescent</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">objective</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;jaxopt&#39;
+</pre></div>
 </div>
 </div>
-<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
 </section>
 
 

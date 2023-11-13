@@ -18,14 +18,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -203,7 +202,9 @@
   <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
 
 
-<div class="viewcode-block" id="ProximalGradient"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="ProximalGradient">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ProximalGradient</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Proximal gradient solver.</span>
 
@@ -273,7 +274,9 @@
   <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
 
-<div class="viewcode-block" id="ProximalGradient.init_state"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.init_state">[docs]</a>  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="ProximalGradient.init_state">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.init_state">[docs]</a>
+  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
                  <span class="n">hyperparams_prox</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
                  <span class="o">*</span><span class="n">args</span><span class="p">,</span>
@@ -312,6 +315,7 @@
                             <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">state</span></div>
+
 
   <span class="k">def</span> <span class="nf">_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff_x</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">):</span>
     <span class="n">diff_norm</span> <span class="o">=</span> <span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">diff_x</span><span class="p">)</span>
@@ -387,7 +391,9 @@
                                <span class="n">aux</span><span class="o">=</span><span class="n">aux</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">next_x</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">next_state</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ProximalGradient.update"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.update">[docs]</a>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="ProximalGradient.update">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.update">[docs]</a>
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
              <span class="n">state</span><span class="p">:</span> <span class="n">NamedTuple</span><span class="p">,</span>
              <span class="n">hyperparams_prox</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -407,14 +413,18 @@
     <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_accel</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update</span>
     <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div>
 
+
   <span class="k">def</span> <span class="nf">_fixed_point_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
     <span class="n">step</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">prox</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ProximalGradient.optimality_fun"><a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.optimality_fun">[docs]</a>  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ProximalGradient.optimality_fun">
+<a class="viewcode-back" href="../../../_autosummary/jaxopt.ProximalGradient.html#jaxopt.ProximalGradient.optimality_fun">[docs]</a>
+  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with ``@custom_root``.&quot;&quot;&quot;</span>
     <span class="n">fp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_point_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span></div>
+
 
   <span class="k">def</span> <span class="nf">_value_and_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">aux</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -455,6 +465,7 @@
       <span class="bp">self</span><span class="o">.</span><span class="n">_fista_line_search</span> <span class="o">=</span> <span class="n">jitted_fista_ls_with_fun</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_fista_line_search</span> <span class="o">=</span> <span class="n">fista_ls_with_fun</span></div>
+
 </pre></div>
 
            </div>

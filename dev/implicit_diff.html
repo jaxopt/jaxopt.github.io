@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -129,9 +128,9 @@
            <div itemprop="articleBody">
              
   <section id="implicit-differentiation">
-<span id="implicit-diff"></span><h1>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Permalink to this heading"></a></h1>
+<span id="implicit-diff"></span><h1>Implicit differentiation<a class="headerlink" href="#implicit-differentiation" title="Link to this heading"></a></h1>
 <section id="argmin-differentiation">
-<h2>Argmin differentiation<a class="headerlink" href="#argmin-differentiation" title="Permalink to this heading"></a></h2>
+<h2>Argmin differentiation<a class="headerlink" href="#argmin-differentiation" title="Link to this heading"></a></h2>
 <p>Argmin differentiation is the task of differentiating a minimization problem’s
 solution with respect to its inputs. Namely, given</p>
 <div class="math notranslate nohighlight">
@@ -141,7 +140,7 @@ is usually done either by implicit differentiation or by autodiff through an
 algorithm’s unrolled iterates.</p>
 </section>
 <section id="jaxopt-solvers">
-<h2>JAXopt solvers<a class="headerlink" href="#jaxopt-solvers" title="Permalink to this heading"></a></h2>
+<h2>JAXopt solvers<a class="headerlink" href="#jaxopt-solvers" title="Link to this heading"></a></h2>
 <p>All solvers in JAXopt support implicit differentiation <strong>out-of-the-box</strong>.
 Most solvers have an <code class="docutils literal notranslate"><span class="pre">implicit_diff=True|False</span></code> option. When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 autodiff of unrolled iterates is used instead of implicit differentiation.</p>
@@ -175,13 +174,13 @@ Since <code class="docutils literal notranslate"><span class="pre">ridge_reg_sol
 <ul class="simple">
 <li><p><a class="reference internal" href="notebooks/implicit_diff/dataset_distillation.html"><span class="doc">Dataset distillation</span></a></p></li>
 <li><p><a class="reference internal" href="notebooks/implicit_diff/maml.html"><span class="doc">Few-shot Adaptation with Model Agnostic Meta-Learning (MAML)</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/implicit_diff/lasso_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-lasso-implicit-diff-py"><span class="std std-ref">Implicit differentiation of lasso.</span></a></p></li>
-<li><p><a class="reference internal" href="auto_examples/implicit_diff/sparse_coding.html#sphx-glr-auto-examples-implicit-diff-sparse-coding-py"><span class="std std-ref">Sparse coding.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_implicit_diff_lasso_implicit_diff.py</span></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_implicit_diff_sparse_coding.py</span></p></li>
 </ul>
 </aside>
 </section>
 <section id="custom-solvers">
-<h2>Custom solvers<a class="headerlink" href="#custom-solvers" title="Permalink to this heading"></a></h2>
+<h2>Custom solvers<a class="headerlink" href="#custom-solvers" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.implicit_diff.custom_root.html#jaxopt.implicit_diff.custom_root" title="jaxopt.implicit_diff.custom_root"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.implicit_diff.custom_root</span></code></a>(optimality_fun)</p></td>
@@ -197,12 +196,12 @@ for easily adding implicit differentiation on top of any existing solver.</p>
 <aside class="topic">
 <p class="topic-title">Examples</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="auto_examples/implicit_diff/ridge_reg_implicit_diff.html#sphx-glr-auto-examples-implicit-diff-ridge-reg-implicit-diff-py"><span class="std std-ref">Implicit differentiation of ridge regression.</span></a></p></li>
+<li><p><span class="xref std std-ref">sphx_glr_auto_examples_implicit_diff_ridge_reg_implicit_diff.py</span></p></li>
 </ul>
 </aside>
 </section>
 <section id="jvps-and-vjps">
-<h2>JVPs and VJPs<a class="headerlink" href="#jvps-and-vjps" title="Permalink to this heading"></a></h2>
+<h2>JVPs and VJPs<a class="headerlink" href="#jvps-and-vjps" title="Link to this heading"></a></h2>
 <p>Finally, we also provide lower-level routines for computing the JVPs and VJPs
 of roots of functions.</p>
 <table class="autosummary longtable docutils align-default">

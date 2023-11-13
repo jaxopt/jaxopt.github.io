@@ -1,0 +1,99 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.6/x64/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.11.6/x64/lib/python3.11/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.6/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 173, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.6/x64/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.6/x64/lib/python3.11/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.11.6/x64/lib/python3.11/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.11.6/x64/lib/python3.11/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import jax
+import jax.numpy as jnp
+
+from jaxopt import AndersonAcceleration
+
+from jaxopt import objective
+from jaxopt.tree_util import tree_scalar_mul, tree_sub
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from matplotlib.pyplot import cm
+import scipy.integrate
+
+jax.config.update("jax_platform_name", "cpu")
+
+
+# Solve the differential equation y'(t)=1+t^2, with solution y(t) = tan(t)
+def f(ti, phi):
+  return 1 + phi ** 2
+
+def T(phi_cur, ti, y0, dx):
+  """Fixed point iteration in the Picard method.
+  See: https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem"""
+  f_phi = f(ti, phi_cur)
+  phi_next = scipy.integrate.cumtrapz(f_phi, initial=y0, dx=dx)
+  return phi_next
+
+y0 = 0
+num_interpolating_points = 100
+t0 = jnp.array(0.)
+tmax = 0.9 * (jnp.pi / 2) # stop before pi/2 to ensure convergence
+dx = (tmax - t0) / (num_interpolating_points-1)
+phi0 = jnp.zeros(num_interpolating_points)
+ti = np.linspace(t0, tmax, num_interpolating_points)
+
+sols = [phi0]
+aa = AndersonAcceleration(T, history_size=5, maxiter=50, ridge=1e-5, jit=False)
+state = aa.init_state(phi0, ti, y0, dx)
+sol = phi0
+sols.append(sol)
+for k in range(aa.maxiter):
+  sol, state = aa.update(phi0, state, ti, y0, dx)
+  sols.append(sol)
+res = sols[-1] - np.tan(ti)
+print(f'Error of {jnp.linalg.norm(res)} with ground truth tan(t)')
+
+
+# vizualize the first 8 iterates to make the figure easier to read
+sols = sols[4:12]
+fig = plt.figure(figsize=(8,4))
+ax = fig.add_subplot(1, 1, 1)
+
+colors = cm.plasma(np.linspace(0, 1, len(sols)))
+for k, (sol, c) in enumerate(zip(sols, colors)):
+  desc = rf'$\phi_{k}$' if k > 0 else rf'$\phi_0=0$'
+  ax.plot(ti, sol, '+', c=c, label=desc)
+ax.plot(ti, np.tan(ti), '-', c='green', label=r'$y(t)=\tan{(t)}$ (ground truth)')
+
+ax.legend()
+props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+formula = rf'$\phi_{{k+1}}(t)=\phi_0+\int_0^{{{tmax/2:.2f}\pi}} f(t,\phi_{{k}}(t))\mathrm{{d}}t$'
+ax.text(0.42, 0.85, formula, transform=ax.transAxes, fontsize=14, verticalalignment='top', bbox=props)
+fig.suptitle('Anderson acceleration for ODE solving')
+plt.show()
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 4[0m
+[1;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mjax[39;00m
+[1;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mjax[39;00m[38;5;21;01m.[39;00m[38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mjnp[39;00m
+[0;32m----> 4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mjaxopt[39;00m [38;5;28;01mimport[39;00m AndersonAcceleration
+[1;32m      6[0m [38;5;28;01mfrom[39;00m [38;5;21;01mjaxopt[39;00m [38;5;28;01mimport[39;00m objective
+[1;32m      7[0m [38;5;28;01mfrom[39;00m [38;5;21;01mjaxopt[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtree_util[39;00m [38;5;28;01mimport[39;00m tree_scalar_mul, tree_sub
+
+[0;31mModuleNotFoundError[0m: No module named 'jaxopt'
+

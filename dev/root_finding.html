@@ -19,14 +19,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=dbee5847"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -131,11 +130,11 @@
            <div itemprop="articleBody">
              
   <section id="root-finding">
-<span id="id1"></span><h1>Root finding<a class="headerlink" href="#root-finding" title="Permalink to this heading"></a></h1>
+<span id="id1"></span><h1>Root finding<a class="headerlink" href="#root-finding" title="Link to this heading"></a></h1>
 <p>This section is concerned with root finding, that is finding <span class="math notranslate nohighlight">\(x\)</span> such
 that <span class="math notranslate nohighlight">\(F(x, \theta) = 0\)</span>.</p>
 <section id="bisection">
-<h2>Bisection<a class="headerlink" href="#bisection" title="Permalink to this heading"></a></h2>
+<h2>Bisection<a class="headerlink" href="#bisection" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.Bisection.html#jaxopt.Bisection" title="jaxopt.Bisection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.Bisection</span></code></a>(optimality_fun, lower, upper)</p></td>
@@ -146,7 +145,7 @@ that <span class="math notranslate nohighlight">\(F(x, \theta) = 0\)</span>.</p>
 <p>Bisection is a suitable algorithm when <span class="math notranslate nohighlight">\(F(x, \theta)\)</span> is one-dimensional
 in <span class="math notranslate nohighlight">\(x\)</span>.</p>
 <section id="instantiating-and-running-the-solver">
-<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Permalink to this heading"></a></h3>
+<h3>Instantiating and running the solver<a class="headerlink" href="#instantiating-and-running-the-solver" title="Link to this heading"></a></h3>
 <p>First, let us consider the case <span class="math notranslate nohighlight">\(F(x)\)</span>, i.e., without extra argument
 <span class="math notranslate nohighlight">\(\theta\)</span>.  The <code class="docutils literal notranslate"><span class="pre">Bisection</span></code> class requires a bracketing interval
 <span class="math notranslate nohighlight">\([\text{lower}, \text{upper}]`\)</span> such that <span class="math notranslate nohighlight">\(F(\text{lower})\)</span> and
@@ -169,7 +168,7 @@ Notice that <code class="docutils literal notranslate"><span class="pre">Bisecti
 since the bracketing interval is sufficient.</p>
 </section>
 <section id="differentiation">
-<h3>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this heading"></a></h3>
+<h3>Differentiation<a class="headerlink" href="#differentiation" title="Link to this heading"></a></h3>
 <p>Now, let us consider the case <span class="math notranslate nohighlight">\(F(x, \theta)\)</span>.  For instance, suppose that
 <code class="docutils literal notranslate"><span class="pre">F</span></code> takes an additional argument <code class="docutils literal notranslate"><span class="pre">factor</span></code>.  We can easily differentiate
 with respect to <code class="docutils literal notranslate"><span class="pre">factor</span></code>:</p>
@@ -189,7 +188,7 @@ See the <a class="reference internal" href="implicit_diff.html#implicit-diff"><s
 </section>
 </section>
 <section id="scipy-wrapper">
-<h2>Scipy wrapper<a class="headerlink" href="#scipy-wrapper" title="Permalink to this heading"></a></h2>
+<h2>Scipy wrapper<a class="headerlink" href="#scipy-wrapper" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.ScipyRootFinding.html#jaxopt.ScipyRootFinding" title="jaxopt.ScipyRootFinding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.ScipyRootFinding</span></code></a>([method, dtype, ...])</p></td>
@@ -199,7 +198,7 @@ See the <a class="reference internal" href="implicit_diff.html#implicit-diff"><s
 </table>
 </section>
 <section id="broyden-s-method">
-<h2>Broyden’s method<a class="headerlink" href="#broyden-s-method" title="Permalink to this heading"></a></h2>
+<h2>Broyden’s method<a class="headerlink" href="#broyden-s-method" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/jaxopt.Broyden.html#jaxopt.Broyden" title="jaxopt.Broyden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaxopt.Broyden</span></code></a>(fun[, has_aux, maxiter, tol, ...])</p></td>

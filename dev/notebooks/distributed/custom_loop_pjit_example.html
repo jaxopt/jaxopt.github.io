@@ -19,14 +19,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=dbee5847"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -130,7 +129,7 @@
 </div>
 </div>
 <section class="tex2jax_ignore mathjax_ignore" id="jax-experimental-pjit-example-using-jaxopt">
-<h1><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> example using JAXopt.<a class="headerlink" href="#jax-experimental-pjit-example-using-jaxopt" title="Permalink to this heading"></a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> example using JAXopt.<a class="headerlink" href="#jax-experimental-pjit-example-using-jaxopt" title="Link to this heading"></a></h1>
 <p>The purpose of this example is to illustrate how JAXopt solvers can be easily
 used for distributed training thanks to <code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code>. In this case, we begin by
 implementing data parallel training of a multi-class logistic regression model
@@ -156,7 +155,7 @@ on synthetic data.</p>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="imports-and-tpu-setup">
-<h1>Imports and TPU setup<a class="headerlink" href="#imports-and-tpu-setup" title="Permalink to this heading"></a></h1>
+<h1>Imports and TPU setup<a class="headerlink" href="#imports-and-tpu-setup" title="Link to this heading"></a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">capture</span>
@@ -212,7 +211,7 @@ on synthetic data.</p>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="type-aliases">
-<h1>Type aliases<a class="headerlink" href="#type-aliases" title="Permalink to this heading"></a></h1>
+<h1>Type aliases<a class="headerlink" href="#type-aliases" title="Link to this heading"></a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">]</span>
@@ -222,7 +221,7 @@ on synthetic data.</p>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="auxiliary-functions">
-<h1>Auxiliary functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this heading"></a></h1>
+<h1>Auxiliary functions<a class="headerlink" href="#auxiliary-functions" title="Link to this heading"></a></h1>
 <p>A minimal working example of how to create a <code class="docutils literal notranslate"><span class="pre">Mesh</span></code> for data parallel execution using <code class="docutils literal notranslate"><span class="pre">pjit</span></code>. Please note that, as opposed to <code class="docutils literal notranslate"><span class="pre">pmap</span></code>, <code class="docutils literal notranslate"><span class="pre">pjit</span></code> allows to seemlessly combine data and model parallel execution as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -243,7 +242,7 @@ on synthetic data.</p>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="custom-loop">
-<h1>Custom-loop<a class="headerlink" href="#custom-loop" title="Permalink to this heading"></a></h1>
+<h1>Custom-loop<a class="headerlink" href="#custom-loop" title="Link to this heading"></a></h1>
 <p>The following code uses data-parallelism in the train loop. Through the <code class="docutils literal notranslate"><span class="pre">use_pjit</span></code> keyword argument we can deactivate this parallelism. We’ll use this feature later to benchmark the impact of parallelism.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -334,7 +333,7 @@ on synthetic data.</p>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="boilerplate">
-<h1>Boilerplate<a class="headerlink" href="#boilerplate" title="Permalink to this heading"></a></h1>
+<h1>Boilerplate<a class="headerlink" href="#boilerplate" title="Link to this heading"></a></h1>
 <p>Creates dataset, calls <code class="docutils literal notranslate"><span class="pre">fit</span></code> with and without <code class="docutils literal notranslate"><span class="pre">jax.pjit</span></code>, makes figures.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -388,7 +387,7 @@ on synthetic data.</p>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="main">
-<h1>Main<a class="headerlink" href="#main" title="Permalink to this heading"></a></h1>
+<h1>Main<a class="headerlink" href="#main" title="Link to this heading"></a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;num_samples:&quot;</span><span class="p">,</span> <span class="n">NUM_SAMPLES</span><span class="p">)</span>
