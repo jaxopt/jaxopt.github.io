@@ -128,7 +128,7 @@
 <h1>jaxopt.perturbations.make_perturbed_fun<a class="headerlink" href="#jaxopt-perturbations-make-perturbed-fun" title="Link to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxopt.perturbations.make_perturbed_fun">
-<span class="sig-prename descclassname"><span class="pre">jaxopt.perturbations.</span></span><span class="sig-name descname"><span class="pre">make_perturbed_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise=&lt;jaxopt._src.perturbations.Gumbel</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/perturbations.html#make_perturbed_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.perturbations.make_perturbed_fun" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jaxopt.perturbations.</span></span><span class="sig-name descname"><span class="pre">make_perturbed_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise=&lt;jaxopt._src.perturbations.Gumbel</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control_variate=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/perturbations.html#make_perturbed_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.perturbations.make_perturbed_fun" title="Link to this definition"></a></dt>
 <dd><p>Transforms a function into a differentiable version with perturbations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -141,6 +141,8 @@ Signature for fun currently supported for custom jvp and jit is:
 <li><p><strong>noise</strong> – a distribution object that must implement a sample function and a
 log-pdf of the desired distribution, similar to the examples above.
 Default is Gumbel distribution.</p></li>
+<li><p><strong>control_variate</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Boolean indicating whether a control variate is used in
+the Monte-Carlo estimate of the Jacobian.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

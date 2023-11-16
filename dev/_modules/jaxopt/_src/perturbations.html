@@ -327,7 +327,8 @@
 <span class="k">def</span> <span class="nf">make_perturbed_fun</span><span class="p">(</span><span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span> <span class="nb">float</span><span class="p">],</span>
                        <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
                        <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
-                       <span class="n">noise</span><span class="o">=</span><span class="n">Gumbel</span><span class="p">()):</span>
+                       <span class="n">noise</span><span class="o">=</span><span class="n">Gumbel</span><span class="p">(),</span>
+                       <span class="n">control_variate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Transforms a function into a differentiable version with perturbations.</span>
 
 <span class="sd">  Args:</span>
@@ -339,6 +340,8 @@
 <span class="sd">    noise: a distribution object that must implement a sample function and a</span>
 <span class="sd">      log-pdf of the desired distribution, similar to the examples above.</span>
 <span class="sd">      Default is Gumbel distribution.</span>
+<span class="sd">    control_variate : Boolean indicating whether a control variate is used in</span>
+<span class="sd">      the Monte-Carlo estimate of the Jacobian.</span>
 
 <span class="sd">  Returns:</span>
 <span class="sd">    A function with the same signature (and an rng) that can be differentiated.</span>
@@ -389,7 +392,25 @@
     <span class="n">tangent_out</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent_flat</span><span class="p">,</span> <span class="n">output_pert</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
     <span class="k">return</span> <span class="n">tangent_out</span>
 
-  <span class="n">forward_pert</span><span class="o">.</span><span class="n">defjvps</span><span class="p">(</span><span class="n">pert_jvp</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">pert_jvp_control_variate</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">noise</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
+                           <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,)</span> <span class="o">+</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">output_pert</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">fun</span><span class="p">)(</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">samples</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="c1"># noise.log_prob corresponds to -nu in the paper.</span>
+    <span class="n">nabla_z_flat</span> <span class="o">=</span> <span class="o">-</span><span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">log_prob</span><span class="p">))(</span><span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">tangent_flat</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_samples</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span>
+        <span class="s1">&#39;nd,ne,e-&gt;d&#39;</span><span class="p">,</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_pert</span> <span class="o">-</span> <span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nabla_z_flat</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)))</span>
+    <span class="n">tangent_out</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tangent_flat</span><span class="p">,</span> <span class="n">output_pert</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+    <span class="k">return</span> <span class="n">tangent_out</span>
+
+  <span class="k">if</span> <span class="n">control_variate</span><span class="p">:</span>
+    <span class="n">forward_pert</span><span class="o">.</span><span class="n">defjvps</span><span class="p">(</span><span class="n">pert_jvp_control_variate</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">forward_pert</span><span class="o">.</span><span class="n">defjvps</span><span class="p">(</span><span class="n">pert_jvp</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
   <span class="k">return</span> <span class="n">forward_pert</span></div>
 
