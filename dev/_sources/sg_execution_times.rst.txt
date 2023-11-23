@@ -1,0 +1,73 @@
+
+:orphan:
+
+.. _sphx_glr_sg_execution_times:
+
+
+Computation times
+=================
+**01:37.855** total execution time for 13 files **from all galleries**:
+
+.. container::
+
+  .. raw:: html
+
+    <style scoped>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+    } );
+    </script>
+
+  .. list-table::
+   :header-rows: 1
+   :class: table table-striped sg-datatable
+
+   * - Example
+     - Time
+     - Mem (MB)
+   * - :ref:`sphx_glr_auto_examples_deep_learning_plot_sgd_solvers.py` (``../examples/deep_learning/plot_sgd_solvers.py``)
+     - 01:27.209
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py` (``../examples/fixed_point/plot_picard_ode.py``)
+     - 00:06.107
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py` (``../examples/fixed_point/plot_anderson_wrapper_cd.py``)
+     - 00:02.389
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py` (``../examples/fixed_point/plot_anderson_accelerate_gd.py``)
+     - 00:02.149
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_constrained_binary_kernel_svm_with_intercept.py` (``../examples/constrained/binary_kernel_svm_with_intercept.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_constrained_multiclass_linear_svm.py` (``../examples/constrained/multiclass_linear_svm.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_constrained_nmf.py` (``../examples/constrained/nmf.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_deep_learning_distributed_flax_imagenet.py` (``../examples/deep_learning/distributed_flax_imagenet.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_deep_learning_haiku_vae.py` (``../examples/deep_learning/haiku_vae.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py` (``../examples/fixed_point/deep_equilibrium_model.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_implicit_diff_lasso_implicit_diff.py` (``../examples/implicit_diff/lasso_implicit_diff.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_implicit_diff_ridge_reg_implicit_diff.py` (``../examples/implicit_diff/ridge_reg_implicit_diff.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_implicit_diff_sparse_coding.py` (``../examples/implicit_diff/sparse_coding.py``)
+     - 00:00.000
+     - 0.0

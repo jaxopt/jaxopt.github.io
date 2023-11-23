@@ -1,12 +1,12 @@
 
 :orphan:
 
-.. _sphx_glr_auto_examples_fixed_point_sg_execution_times:
+.. _sphx_glr_auto_examples_sg_execution_times:
 
 
 Computation times
 =================
-**00:10.646** total execution time for 4 files **from auto_examples/fixed_point**:
+**00:00.000** total execution time for 0 files **from auto_examples**:
 
 .. container::
 
@@ -32,15 +32,6 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py` (``plot_picard_ode.py``)
-     - 00:06.107
-     - 0.0
-   * - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py` (``plot_anderson_wrapper_cd.py``)
-     - 00:02.389
-     - 0.0
-   * - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py` (``plot_anderson_accelerate_gd.py``)
-     - 00:02.149
-     - 0.0
-   * - :ref:`sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py` (``deep_equilibrium_model.py``)
-     - 00:00.000
-     - 0.0
+   * - N/A
+     - N/A
+     - N/A
