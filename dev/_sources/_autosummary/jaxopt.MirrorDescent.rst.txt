@@ -18,6 +18,7 @@
       ~MirrorDescent.attribute_values
       ~MirrorDescent.init_state
       ~MirrorDescent.l2_optimality_error
+      ~MirrorDescent.log_info
       ~MirrorDescent.make_projection_grad
       ~MirrorDescent.optimality_fun
       ~MirrorDescent.run

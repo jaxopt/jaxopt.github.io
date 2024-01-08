@@ -18,6 +18,7 @@
       ~BacktrackingLineSearch.attribute_values
       ~BacktrackingLineSearch.init_state
       ~BacktrackingLineSearch.l2_optimality_error
+      ~BacktrackingLineSearch.log_info
       ~BacktrackingLineSearch.run
       ~BacktrackingLineSearch.update
    

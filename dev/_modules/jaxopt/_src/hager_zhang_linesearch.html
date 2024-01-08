@@ -202,7 +202,7 @@
 <span class="sd">    maxiter: maximum number of line search iterations.</span>
 <span class="sd">    tol: tolerance of the stopping criterion.</span>
 
-<span class="sd">    verbose: whether to print error on every iteration or not.</span>
+<span class="sd">    verbose: whether to print information on every iteration or not.</span>
 
 <span class="sd">    jit: whether to JIT-compile the optimization loop (default: &quot;auto&quot;).</span>
 <span class="sd">    unroll: whether to unroll the optimization loop (default: &quot;auto&quot;).</span>
@@ -222,7 +222,7 @@
   <span class="c1"># TODO(vroulet): remove max_stepsize argument as it is not used</span>
   <span class="n">max_stepsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span> 
 
-  <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">verbose</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">jit</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
   <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
 
@@ -673,6 +673,16 @@
         <span class="n">failed</span><span class="o">=</span><span class="n">failed</span><span class="p">,</span>
         <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">new_num_fun_eval</span><span class="p">,</span>
         <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">new_num_grad_eval</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span>
+        <span class="n">new_state</span><span class="p">,</span>
+        <span class="n">error_name</span><span class="o">=</span><span class="s2">&quot;Minimum Decrease &amp; Curvature Errors&quot;</span><span class="p">,</span>
+        <span class="n">additional_info</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;Stepsize&quot;</span><span class="p">:</span> <span class="n">new_stepsize</span><span class="p">,</span>
+            <span class="s2">&quot;Objective Value&quot;</span><span class="p">:</span> <span class="n">new_value</span>
+        <span class="p">}</span>
+      <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">LineSearchStep</span><span class="p">(</span><span class="n">stepsize</span><span class="o">=</span><span class="n">new_stepsize</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>
 

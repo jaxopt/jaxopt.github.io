@@ -18,6 +18,7 @@
       ~BFGS.attribute_values
       ~BFGS.init_state
       ~BFGS.l2_optimality_error
+      ~BFGS.log_info
       ~BFGS.optimality_fun
       ~BFGS.run
       ~BFGS.update

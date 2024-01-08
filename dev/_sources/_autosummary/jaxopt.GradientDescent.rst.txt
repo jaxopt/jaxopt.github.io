@@ -18,6 +18,7 @@
       ~GradientDescent.attribute_values
       ~GradientDescent.init_state
       ~GradientDescent.l2_optimality_error
+      ~GradientDescent.log_info
       ~GradientDescent.optimality_fun
       ~GradientDescent.prox
       ~GradientDescent.run

@@ -18,6 +18,7 @@
       ~BoxCDQP.attribute_values
       ~BoxCDQP.init_state
       ~BoxCDQP.l2_optimality_error
+      ~BoxCDQP.log_info
       ~BoxCDQP.optimality_fun
       ~BoxCDQP.run
       ~BoxCDQP.update

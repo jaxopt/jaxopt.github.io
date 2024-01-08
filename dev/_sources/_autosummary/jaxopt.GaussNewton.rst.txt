@@ -18,6 +18,7 @@
       ~GaussNewton.attribute_values
       ~GaussNewton.init_state
       ~GaussNewton.l2_optimality_error
+      ~GaussNewton.log_info
       ~GaussNewton.run
       ~GaussNewton.update
    

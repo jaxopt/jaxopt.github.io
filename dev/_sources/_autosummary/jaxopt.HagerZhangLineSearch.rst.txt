@@ -18,6 +18,7 @@
       ~HagerZhangLineSearch.attribute_values
       ~HagerZhangLineSearch.init_state
       ~HagerZhangLineSearch.l2_optimality_error
+      ~HagerZhangLineSearch.log_info
       ~HagerZhangLineSearch.run
       ~HagerZhangLineSearch.update
    

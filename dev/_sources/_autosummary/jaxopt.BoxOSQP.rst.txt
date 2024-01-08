@@ -19,6 +19,7 @@
       ~BoxOSQP.init_params
       ~BoxOSQP.init_state
       ~BoxOSQP.l2_optimality_error
+      ~BoxOSQP.log_info
       ~BoxOSQP.run
       ~BoxOSQP.update
    

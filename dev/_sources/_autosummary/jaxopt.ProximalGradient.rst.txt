@@ -18,6 +18,7 @@
       ~ProximalGradient.attribute_values
       ~ProximalGradient.init_state
       ~ProximalGradient.l2_optimality_error
+      ~ProximalGradient.log_info
       ~ProximalGradient.optimality_fun
       ~ProximalGradient.prox
       ~ProximalGradient.run

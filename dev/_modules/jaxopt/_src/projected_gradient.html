@@ -176,7 +176,7 @@
 <span class="sd">    tol: tolerance to use.</span>
 
 <span class="sd">    acceleration: whether to use acceleration (also known as FISTA) or not.</span>
-<span class="sd">    verbose: whether to print error on every iteration or not.</span>
+<span class="sd">    verbose: whether to print information on every iteration or not.</span>
 
 <span class="sd">    implicit_diff: whether to enable implicit diff or autodiff of unrolled</span>
 <span class="sd">      iterations.</span>
@@ -200,7 +200,7 @@
 
   <span class="n">acceleration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">decrease_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
-  <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">verbose</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
   <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>

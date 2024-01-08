@@ -18,6 +18,7 @@
       ~PolyakSGD.attribute_values
       ~PolyakSGD.init_state
       ~PolyakSGD.l2_optimality_error
+      ~PolyakSGD.log_info
       ~PolyakSGD.optimality_fun
       ~PolyakSGD.run
       ~PolyakSGD.run_iterator

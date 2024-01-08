@@ -142,7 +142,7 @@
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>check_bracket</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>verbose</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> | </em><em>int</em>) – </p></li>
 <li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
@@ -198,7 +198,7 @@ If True, the method <code class="docutils literal notranslate"><span class="pre"
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.Bisection.verbose">
 <span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.Bisection.verbose" title="Link to this definition"></a></dt>
-<dd><p>whether to print error on every iteration or not.</p>
+<dd><p>whether to print information on every iteration or not.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -225,7 +225,7 @@ If True, the method <code class="docutils literal notranslate"><span class="pre"
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
 <li><p><strong>check_bracket</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>verbose</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> | </em><em>int</em>) – </p></li>
 <li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>has_aux</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
@@ -256,10 +256,13 @@ If True, the method <code class="docutils literal notranslate"><span class="pre"
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.Bisection.l2_optimality_error" title="jaxopt.Bisection.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
 <td><p>Computes the L2 optimality error.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.Bisection.run" title="jaxopt.Bisection.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([init_params])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.Bisection.log_info" title="jaxopt.Bisection.log_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_info</span></code></a>(state[, error_name, additional_info])</p></td>
+<td><p>Base info at the end of the update.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.Bisection.run" title="jaxopt.Bisection.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([init_params])</p></td>
 <td><p>Runs the optimization loop.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.Bisection.update" title="jaxopt.Bisection.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, *args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.Bisection.update" title="jaxopt.Bisection.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, *args, **kwargs)</p></td>
 <td><p>Performs one iteration of the bisection solver.</p></td>
 </tr>
 </tbody>
@@ -327,6 +330,12 @@ If True, the method <code class="docutils literal notranslate"><span class="pre"
 <dt class="sig sig-object py" id="jaxopt.Bisection.l2_optimality_error">
 <span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.Bisection.l2_optimality_error" title="Link to this definition"></a></dt>
 <dd><p>Computes the L2 optimality error.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.Bisection.log_info">
+<span class="sig-name descname"><span class="pre">log_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.Bisection.log_info" title="Link to this definition"></a></dt>
+<dd><p>Base info at the end of the update.</p>
 </dd></dl>
 
 <dl class="py method">

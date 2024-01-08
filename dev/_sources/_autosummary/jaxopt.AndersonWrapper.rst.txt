@@ -18,6 +18,7 @@
       ~AndersonWrapper.attribute_values
       ~AndersonWrapper.init_state
       ~AndersonWrapper.l2_optimality_error
+      ~AndersonWrapper.log_info
       ~AndersonWrapper.optimality_fun
       ~AndersonWrapper.run
       ~AndersonWrapper.update

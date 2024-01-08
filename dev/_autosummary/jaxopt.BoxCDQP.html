@@ -135,7 +135,7 @@
 <h1>jaxopt.BoxCDQP<a class="headerlink" href="#jaxopt-boxcdqp" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.BoxCDQP">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">BoxCDQP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/cd_qp.html#BoxCDQP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BoxCDQP" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">BoxCDQP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/cd_qp.html#BoxCDQP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.BoxCDQP" title="Link to this definition"></a></dt>
 <dd><p>Coordinate descent solver for box-constrained QPs.</p>
 <p>This solver minimizes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.5</span> <span class="o">&lt;</span><span class="n">x</span><span class="p">,</span> <span class="n">Qx</span><span class="o">&gt;</span> <span class="o">+</span> <span class="o">&lt;</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="o">&gt;</span> <span class="n">subject</span> <span class="n">to</span> <span class="n">l</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">u</span>
@@ -146,7 +146,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> | </em><em>int</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
@@ -169,7 +169,7 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.BoxCDQP.verbose">
 <span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.BoxCDQP.verbose" title="Link to this definition"></a></dt>
-<dd><p>whether to print error on every iteration or not.</p>
+<dd><p>whether to print information on every iteration or not.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -199,13 +199,13 @@ iterations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.BoxCDQP.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BoxCDQP.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BoxCDQP.__init__" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> | </em><em>int</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
@@ -236,7 +236,10 @@ iterations.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BoxCDQP.l2_optimality_error" title="jaxopt.BoxCDQP.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
 <td><p>Computes the L2 optimality error.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code>(sol, params_obj, params_ineq)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BoxCDQP.log_info" title="jaxopt.BoxCDQP.log_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_info</span></code></a>(state[, error_name, additional_info])</p></td>
+<td><p>Base info at the end of the update.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code>(sol, params_obj, params_ineq)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">rtype<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span></p>
@@ -244,10 +247,10 @@ iterations.</p>
 </dl>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BoxCDQP.run" title="jaxopt.BoxCDQP.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BoxCDQP.run" title="jaxopt.BoxCDQP.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
 <td><p>Runs the optimization loop.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.BoxCDQP.update" title="jaxopt.BoxCDQP.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, params_obj, params_ineq)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.BoxCDQP.update" title="jaxopt.BoxCDQP.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, params_obj, params_ineq)</p></td>
 <td><p>Performs one epoch of coordinate descent.</p></td>
 </tr>
 </tbody>
@@ -303,6 +306,12 @@ iterations.</p>
 <dt class="sig sig-object py" id="jaxopt.BoxCDQP.l2_optimality_error">
 <span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BoxCDQP.l2_optimality_error" title="Link to this definition"></a></dt>
 <dd><p>Computes the L2 optimality error.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.BoxCDQP.log_info">
+<span class="sig-name descname"><span class="pre">log_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.BoxCDQP.log_info" title="Link to this definition"></a></dt>
+<dd><p>Base info at the end of the update.</p>
 </dd></dl>
 
 <dl class="py method">

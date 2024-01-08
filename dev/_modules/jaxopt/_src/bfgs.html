@@ -222,7 +222,8 @@
 <span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
 <span class="sd">    jit: whether to JIT-compile the optimization loop (default: True).</span>
 <span class="sd">    unroll: whether to unroll the optimization loop (default: &quot;auto&quot;).</span>
-<span class="sd">    verbose: whether to print error on every iteration or not.</span>
+<span class="sd">    verbose: if set to True or 1 prints the information at each step of </span>
+<span class="sd">      the solver, if set to 2, print also the information of the linesearch.</span>
 
 <span class="sd">  Reference:</span>
 <span class="sd">    Jorge Nocedal and Stephen Wright.</span>
@@ -256,7 +257,7 @@
   <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">unroll</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">AutoOrBoolean</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
 
-  <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">verbose</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="BFGS.init_state">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.BFGS.html#jaxopt.BFGS.init_state">[docs]</a>
@@ -380,6 +381,17 @@
                           <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">new_num_fun_eval</span><span class="p">,</span>
                           <span class="n">num_linesearch_iter</span><span class="o">=</span><span class="n">new_num_linesearch_iter</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span>
+          <span class="n">new_state</span><span class="p">,</span>
+          <span class="n">error_name</span><span class="o">=</span><span class="s2">&quot;Gradient Norm&quot;</span><span class="p">,</span>
+          <span class="n">additional_info</span><span class="o">=</span><span class="p">{</span>
+              <span class="s2">&quot;Objective Value&quot;</span><span class="p">:</span> <span class="n">new_value</span><span class="p">,</span>
+              <span class="s2">&quot;Stepsize&quot;</span><span class="p">:</span> <span class="n">new_stepsize</span><span class="p">,</span>
+              <span class="s2">&quot;Number Linesearch Iterations&quot;</span><span class="p">:</span> 
+              <span class="n">new_state</span><span class="o">.</span><span class="n">num_linesearch_iter</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">num_linesearch_iter</span>
+          <span class="p">}</span>
+      <span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">new_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">new_state</span><span class="p">)</span></div>
 
 
@@ -413,7 +425,7 @@
         <span class="n">max_stepsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_stepsize</span><span class="p">,</span>
         <span class="n">jit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span>
         <span class="n">unroll</span><span class="o">=</span><span class="n">unroll</span><span class="p">,</span>
-        <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">run_ls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linesearch_solver</span><span class="o">.</span><span class="n">run</span>
 

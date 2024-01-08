@@ -18,6 +18,7 @@
       ~FixedPointIteration.attribute_values
       ~FixedPointIteration.init_state
       ~FixedPointIteration.l2_optimality_error
+      ~FixedPointIteration.log_info
       ~FixedPointIteration.optimality_fun
       ~FixedPointIteration.run
       ~FixedPointIteration.update

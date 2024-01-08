@@ -19,6 +19,7 @@
       ~IterativeRefinement.init_params
       ~IterativeRefinement.init_state
       ~IterativeRefinement.l2_optimality_error
+      ~IterativeRefinement.log_info
       ~IterativeRefinement.optimality_fun
       ~IterativeRefinement.run
       ~IterativeRefinement.solve

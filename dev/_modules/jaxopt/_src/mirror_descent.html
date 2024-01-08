@@ -182,7 +182,7 @@
 <span class="sd">      each iteration.</span>
 <span class="sd">    maxiter: maximum number of mirror descent iterations.</span>
 <span class="sd">    tol: tolerance to use.</span>
-<span class="sd">    verbose: whether to print error on every iteration or not.</span>
+<span class="sd">    verbose: whether to print information on every iteration or not.</span>
 <span class="sd">    implicit_diff: whether to enable implicit diff or autodiff of unrolled</span>
 <span class="sd">      iterations.</span>
 <span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
@@ -201,7 +201,7 @@
   <span class="n">stepsize</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span>
   <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
   <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span>
-  <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">verbose</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">has_aux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
@@ -286,6 +286,12 @@
       <span class="n">num_fun_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_fun_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
       <span class="n">num_grad_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_grad_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
       <span class="n">num_proj_eval</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">num_proj_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span>
+    
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span>
+          <span class="n">next_state</span><span class="p">,</span>
+          <span class="n">error_name</span><span class="o">=</span><span class="s2">&quot;Distance btw Iterates&quot;</span>
+      <span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">next_x</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">next_state</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MirrorDescent.update">

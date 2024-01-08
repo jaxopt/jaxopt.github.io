@@ -18,6 +18,7 @@
       ~AndersonAcceleration.attribute_values
       ~AndersonAcceleration.init_state
       ~AndersonAcceleration.l2_optimality_error
+      ~AndersonAcceleration.log_info
       ~AndersonAcceleration.optimality_fun
       ~AndersonAcceleration.run
       ~AndersonAcceleration.update

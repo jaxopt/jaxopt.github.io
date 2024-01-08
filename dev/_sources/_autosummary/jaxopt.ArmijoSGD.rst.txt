@@ -18,6 +18,7 @@
       ~ArmijoSGD.attribute_values
       ~ArmijoSGD.init_state
       ~ArmijoSGD.l2_optimality_error
+      ~ArmijoSGD.log_info
       ~ArmijoSGD.optimality_fun
       ~ArmijoSGD.reset_stepsize
       ~ArmijoSGD.run

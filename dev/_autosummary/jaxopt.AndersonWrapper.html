@@ -142,7 +142,7 @@ of AndersonState.</p>
 <li><p><strong>mixing_frequency</strong> (<em>int</em>) – </p></li>
 <li><p><strong>beta</strong> (<em>float</em>) – </p></li>
 <li><p><strong>ridge</strong> (<em>float</em>) – </p></li>
-<li><p><strong>verbose</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> | </em><em>int</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
@@ -186,7 +186,7 @@ Consider increasing this value if the solver returns <code class="docutils liter
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.AndersonWrapper.verbose">
 <span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.AndersonWrapper.verbose" title="Link to this definition"></a></dt>
-<dd><p>whether to print error on every iteration or not.</p>
+<dd><p>whether to print information on every iteration or not.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -225,7 +225,7 @@ iterations.</p>
 <li><p><strong>mixing_frequency</strong> (<em>int</em>) – </p></li>
 <li><p><strong>beta</strong> (<em>float</em>) – </p></li>
 <li><p><strong>ridge</strong> (<em>float</em>) – </p></li>
-<li><p><strong>verbose</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> | </em><em>int</em>) – </p></li>
 <li><p><strong>implicit_diff</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
@@ -261,13 +261,16 @@ iterations.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.AndersonWrapper.l2_optimality_error" title="jaxopt.AndersonWrapper.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, *args, **kwargs)</p></td>
 <td><p>Computes the L2 optimality error.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.AndersonWrapper.optimality_fun" title="jaxopt.AndersonWrapper.optimality_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code></a>(params, *args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.AndersonWrapper.log_info" title="jaxopt.AndersonWrapper.log_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_info</span></code></a>(state[, error_name, additional_info])</p></td>
+<td><p>Base info at the end of the update.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.AndersonWrapper.optimality_fun" title="jaxopt.AndersonWrapper.optimality_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code></a>(params, *args, **kwargs)</p></td>
 <td><p>Optimality function mapping compatible with <code class="docutils literal notranslate"><span class="pre">&#64;custom_root</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.AndersonWrapper.run" title="jaxopt.AndersonWrapper.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.AndersonWrapper.run" title="jaxopt.AndersonWrapper.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, *args, **kwargs)</p></td>
 <td><p>Runs the optimization loop.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.AndersonWrapper.update" title="jaxopt.AndersonWrapper.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, *args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.AndersonWrapper.update" title="jaxopt.AndersonWrapper.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(params, state, *args, **kwargs)</p></td>
 <td><p>Perform one step of Anderson acceleration over the internal solver update.</p></td>
 </tr>
 </tbody>
@@ -311,6 +314,12 @@ iterations.</p>
 <dt class="sig sig-object py" id="jaxopt.AndersonWrapper.l2_optimality_error">
 <span class="sig-name descname"><span class="pre">l2_optimality_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.AndersonWrapper.l2_optimality_error" title="Link to this definition"></a></dt>
 <dd><p>Computes the L2 optimality error.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.AndersonWrapper.log_info">
+<span class="sig-name descname"><span class="pre">log_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.AndersonWrapper.log_info" title="Link to this definition"></a></dt>
+<dd><p>Base info at the end of the update.</p>
 </dd></dl>
 
 <dl class="py method">

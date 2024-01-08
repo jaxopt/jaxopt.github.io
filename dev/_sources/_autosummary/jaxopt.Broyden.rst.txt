@@ -18,6 +18,7 @@
       ~Broyden.attribute_values
       ~Broyden.init_state
       ~Broyden.l2_optimality_error
+      ~Broyden.log_info
       ~Broyden.optimality_fun
       ~Broyden.run
       ~Broyden.update

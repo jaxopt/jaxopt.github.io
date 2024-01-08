@@ -18,6 +18,7 @@
       ~NonlinearCG.attribute_values
       ~NonlinearCG.init_state
       ~NonlinearCG.l2_optimality_error
+      ~NonlinearCG.log_info
       ~NonlinearCG.optimality_fun
       ~NonlinearCG.run
       ~NonlinearCG.update

@@ -18,6 +18,7 @@
       ~LBFGS.attribute_values
       ~LBFGS.init_state
       ~LBFGS.l2_optimality_error
+      ~LBFGS.log_info
       ~LBFGS.optimality_fun
       ~LBFGS.run
       ~LBFGS.update

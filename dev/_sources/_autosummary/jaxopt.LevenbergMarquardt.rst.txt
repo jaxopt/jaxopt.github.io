@@ -18,6 +18,7 @@
       ~LevenbergMarquardt.attribute_values
       ~LevenbergMarquardt.init_state
       ~LevenbergMarquardt.l2_optimality_error
+      ~LevenbergMarquardt.log_info
       ~LevenbergMarquardt.optimality_fun
       ~LevenbergMarquardt.run
       ~LevenbergMarquardt.solver

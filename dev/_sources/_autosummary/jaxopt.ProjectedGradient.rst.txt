@@ -18,6 +18,7 @@
       ~ProjectedGradient.attribute_values
       ~ProjectedGradient.init_state
       ~ProjectedGradient.l2_optimality_error
+      ~ProjectedGradient.log_info
       ~ProjectedGradient.optimality_fun
       ~ProjectedGradient.run
       ~ProjectedGradient.update

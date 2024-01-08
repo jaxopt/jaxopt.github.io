@@ -131,7 +131,7 @@
 <h1>jaxopt.IterativeRefinement<a class="headerlink" href="#jaxopt-iterativerefinement" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxopt.IterativeRefinement">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">IterativeRefinement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A_bar=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=functools.partial(&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge=1e-06)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll='auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/iterative_refinement.html#IterativeRefinement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.IterativeRefinement" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxopt.</span></span><span class="sig-name descname"><span class="pre">IterativeRefinement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A_bar=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=functools.partial(&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge=1e-06)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll='auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxopt/_src/iterative_refinement.html#IterativeRefinement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxopt.IterativeRefinement" title="Link to this definition"></a></dt>
 <dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Iterative_refinement">Iterativement refinement</a> algorithm.</p>
 <p>This is a meta-algorithm for solving the linear system <code class="docutils literal notranslate"><span class="pre">Ax</span> <span class="pre">=</span> <span class="pre">b</span></code> based on
 a provided linear system solver. Our implementation is a slight generalization
@@ -156,7 +156,7 @@ inaccurate.  This is particularly useful for ill-posed problems.</p>
 <li><p><strong>solve</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> | </em><em>int</em>) – </p></li>
 <li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>unroll</strong> (<em>str</em><em> | </em><em>bool</em>) – </p></li>
@@ -215,7 +215,7 @@ This solver can be inaccurate and run with low precision.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxopt.IterativeRefinement.verbose">
 <span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#jaxopt.IterativeRefinement.verbose" title="Link to this definition"></a></dt>
-<dd><p>If verbose=1, print error at each iteration.</p>
+<dd><p>whether to print information on every iteration or not.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -249,7 +249,7 @@ iterations.</p>
 <p>[3] <a class="reference external" href="https://en.wikipedia.org/wiki/Iterative_refinement">https://en.wikipedia.org/wiki/Iterative_refinement</a>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxopt.IterativeRefinement.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A_bar=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=functools.partial(&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge=1e-06)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll='auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.IterativeRefinement.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matvec_A=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matvec_A_bar=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve=functools.partial(&lt;function</span> <span class="pre">solve_gmres&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ridge=1e-06)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol=1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit_diff_solve=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll='auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.IterativeRefinement.__init__" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -258,7 +258,7 @@ iterations.</p>
 <li><p><strong>solve</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
 <li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>verbose</strong> (<em>int</em>) – </p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> | </em><em>int</em>) – </p></li>
 <li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
 <li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>unroll</strong> (<em>str</em><em> | </em><em>bool</em>) – </p></li>
@@ -291,16 +291,19 @@ iterations.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.IterativeRefinement.l2_optimality_error" title="jaxopt.IterativeRefinement.l2_optimality_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l2_optimality_error</span></code></a>(params, A, b[, A_bar])</p></td>
 <td><p>Computes the L2 optimality error.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code>(params, A, b[, A_bar])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.IterativeRefinement.log_info" title="jaxopt.IterativeRefinement.log_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_info</span></code></a>(state[, error_name, additional_info])</p></td>
+<td><p>Base info at the end of the update.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimality_fun</span></code>(params, A, b[, A_bar])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxopt.IterativeRefinement.run" title="jaxopt.IterativeRefinement.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, A, b[, A_bar])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxopt.IterativeRefinement.run" title="jaxopt.IterativeRefinement.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(init_params, A, b[, A_bar])</p></td>
 <td><p>Runs the iterative refinement.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="jaxopt.IterativeRefinement.solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve</span></code></a>(b, *[, ridge, init, tol])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id0" title="jaxopt.IterativeRefinement.solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve</span></code></a>(b, *[, ridge, init, tol])</p></td>
 <td><p>Solves <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span></code> using gmres.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code>(params, state, A, b[, A_bar])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code>(params, state, A, b[, A_bar])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -348,6 +351,12 @@ iterations.</p>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxopt.IterativeRefinement.log_info">
+<span class="sig-name descname"><span class="pre">log_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jaxopt.IterativeRefinement.log_info" title="Link to this definition"></a></dt>
+<dd><p>Base info at the end of the update.</p>
 </dd></dl>
 
 <dl class="py method">

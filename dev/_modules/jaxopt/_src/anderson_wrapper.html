@@ -183,7 +183,7 @@
 <span class="sd">    beta: momentum in Anderson updates. (default: 1).</span>
 <span class="sd">    ridge: ridge regularization in solver.</span>
 <span class="sd">      Consider increasing this value if the solver returns ``NaN``.</span>
-<span class="sd">    verbose: whether to print error on every iteration or not.</span>
+<span class="sd">    verbose: whether to print information on every iteration or not.</span>
 <span class="sd">    implicit_diff: whether to enable implicit diff or autodiff of unrolled</span>
 <span class="sd">      iterations.</span>
 <span class="sd">    implicit_diff_solve: the linear system solver to use.</span>
@@ -195,7 +195,7 @@
   <span class="n">mixing_frequency</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span>
   <span class="n">ridge</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span>
-  <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">verbose</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">implicit_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">implicit_diff_solve</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">jit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
@@ -278,6 +278,9 @@
                                       <span class="n">params_history</span><span class="o">=</span><span class="n">params_history</span><span class="p">,</span>
                                       <span class="n">residuals_history</span><span class="o">=</span><span class="n">residuals_history</span><span class="p">,</span>
                                       <span class="n">residual_gram</span><span class="o">=</span><span class="n">residual_gram</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="n">next_state</span><span class="p">,</span> <span class="n">error_name</span><span class="o">=</span><span class="s2">&quot;Inner Solver Error&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">next_params</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">next_state</span><span class="p">)</span></div>
 
 

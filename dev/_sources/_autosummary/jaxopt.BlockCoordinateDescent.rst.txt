@@ -18,6 +18,7 @@
       ~BlockCoordinateDescent.attribute_values
       ~BlockCoordinateDescent.init_state
       ~BlockCoordinateDescent.l2_optimality_error
+      ~BlockCoordinateDescent.log_info
       ~BlockCoordinateDescent.optimality_fun
       ~BlockCoordinateDescent.run
       ~BlockCoordinateDescent.update

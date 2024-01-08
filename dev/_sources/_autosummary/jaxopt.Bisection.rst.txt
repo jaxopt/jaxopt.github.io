@@ -18,6 +18,7 @@
       ~Bisection.attribute_values
       ~Bisection.init_state
       ~Bisection.l2_optimality_error
+      ~Bisection.log_info
       ~Bisection.run
       ~Bisection.update
    
