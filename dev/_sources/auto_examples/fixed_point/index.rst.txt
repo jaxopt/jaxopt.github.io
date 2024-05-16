@@ -14,6 +14,7 @@ Fixed point resolution
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -82,6 +83,8 @@ Fixed point resolution
       <div class="sphx-glr-thumbnail-title">Deep Equilibrium (DEQ) model in Flax with Anderson acceleration.</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

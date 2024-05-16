@@ -24,7 +24,7 @@
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -145,16 +145,16 @@ Can benefit from GPU/TPU acceleration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec_Q</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>matvec_A</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>fun</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>solve</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>refine_regularization</strong> (<em>float</em>) – </p></li>
-<li><p><strong>refine_maxiter</strong> (<em>int</em>) – </p></li>
-<li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
-<li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>matvec_Q</strong> (<em>Callable</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>matvec_A</strong> (<em>Callable</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>fun</strong> (<em>Callable</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>solve</strong> (<em>Callable</em>)</p></li>
+<li><p><strong>refine_regularization</strong> (<em>float</em>)</p></li>
+<li><p><strong>refine_maxiter</strong> (<em>int</em>)</p></li>
+<li><p><strong>maxiter</strong> (<em>int</em>)</p></li>
+<li><p><strong>tol</strong> (<em>float</em>)</p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>jit</strong> (<em>bool</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -200,11 +200,11 @@ so the user should provide it in init_params.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>b</strong> (<em>Any</em>) – </p></li>
-<li><p><strong>ridge</strong> (<em>float</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>init</strong> (<em>Any</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>tol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>matvec</strong> (<em>Callable</em>)</p></li>
+<li><p><strong>b</strong> (<em>Any</em>)</p></li>
+<li><p><strong>ridge</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>init</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>tol</strong> (<em>float</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -265,16 +265,16 @@ iterations.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matvec_Q</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>matvec_A</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>fun</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>solve</strong> (<em>Callable</em>) – </p></li>
-<li><p><strong>refine_regularization</strong> (<em>float</em>) – </p></li>
-<li><p><strong>refine_maxiter</strong> (<em>int</em>) – </p></li>
-<li><p><strong>maxiter</strong> (<em>int</em>) – </p></li>
-<li><p><strong>tol</strong> (<em>float</em>) – </p></li>
-<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>jit</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>matvec_Q</strong> (<em>Callable</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>matvec_A</strong> (<em>Callable</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>fun</strong> (<em>Callable</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>solve</strong> (<em>Callable</em>)</p></li>
+<li><p><strong>refine_regularization</strong> (<em>float</em>)</p></li>
+<li><p><strong>refine_maxiter</strong> (<em>int</em>)</p></li>
+<li><p><strong>maxiter</strong> (<em>int</em>)</p></li>
+<li><p><strong>tol</strong> (<em>float</em>)</p></li>
+<li><p><strong>implicit_diff_solve</strong> (<em>Callable</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>jit</strong> (<em>bool</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -345,9 +345,9 @@ iterations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>params</strong> (<em>KKTSolution</em>) – </p></li>
-<li><p><strong>params_obj</strong> (<em>Any</em><em> | </em><em>None</em>) – </p></li>
-<li><p><strong>params_eq</strong> (<em>Any</em><em> | </em><em>None</em>) – </p></li>
+<li><p><strong>params</strong> (<em>KKTSolution</em>)</p></li>
+<li><p><strong>params_obj</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>params_eq</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -394,7 +394,7 @@ or a tuple (params_A, b) if matvec_A is provided.</p></li>
 <li><p><strong>ridge</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span>) – optional ridge regularization.</p></li>
 <li><p><strong>init</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span>) – optional initialization to be used by gmres.</p></li>
 <li><p><strong>**kwargs</strong> – additional keyword arguments for solver.</p></li>
-<li><p><strong>tol</strong> (<em>float</em>) – </p></li>
+<li><p><strong>tol</strong> (<em>float</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

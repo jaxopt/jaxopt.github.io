@@ -23,7 +23,7 @@
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -416,14 +416,14 @@
     <span class="n">gain_ratio_test_not_met_ret</span> <span class="o">=</span> <span class="n">gain_ratio_test_false_func</span><span class="p">(</span>
         <span class="o">*</span><span class="n">gain_ratio_test_init_state</span><span class="p">)</span>
 
-    <span class="n">gain_ratio_test_is_met_ret</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+    <span class="n">gain_ratio_test_is_met_ret</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">gain_ratio_test_is_met</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">gain_ratio_test_is_met_ret</span><span class="p">)</span>
 
-    <span class="n">gain_ratio_test_not_met_ret</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+    <span class="n">gain_ratio_test_not_met_ret</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">gain_ratio_test_is_met</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span>
         <span class="n">gain_ratio_test_not_met_ret</span><span class="p">)</span>
 
-    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">damping_factor</span><span class="p">,</span> <span class="n">increase_factor</span><span class="p">,</span> <span class="n">residual</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">jt</span><span class="p">,</span> <span class="n">jtj</span><span class="p">,</span> <span class="n">hess_res</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">gain_ratio_test_is_met_ret</span><span class="p">,</span>
         <span class="n">gain_ratio_test_not_met_ret</span><span class="p">)</span>
 

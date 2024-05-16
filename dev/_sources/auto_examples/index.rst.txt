@@ -21,6 +21,9 @@ To install the libraries that the examples depend on, please run::
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 
@@ -37,6 +40,7 @@ Constrained optimization
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -89,6 +93,8 @@ Constrained optimization
     </div>
 
 
+.. thumbnail-parent-div-close
+
 .. raw:: html
 
     </div>
@@ -104,6 +110,7 @@ Deep learning
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -156,6 +163,8 @@ Deep learning
     </div>
 
 
+.. thumbnail-parent-div-close
+
 .. raw:: html
 
     </div>
@@ -171,6 +180,7 @@ Fixed point resolution
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -240,6 +250,8 @@ Fixed point resolution
     </div>
 
 
+.. thumbnail-parent-div-close
+
 .. raw:: html
 
     </div>
@@ -255,6 +267,7 @@ Implicit differentiation
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -306,6 +319,8 @@ Implicit differentiation
       <div class="sphx-glr-thumbnail-title">Sparse coding.</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

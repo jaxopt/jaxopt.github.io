@@ -24,7 +24,7 @@
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -306,7 +306,7 @@ on synthetic data.</p>
       <span class="n">in_axis_resources</span><span class="o">=</span><span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span>
       <span class="n">out_axis_resources</span><span class="o">=</span><span class="n">PartitionSpec</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">))(</span><span class="o">*</span><span class="n">data</span><span class="p">)</span>
   <span class="k">else</span><span class="p">:</span>  <span class="c1"># Just move data to device.</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">device_put</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">device_put</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
   <span class="c1"># Pre-compiles update, preventing it from affecting step times.</span>
   <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -320,7 +320,7 @@ on synthetic data.</p>
   <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAXITER</span><span class="p">):</span>
     <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">params</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-    <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">block_until_ready</span><span class="p">(),</span> <span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">))</span>
+    <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">block_until_ready</span><span class="p">(),</span> <span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">state</span><span class="p">))</span>
     <span class="n">step_times</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">tic</span>
     <span class="n">errors</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 

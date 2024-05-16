@@ -14,6 +14,7 @@ Deep learning
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -65,6 +66,8 @@ Deep learning
       <div class="sphx-glr-thumbnail-title">SPMD ResNet example with Flax and JAXopt.</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 
