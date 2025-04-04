@@ -1,32 +1,30 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>jaxopt._src.loss &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -127,13 +125,13 @@
 
 <span class="sd">&quot;&quot;&quot;Loss functions.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 
-<span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">from</span> <span class="nn">jax.nn</span> <span class="kn">import</span> <span class="n">softplus</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">from</span> <span class="nn">jax.scipy.special</span> <span class="kn">import</span> <span class="n">logsumexp</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.projection</span> <span class="kn">import</span> <span class="n">projection_simplex</span><span class="p">,</span> <span class="n">projection_hypercube</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">softplus</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax.scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">logsumexp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.projection</span><span class="w"> </span><span class="kn">import</span> <span class="n">projection_simplex</span><span class="p">,</span> <span class="n">projection_hypercube</span>
 
 
 <span class="c1"># Regression</span>
@@ -141,7 +139,7 @@
 
 <div class="viewcode-block" id="huber_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.huber_loss.html#jaxopt.loss.huber_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">huber_loss</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pred</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">huber_loss</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pred</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Huber loss.</span>
 
 <span class="sd">  Args:</span>
@@ -165,7 +163,7 @@
 
 <div class="viewcode-block" id="binary_logistic_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.binary_logistic_loss.html#jaxopt.loss.binary_logistic_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">binary_logistic_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logit</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">binary_logistic_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logit</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Binary logistic loss.</span>
 
 <span class="sd">  Args:</span>
@@ -185,7 +183,7 @@
 
 <div class="viewcode-block" id="binary_sparsemax_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.binary_sparsemax_loss.html#jaxopt.loss.binary_sparsemax_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">binary_sparsemax_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logit</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">binary_sparsemax_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logit</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Binary sparsemax loss.</span>
 
 <span class="sd">  Args:</span>
@@ -204,7 +202,7 @@
 
 <div class="viewcode-block" id="sparse_plus">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.sparse_plus.html#jaxopt.loss.sparse_plus">[docs]</a>
-<span class="k">def</span> <span class="nf">sparse_plus</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sparse_plus</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sparse plus function.</span>
 
 <span class="sd">  Computes the function:</span>
@@ -233,7 +231,7 @@
 
 <div class="viewcode-block" id="sparse_sigmoid">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.sparse_sigmoid.html#jaxopt.loss.sparse_sigmoid">[docs]</a>
-<span class="k">def</span> <span class="nf">sparse_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sparse_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sparse sigmoid function.</span>
 
 <span class="sd">  Computes the function:</span>
@@ -262,7 +260,7 @@
 
 <div class="viewcode-block" id="binary_hinge_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.binary_hinge_loss.html#jaxopt.loss.binary_hinge_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">binary_hinge_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">binary_hinge_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Binary hinge loss.</span>
 
 <span class="sd">  Args:</span>
@@ -281,7 +279,7 @@
 
 <div class="viewcode-block" id="binary_perceptron_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.binary_perceptron_loss.html#jaxopt.loss.binary_perceptron_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">binary_perceptron_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">binary_perceptron_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Binary perceptron loss.</span>
 
 <span class="sd">  Args:</span>
@@ -302,7 +300,7 @@
 
 <div class="viewcode-block" id="multiclass_logistic_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.multiclass_logistic_loss.html#jaxopt.loss.multiclass_logistic_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">multiclass_logistic_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logits</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiclass_logistic_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logits</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Multiclass logistic loss.</span>
 
 <span class="sd">  Args:</span>
@@ -323,7 +321,7 @@
 
 <div class="viewcode-block" id="multiclass_sparsemax_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.multiclass_sparsemax_loss.html#jaxopt.loss.multiclass_sparsemax_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">multiclass_sparsemax_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiclass_sparsemax_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Multiclass sparsemax loss.</span>
 
 <span class="sd">  Args:</span>
@@ -349,7 +347,7 @@
 
 <div class="viewcode-block" id="multiclass_hinge_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.multiclass_hinge_loss.html#jaxopt.loss.multiclass_hinge_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">multiclass_hinge_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiclass_hinge_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
                           <span class="n">scores</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Multiclass hinge loss.</span>
 
@@ -369,7 +367,7 @@
 
 <div class="viewcode-block" id="multiclass_perceptron_loss">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.loss.multiclass_perceptron_loss.html#jaxopt.loss.multiclass_perceptron_loss">[docs]</a>
-<span class="k">def</span> <span class="nf">multiclass_perceptron_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiclass_perceptron_loss</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
                                <span class="n">scores</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Binary perceptron loss.</span>
 
@@ -390,7 +388,7 @@
 <span class="c1"># Fenchel-Young losses</span>
 
 
-<span class="k">def</span> <span class="nf">make_fenchel_young_loss</span><span class="p">(</span><span class="n">max_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="nb">float</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_fenchel_young_loss</span><span class="p">(</span><span class="n">max_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="nb">float</span><span class="p">]):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates a Fenchel-Young loss from a max function.</span>
 
 <span class="sd">  Args:</span>
@@ -417,7 +415,7 @@
 <span class="sd">    where y_eps is the gradient of F, the argmax.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
-  <span class="k">def</span> <span class="nf">fy_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">fy_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">max_fun</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">fy_loss</span>
 </pre></div>

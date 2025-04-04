@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -5,29 +7,25 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Non-negative matrix factorizaton (NMF) using alternating minimization. &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -136,18 +134,18 @@
 <h1>Non-negative matrix factorizaton (NMF) using alternating minimization.<a class="headerlink" href="#non-negative-matrix-factorizaton-nmf-using-alternating-minimization" title="Link to this heading"></a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
-<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">absl</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">absl</span><span class="w"> </span><span class="kn">import</span> <span class="n">flags</span>
 
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BlockCoordinateDescent</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">objective</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">prox</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlockCoordinateDescent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">objective</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">prox</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">onp</span>
 
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span>
 
 
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span><span class="s2">&quot;penalty&quot;</span><span class="p">,</span> <span class="s2">&quot;l2&quot;</span><span class="p">,</span> <span class="s2">&quot;Regularization type.&quot;</span><span class="p">)</span>
@@ -155,7 +153,7 @@
 <span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
 
 
-<span class="k">def</span> <span class="nf">nnreg</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V_init</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">150</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nnreg</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V_init</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">150</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Regularized non-negative regression.</span>
 
 <span class="sd">  We solve::</span>
@@ -180,13 +178,13 @@
   <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># approximate solution V</span>
 
 
-<span class="k">def</span> <span class="nf">reconstruction_error</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">reconstruction_error</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Computes (unregularized) reconstruction error.&quot;&quot;&quot;</span>
   <span class="n">UV</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
   <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">UV</span> <span class="o">-</span> <span class="n">X</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">nmf</span><span class="p">(</span><span class="n">U_init</span><span class="p">,</span> <span class="n">V_init</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nmf</span><span class="p">(</span><span class="n">U_init</span><span class="p">,</span> <span class="n">V_init</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;NMF by alternating minimization.</span>
 
 <span class="sd">  We solve</span>
@@ -216,7 +214,7 @@
     <span class="nb">print</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
   <span class="k">del</span> <span class="n">argv</span>
 
   <span class="c1"># Prepare data.</span>
@@ -247,11 +245,11 @@
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BlockCoordinateDescent</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">objective</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">prox</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">absl</span><span class="w"> </span><span class="kn">import</span> <span class="n">flags</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlockCoordinateDescent</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">objective</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">prox</span>
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;jaxopt&#39;
 </pre></div>

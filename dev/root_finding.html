@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
@@ -5,31 +7,27 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Root finding &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="_static/copybutton.js?v=f281be69"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -156,9 +154,9 @@ in this interval as long as <span class="math notranslate nohighlight">\(F\)</sp
 that we want to find the root of <span class="math notranslate nohighlight">\(F(x) = x^3 - x - 2\)</span>. We have
 <span class="math notranslate nohighlight">\(F(1) = -2\)</span> and <span class="math notranslate nohighlight">\(F(2) = 4\)</span>. Since the function is continuous, there
 must be a <span class="math notranslate nohighlight">\(x\)</span> between 1 and 2 such that <span class="math notranslate nohighlight">\(F(x) = 0\)</span>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">Bisection</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bisection</span>
 
-<span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
   <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">2</span>
 
 <span class="n">bisec</span> <span class="o">=</span> <span class="n">Bisection</span><span class="p">(</span><span class="n">optimality_fun</span><span class="o">=</span><span class="n">F</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -174,10 +172,10 @@ since the bracketing interval is sufficient.</p>
 <p>Now, let us consider the case <span class="math notranslate nohighlight">\(F(x, \theta)\)</span>.  For instance, suppose that
 <code class="docutils literal notranslate"><span class="pre">F</span></code> takes an additional argument <code class="docutils literal notranslate"><span class="pre">factor</span></code>.  We can easily differentiate
 with respect to <code class="docutils literal notranslate"><span class="pre">factor</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
   <span class="k">return</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">2</span>
 
-<span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="n">factor</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="n">factor</span><span class="p">):</span>
   <span class="n">bisec</span> <span class="o">=</span> <span class="n">Bisection</span><span class="p">(</span><span class="n">optimality_fun</span><span class="o">=</span><span class="n">F</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">bisec</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="n">factor</span><span class="p">)</span><span class="o">.</span><span class="n">params</span>
 
@@ -217,10 +215,10 @@ updates.
 One can control the number of updates with the <code class="docutils literal notranslate"><span class="pre">history_size</span></code> argument.
 Furthermore, Broyden’s method uses a line search to ensure the rank-one updates are stable.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">Broyden</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">Broyden</span>
 
-<span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
   <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">2</span>
 
 <span class="n">broyden</span> <span class="o">=</span> <span class="n">Broyden</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">F</span><span class="p">)</span>
@@ -228,14 +226,14 @@ Furthermore, Broyden’s method uses a line search to ensure the rank-one update
 </pre></div>
 </div>
 <p>For implicit differentiation:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">Broyden</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">Broyden</span>
 
-<span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
   <span class="k">return</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">2</span>
 
-<span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="n">factor</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="n">factor</span><span class="p">):</span>
   <span class="n">broyden</span> <span class="o">=</span> <span class="n">Broyden</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">F</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">broyden</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">factor</span><span class="o">=</span><span class="n">factor</span><span class="p">)</span><span class="o">.</span><span class="n">params</span>
 

@@ -18,7 +18,7 @@ Fixed point resolution
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Thanks to the Picard–Lindelöf theorem, we can reduce differential equation solving to fixed poi...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Thanks to the Picard–Lindelöf theorem, we can reduce differential equation solving to fixed point computations and simple integration.  More precisely consider the ODE:">
 
 .. only:: html
 
@@ -35,7 +35,7 @@ Fixed point resolution
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Block coordinate descent converges to a fixed point. It can therefore be accelerated with Ander...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Block coordinate descent converges to a fixed point. It can therefore be accelerated with Anderson acceleration.">
 
 .. only:: html
 

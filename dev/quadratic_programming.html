@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
@@ -5,31 +7,27 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quadratic programming &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="_static/copybutton.js?v=f281be69"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -274,7 +272,7 @@ Hence, the matrix <span class="math notranslate nohighlight">\(Q\)</span> <em>mu
 <p>This class is optimized for QPs with equality constraints only: it supports jit, pytrees and matvec.
 It is based on the KKT conditions of the problem.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
 
 <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
@@ -296,7 +294,7 @@ or with redundant constraints.</p>
 it is possible to enable
 <a class="reference external" href="https://en.wikipedia.org/wiki/Iterative_refinement">iterative refinement</a>.
 This can be done by setting <code class="docutils literal notranslate"><span class="pre">refine_regularization</span></code> and <code class="docutils literal notranslate"><span class="pre">refine_maxiter</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt.eq_qp</span> <span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt.eq_qp</span><span class="w"> </span><span class="kn">import</span> <span class="n">EqualityConstrainedQP</span>
 
 <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">3000.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
@@ -332,7 +330,7 @@ However, it is not jittable, and does not support matvec and pytrees.</p>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">CvxpyQP</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">CvxpyQP</span>
 
 <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
@@ -368,7 +366,7 @@ Hence we recommend to use <code class="xref py py-class docutils literal notrans
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OSQP</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">OSQP</span>
 
 <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
@@ -411,7 +409,7 @@ but accepts problems in the above box-constrained format instead.  The bounds
 <code class="docutils literal notranslate"><span class="pre">u</span></code> (resp. <code class="docutils literal notranslate"><span class="pre">l</span></code>) can be set to <code class="docutils literal notranslate"><span class="pre">inf</span></code> (resp. <code class="docutils literal notranslate"><span class="pre">-inf</span></code>) if required.
 Equality can be enforced with <code class="docutils literal notranslate"><span class="pre">l</span> <span class="pre">=</span> <span class="pre">u</span></code>.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BoxOSQP</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxOSQP</span>
 
 <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
@@ -460,7 +458,7 @@ instead.</p>
 <p><a class="reference internal" href="_autosummary/jaxopt.BoxCDQP.html#jaxopt.BoxCDQP" title="jaxopt.BoxCDQP"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BoxCDQP</span></code></a> uses a coordinate descent solver. The solver returns only
 the primal solution.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BoxCDQP</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxCDQP</span>
 
 <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
@@ -485,7 +483,7 @@ quadratics of the form:</p>
 x=Qx+c=0\)</span>.  Therefore, this is equivalent to solving the linear system
 <span class="math notranslate nohighlight">\(Qx=-c\)</span>.  Since the matrix <span class="math notranslate nohighlight">\(Q\)</span> is assumed PSD, one of the best
 algorithms is <em>conjugate gradient</em>.  In JAXopt, this can be done as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt.linear_solve</span> <span class="kn">import</span> <span class="n">solve_cg</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt.linear_solve</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_cg</span>
 
 <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
@@ -570,14 +568,14 @@ implicit differentiation:</p>
 <span class="n">data</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">make_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">lam</span> <span class="o">=</span> <span class="mf">10.0</span>
 
-<span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">xyt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">xyt</span><span class="p">):</span>
   <span class="k">del</span> <span class="n">params_Q</span>  <span class="c1"># unused</span>
   <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">xyt</span>
   <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
 <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="n">lam</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="k">def</span> <span class="nf">matvec_A</span><span class="p">(</span><span class="n">params_A</span><span class="p">,</span> <span class="n">xyt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">matvec_A</span><span class="p">(</span><span class="n">params_A</span><span class="p">,</span> <span class="n">xyt</span><span class="p">):</span>
   <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">xyt</span>
   <span class="n">residuals</span> <span class="o">=</span> <span class="n">params_A</span> <span class="o">@</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
   <span class="k">return</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">t</span>
@@ -620,12 +618,12 @@ than materializing the full matrix.</p></li>
 <span class="n">W_0</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">W_0</span>
 
-<span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">):</span>
   <span class="n">Y</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">params_obj</span>
   <span class="c1"># Write the objective as an implicit quadratic polynomial</span>
   <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">U</span> <span class="o">@</span> <span class="n">W</span><span class="p">))</span>
 
-<span class="k">def</span> <span class="nf">matvec_G</span><span class="p">(</span><span class="n">params_G</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">matvec_G</span><span class="p">(</span><span class="n">params_G</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
   <span class="k">del</span> <span class="n">params_G</span>  <span class="c1"># unused</span>
   <span class="k">return</span> <span class="o">-</span><span class="n">W</span>
 
@@ -646,9 +644,9 @@ than materializing the full matrix.</p></li>
 <p>When using implicit differentiation, the parameters w.r.t which we differentiate
 must be passed to <cite>params_obj</cite>, <cite>params_eq</cite> or <cite>params_ineq</cite>. They should not be captured
 from the global scope by <cite>fun</cite> or <cite>matvec</cite>. We illustrate below this common mistake:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wrong_solver</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>  <span class="c1"># don&#39;t do this!</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">wrong_solver</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>  <span class="c1"># don&#39;t do this!</span>
 
-  <span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="k">del</span> <span class="n">params_Q</span>  <span class="c1"># unused</span>
     <span class="c1"># error! Q is captured from the global scope.</span>
     <span class="c1"># it does not fail now, but it will fail later.</span>
@@ -673,9 +671,9 @@ from the global scope by <cite>fun</cite> or <cite>matvec</cite>. We illustrate 
 starting point <cite>init_params</cite>. Hence, derivatives w.r.t <cite>init_params</cite> are always
 zero (mathematically).</p>
 <p>The correct implementation is given below:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">correct_solver</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">correct_solver</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
 
-  <span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">matvec_Q</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">params_Q</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 
   <span class="n">c</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
@@ -5,31 +7,27 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Non-smooth optimization &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="_static/copybutton.js?v=f281be69"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -168,10 +166,10 @@ setting the corresponding proximal operator, which is achieved using the
 <p>which corresponds to the choice <span class="math notranslate nohighlight">\(g(w, \text{l1reg}) = \text{l1reg} \cdot ||w||_1\)</span>.  The
 corresponding <code class="docutils literal notranslate"><span class="pre">prox</span></code> operator is <a class="reference internal" href="_autosummary/jaxopt.prox.prox_lasso.html#jaxopt.prox.prox_lasso" title="jaxopt.prox.prox_lasso"><code class="xref py py-func docutils literal notranslate"><span class="pre">prox_lasso</span></code></a>.
 We can therefore write:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">ProximalGradient</span>
-<span class="kn">from</span> <span class="nn">jaxopt.prox</span> <span class="kn">import</span> <span class="n">prox_lasso</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProximalGradient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt.prox</span><span class="w"> </span><span class="kn">import</span> <span class="n">prox_lasso</span>
 
-<span class="k">def</span> <span class="nf">least_squares</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">least_squares</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
   <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span>
   <span class="n">residuals</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>
   <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
@@ -193,7 +191,7 @@ argument The remaining arguments are passed to the objective function, here
 <p>In some applications, it is useful to differentiate the solution of the solver
 with respect to some hyperparameters.  Continuing the previous example, we can
 now differentiate the solution w.r.t. <code class="docutils literal notranslate"><span class="pre">l1reg</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">l1reg</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">solution</span><span class="p">(</span><span class="n">l1reg</span><span class="p">):</span>
   <span class="n">pg</span> <span class="o">=</span> <span class="n">ProximalGradient</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">least_squares</span><span class="p">,</span> <span class="n">prox</span><span class="o">=</span><span class="n">prox_lasso</span><span class="p">,</span> <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">pg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">w_init</span><span class="p">,</span> <span class="n">hyperparams_prox</span><span class="o">=</span><span class="n">l1reg</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">params</span>
 
@@ -224,8 +222,8 @@ and autodiff of unrolled iterations if <code class="docutils literal notranslate
 <p>Contrary to other solvers, <a class="reference internal" href="_autosummary/jaxopt.BlockCoordinateDescent.html#jaxopt.BlockCoordinateDescent" title="jaxopt.BlockCoordinateDescent"><code class="xref py py-class docutils literal notranslate"><span class="pre">jaxopt.BlockCoordinateDescent</span></code></a> only works with
 <a class="reference internal" href="objective_and_loss.html#composite-linear-functions"><span class="std std-ref">composite linear objective functions</span></a>.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">objective</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">prox</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">objective</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">prox</span>
 
 <span class="n">l1reg</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">w_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>

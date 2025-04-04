@@ -35,7 +35,7 @@ Constrained optimization
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This quadratic program can be solved either with OSQP or with block coordinate descent.    Refe...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This quadratic program can be solved either with OSQP or with block coordinate descent.    Reference:        Crammer, K. and Singer, Y., 2001. On the algorithmic implementation of multiclass kernel-based vector machines.   Journal of machine learning research, 2(Dec), pp.265-292.">
 
 .. only:: html
 
@@ -52,7 +52,7 @@ Constrained optimization
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="The dual objective of binary kernel SVMs with an intercept contains both box constraints and an...">
+    <div class="sphx-glr-thumbcontainer" tooltip="The dual objective of binary kernel SVMs with an intercept contains both box constraints and an equality constraint, making it challenging to solve. The state-of-the-art algorithm to solve this objective is SMO (Sequential minimal optimization). ">
 
 .. only:: html
 

@@ -52,7 +52,7 @@ Deep learning
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="The purpose of this example is to illustrate how JAXopt solvers can be easily used for distribu...">
+    <div class="sphx-glr-thumbcontainer" tooltip="The purpose of this example is to illustrate how JAXopt solvers can be easily used for distributed training thanks to jax.pjit. In this case, we begin by implementing data parallel training of a ResNet50 model on the ImageNet dataset as a fork of Flax&#x27;s official ImageNet example. General aspects to pay attention to include:">
 
 .. only:: html
 

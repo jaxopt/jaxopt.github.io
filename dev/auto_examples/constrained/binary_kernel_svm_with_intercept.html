@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -5,29 +7,25 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Binary kernel SVM with intercept. &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -145,19 +143,19 @@ using projection_box_section.</p>
 it with BoxOSQP too.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">app</span>
-<span class="kn">from</span> <span class="nn">absl</span> <span class="kn">import</span> <span class="n">flags</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">absl</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">absl</span><span class="w"> </span><span class="kn">import</span> <span class="n">flags</span>
 
-<span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">projection</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">ProjectedGradient</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BoxOSQP</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">projection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProjectedGradient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxOSQP</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">onp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">svm</span>
 
 
 <span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;lam&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;Regularization parameter. Must be positive.&quot;</span><span class="p">)</span>
@@ -168,7 +166,7 @@ it with BoxOSQP too.</p>
 <span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
 
 
-<span class="k">def</span> <span class="nf">binary_kernel_svm_skl</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">binary_kernel_svm_skl</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Solve SVM with sklearn.svm.SVC: &quot;</span><span class="p">)</span>
   <span class="n">K</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
   <span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;precomputed&quot;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">tol</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -177,10 +175,10 @@ it with BoxOSQP too.</p>
   <span class="k">return</span> <span class="n">dual_coef</span>
 
 
-<span class="k">def</span> <span class="nf">binary_kernel_svm_pg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">binary_kernel_svm_pg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Solve SVM with Projected Gradient: &quot;</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">objective_fun</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">objective_fun</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Dual objective of binary kernel SVMs with intercept.&quot;&quot;&quot;</span>
     <span class="c1"># The dual objective is:</span>
     <span class="c1"># fun(beta) = 0.5 beta^T K beta - beta^T y</span>
@@ -196,7 +194,7 @@ it with BoxOSQP too.</p>
   <span class="c1"># Define projection operator.</span>
   <span class="n">w</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-  <span class="k">def</span> <span class="nf">proj</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">proj</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
     <span class="n">box_lower</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">C</span><span class="p">)</span>
     <span class="n">box_upper</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">proj_params</span> <span class="o">=</span> <span class="p">(</span><span class="n">box_lower</span><span class="p">,</span> <span class="n">box_upper</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
@@ -212,7 +210,7 @@ it with BoxOSQP too.</p>
   <span class="k">return</span> <span class="n">beta_fit</span>
 
 
-<span class="k">def</span> <span class="nf">binary_kernel_svm_osqp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">binary_kernel_svm_osqp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
   <span class="c1"># The dual objective is:</span>
   <span class="c1"># fun(beta) = 0.5 beta^T K beta - beta^T y</span>
   <span class="c1"># subject to</span>
@@ -223,7 +221,7 @@ it with BoxOSQP too.</p>
 
   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Solve SVM with OSQP: &quot;</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">matvec_Q</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">matvec_Q</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>  <span class="n">beta</span><span class="p">))</span>
   
   <span class="c1"># There qre two types of constraints:</span>
@@ -234,7 +232,7 @@ it with BoxOSQP too.</p>
   <span class="c1"># The second one involves their sum (i.e dot product with vector full of 1).</span>
   <span class="c1"># We take advantage of matvecs to avoid materializing A in memory.</span>
   <span class="c1"># We return a tuple whose entries correspond each type of constraint.</span>
-  <span class="k">def</span> <span class="nf">matvec_A</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">matvec_A</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">beta</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
   
   <span class="c1"># l, u must have same shape than matvec_A&#39;s output.</span>
@@ -249,7 +247,7 @@ it with BoxOSQP too.</p>
   <span class="k">return</span> <span class="n">beta</span>
 
 
-<span class="k">def</span> <span class="nf">print_svm_result</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_svm_result</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
   <span class="c1"># Here the vector `beta` of coefficients is signed:</span>
   <span class="c1"># its sign depends of the true label of the corresponding example.</span>
   <span class="c1"># Hence we use jnp.abs() to detect support vectors.</span>
@@ -259,7 +257,7 @@ it with BoxOSQP too.</p>
   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
   <span class="k">del</span> <span class="n">argv</span>
 
   <span class="n">num_samples</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">num_samples</span>
@@ -296,11 +294,11 @@ it with BoxOSQP too.</p>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">jax</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">projection</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">ProjectedGradient</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">BoxOSQP</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">projection</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProjectedGradient</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxOSQP</span>
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;jaxopt&#39;
 </pre></div>

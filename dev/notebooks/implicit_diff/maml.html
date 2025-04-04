@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -5,31 +7,27 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Few-shot Adaptation with Model Agnostic Meta-Learning (MAML) &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../../_static/copybutton.js?v=f281be69"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -139,39 +137,39 @@ limitations under the License.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span>
 
 <span class="c1"># activate TPUs if available</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">jax.tools.colab_tpu</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">jax.tools.colab_tpu</span>
     <span class="n">jax</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">colab_tpu</span><span class="o">.</span><span class="n">setup_tpu</span><span class="p">()</span>
 <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TPU not found, continuing without it.&quot;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
-<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">random</span>
-<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">vmap</span>
-<span class="kn">from</span> <span class="nn">jax.tree_util</span> <span class="kn">import</span> <span class="n">Partial</span><span class="p">,</span> <span class="n">tree_map</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">vmap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">Partial</span><span class="p">,</span> <span class="n">tree_map</span>
 
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">LBFGS</span><span class="p">,</span> <span class="n">GradientDescent</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">linear_solve</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">OptaxSolver</span>
-<span class="kn">from</span> <span class="nn">jaxopt</span> <span class="kn">import</span> <span class="n">tree_util</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">LBFGS</span><span class="p">,</span> <span class="n">GradientDescent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_solve</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptaxSolver</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_util</span>
 
-<span class="kn">import</span> <span class="nn">optax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">optax</span>
 
 <span class="c1"># we use flax to construct a small multi-layer perceptron</span>
-<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flax</span><span class="w"> </span><span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="c1"># for plotting</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span>
 </pre></div>
 </div>
 </div>
@@ -209,7 +207,7 @@ limitations under the License.</p>
 <p>We consider a multi-task problem, where each task involves regressing from the input to the output of a sine wave. The different tasks have different amplitude and phase of the sinusoid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_task</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">n_samples_train</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_samples_test</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">min_phase</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">max_phase</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">min_amplitude</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_amplitude</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generate_task</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">n_samples_train</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_samples_test</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">min_phase</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">max_phase</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">min_amplitude</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_amplitude</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a toy 1-D regression dataset.&quot;&quot;&quot;</span>
     <span class="n">amplitude</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_amplitude</span> <span class="o">-</span> <span class="n">min_amplitude</span><span class="p">)</span> <span class="o">+</span> <span class="n">min_amplitude</span>
     
@@ -233,7 +231,7 @@ limitations under the License.</p>
 <span class="c1"># the next function should generate a metabatch of tasks in a vectorized fashion (that is without a for loop)</span>
 <span class="c1"># the tasks should be batched in the first dimension</span>
 <span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">generate_task_batch</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">meta_batch_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">n_samples_train</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_samples_test</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">min_phase</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">max_phase</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">min_amplitude</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_amplitude</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_task_batch</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">meta_batch_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">n_samples_train</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_samples_test</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">min_phase</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">max_phase</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">min_amplitude</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_amplitude</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a batch of toy 1-D regression datasets.&quot;&quot;&quot;</span>
     <span class="n">keys</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">meta_batch_size</span><span class="p">)</span>
     <span class="n">tasks</span> <span class="o">=</span> <span class="n">vmap</span><span class="p">(</span>
@@ -321,12 +319,12 @@ limitations under the License.</p>
 <p>In the following cells we’ll define the inner objective <span class="math notranslate nohighlight">\({\mathcal{L}}_i(x) + \frac{\lambda}{2}\|x - \theta\|^2\)</span> as <code class="docutils literal notranslate"><span class="pre">inner_loss</span></code> and the outer objective <span class="math notranslate nohighlight">\(\hat{\mathcal{L_i}}\)</span> as <code class="docutils literal notranslate"><span class="pre">outer_loss</span></code>. Both losses are a quadratic loss using as predictive model a multi-layer perceptron.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SimpleMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SimpleMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
   <span class="n">features</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
   <span class="n">dtype</span><span class="p">:</span> <span class="n">Any</span>
 
   <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
-  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">inputs</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">):</span>
       <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span>
@@ -355,7 +353,7 @@ limitations under the License.</p>
 <p>The regressor is a neural network model with 2 hidden layers of size 40 with ReLU nonlinearities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">inner_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">outer_parameters</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="n">L2REG</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">inner_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">outer_parameters</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="n">L2REG</span><span class="p">):</span>
   <span class="c1"># x are the task adapted parameters phi prime in the original paper</span>
   <span class="c1"># outer_parameters are the meta parameters, theta bold in the original paper</span>
   <span class="n">samples</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">data</span>
@@ -381,7 +379,7 @@ limitations under the License.</p>
   <span class="p">),</span>
 <span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">outer_loss</span><span class="p">(</span><span class="n">meta_params</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">outer_loss</span><span class="p">(</span><span class="n">meta_params</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">):</span>
   <span class="c1"># inner parameters is passed </span>
   <span class="c1"># iterate on the first K-1 tasks</span>
   <span class="n">in_params_sol</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">vmap</span><span class="p">(</span><span class="n">inner_solver</span><span class="o">.</span><span class="n">run</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">))(</span>

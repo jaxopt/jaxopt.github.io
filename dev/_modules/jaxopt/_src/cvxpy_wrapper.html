@@ -1,32 +1,30 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>jaxopt._src.cvxpy_wrapper &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -126,22 +124,22 @@
 <span class="c1"># limitations under the License.</span>
 <span class="sd">&quot;&quot;&quot;CVXPY wrappers.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
 
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
-<span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span> 
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">linear_solve</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">tree_util</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_solve</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_util</span>
 
 
-<span class="k">def</span> <span class="nf">_check_params</span><span class="p">(</span><span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params_ineq</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_params</span><span class="p">(</span><span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params_ineq</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
   <span class="k">if</span> <span class="n">params_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;params_obj should be a tuple (Q, c)&quot;</span><span class="p">)</span>
   
@@ -166,7 +164,7 @@
       <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;G.shape[1] != Q.shape[1]&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_make_cvxpy_qp_optimality_fun</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_cvxpy_qp_optimality_fun</span><span class="p">():</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Makes the optimality function for CVXPY quadratic programming.</span>
 
 <span class="sd">  Returns:</span>
@@ -176,17 +174,17 @@
 <span class="sd">      params_eq = (A, b) or None</span>
 <span class="sd">      params_ineq = (G, h) or None</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="k">def</span> <span class="nf">obj_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">obj_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_obj</span><span class="p">):</span>
     <span class="n">Q</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">params_obj</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">primal_var</span><span class="p">))</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">eq_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">eq_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">params_eq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="kc">None</span>
     <span class="n">A</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">params_eq</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">primal_var</span><span class="p">)</span> <span class="o">-</span> <span class="n">b</span>
 
-  <span class="k">def</span> <span class="nf">ineq_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">ineq_fun</span><span class="p">(</span><span class="n">primal_var</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">params_ineq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="kc">None</span>
     <span class="n">G</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">params_ineq</span>
@@ -198,7 +196,7 @@
 <div class="viewcode-block" id="CvxpyQP">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP">[docs]</a>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">CvxpyQP</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Solver</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CvxpyQP</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Solver</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Wraps CVXPY&#39;s quadratic solver with implicit diff support.</span>
 
 <span class="sd">  No support for matvec, pytrees, jit and vmap.</span>
@@ -216,7 +214,7 @@
 
 <div class="viewcode-block" id="CvxpyQP.run">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP.run">[docs]</a>
-  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
           <span class="n">init_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>  <span class="c1"># unused</span>
           <span class="n">params_obj</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">ArrayPair</span><span class="p">,</span>
           <span class="n">params_eq</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">base</span><span class="o">.</span><span class="n">ArrayPair</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -240,7 +238,7 @@
     <span class="c1"># TODO(lbethune): the interface of CVXPY could easily allow pytrees for constraints,</span>
     <span class="c1"># by populating `constraints` list with different Ai x = bi and Gi x &lt;= hi.</span>
     <span class="c1"># Pytree support for x could be possible by creating a cp.Variable for each leaf in the pytree c.</span>
-    <span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cp</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">cvxpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
 
     <span class="k">del</span> <span class="n">init_params</span>  <span class="c1"># no warm start</span>
     <span class="n">_check_params</span><span class="p">(</span><span class="n">params_obj</span><span class="p">,</span> <span class="n">params_eq</span><span class="p">,</span> <span class="n">params_ineq</span><span class="p">)</span>
@@ -276,7 +274,7 @@
 
 <div class="viewcode-block" id="CvxpyQP.l2_optimality_error">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.CvxpyQP.html#jaxopt.CvxpyQP.l2_optimality_error">[docs]</a>
-  <span class="k">def</span> <span class="nf">l2_optimality_error</span><span class="p">(</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">l2_optimality_error</span><span class="p">(</span>
       <span class="bp">self</span><span class="p">,</span>
       <span class="n">params</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
       <span class="n">params_obj</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">ArrayPair</span><span class="p">,</span>
@@ -288,7 +286,7 @@
     <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_l2_norm</span><span class="p">(</span><span class="n">pytree</span><span class="p">)</span></div>
 
 
-  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">optimality_fun</span> <span class="o">=</span> <span class="n">_make_cvxpy_qp_optimality_fun</span><span class="p">()</span>
 
     <span class="c1"># Set up implicit diff.</span>

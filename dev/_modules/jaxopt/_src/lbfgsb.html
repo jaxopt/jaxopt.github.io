@@ -1,32 +1,30 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>jaxopt._src.lbfgsb &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -133,32 +131,32 @@
 <span class="c1"># Computing, 16, 5, pp. 1190-1208.</span>
 <span class="c1"># [2] J. Nocedal and S. Wright.  Numerical Optimization, second edition.</span>
 
-<span class="kn">import</span> <span class="nn">dataclasses</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
 
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">projection</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.lbfgs</span> <span class="kn">import</span> <span class="n">init_history</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.lbfgs</span> <span class="kn">import</span> <span class="n">update_history</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.linesearch_util</span> <span class="kn">import</span> <span class="n">_init_stepsize</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src.linesearch_util</span> <span class="kn">import</span> <span class="n">_setup_linesearch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">projection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.lbfgs</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_history</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.lbfgs</span><span class="w"> </span><span class="kn">import</span> <span class="n">update_history</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.linesearch_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">_init_stepsize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.linesearch_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">_setup_linesearch</span>
 
-<span class="kn">from</span> <span class="nn">jaxopt._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_single_dtype</span>
-<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_add_scalar_mul</span>
-<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_inf_norm</span>
-<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_map</span>
-<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_sub</span>
-<span class="kn">from</span> <span class="nn">jaxopt.tree_util</span> <span class="kn">import</span> <span class="n">tree_vdot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_single_dtype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_add_scalar_mul</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_inf_norm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_map</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_sub</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_vdot</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 
-<span class="k">def</span> <span class="nf">_flatten_and_concat</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">batch_ndims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_flatten_and_concat</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">batch_ndims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Flattens a pytree and concatenates leaves along the last dimension.&quot;&quot;&quot;</span>
   <span class="n">r</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
       <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">batch_ndims</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)),</span> <span class="n">tree</span>
@@ -168,7 +166,7 @@
   <span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_split_and_pack_like</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_split_and_pack_like</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Splits an array and packs the components like the provided pytree.&quot;&quot;&quot;</span>
   <span class="n">treedef</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_util</span><span class="o">.</span><span class="n">tree_structure</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_util</span><span class="o">.</span><span class="n">treedef_is_leaf</span><span class="p">(</span><span class="n">treedef</span><span class="p">):</span>
@@ -181,7 +179,7 @@
                                 <span class="n">tree</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_get_error</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">grad</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">lower</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">upper</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_error</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">grad</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">lower</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">upper</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Computes the error for determining convergence.&quot;&quot;&quot;</span>
   <span class="n">err</span> <span class="o">=</span> <span class="n">tree_map</span><span class="p">(</span>
       <span class="k">lambda</span> <span class="n">y</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">g</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span>
@@ -189,7 +187,7 @@
   <span class="k">return</span> <span class="n">tree_inf_norm</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_find_cauchy_point</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_find_cauchy_point</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">grad</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">lower</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -250,10 +248,10 @@
   <span class="n">init_state</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_ind</span><span class="p">,</span> <span class="n">init_df</span><span class="p">,</span> <span class="n">init_ddf</span><span class="p">,</span> <span class="n">active_set_mask_sorted</span><span class="p">,</span> <span class="n">init_c</span><span class="p">,</span>
                 <span class="n">init_p</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">_cond</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">_cond</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">dt</span><span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
-  <span class="k">def</span> <span class="nf">_body</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">_body</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="n">i</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">ddf</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">args</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">t_ind</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># index of the unsorted array</span>
     <span class="n">c_new</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span>
@@ -288,7 +286,7 @@
   <span class="k">return</span> <span class="n">x_cauchy</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dt_min</span> <span class="o">*</span> <span class="n">p</span><span class="p">,</span> <span class="n">active_set_mask</span>
 
 
-<span class="k">def</span> <span class="nf">_minimize_subspace</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_minimize_subspace</span><span class="p">(</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">x_cauchy</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">active_set_mask</span>
 <span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Direct primal method of subspace minimization from [1].&quot;&quot;&quot;</span>
@@ -316,7 +314,7 @@
   <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">active_set_mask</span><span class="p">,</span> <span class="n">x_cauchy</span> <span class="o">+</span> <span class="n">alpha_star</span> <span class="o">*</span> <span class="n">du</span><span class="p">,</span> <span class="n">x_cauchy</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">LbfgsbState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LbfgsbState</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Named tuple containing state information.&quot;&quot;&quot;</span>
 
   <span class="n">iter_num</span><span class="p">:</span> <span class="nb">int</span>
@@ -339,7 +337,7 @@
 <div class="viewcode-block" id="LBFGSB">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.LBFGSB.html#jaxopt.LBFGSB">[docs]</a>
 <span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">LBFGSB</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LBFGSB</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">IterativeSolver</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;L-BFGS-B solver.</span>
 
 <span class="sd">  L-BFGS-B is a version of L-BFGS that incorporates box constraints on</span>
@@ -423,7 +421,7 @@
 
   <span class="n">verbose</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
-  <span class="k">def</span> <span class="nf">_cond_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">_cond_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="c1"># We continue the optimization loop while the error tolerance is not met</span>
     <span class="c1"># and either failed linesearch is disallowed or linesearch hasn&#39;t failed.</span>
@@ -432,7 +430,7 @@
 
 <div class="viewcode-block" id="LBFGSB.init_state">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.LBFGSB.html#jaxopt.LBFGSB.init_state">[docs]</a>
-  <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span>
       <span class="bp">self</span><span class="p">,</span>
       <span class="n">init_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
       <span class="n">bounds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
@@ -495,7 +493,7 @@
 
 <div class="viewcode-block" id="LBFGSB.update">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.LBFGSB.html#jaxopt.LBFGSB.update">[docs]</a>
-  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span>
       <span class="bp">self</span><span class="p">,</span>
       <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
       <span class="n">state</span><span class="p">:</span> <span class="n">LbfgsbState</span><span class="p">,</span>
@@ -690,13 +688,13 @@
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">(</span><span class="n">new_params</span><span class="p">,</span> <span class="n">new_state</span><span class="p">)</span></div>
 
 
-  <span class="k">def</span> <span class="nf">_fixed_point_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">_fixed_point_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
     <span class="n">step</span> <span class="o">=</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">projection</span><span class="o">.</span><span class="n">projection_box</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LBFGSB.optimality_fun">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.LBFGSB.html#jaxopt.LBFGSB.optimality_fun">[docs]</a>
-  <span class="k">def</span> <span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">optimality_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimality function mapping compatible with `@custom_root`.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
@@ -704,16 +702,16 @@
     <span class="k">return</span> <span class="n">tree_sub</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span></div>
 
 
-  <span class="k">def</span> <span class="nf">_value_and_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">_value_and_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">OptStep</span><span class="p">):</span>
       <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">params</span>
     <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">value</span><span class="p">,</span> <span class="n">grad</span>
 
-  <span class="k">def</span> <span class="nf">_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">_grad_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
 
-  <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
 
     <span class="n">_fun_with_aux</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_and_grad_with_aux</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">_make_funs_with_aux</span><span class="p">(</span>

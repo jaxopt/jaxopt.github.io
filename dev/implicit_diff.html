@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
@@ -5,31 +7,27 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Implicit differentiation &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="_static/copybutton.js?v=f281be69"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -147,11 +145,11 @@ algorithm’s unrolled iterates.</p>
 Most solvers have an <code class="docutils literal notranslate"><span class="pre">implicit_diff=True|False</span></code> option. When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 autodiff of unrolled iterates is used instead of implicit differentiation.</p>
 <p>Using the ridge regression example from the <a class="reference internal" href="unconstrained.html#unconstrained-optim"><span class="std std-ref">unconstrained optimization</span></a> section, we can write:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ridge_reg_objective</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">ridge_reg_objective</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
   <span class="n">residuals</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>
   <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">params</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">ridge_reg_solution</span><span class="p">(</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ridge_reg_solution</span><span class="p">(</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
   <span class="n">gd</span> <span class="o">=</span> <span class="n">jaxopt</span><span class="o">.</span><span class="n">GradientDescent</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">ridge_reg_objective</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">implicit_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">gd</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">l2reg</span><span class="o">=</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
@@ -163,7 +161,7 @@ Since <code class="docutils literal notranslate"><span class="pre">ridge_reg_sol
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">argnums=0</span></code> specifies that we want to differentiate with respect to <code class="docutils literal notranslate"><span class="pre">l2reg</span></code>.</p>
 <p>We can also compose <code class="docutils literal notranslate"><span class="pre">ridge_reg_solution</span></code> with other functions:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">validation_loss</span><span class="p">(</span><span class="n">l2reg</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">validation_loss</span><span class="p">(</span><span class="n">l2reg</span><span class="p">):</span>
   <span class="n">sol</span> <span class="o">=</span> <span class="n">ridge_reg_solution</span><span class="p">(</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
   <span class="n">residuals</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_val</span>
   <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>

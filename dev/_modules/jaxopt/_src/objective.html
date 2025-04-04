@@ -1,32 +1,30 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>jaxopt._src.objective &mdash; JAXopt 0.8.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=37e83ca3" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7f96dc5e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -127,16 +125,16 @@
 
 <span class="sd">&quot;&quot;&quot;Common objective functions.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
 
-<span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">base</span>
-<span class="kn">from</span> <span class="nn">jaxopt._src</span> <span class="kn">import</span> <span class="n">loss</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">loss</span>
 
 
-<span class="k">class</span> <span class="nc">CompositeLinearFunction</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CompositeLinearFunction</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;A base class to represent composite linear functions.</span>
 
 <span class="sd">  These are functions of the form::</span>
@@ -147,19 +145,19 @@
 <span class="sd">  where  ``linop = make_linop(*args, **kwargs)``.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
-  <span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear term in the function.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="kc">None</span>
 
-  <span class="k">def</span> <span class="nf">lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Lipschitz-constant of subfun.&quot;&quot;&quot;</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-  <span class="k">def</span> <span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;To be implemented by the child class.&quot;&quot;&quot;</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">linop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_linop</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">predictions</span> <span class="o">=</span> <span class="n">linop</span><span class="o">.</span><span class="n">matvec</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subfun</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -169,24 +167,24 @@
     <span class="k">return</span> <span class="n">ret</span>
 
 
-<span class="k">class</span> <span class="nc">LeastSquares</span><span class="p">(</span><span class="n">CompositeLinearFunction</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LeastSquares</span><span class="p">(</span><span class="n">CompositeLinearFunction</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Least squares.&quot;&quot;&quot;</span>
 
-  <span class="k">def</span> <span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">residuals</span> <span class="o">=</span> <span class="n">predictions</span> <span class="o">-</span> <span class="n">y</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">make_linop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">make_linop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates linear operator.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">LinearOperator</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-  <span class="k">def</span> <span class="nf">columnwise_lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">columnwise_lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Column-wise Lipschitz constants.&quot;&quot;&quot;</span>
     <span class="n">linop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_linop</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">linop</span><span class="o">.</span><span class="n">column_l2_norms</span><span class="p">(</span><span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.0</span>
 
-  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Least squares.</span>
 
 <span class="sd">    .. math::</span>
@@ -213,7 +211,7 @@
 
 <div class="viewcode-block" id="ridge_regression">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.objective.ridge_regression.html#jaxopt.objective.ridge_regression">[docs]</a>
-<span class="k">def</span> <span class="nf">ridge_regression</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ridge_regression</span><span class="p">(</span>
   <span class="n">params</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
   <span class="n">l2reg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
   <span class="n">data</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -246,23 +244,23 @@
 <span class="n">_logloss_vmap</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">multiclass_logistic_loss</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">MulticlassLogreg</span><span class="p">(</span><span class="n">CompositeLinearFunction</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MulticlassLogreg</span><span class="p">(</span><span class="n">CompositeLinearFunction</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Multiclass logistic regression objective.&quot;&quot;&quot;</span>
 
-  <span class="k">def</span> <span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">_logloss_vmap</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
 
-  <span class="k">def</span> <span class="nf">make_linop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">make_linop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates linear operator.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">LinearOperator</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-  <span class="k">def</span> <span class="nf">columnwise_lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">columnwise_lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Column-wise Lipschitz constants.&quot;&quot;&quot;</span>
     <span class="n">linop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_linop</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">linop</span><span class="o">.</span><span class="n">column_l2_norms</span><span class="p">(</span><span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
 
-  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Multiclass logistic regression.</span>
 
 <span class="sd">    .. math::</span>
@@ -292,7 +290,7 @@
 
 <div class="viewcode-block" id="multiclass_logreg_with_intercept">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.objective.multiclass_logreg_with_intercept.html#jaxopt.objective.multiclass_logreg_with_intercept">[docs]</a>
-<span class="k">def</span> <span class="nf">multiclass_logreg_with_intercept</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiclass_logreg_with_intercept</span><span class="p">(</span>
   <span class="n">params</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
   <span class="n">data</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -323,7 +321,7 @@
 
 <div class="viewcode-block" id="l2_multiclass_logreg">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.objective.l2_multiclass_logreg.html#jaxopt.objective.l2_multiclass_logreg">[docs]</a>
-<span class="k">def</span> <span class="nf">l2_multiclass_logreg</span><span class="p">(</span><span class="n">W</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">l2_multiclass_logreg</span><span class="p">(</span><span class="n">W</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                          <span class="n">l2reg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                          <span class="n">data</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -352,7 +350,7 @@
 
 <div class="viewcode-block" id="l2_multiclass_logreg_with_intercept">
 <a class="viewcode-back" href="../../../_autosummary/jaxopt.objective.l2_multiclass_logreg_with_intercept.html#jaxopt.objective.l2_multiclass_logreg_with_intercept">[docs]</a>
-<span class="k">def</span> <span class="nf">l2_multiclass_logreg_with_intercept</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">l2_multiclass_logreg_with_intercept</span><span class="p">(</span>
   <span class="n">params</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
   <span class="n">l2reg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
   <span class="n">data</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -386,23 +384,23 @@
 <span class="n">_binary_logloss_vmap</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">binary_logistic_loss</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">BinaryLogreg</span><span class="p">(</span><span class="n">CompositeLinearFunction</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BinaryLogreg</span><span class="p">(</span><span class="n">CompositeLinearFunction</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Binary logistic regression objective.&quot;&quot;&quot;</span>
 
-  <span class="k">def</span> <span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">_binary_logloss_vmap</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
 
-  <span class="k">def</span> <span class="nf">make_linop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">make_linop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates linear operator.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">LinearOperator</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-  <span class="k">def</span> <span class="nf">columnwise_lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">columnwise_lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Column-wise Lipschitz constants.&quot;&quot;&quot;</span>
     <span class="n">linop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_linop</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">linop</span><span class="o">.</span><span class="n">column_l2_norms</span><span class="p">(</span><span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.25</span>
 
-  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Binary logistic regression.</span>
 
 <span class="sd">    .. math::</span>
@@ -431,10 +429,10 @@
 <span class="n">binary_logreg</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">binary_logreg</span><span class="o">.</span><span class="fm">__call__</span><span class="o">.</span><span class="vm">__doc__</span>
 
 
-<span class="k">class</span> <span class="nc">MulticlassLinearSvmDual</span><span class="p">(</span><span class="n">CompositeLinearFunction</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MulticlassLinearSvmDual</span><span class="p">(</span><span class="n">CompositeLinearFunction</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Dual objective function of multiclass linear SVMs.&quot;&quot;&quot;</span>
 
-  <span class="k">def</span> <span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Xbeta</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">subfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Xbeta</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">data</span>
     <span class="n">XY</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>  <span class="c1"># todo: avoid storing / computing this matrix.</span>
 
@@ -445,16 +443,16 @@
     <span class="c1"># With opposite sign, as we want to maximize.</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">l2reg</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">make_linop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">make_linop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates linear operator.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">LinearOperator</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">columnwise_lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">columnwise_lipschitz_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Column-wise Lipschitz constants.&quot;&quot;&quot;</span>
     <span class="n">linop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_linop</span><span class="p">(</span><span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">linop</span><span class="o">.</span><span class="n">column_l2_norms</span><span class="p">(</span><span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l2reg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
 
 
