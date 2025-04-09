@@ -19,19 +19,16 @@ Traceback (most recent call last):
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
 from functools import partial
-from typing import Any, Mapping, Tuple, Callable
+from typing import Any, Tuple, Callable
 
 from absl import app
 from absl import flags
 
-import flax
 from flax import linen as nn
 
 import jax
 import jax.numpy as jnp
-from jax.tree_util import tree_structure
 
-import jaxopt
 from jaxopt import loss
 from jaxopt import OptaxSolver
 from jaxopt import FixedPointIteration
@@ -43,7 +40,6 @@ import optax
 
 import tensorflow_datasets as tfds
 import tensorflow as tf
-from collections import namedtuple
 
 
 dataset_names = [
@@ -302,12 +298,12 @@ if __name__ == "__main__":
 
 [31m---------------------------------------------------------------------------[39m
 [31mModuleNotFoundError[39m                       Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 14[39m
-[32m     11[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mjax[39;00m[34;01m.[39;00m[34;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mjnp[39;00m
-[32m     12[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjax[39;00m[34;01m.[39;00m[34;01mtree_util[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m tree_structure
-[32m---> [39m[32m14[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m
-[32m     15[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m loss
-[32m     16[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m OptaxSolver
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 12[39m
+[32m      9[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mjax[39;00m
+[32m     10[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mjax[39;00m[34;01m.[39;00m[34;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mjnp[39;00m
+[32m---> [39m[32m12[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m loss
+[32m     13[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m OptaxSolver
+[32m     14[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m FixedPointIteration
 
 [31mModuleNotFoundError[39m: No module named 'jaxopt'
 

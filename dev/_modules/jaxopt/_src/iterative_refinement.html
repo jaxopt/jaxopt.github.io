@@ -139,15 +139,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">loop</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">base</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_zeros_like</span><span class="p">,</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_sub</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_add_scalar_mul</span><span class="p">,</span> <span class="n">tree_scalar_mul</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_vdot</span><span class="p">,</span> <span class="n">tree_negative</span><span class="p">,</span> <span class="n">tree_l2_norm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.tree_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_l2_norm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src.linear_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">_make_linear_operator</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jaxopt._src.linear_solve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">linear_solve</span>
 

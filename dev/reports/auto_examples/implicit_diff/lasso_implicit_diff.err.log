@@ -21,7 +21,6 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 from absl import app
 from absl import flags
 
-import jax
 import jax.numpy as jnp
 
 from jaxopt import BlockCoordinateDescent
@@ -106,12 +105,12 @@ if __name__ == "__main__":
 
 [31m---------------------------------------------------------------------------[39m
 [31mModuleNotFoundError[39m                       Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 7[39m
-[32m      4[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mjax[39;00m
-[32m      5[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mjax[39;00m[34;01m.[39;00m[34;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mjnp[39;00m
-[32m----> [39m[32m7[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m BlockCoordinateDescent
-[32m      8[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m objective
-[32m      9[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m OptaxSolver
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 6[39m
+[32m      2[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mabsl[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m flags
+[32m      4[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mjax[39;00m[34;01m.[39;00m[34;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mjnp[39;00m
+[32m----> [39m[32m6[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m BlockCoordinateDescent
+[32m      7[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m objective
+[32m      8[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mjaxopt[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m OptaxSolver
 
 [31mModuleNotFoundError[39m: No module named 'jaxopt'
 

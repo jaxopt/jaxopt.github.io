@@ -124,18 +124,14 @@
 <span class="c1"># limitations under the License.</span>
 <span class="sd">&quot;&quot;&quot;CVXPY wrappers.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span> 
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">base</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">implicit_diff</span> <span class="k">as</span> <span class="n">idf</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_solve</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxopt._src</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_util</span>
 
 
