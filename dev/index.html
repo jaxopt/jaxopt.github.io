@@ -113,10 +113,6 @@
              
   <section id="jaxopt">
 <h1>JAXopt<a class="headerlink" href="#jaxopt" title="Link to this heading"></a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This is the documentation for the development version of JAXopt.</p>
-</div>
 <p>Hardware accelerated, batchable and differentiable optimizers in
 <a class="reference external" href="https://github.com/google/jax">JAX</a>.</p>
 <ul class="simple">
@@ -128,6 +124,14 @@ automatically vectorized using JAX’s vmap.</p></li>
 respect to their inputs either implicitly or via autodiff of unrolled
 algorithm iterations.</p></li>
 </ul>
+<section id="status">
+<h2>Status<a class="headerlink" href="#status" title="Link to this heading"></a></h2>
+<p>JAXopt is no longer maintained nor developed. Alternatives may be found
+<a class="reference external" href="https://docs.jax.dev/en/latest/">here</a>. Some of its features (like losses,
+projections, lbfgs optimizer) have been ported into
+<a class="reference external" href="https://github.com/google-deepmind/optax">optax</a>. We are sincerely grateful for
+all the community contributions the project has garnered over the years.</p>
+</section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>To install the latest release of JAXopt, use the following command:</p>
