@@ -208,7 +208,9 @@
     <span class="p">)</span>
   <span class="c1"># Define the expected shape &amp; dtype of output.</span>
   <span class="n">shape_dtype</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">ShapeDtypeStruct</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-  <span class="n">sol</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">pure_callback</span><span class="p">(</span><span class="n">_isotonic_l2_pav_numba</span><span class="p">,</span> <span class="n">shape_dtype</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+  <span class="n">sol</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">pure_callback</span><span class="p">(</span>
+      <span class="n">_isotonic_l2_pav_numba</span><span class="p">,</span> <span class="n">shape_dtype</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vmap_method</span><span class="o">=</span><span class="s2">&quot;sequential&quot;</span>
+  <span class="p">)</span>
   <span class="k">return</span> <span class="n">sol</span>
 
 
