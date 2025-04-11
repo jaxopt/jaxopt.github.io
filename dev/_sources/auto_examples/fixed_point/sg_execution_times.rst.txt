@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:07.707** total execution time for 4 files **from auto_examples/fixed_point**:
+**00:07.740** total execution time for 4 files **from auto_examples/fixed_point**:
 
 .. container::
 
@@ -33,13 +33,13 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py` (``plot_picard_ode.py``)
-     - 00:04.282
+     - 00:04.308
      - 0.0
    * - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py` (``plot_anderson_wrapper_cd.py``)
-     - 00:01.819
+     - 00:01.803
      - 0.0
    * - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py` (``plot_anderson_accelerate_gd.py``)
-     - 00:01.606
+     - 00:01.629
      - 0.0
    * - :ref:`sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py` (``deep_equilibrium_model.py``)
      - 00:00.000
