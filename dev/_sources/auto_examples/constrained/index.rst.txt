@@ -25,7 +25,7 @@ Constrained optimization
   .. image:: /auto_examples/constrained/images/thumb/sphx_glr_nmf_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_constrained_nmf.py`
+  :doc:`/auto_examples/constrained/nmf`
 
 .. raw:: html
 
@@ -42,7 +42,7 @@ Constrained optimization
   .. image:: /auto_examples/constrained/images/thumb/sphx_glr_multiclass_linear_svm_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_constrained_multiclass_linear_svm.py`
+  :doc:`/auto_examples/constrained/multiclass_linear_svm`
 
 .. raw:: html
 
@@ -59,7 +59,7 @@ Constrained optimization
   .. image:: /auto_examples/constrained/images/thumb/sphx_glr_binary_kernel_svm_with_intercept_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_constrained_binary_kernel_svm_with_intercept.py`
+  :doc:`/auto_examples/constrained/binary_kernel_svm_with_intercept`
 
 .. raw:: html
 

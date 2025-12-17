@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**01:07.698** total execution time for 13 files **from all galleries**:
+**01:09.130** total execution time for 13 files **from all galleries**:
 
 .. container::
 
@@ -33,16 +33,16 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_deep_learning_plot_sgd_solvers.py` (``../examples/deep_learning/plot_sgd_solvers.py``)
-     - 00:58.023
+     - 00:58.748
      - 0.0
    * - :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py` (``../examples/fixed_point/plot_picard_ode.py``)
-     - 00:05.794
+     - 00:06.128
      - 0.0
    * - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py` (``../examples/fixed_point/plot_anderson_wrapper_cd.py``)
-     - 00:02.062
+     - 00:02.227
      - 0.0
    * - :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py` (``../examples/fixed_point/plot_anderson_accelerate_gd.py``)
-     - 00:01.818
+     - 00:02.027
      - 0.0
    * - :ref:`sphx_glr_auto_examples_constrained_binary_kernel_svm_with_intercept.py` (``../examples/constrained/binary_kernel_svm_with_intercept.py``)
      - 00:00.000

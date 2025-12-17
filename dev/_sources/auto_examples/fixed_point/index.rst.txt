@@ -25,7 +25,7 @@ Fixed point resolution
   .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_picard_ode_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_fixed_point_plot_picard_ode.py`
+  :doc:`/auto_examples/fixed_point/plot_picard_ode`
 
 .. raw:: html
 
@@ -42,7 +42,7 @@ Fixed point resolution
   .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_anderson_wrapper_cd_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_wrapper_cd.py`
+  :doc:`/auto_examples/fixed_point/plot_anderson_wrapper_cd`
 
 .. raw:: html
 
@@ -59,7 +59,7 @@ Fixed point resolution
   .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_plot_anderson_accelerate_gd_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_fixed_point_plot_anderson_accelerate_gd.py`
+  :doc:`/auto_examples/fixed_point/plot_anderson_accelerate_gd`
 
 .. raw:: html
 
@@ -76,7 +76,7 @@ Fixed point resolution
   .. image:: /auto_examples/fixed_point/images/thumb/sphx_glr_deep_equilibrium_model_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_fixed_point_deep_equilibrium_model.py`
+  :doc:`/auto_examples/fixed_point/deep_equilibrium_model`
 
 .. raw:: html
 
